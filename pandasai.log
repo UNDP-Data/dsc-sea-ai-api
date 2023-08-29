@@ -1,0 +1,3526 @@
+2023-06-21 17:03:20 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 17:03:20 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 17:07:07 [INFO] 127.0.0.1 - - [21/Jun/2023 17:07:07] "GET / HTTP/1.1" 200 -
+2023-06-21 17:07:32 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 26, in send_promt
+    result = pandas_ai.run(sheets[table_name], prompt=prompt)
+                           ~~~~~~^^^^^^^^^^^^
+KeyError: 'your_table_name'
+2023-06-21 17:07:32 [INFO] 127.0.0.1 - - [21/Jun/2023 17:07:32] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:08:05 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:08:05 [INFO] Prompt ID: d83e6c34-52be-446e-9559-d8384aa93280
+2023-06-21 17:08:12 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+
+# Load the dataframe
+df = pd.read_csv('data.csv')
+
+# Print the shape of the dataframe
+print("Shape of the dataframe:", df.shape)
+
+# Print the columns of the dataframe
+print("Columns of the dataframe:", df.columns)
+
+# Print the data types of the columns
+print("Data types of the columns:\n", df.dtypes)
+
+# Print the first 5 rows of the dataframe
+print("First 5 rows of the dataframe:\n", df.head())
+
+# Print the last 5 rows of the dataframe
+print("Last 5 rows of the dataframe:\n", df.tail())
+                        ```
+                    
+2023-06-21 17:08:12 [INFO] 
+Code running:
+```
+print('Shape of the dataframe:', df.shape)
+print('Columns of the dataframe:', df.columns)
+print('Data types of the columns:\n', df.dtypes)
+print('First 5 rows of the dataframe:\n', df.head())
+print('Last 5 rows of the dataframe:\n', df.tail())
+```
+2023-06-21 17:08:12 [INFO] Answer: ('Last 5 rows of the dataframe:\n',      Project ID                                      Project Title       Budget     Country  ... Donors Direct Beneficiaries  Indirect Beneficiaries Old Beneficiaries
+293        6249                              Green Sharm El Sheikh    6212694.0       Egypt  ...    GEF                    0                     0.0               NaN
+294        4998      Grid-connected Small-Scale Photovoltaic Syste    3536364.0       Egypt  ...    GEF                    0                     0.0               NaN
+295      130275                    Promote small-scale PV-UNDP-EGY    1103288.0       Egypt  ...  Japan                    0                     0.0               NaN
+296      130610                      Multilateral Support to COP27    1500000.0       Egypt  ...     EU                    0                     0.0               NaN
+297      132688  Projet d’Electrification  Rurale en Zones Isol...  322000000.0  Mauritania  ...    NaN                    0                     0.0               NaN
+
+[5 rows x 14 columns])
+2023-06-21 17:08:12 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1813, in make_response
+    rv = self.response_class(
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/werkzeug/wrappers/response.py", line 155, in __init__
+    super().__init__(
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/werkzeug/sansio/response.py", line 170, in __init__
+    self.status = status  # type: ignore
+    ^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/werkzeug/sansio/response.py", line 191, in status
+    self._status, self._status_code = self._clean_status(value)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/werkzeug/sansio/response.py", line 197, in _clean_status
+    value = value.strip()
+            ^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'strip'
+2023-06-21 17:08:12 [INFO] 127.0.0.1 - - [21/Jun/2023 17:08:12] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:09:42 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:09:42 [INFO] Prompt ID: 1eff5542-c156-4062-9c50-7186ef2fb199
+2023-06-21 17:09:46 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Get the project with the highest budget
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+
+# Print the project with the highest budget
+print(highest_budget_project)
+                        ```
+                    
+2023-06-21 17:09:46 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:09:46 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:09:46 [INFO] 127.0.0.1 - - [21/Jun/2023 17:09:46] "POST / HTTP/1.1" 200 -
+2023-06-21 17:10:10 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:10:10 [INFO] Prompt ID: 2cce5d44-5938-4b6f-a26e-d6c476375469
+2023-06-21 17:10:10 [INFO] Using cached response
+2023-06-21 17:10:10 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:10:10 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:10:10 [INFO] 127.0.0.1 - - [21/Jun/2023 17:10:10] "POST / HTTP/1.1" 200 -
+2023-06-21 17:10:13 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:10:13 [INFO] Prompt ID: a18fa4ca-8b32-4c74-9c6c-dc861db424a0
+2023-06-21 17:10:13 [INFO] Using cached response
+2023-06-21 17:10:13 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:10:13 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:10:13 [INFO] 127.0.0.1 - - [21/Jun/2023 17:10:13] "POST / HTTP/1.1" 200 -
+2023-06-21 17:10:24 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 17:10:24 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 17:10:28 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:10:28 [INFO] Prompt ID: 890015fe-945c-4a37-9abc-411afc85f0d3
+2023-06-21 17:10:28 [INFO] Using cached response
+2023-06-21 17:10:28 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:10:28 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:10:28 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 27, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 17:10:28 [INFO] 127.0.0.1 - - [21/Jun/2023 17:10:28] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:10:32 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:10:32 [INFO] Prompt ID: 9681282e-73ce-4f51-ac34-9b6b6775bc0c
+2023-06-21 17:10:36 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Get the project with the highest budget
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+
+# Print the project with the highest budget
+print(highest_budget_project)
+                        ```
+                    
+2023-06-21 17:10:36 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:10:36 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:10:36 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 27, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 17:10:36 [INFO] 127.0.0.1 - - [21/Jun/2023 17:10:36] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:22:26 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:22:26 [INFO] Prompt ID: 51969c8f-7963-4f15-b808-7529535c5170
+2023-06-21 17:22:26 [INFO] Using cached response
+2023-06-21 17:22:26 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:22:26 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:22:26 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 27, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 17:22:26 [INFO] 127.0.0.1 - - [21/Jun/2023 17:22:26] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:22:54 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 17:22:54 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 17:22:58 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:22:58 [INFO] Prompt ID: 501ac1a5-f27e-49b2-8167-9f8ec4db4977
+2023-06-21 17:22:58 [INFO] Using cached response
+2023-06-21 17:22:58 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:22:58 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:22:58 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 28, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 17:22:58 [INFO] 127.0.0.1 - - [21/Jun/2023 17:22:58] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:23:33 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 17:23:33 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 17:23:37 [INFO] 127.0.0.1 - - [21/Jun/2023 17:23:37] "[31m[1mGET / HTTP/1.1[0m" 405 -
+2023-06-21 17:25:53 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:25:53 [INFO] Prompt ID: 6cbbda49-394c-4c4a-aab5-7e09f2b5b8ba
+2023-06-21 17:25:53 [INFO] Using cached response
+2023-06-21 17:25:53 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:25:53 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:25:53 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 23, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 17:25:53 [INFO] 127.0.0.1 - - [21/Jun/2023 17:25:53] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:26:08 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:26:08 [INFO] Prompt ID: 0e139bc9-9f5d-4918-a418-bf8966b03831
+2023-06-21 17:26:08 [INFO] Using cached response
+2023-06-21 17:26:08 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:26:08 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:26:08 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 23, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 17:26:08 [INFO] 127.0.0.1 - - [21/Jun/2023 17:26:08] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:27:00 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 17:27:00 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 17:27:04 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:27:04 [INFO] Prompt ID: 6a2ebccf-31b3-4382-9d85-ac45fff7fa1b
+2023-06-21 17:27:04 [INFO] Using cached response
+2023-06-21 17:27:04 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:27:04 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:27:04 [INFO] 127.0.0.1 - - [21/Jun/2023 17:27:04] "POST / HTTP/1.1" 200 -
+2023-06-21 17:27:33 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:27:33 [INFO] Prompt ID: 8d663415-cc57-433b-b934-093606ceee8c
+2023-06-21 17:27:38 [INFO] 
+                        Code generated:
+                        ```
+                        df.nlargest(3, 'Budget')[['Project Title', 'Budget']]
+                        ```
+                    
+2023-06-21 17:27:38 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')[['Project Title', 'Budget']]
+```
+2023-06-21 17:27:39 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 17:27:39 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1837, in make_response
+    raise TypeError(
+TypeError: The view function did not return a valid response. The return type must be a string, dict, list, tuple with headers or status, Response instance, or WSGI callable, but it was a DataFrame.
+2023-06-21 17:27:39 [INFO] 127.0.0.1 - - [21/Jun/2023 17:27:39] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 17:29:28 [INFO] Running PandasAI with openai LLM...
+2023-06-21 17:29:28 [INFO] Prompt ID: a467d8d6-9914-49f0-b739-3606635420bc
+2023-06-21 17:29:28 [INFO] Using cached response
+2023-06-21 17:29:28 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 17:29:28 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 17:29:28 [INFO] 127.0.0.1 - - [21/Jun/2023 17:29:28] "POST / HTTP/1.1" 200 -
+2023-06-21 19:32:45 [INFO] Running PandasAI with openai LLM...
+2023-06-21 19:32:45 [INFO] Prompt ID: d3b36a00-3924-406d-b023-d0f617b1fe77
+2023-06-21 19:32:45 [INFO] Using cached response
+2023-06-21 19:32:45 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 19:32:45 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 19:32:45 [INFO] 127.0.0.1 - - [21/Jun/2023 19:32:45] "POST / HTTP/1.1" 200 -
+2023-06-21 19:32:58 [INFO] Running PandasAI with openai LLM...
+2023-06-21 19:32:58 [INFO] Prompt ID: 3a56997b-659d-4294-a409-23b48a863ef4
+2023-06-21 19:32:58 [INFO] Using cached response
+2023-06-21 19:32:58 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 19:32:58 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 19:32:58 [INFO] 127.0.0.1 - - [21/Jun/2023 19:32:58] "POST / HTTP/1.1" 200 -
+2023-06-21 19:33:13 [INFO] Running PandasAI with openai LLM...
+2023-06-21 19:33:13 [INFO] Prompt ID: 76202d07-984b-4315-83c2-57d266a84cad
+2023-06-21 19:33:17 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# find the project with the lowest budget
+lowest_budget_project = df.loc[df['Budget'].idxmin()]['Project Title']
+
+print(lowest_budget_project)
+                        ```
+                    
+2023-06-21 19:33:17 [INFO] 
+Code running:
+```
+lowest_budget_project = df.loc[df['Budget'].idxmin()]['Project Title']
+print(lowest_budget_project)
+```
+2023-06-21 19:33:17 [INFO] Answer: Seventh Operational Phase of the GEF Small Grants Programme in Mexico
+2023-06-21 19:33:17 [INFO] 127.0.0.1 - - [21/Jun/2023 19:33:17] "POST / HTTP/1.1" 200 -
+2023-06-21 19:33:37 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 19:33:37 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 19:33:44 [INFO] Running PandasAI with openai LLM...
+2023-06-21 19:33:44 [INFO] Prompt ID: 72a959a1-ed32-42d0-a5cd-d93885d16408
+2023-06-21 19:33:44 [INFO] Using cached response
+2023-06-21 19:33:44 [INFO] 
+Code running:
+```
+lowest_budget_project = df.loc[df['Budget'].idxmin()]['Project Title']
+print(lowest_budget_project)
+```
+2023-06-21 19:33:44 [INFO] Answer: Seventh Operational Phase of the GEF Small Grants Programme in Mexico
+2023-06-21 19:33:44 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 22, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 19:33:44 [INFO] 127.0.0.1 - - [21/Jun/2023 19:33:44] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 19:34:02 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 19:34:02 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 19:34:06 [INFO] Running PandasAI with openai LLM...
+2023-06-21 19:34:06 [INFO] Prompt ID: f411bd76-fabf-48f3-9c3c-173081e6c786
+2023-06-21 19:34:06 [INFO] Using cached response
+2023-06-21 19:34:06 [INFO] 
+Code running:
+```
+lowest_budget_project = df.loc[df['Budget'].idxmin()]['Project Title']
+print(lowest_budget_project)
+```
+2023-06-21 19:34:06 [INFO] Answer: Seventh Operational Phase of the GEF Small Grants Programme in Mexico
+2023-06-21 19:34:06 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 22, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 19:34:06 [INFO] 127.0.0.1 - - [21/Jun/2023 19:34:06] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 19:34:26 [INFO] Running PandasAI with openai LLM...
+2023-06-21 19:34:26 [INFO] Prompt ID: d176686c-570c-49ea-ba0c-6f56fd5f50c0
+2023-06-21 19:34:26 [INFO] Using cached response
+2023-06-21 19:34:26 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 19:34:26 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 19:34:26 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 22, in send_promt
+    return result.to_json()
+           ^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'to_json'
+2023-06-21 19:34:26 [INFO] 127.0.0.1 - - [21/Jun/2023 19:34:26] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 19:35:23 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 19:35:23 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 19:35:26 [INFO] Running PandasAI with openai LLM...
+2023-06-21 19:35:26 [INFO] Prompt ID: 7932c20d-a51b-4bd5-996a-e50a6724c29f
+2023-06-21 19:35:26 [INFO] Using cached response
+2023-06-21 19:35:26 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 19:35:26 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 19:35:26 [INFO] 127.0.0.1 - - [21/Jun/2023 19:35:26] "POST / HTTP/1.1" 200 -
+2023-06-21 20:07:15 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:07:15 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:07:21 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:07:21 [INFO] Prompt ID: 8c696bde-72d5-417e-a05a-f833a7ba432e
+2023-06-21 20:07:21 [INFO] Using cached response
+2023-06-21 20:07:21 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 20:07:21 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 20:07:21 [INFO] 127.0.0.1 - - [21/Jun/2023 20:07:21] "POST / HTTP/1.1" 200 -
+2023-06-21 20:07:27 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:07:27 [INFO] Prompt ID: 137d9f3a-0f33-4129-8132-ece5d1d8107e
+2023-06-21 20:07:32 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Get the project title with the second highest budget
+second_highest_budget_project = df_sorted.iloc[1]['Project Title']
+
+# Print the project title with the second highest budget
+print(second_highest_budget_project)
+                        ```
+                    
+2023-06-21 20:07:32 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+second_highest_budget_project = df_sorted.iloc[1]['Project Title']
+print(second_highest_budget_project)
+```
+2023-06-21 20:07:32 [INFO] Answer: Provision & Installation of Solar Powered Streetlights along Trench Line, Ngarannam, Mafa L.G.A, Borno State
+2023-06-21 20:07:32 [INFO] 127.0.0.1 - - [21/Jun/2023 20:07:32] "POST / HTTP/1.1" 200 -
+2023-06-21 20:08:02 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:08:02 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:08:07 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:08:07 [INFO] Prompt ID: 8270346d-003f-4f74-9636-164d80590854
+2023-06-21 20:08:07 [INFO] Using cached response
+2023-06-21 20:08:07 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+second_highest_budget_project = df_sorted.iloc[1]['Project Title']
+print(second_highest_budget_project)
+```
+2023-06-21 20:08:07 [INFO] Answer: Provision & Installation of Solar Powered Streetlights along Trench Line, Ngarannam, Mafa L.G.A, Borno State
+2023-06-21 20:08:07 [INFO] 127.0.0.1 - - [21/Jun/2023 20:08:07] "POST / HTTP/1.1" 200 -
+2023-06-21 20:08:25 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:08:25 [INFO] Prompt ID: 45e57e1a-eb4d-4b8d-a488-f781e63901ba
+2023-06-21 20:08:25 [INFO] Using cached response
+2023-06-21 20:08:25 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+highest_budget_project = sorted_df.iloc[0]['Project Title']
+print(highest_budget_project)
+```
+2023-06-21 20:08:25 [INFO] Answer: Projet d’Electrification  Rurale en Zones Isolées (PERZI)
+2023-06-21 20:08:25 [INFO] 127.0.0.1 - - [21/Jun/2023 20:08:25] "POST / HTTP/1.1" 200 -
+2023-06-21 20:08:39 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:08:39 [INFO] Prompt ID: a9d0aa4d-103f-42d1-98b2-a199f4f326d6
+2023-06-21 20:08:39 [INFO] Using cached response
+2023-06-21 20:08:39 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')[['Project Title', 'Budget']]
+```
+2023-06-21 20:08:39 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:08:39 [INFO] 127.0.0.1 - - [21/Jun/2023 20:08:39] "POST / HTTP/1.1" 200 -
+2023-06-21 20:09:46 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:09:46 [INFO] Prompt ID: cee07e0d-3543-4763-ae72-b5b7c7d948ab
+2023-06-21 20:09:50 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three budgets
+top_three = df_sorted.head(3)
+
+# plot the top three budgets
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Budgets')
+plt.show()
+                        ```
+                    
+2023-06-21 20:09:50 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab
+2023-06-21 20:09:50 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Budgets')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 20:16:00 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:16:00 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:17:05 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:17:05 [INFO] Prompt ID: 4b5762d1-5934-4ed0-94af-184f50fd3431
+2023-06-21 20:17:05 [INFO] Using cached response
+2023-06-21 20:17:05 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')[['Project Title', 'Budget']]
+```
+2023-06-21 20:17:05 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:17:05 [INFO] 127.0.0.1 - - [21/Jun/2023 20:17:05] "POST / HTTP/1.1" 200 -
+2023-06-21 20:17:20 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:17:20 [INFO] Prompt ID: 8322a83b-3833-460f-9494-8c2afeddbb0d
+2023-06-21 20:17:23 [INFO] 
+                        Code generated:
+                        ```
+                        highest_budget = df['Budget'].max()
+print(highest_budget)
+                        ```
+                    
+2023-06-21 20:17:23 [INFO] 
+Code running:
+```
+highest_budget = df['Budget'].max()
+print(highest_budget)
+```
+2023-06-21 20:17:23 [INFO] Answer: 322000000.0
+2023-06-21 20:17:23 [INFO] 127.0.0.1 - - [21/Jun/2023 20:17:23] "POST / HTTP/1.1" 200 -
+2023-06-21 20:17:30 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:17:30 [INFO] Prompt ID: 0d16fe0a-d14a-4770-938e-bc00b12b98ef
+2023-06-21 20:17:40 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three projects with the highest budget
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+
+# Print the result
+print(top_three)
+                        ```
+                    
+2023-06-21 20:17:40 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+print(top_three)
+```
+2023-06-21 20:17:40 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:17:40 [INFO] 127.0.0.1 - - [21/Jun/2023 20:17:40] "POST / HTTP/1.1" 200 -
+2023-06-21 20:18:11 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:18:11 [INFO] Prompt ID: 369315eb-b263-4f09-8fc9-370614f63ace
+2023-06-21 20:18:16 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three projects with the highest budget
+top_three_projects = sorted_df[['Project ID', 'Project Title', 'Budget']].head(3)
+
+# Print the top three projects
+print(top_three_projects)
+                        ```
+                    
+2023-06-21 20:18:16 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three_projects = sorted_df[['Project ID', 'Project Title', 'Budget']].head(
+    3)
+print(top_three_projects)
+```
+2023-06-21 20:18:16 [INFO] Answer:      Project ID                                      Project Title        Budget
+297      132688  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262    10046575  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87       123296                      EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:18:16 [INFO] 127.0.0.1 - - [21/Jun/2023 20:18:16] "POST / HTTP/1.1" 200 -
+2023-06-21 20:18:32 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:18:32 [INFO] Prompt ID: 31e252bf-e9af-4b3f-b3f1-2a75c49261b2
+2023-06-21 20:18:37 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('filename.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows with highest budget
+top_three = sorted_df.head(3)
+
+# Filter the columns to only include 'Project Title' and 'Budget'
+result = top_three[['Project Title', 'Budget']]
+
+# Print the result
+print(result)
+                        ```
+                    
+2023-06-21 20:18:37 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df.head(3)
+result = top_three[['Project Title', 'Budget']]
+print(result)
+```
+2023-06-21 20:18:37 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:18:37 [INFO] 127.0.0.1 - - [21/Jun/2023 20:18:37] "POST / HTTP/1.1" 200 -
+2023-06-21 20:18:38 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:18:38 [INFO] Prompt ID: 0b64b0d8-27ca-4817-89cd-a316bbd30c78
+2023-06-21 20:18:41 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('filename.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows with highest budget
+top_three = sorted_df.head(3)
+
+# Print the top three rows with highest budget
+print(top_three)
+                        ```
+                    
+2023-06-21 20:18:41 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df.head(3)
+print(top_three)
+```
+2023-06-21 20:18:41 [INFO] Answer:      Project ID                                      Project Title        Budget     Country Country Code                                     Link  Output Count Description SDGs Solution Donors  Direct Beneficiaries  Indirect Beneficiaries  Old Beneficiaries
+297      132688  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08  Mauritania          MRT                                      NaN             1         NaN  NaN      NaN    NaN                     0                     0.0                NaN
+262    10046575  Provision & Installation of Solar Powered Stre...  8.632392e+07     Nigeria          NGA                                      NaN             1         NaN  NaN      NaN    NaN                     0                     0.0                NaN
+87       123296                      EU4Schools Phase II (Albania)  6.775257e+07     Albania          ALB  https://open.undp.org/projects/00129706             4         NaN  NaN      NaN    NaN                     0                     0.0                NaN
+2023-06-21 20:18:41 [INFO] 127.0.0.1 - - [21/Jun/2023 20:18:41] "POST / HTTP/1.1" 200 -
+2023-06-21 20:19:20 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:19:20 [INFO] Prompt ID: 567ac99b-00aa-4edd-8285-74697ecf9081
+2023-06-21 20:19:23 [INFO] 
+                        Code generated:
+                        ```
+                        df.nlargest(3, 'Budget')['Budget']
+                        ```
+                    
+2023-06-21 20:19:23 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')['Budget']
+```
+2023-06-21 20:19:23 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 20:19:23 [INFO] 127.0.0.1 - - [21/Jun/2023 20:19:23] "POST / HTTP/1.1" 200 -
+2023-06-21 20:20:49 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:20:49 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:20:53 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:20:53 [INFO] Prompt ID: ede4a1c2-1929-4e6d-a9e1-6a4d33a7bb36
+2023-06-21 20:20:53 [INFO] Using cached response
+2023-06-21 20:20:53 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')['Budget']
+```
+2023-06-21 20:20:53 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 20:20:53 [INFO] 127.0.0.1 - - [21/Jun/2023 20:20:53] "POST / HTTP/1.1" 200 -
+2023-06-21 20:21:02 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:21:02 [INFO] Prompt ID: 7b948e96-437c-457b-88d1-ffa506928761
+2023-06-21 20:21:02 [INFO] Using cached response
+2023-06-21 20:21:02 [INFO] 
+Code running:
+```
+highest_budget = df['Budget'].max()
+print(highest_budget)
+```
+2023-06-21 20:21:02 [INFO] Answer: 322000000.0
+2023-06-21 20:21:02 [INFO] 127.0.0.1 - - [21/Jun/2023 20:21:02] "POST / HTTP/1.1" 200 -
+2023-06-21 20:21:09 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:21:09 [INFO] Prompt ID: 30ae4a62-b0f2-479e-87fd-0afdf093be81
+2023-06-21 20:21:09 [INFO] Using cached response
+2023-06-21 20:21:09 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+print(top_three)
+```
+2023-06-21 20:21:09 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:21:09 [INFO] 127.0.0.1 - - [21/Jun/2023 20:21:09] "POST / HTTP/1.1" 200 -
+2023-06-21 20:21:15 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:21:15 [INFO] Prompt ID: 9b22b0da-d892-4bee-8139-91d5fb4abf77
+2023-06-21 20:21:15 [INFO] Using cached response
+2023-06-21 20:21:15 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')[['Project Title', 'Budget']]
+```
+2023-06-21 20:21:15 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:21:15 [INFO] 127.0.0.1 - - [21/Jun/2023 20:21:15] "POST / HTTP/1.1" 200 -
+2023-06-21 20:21:31 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:21:31 [INFO] Prompt ID: 3d7715a0-549b-44f8-a00e-0b258f0ca8e4
+2023-06-21 20:21:37 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 20:21:37 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/3d7715a0-549b-44f8-a00e-0b258f0ca8e4
+2023-06-21 20:21:37 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/3d7715a0-549b-44f8-a00e-0b258f0ca8e4/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 20:22:34 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:22:34 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:22:37 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:22:37 [INFO] Prompt ID: 42937f7e-eb6b-4a52-a442-56acc04deadc
+2023-06-21 20:22:44 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+top_three.plot(kind='bar', x='Project Title', y='Budget')
+                        ```
+                    
+2023-06-21 20:22:44 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+top_three.plot(kind='bar', x='Project Title', y='Budget')
+```
+2023-06-21 20:23:56 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:23:56 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:23:57 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:23:57 [INFO] Prompt ID: 99a864e6-655a-458f-a4ed-2beed7560c7e
+2023-06-21 20:24:07 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 20:24:07 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/99a864e6-655a-458f-a4ed-2beed7560c7e
+2023-06-21 20:24:07 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/99a864e6-655a-458f-a4ed-2beed7560c7e/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 20:26:54 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:26:54 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:26:58 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:26:58 [INFO] Prompt ID: 3ade372c-56f1-498f-9323-b45a0602530a
+2023-06-21 20:27:08 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 20:27:08 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/3ade372c-56f1-498f-9323-b45a0602530a
+2023-06-21 20:27:08 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/3ade372c-56f1-498f-9323-b45a0602530a/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 20:28:07 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:28:07 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:28:10 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:28:10 [INFO] Prompt ID: 0b1d96b3-3fb2-4b7f-b8a9-afd0e76ffe62
+2023-06-21 20:28:10 [INFO] Using cached response
+2023-06-21 20:28:10 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')['Budget']
+```
+2023-06-21 20:28:10 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 20:28:10 [INFO] 127.0.0.1 - - [21/Jun/2023 20:28:10] "POST / HTTP/1.1" 200 -
+2023-06-21 20:28:49 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:28:49 [INFO] Prompt ID: 89cbde91-6a4c-4431-b658-616f3c197ed3
+2023-06-21 20:28:49 [INFO] Using cached response
+2023-06-21 20:28:49 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')['Budget']
+```
+2023-06-21 20:28:49 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 20:28:49 [INFO] 127.0.0.1 - - [21/Jun/2023 20:28:49] "POST / HTTP/1.1" 200 -
+2023-06-21 20:28:57 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:28:57 [INFO] Prompt ID: ab861f32-73d5-4275-80b1-2303f1bd4432
+2023-06-21 20:28:57 [INFO] Using cached response
+2023-06-21 20:28:57 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+print(top_three)
+```
+2023-06-21 20:28:57 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:28:57 [INFO] 127.0.0.1 - - [21/Jun/2023 20:28:57] "POST / HTTP/1.1" 200 -
+2023-06-21 20:29:34 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:29:34 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:29:37 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:29:37 [INFO] Prompt ID: ad43aab1-5187-4166-bcf5-d7ba7cabd8e3
+2023-06-21 20:29:37 [INFO] Using cached response
+2023-06-21 20:29:37 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+print(top_three)
+```
+2023-06-21 20:29:37 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 20:29:37 [INFO] 127.0.0.1 - - [21/Jun/2023 20:29:37] "POST / HTTP/1.1" 200 -
+2023-06-21 20:29:42 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:29:42 [INFO] Prompt ID: 21287297-d449-4586-a306-4d8097382cc1
+2023-06-21 20:29:42 [INFO] Using cached response
+2023-06-21 20:29:42 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')['Budget']
+```
+2023-06-21 20:29:42 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 20:29:42 [INFO] 127.0.0.1 - - [21/Jun/2023 20:29:42] "POST / HTTP/1.1" 200 -
+2023-06-21 20:29:46 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:29:46 [INFO] Prompt ID: 226dff87-6e06-4d45-a56e-35c681962e21
+2023-06-21 20:29:52 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 20:29:52 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/226dff87-6e06-4d45-a56e-35c681962e21
+2023-06-21 20:29:52 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/226dff87-6e06-4d45-a56e-35c681962e21/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 20:32:38 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 20:32:38 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 20:32:42 [INFO] Running PandasAI with openai LLM...
+2023-06-21 20:32:42 [INFO] Prompt ID: 3c13673c-29c3-417f-a054-cbb29eed9841
+2023-06-21 20:32:48 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 20:32:48 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/3c13673c-29c3-417f-a054-cbb29eed9841
+2023-06-21 20:32:48 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/3c13673c-29c3-417f-a054-cbb29eed9841/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 21:50:54 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 21:50:54 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 21:50:58 [INFO] Running PandasAI with openai LLM...
+2023-06-21 21:50:58 [INFO] Prompt ID: c673d83f-bc7c-4258-a404-f615c1eb8b7d
+2023-06-21 21:51:05 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 21:51:05 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/c673d83f-bc7c-4258-a404-f615c1eb8b7d
+2023-06-21 21:51:05 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/c673d83f-bc7c-4258-a404-f615c1eb8b7d/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 21:51:43 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 21:51:43 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 21:51:45 [INFO] Running PandasAI with openai LLM...
+2023-06-21 21:51:45 [INFO] Prompt ID: 9184e368-309a-405b-8c32-d1432bcd6ca5
+2023-06-21 21:51:52 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 21:51:52 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/9184e368-309a-405b-8c32-d1432bcd6ca5
+2023-06-21 21:51:52 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/9184e368-309a-405b-8c32-d1432bcd6ca5/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 21:55:34 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 21:55:34 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 21:55:38 [INFO] Running PandasAI with openai LLM...
+2023-06-21 21:55:38 [INFO] Prompt ID: c123da3d-4d40-4cd2-acae-3e1b2bdb6fcd
+2023-06-21 21:55:48 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 21:55:48 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/c123da3d-4d40-4cd2-acae-3e1b2bdb6fcd
+2023-06-21 21:55:48 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/c123da3d-4d40-4cd2-acae-3e1b2bdb6fcd/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 21:55:49 [INFO] Answer: None
+2023-06-21 21:55:49 [INFO] 127.0.0.1 - - [21/Jun/2023 21:55:49] "POST / HTTP/1.1" 200 -
+2023-06-21 21:57:38 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 21:57:38 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 21:57:41 [INFO] Running PandasAI with openai LLM...
+2023-06-21 21:57:41 [INFO] Prompt ID: 657f6fb3-6620-4613-837e-469061b98f2f
+2023-06-21 21:57:41 [INFO] Using cached response
+2023-06-21 21:57:41 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/657f6fb3-6620-4613-837e-469061b98f2f
+2023-06-21 21:57:41 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/657f6fb3-6620-4613-837e-469061b98f2f/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 21:57:41 [INFO] Answer: None
+2023-06-21 21:57:41 [INFO] 127.0.0.1 - - [21/Jun/2023 21:57:41] "POST / HTTP/1.1" 200 -
+2023-06-21 22:02:00 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:02:00 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:02:02 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:02:02 [INFO] Prompt ID: ed6e74e9-842a-4d47-b7e5-60c560ecd88d
+2023-06-21 22:02:02 [INFO] Using cached response
+2023-06-21 22:02:02 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/ed6e74e9-842a-4d47-b7e5-60c560ecd88d
+2023-06-21 22:02:02 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/ed6e74e9-842a-4d47-b7e5-60c560ecd88d/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:02:02 [INFO] Answer: None
+2023-06-21 22:02:02 [INFO] 127.0.0.1 - - [21/Jun/2023 22:02:02] "POST / HTTP/1.1" 200 -
+2023-06-21 22:02:09 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:02:09 [INFO] Prompt ID: 35426b93-f27b-4310-9e49-c3531ed07ca4
+2023-06-21 22:02:15 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budgets
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budgets
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budgets')
+plt.show()
+                        ```
+                    
+2023-06-21 22:02:15 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/35426b93-f27b-4310-9e49-c3531ed07ca4
+2023-06-21 22:02:15 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budgets')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/35426b93-f27b-4310-9e49-c3531ed07ca4/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:02:15 [INFO] Answer: None
+2023-06-21 22:02:15 [INFO] 127.0.0.1 - - [21/Jun/2023 22:02:15] "POST / HTTP/1.1" 200 -
+2023-06-21 22:07:59 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:07:59 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:08:01 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:08:01 [INFO] Prompt ID: 17410ec5-032f-478e-8f90-a49b24140314
+2023-06-21 22:08:01 [INFO] Using cached response
+2023-06-21 22:08:01 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budgets')
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:08:02 [INFO] Answer: None
+2023-06-21 22:08:02 [INFO] 127.0.0.1 - - [21/Jun/2023 22:08:02] "POST / HTTP/1.1" 200 -
+2023-06-21 22:08:11 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:08:11 [INFO] Prompt ID: b9c18a19-e5c6-4ff5-b056-85a1aaf835b6
+2023-06-21 22:08:21 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:08:21 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:08:21 [INFO] Answer: None
+2023-06-21 22:08:21 [INFO] 127.0.0.1 - - [21/Jun/2023 22:08:21] "POST / HTTP/1.1" 200 -
+2023-06-21 22:08:55 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:08:55 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:08:59 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:08:59 [INFO] Prompt ID: 52d89c50-b67d-4c06-9051-31e19a872661
+2023-06-21 22:09:05 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:09:05 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:09:05 [INFO] Answer: None
+2023-06-21 22:09:05 [INFO] 127.0.0.1 - - [21/Jun/2023 22:09:05] "POST / HTTP/1.1" 200 -
+2023-06-21 22:09:45 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:09:45 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:09:53 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:09:53 [INFO] Prompt ID: 5ba1402e-f249-425e-a159-df765cd2edd9
+2023-06-21 22:09:53 [INFO] Using cached response
+2023-06-21 22:09:53 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+print(top_three)
+```
+2023-06-21 22:09:53 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-21 22:09:53 [INFO] 127.0.0.1 - - [21/Jun/2023 22:09:53] "POST / HTTP/1.1" 200 -
+2023-06-21 22:10:03 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:10:03 [INFO] Prompt ID: 525930ef-3453-4604-b2fa-eee4f0462f6f
+2023-06-21 22:10:13 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:10:13 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/525930ef-3453-4604-b2fa-eee4f0462f6f
+2023-06-21 22:10:13 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/525930ef-3453-4604-b2fa-eee4f0462f6f/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:10:13 [INFO] Answer: None
+2023-06-21 22:10:13 [INFO] 127.0.0.1 - - [21/Jun/2023 22:10:13] "POST / HTTP/1.1" 200 -
+2023-06-21 22:43:54 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:43:54 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:44:03 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:44:03 [INFO] Prompt ID: 415c294f-5917-499b-9e43-fb56ba8567ff
+2023-06-21 22:44:09 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:44:09 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/415c294f-5917-499b-9e43-fb56ba8567ff
+2023-06-21 22:44:09 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/415c294f-5917-499b-9e43-fb56ba8567ff/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:44:09 [INFO] Answer: None
+2023-06-21 22:44:09 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 33, in send_promt
+    elif isinstance(output, None):
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+2023-06-21 22:44:09 [INFO] 127.0.0.1 - - [21/Jun/2023 22:44:09] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 22:45:03 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:45:03 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:45:44 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:45:44 [INFO] Prompt ID: 1b6207e9-d9a2-41c6-a7a2-2ec494d1befe
+2023-06-21 22:45:44 [INFO] Using cached response
+2023-06-21 22:45:44 [INFO] 
+Code running:
+```
+df.nlargest(3, 'Budget')['Budget']
+```
+2023-06-21 22:45:44 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 22:45:44 [INFO] 127.0.0.1 - - [21/Jun/2023 22:45:44] "POST / HTTP/1.1" 200 -
+2023-06-21 22:46:16 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:46:16 [INFO] Prompt ID: c743f635-8af1-4a53-85bf-2b2f11fa45c6
+2023-06-21 22:46:20 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:46:20 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/c743f635-8af1-4a53-85bf-2b2f11fa45c6
+2023-06-21 22:46:20 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/c743f635-8af1-4a53-85bf-2b2f11fa45c6/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:46:20 [INFO] Answer: None
+2023-06-21 22:46:20 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 33, in send_promt
+    elif isinstance(output, None):
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+2023-06-21 22:46:20 [INFO] 127.0.0.1 - - [21/Jun/2023 22:46:20] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 22:48:08 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:48:08 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:48:19 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:48:19 [INFO] Prompt ID: 4ac66f83-ad87-4257-bee1-8f8333a7e383
+2023-06-21 22:48:23 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows and only the 'Budget' column
+top_three_budgets = sorted_df['Budget'].head(3)
+
+# Print the result
+print(top_three_budgets)
+                        ```
+                    
+2023-06-21 22:48:23 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = sorted_df['Budget'].head(3)
+print(top_three_budgets)
+```
+2023-06-21 22:48:23 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 22:48:23 [INFO] 127.0.0.1 - - [21/Jun/2023 22:48:23] "POST / HTTP/1.1" 200 -
+2023-06-21 22:48:45 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:48:45 [INFO] Prompt ID: 0a985f06-db40-49d4-b45a-3c2725b78c5c
+2023-06-21 22:48:56 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:48:56 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/0a985f06-db40-49d4-b45a-3c2725b78c5c
+2023-06-21 22:48:56 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/0a985f06-db40-49d4-b45a-3c2725b78c5c/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:48:56 [INFO] Answer: None
+2023-06-21 22:48:56 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 33, in send_promt
+    elif isinstance(output, None):
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+2023-06-21 22:48:56 [INFO] 127.0.0.1 - - [21/Jun/2023 22:48:56] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 22:51:36 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:51:36 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:51:46 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:51:46 [INFO] Prompt ID: 61c4a3c7-2264-4526-8d5d-e5b98f076231
+2023-06-21 22:51:50 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows and only the 'Budget' column
+top_three_budgets = sorted_df['Budget'].head(3)
+
+# Print the result
+print(top_three_budgets)
+                        ```
+                    
+2023-06-21 22:51:50 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = sorted_df['Budget'].head(3)
+print(top_three_budgets)
+```
+2023-06-21 22:51:50 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 22:51:50 [INFO] 127.0.0.1 - - [21/Jun/2023 22:51:50] "POST / HTTP/1.1" 200 -
+2023-06-21 22:52:09 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:52:09 [INFO] Prompt ID: f33c1683-0711-4023-adcd-649667179ec0
+2023-06-21 22:52:14 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:52:14 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/f33c1683-0711-4023-adcd-649667179ec0
+2023-06-21 22:52:14 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/f33c1683-0711-4023-adcd-649667179ec0/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:52:15 [INFO] Answer: None
+2023-06-21 22:52:15 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 38, in send_promt
+    return image_to_json(path)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/json_image.py", line 7, in image_to_json
+    with open(image_path, 'rb') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab/chart.png'\n"
+2023-06-21 22:52:15 [INFO] 127.0.0.1 - - [21/Jun/2023 22:52:15] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 22:57:43 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 22:57:43 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 22:57:50 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:57:50 [INFO] Prompt ID: 4d65ccf2-78ae-47da-bb89-ae6bed5a89d8
+2023-06-21 22:57:55 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three highest budget
+top_three_budget = sorted_df['Budget'][:3]
+
+# Print the top three highest budget
+print(top_three_budget)
+                        ```
+                    
+2023-06-21 22:57:55 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three_budget = sorted_df['Budget'][:3]
+print(top_three_budget)
+```
+2023-06-21 22:57:55 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 22:57:55 [INFO] 127.0.0.1 - - [21/Jun/2023 22:57:55] "POST / HTTP/1.1" 200 -
+2023-06-21 22:58:10 [INFO] Running PandasAI with openai LLM...
+2023-06-21 22:58:10 [INFO] Prompt ID: 098eb909-868f-4c3c-bd66-4ffb963f4c51
+2023-06-21 22:58:20 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 22:58:20 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/098eb909-868f-4c3c-bd66-4ffb963f4c51
+2023-06-21 22:58:20 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/098eb909-868f-4c3c-bd66-4ffb963f4c51/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 22:58:20 [INFO] Answer: None
+2023-06-21 22:58:20 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 39, in send_promt
+    return image_to_json(path)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/json_image.py", line 7, in image_to_json
+    with open(image_path, 'rb') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab/chart.png'\n"
+2023-06-21 22:58:20 [INFO] 127.0.0.1 - - [21/Jun/2023 22:58:20] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 23:06:20 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:06:20 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:06:29 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:06:29 [INFO] Prompt ID: e97da646-6e32-4669-b316-e5a974688b69
+2023-06-21 23:06:33 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows and only the 'Budget' column
+top_three_budgets = sorted_df['Budget'].head(3)
+
+# Print the result
+print(top_three_budgets)
+                        ```
+                    
+2023-06-21 23:06:33 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = sorted_df['Budget'].head(3)
+print(top_three_budgets)
+```
+2023-06-21 23:06:33 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 23:06:33 [INFO] 127.0.0.1 - - [21/Jun/2023 23:06:33] "POST / HTTP/1.1" 200 -
+2023-06-21 23:07:04 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:07:04 [INFO] Prompt ID: 6e77b6c3-b941-4b8a-b4bc-edae0a430051
+2023-06-21 23:07:14 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 23:07:14 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/6e77b6c3-b941-4b8a-b4bc-edae0a430051
+2023-06-21 23:07:14 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/6e77b6c3-b941-4b8a-b4bc-edae0a430051/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 23:07:14 [INFO] Answer: None
+2023-06-21 23:07:14 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 39, in send_promt
+    return image_to_json(path)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/json_image.py", line 7, in image_to_json
+    with open(image_path, 'rb') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab/chart.png'\n"
+2023-06-21 23:07:14 [INFO] 127.0.0.1 - - [21/Jun/2023 23:07:14] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 23:11:02 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:11:02 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:11:21 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:11:21 [INFO] Prompt ID: eb8f1104-f93e-4b91-b6c8-0c9b3edd6b4f
+2023-06-21 23:11:27 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows and only the 'Budget' column
+top_three_budgets = df_sorted['Budget'].head(3)
+
+# Print the result
+print(top_three_budgets)
+                        ```
+                    
+2023-06-21 23:11:27 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = df_sorted['Budget'].head(3)
+print(top_three_budgets)
+```
+2023-06-21 23:11:27 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 23:11:30 [INFO] 127.0.0.1 - - [21/Jun/2023 23:11:30] "POST / HTTP/1.1" 200 -
+2023-06-21 23:12:06 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:12:06 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:12:11 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:12:11 [INFO] Prompt ID: 71d43d3b-fa03-435e-a731-596b08aa2b84
+2023-06-21 23:12:11 [INFO] Using cached response
+2023-06-21 23:12:11 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = df_sorted['Budget'].head(3)
+print(top_three_budgets)
+```
+2023-06-21 23:12:11 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 23:12:21 [INFO] 127.0.0.1 - - [21/Jun/2023 23:12:21] "POST / HTTP/1.1" 200 -
+2023-06-21 23:12:50 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:12:50 [INFO] Prompt ID: be3f895c-0398-4267-a3b4-41c222ea2be1
+2023-06-21 23:12:55 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 23:12:55 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/be3f895c-0398-4267-a3b4-41c222ea2be1
+2023-06-21 23:12:55 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/be3f895c-0398-4267-a3b4-41c222ea2be1/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 23:12:55 [INFO] Answer: None
+2023-06-21 23:13:05 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 41, in send_promt
+    return image_to_json(path)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/json_image.py", line 7, in image_to_json
+    with open(image_path, 'rb') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab/chart.png'\n"
+2023-06-21 23:13:05 [INFO] 127.0.0.1 - - [21/Jun/2023 23:13:05] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 23:14:42 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:14:42 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:14:50 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:14:50 [INFO] Prompt ID: af8866f0-b849-4291-9692-91fa5ee353f3
+2023-06-21 23:14:55 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 23:14:55 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/af8866f0-b849-4291-9692-91fa5ee353f3
+2023-06-21 23:14:55 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/af8866f0-b849-4291-9692-91fa5ee353f3/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 23:14:56 [INFO] Answer: None
+2023-06-21 23:15:16 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 41, in send_promt
+    return image_to_json(path)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/json_image.py", line 7, in image_to_json
+    with open(image_path, 'rb') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab/chart.png'\n"
+2023-06-21 23:15:16 [INFO] 127.0.0.1 - - [21/Jun/2023 23:15:16] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 23:17:06 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:17:06 [INFO] Prompt ID: 9ca0135f-6abd-4d43-9362-63372bf04e81
+2023-06-21 23:17:10 [INFO] 
+                        Code generated:
+                        ```
+                        startCode
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+endCode
+                        ```
+                    
+2023-06-21 23:17:10 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/9ca0135f-6abd-4d43-9362-63372bf04e81
+2023-06-21 23:17:10 [INFO] 
+Code running:
+```
+startCode
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/9ca0135f-6abd-4d43-9362-63372bf04e81/chart.png'
+    )
+plt.show()
+plt.close('all')
+endCode
+```
+2023-06-21 23:17:27 [INFO] Answer: 
+2023-06-21 23:17:47 [INFO] 127.0.0.1 - - [21/Jun/2023 23:17:47] "POST / HTTP/1.1" 200 -
+2023-06-21 23:19:47 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:19:47 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:19:51 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:19:51 [INFO] Prompt ID: 0cde9669-4675-4aa3-a625-cefdb77deb34
+2023-06-21 23:19:51 [INFO] Using cached response
+2023-06-21 23:19:51 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = df_sorted['Budget'].head(3)
+print(top_three_budgets)
+```
+2023-06-21 23:19:51 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 23:20:11 [INFO] 127.0.0.1 - - [21/Jun/2023 23:20:11] "POST / HTTP/1.1" 200 -
+2023-06-21 23:20:24 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:20:24 [INFO] Prompt ID: 0daa94b1-f7f5-4526-bb74-ddb57d24d106
+2023-06-21 23:20:28 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 23:20:28 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/0daa94b1-f7f5-4526-bb74-ddb57d24d106
+2023-06-21 23:20:28 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/0daa94b1-f7f5-4526-bb74-ddb57d24d106/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 23:20:28 [INFO] Answer: None
+2023-06-21 23:20:48 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 46, in send_promt
+    return image_to_json(path)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/json_image.py", line 7, in image_to_json
+    with open(image_path, 'rb') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/cee07e0d-3543-4763-ae72-b5b7c7d948ab/chart.png'\n"
+2023-06-21 23:20:48 [INFO] 127.0.0.1 - - [21/Jun/2023 23:20:48] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 23:26:11 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:26:11 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:26:21 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:26:21 [INFO] Prompt ID: fd82eccc-d955-4d3d-a664-34daf455eb3e
+2023-06-21 23:26:26 [INFO] 
+                        Code generated:
+                        ```
+                        # Importing pandas library
+import pandas as pd
+
+# Reading the dataframe from a csv file
+df = pd.read_csv('filename.csv')
+
+# Sorting the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Selecting the top three rows with highest budget
+top_three = sorted_df.head(3)
+
+# Extracting only the budget column from the top three rows
+budgets = top_three['Budget']
+
+# Printing the budgets
+print(budgets)
+                        ```
+                    
+2023-06-21 23:26:26 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df.head(3)
+budgets = top_three['Budget']
+print(budgets)
+```
+2023-06-21 23:26:26 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 23:26:26 [INFO] 127.0.0.1 - - [21/Jun/2023 23:26:26] "POST / HTTP/1.1" 200 -
+2023-06-21 23:26:45 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:26:45 [INFO] Prompt ID: aeaed8c6-d8aa-4e12-ad57-ef314b4e8033
+2023-06-21 23:26:51 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 23:26:51 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/aeaed8c6-d8aa-4e12-ad57-ef314b4e8033
+2023-06-21 23:26:51 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/aeaed8c6-d8aa-4e12-ad57-ef314b4e8033/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 23:26:51 [INFO] Answer: None
+2023-06-21 23:26:51 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1801, in make_response
+    raise TypeError(
+TypeError: The view function for 'send_promt' did not return a valid response. The function either returned None or ended without a return statement.
+2023-06-21 23:26:51 [INFO] 127.0.0.1 - - [21/Jun/2023 23:26:51] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 23:28:54 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:28:54 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:29:04 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:29:04 [INFO] Prompt ID: 53ed87cb-ecc2-44a3-ab00-2bbd5ed6496c
+2023-06-21 23:29:10 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows and the 'Budget' column
+top_three_budgets = df_sorted.iloc[:3]['Budget']
+
+# Print the top three budgets
+print(top_three_budgets)
+                        ```
+                    
+2023-06-21 23:29:10 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = df_sorted.iloc[:3]['Budget']
+print(top_three_budgets)
+```
+2023-06-21 23:29:10 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 23:29:10 [INFO] 127.0.0.1 - - [21/Jun/2023 23:29:10] "POST / HTTP/1.1" 200 -
+2023-06-21 23:29:18 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:29:18 [INFO] Prompt ID: 44aef37f-75a2-48ab-a0e0-b36f2e266a0c
+2023-06-21 23:29:27 [INFO] 
+                        Code generated:
+                        ```
+                        startCode
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+endCode
+                        ```
+                    
+2023-06-21 23:29:27 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/44aef37f-75a2-48ab-a0e0-b36f2e266a0c
+2023-06-21 23:29:27 [INFO] 
+Code running:
+```
+startCode
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/44aef37f-75a2-48ab-a0e0-b36f2e266a0c/chart.png'
+    )
+plt.show()
+plt.close('all')
+endCode
+```
+2023-06-21 23:29:47 [INFO] Answer: 
+2023-06-21 23:29:47 [INFO] 127.0.0.1 - - [21/Jun/2023 23:29:47] "POST / HTTP/1.1" 200 -
+2023-06-21 23:33:33 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:33:33 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:33:40 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:33:40 [INFO] Prompt ID: 1eadde90-1694-4239-adc2-64fcb6882718
+2023-06-21 23:33:47 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 23:33:47 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/1eadde90-1694-4239-adc2-64fcb6882718
+2023-06-21 23:33:47 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/1eadde90-1694-4239-adc2-64fcb6882718/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 23:33:47 [INFO] Answer: None
+2023-06-21 23:33:47 [INFO] 127.0.0.1 - - [21/Jun/2023 23:33:47] "POST / HTTP/1.1" 200 -
+2023-06-21 23:47:51 [ERROR] Exception on / [POST]
+Traceback (most recent call last):
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gaomingrui/Python/UNDP/Pandasai/Flask/main.py", line 26, in send_promt
+    error_message = {
+KeyError: 'Project'
+2023-06-21 23:47:51 [INFO] 127.0.0.1 - - [21/Jun/2023 23:47:51] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+2023-06-21 23:48:20 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-21 23:48:20 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-21 23:48:31 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:48:31 [INFO] Prompt ID: 5cbff92e-c348-4404-bc0f-130da0c3e027
+2023-06-21 23:48:36 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows and the 'Budget' column
+top_three_budgets = df_sorted.iloc[:3]['Budget']
+
+# Print the top three budgets
+print(top_three_budgets)
+                        ```
+                    
+2023-06-21 23:48:36 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three_budgets = df_sorted.iloc[:3]['Budget']
+print(top_three_budgets)
+```
+2023-06-21 23:48:36 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-21 23:48:36 [INFO] 127.0.0.1 - - [21/Jun/2023 23:48:36] "POST / HTTP/1.1" 200 -
+2023-06-21 23:48:52 [INFO] Running PandasAI with openai LLM...
+2023-06-21 23:48:52 [INFO] Prompt ID: b519d1c2-b6ec-4f78-977a-cbed32649ef0
+2023-06-21 23:48:59 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top three projects with the highest budget
+top_three = df_sorted.head(3)
+
+# plot the top three projects with the highest budget
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-21 23:48:59 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/b519d1c2-b6ec-4f78-977a-cbed32649ef0
+2023-06-21 23:48:59 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/b519d1c2-b6ec-4f78-977a-cbed32649ef0/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-21 23:48:59 [INFO] Answer: None
+2023-06-21 23:48:59 [INFO] 127.0.0.1 - - [21/Jun/2023 23:48:59] "POST / HTTP/1.1" 200 -
+2023-06-21 23:49:30 [INFO] 127.0.0.1 - - [21/Jun/2023 23:49:30] "POST / HTTP/1.1" 200 -
+2023-06-22 00:03:58 [INFO] 127.0.0.1 - - [22/Jun/2023 00:03:58] "POST / HTTP/1.1" 200 -
+2023-06-22 01:23:24 [INFO] Running PandasAI with openai LLM...
+2023-06-22 01:23:24 [INFO] Prompt ID: d38b5bc9-d72e-4abc-9551-ee94e7a4e4f1
+2023-06-22 01:23:24 [INFO] Using cached response
+2023-06-22 01:23:24 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/d38b5bc9-d72e-4abc-9551-ee94e7a4e4f1
+2023-06-22 01:23:24 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+plt.bar(top_three['Project Title'], top_three['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Three Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/d38b5bc9-d72e-4abc-9551-ee94e7a4e4f1/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-22 01:23:24 [INFO] Answer: None
+2023-06-22 01:23:24 [INFO] 127.0.0.1 - - [22/Jun/2023 01:23:24] "POST / HTTP/1.1" 200 -
+2023-06-22 10:31:57 [INFO] Running PandasAI with openai LLM...
+2023-06-22 10:31:57 [INFO] Prompt ID: 0a6a5c26-b8a9-44d1-acf2-d29185a710ce
+2023-06-22 10:32:03 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows with highest budget
+top_three = df_sorted.head(3)['Budget']
+
+# Print the result
+print(top_three)
+                        ```
+                    
+2023-06-22 10:32:03 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)['Budget']
+print(top_three)
+```
+2023-06-22 10:32:03 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-22 10:32:03 [INFO] 127.0.0.1 - - [22/Jun/2023 10:32:03] "POST / HTTP/1.1" 200 -
+2023-06-22 10:32:26 [INFO] Running PandasAI with openai LLM...
+2023-06-22 10:32:26 [INFO] Prompt ID: 109c6040-ec29-4014-8abe-9206a90ed432
+2023-06-22 10:32:36 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top five projects with the highest budget
+top_five = df_sorted.head(5)
+
+# plot the top five projects with the highest budget
+plt.bar(top_five['Project Title'], top_five['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-22 10:32:36 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/109c6040-ec29-4014-8abe-9206a90ed432
+2023-06-22 10:32:36 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_five = df_sorted.head(5)
+plt.bar(top_five['Project Title'], top_five['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/109c6040-ec29-4014-8abe-9206a90ed432/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-22 10:32:36 [INFO] Answer: None
+2023-06-22 10:32:36 [INFO] 127.0.0.1 - - [22/Jun/2023 10:32:36] "POST / HTTP/1.1" 200 -
+2023-06-22 15:40:53 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-22 15:40:53 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-22 15:41:01 [INFO] Running PandasAI with openai LLM...
+2023-06-22 15:41:01 [INFO] Prompt ID: 57d67085-80b0-4bc9-8b38-592b75bce8b2
+2023-06-22 15:41:01 [INFO] Using cached response
+2023-06-22 15:41:01 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)['Budget']
+print(top_three)
+```
+2023-06-22 15:41:01 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-22 15:41:01 [INFO] 127.0.0.1 - - [22/Jun/2023 15:41:01] "POST / HTTP/1.1" 200 -
+2023-06-22 15:41:23 [INFO] Running PandasAI with openai LLM...
+2023-06-22 15:41:23 [INFO] Prompt ID: b7da8c1a-8013-4f88-babf-5f0d40b7855f
+2023-06-22 15:41:28 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three rows with highest budget
+top_three = df_sorted.head(3)
+
+# Select only the 'Budget' column from the top three rows
+top_three_budget = top_three['Budget']
+
+# Print the top three highest budget
+print(top_three_budget)
+                        ```
+                    
+2023-06-22 15:41:28 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+top_three_budget = top_three['Budget']
+print(top_three_budget)
+```
+2023-06-22 15:41:28 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-22 15:41:28 [INFO] 127.0.0.1 - - [22/Jun/2023 15:41:28] "POST / HTTP/1.1" 200 -
+2023-06-22 15:41:45 [INFO] Running PandasAI with openai LLM...
+2023-06-22 15:41:45 [INFO] Prompt ID: 38e11011-23c2-4d71-880b-bbc7edece78c
+2023-06-22 15:41:49 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+
+# read the csv file into a pandas dataframe
+df = pd.read_csv('filename.csv')
+
+# print the metadata of the dataframe
+print(df.info())
+
+# find the highest budget
+highest_budget = df['Budget'].max()
+
+print(highest_budget)
+                        ```
+                    
+2023-06-22 15:41:49 [INFO] 
+Code running:
+```
+print(df.info())
+highest_budget = df['Budget'].max()
+print(highest_budget)
+```
+2023-06-22 15:41:49 [INFO] Answer: 322000000.0
+2023-06-22 15:41:49 [INFO] 127.0.0.1 - - [22/Jun/2023 15:41:49] "POST / HTTP/1.1" 200 -
+2023-06-22 15:42:10 [INFO] Running PandasAI with openai LLM...
+2023-06-22 15:42:10 [INFO] Prompt ID: 67da61c3-e7ef-4d79-8b37-802aca6bec8b
+2023-06-22 15:42:13 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three projects with the highest budget
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+
+# Print the top three projects with the highest budget
+print(top_three)
+                        ```
+                    
+2023-06-22 15:42:13 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+print(top_three)
+```
+2023-06-22 15:42:13 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-22 15:42:13 [INFO] 127.0.0.1 - - [22/Jun/2023 15:42:13] "POST / HTTP/1.1" 200 -
+2023-06-22 15:42:35 [INFO] Running PandasAI with openai LLM...
+2023-06-22 15:42:35 [INFO] Prompt ID: 8ed13a5f-d28d-43bb-ab93-378f358b5d70
+2023-06-22 15:42:44 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top five projects with the highest budget
+top_five = df_sorted.head(5)
+
+# plot the top five projects with the highest budget
+plt.bar(top_five['Project Title'], top_five['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-22 15:42:44 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/8ed13a5f-d28d-43bb-ab93-378f358b5d70
+2023-06-22 15:42:44 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_five = df_sorted.head(5)
+plt.bar(top_five['Project Title'], top_five['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/8ed13a5f-d28d-43bb-ab93-378f358b5d70/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-22 15:42:44 [INFO] Answer: None
+2023-06-22 15:42:44 [INFO] 127.0.0.1 - - [22/Jun/2023 15:42:44] "POST / HTTP/1.1" 200 -
+2023-06-22 16:06:40 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-06-22 16:06:40 [INFO] [33mPress CTRL+C to quit[0m
+2023-06-22 16:06:59 [INFO] Running PandasAI with openai LLM...
+2023-06-22 16:06:59 [INFO] Prompt ID: 002803e3-e6b6-44f8-b090-1ebe29e1b33c
+2023-06-22 16:07:05 [INFO] 
+                        Code generated:
+                        ```
+                        # Importing pandas library
+import pandas as pd
+
+# Reading the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Sorting the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Selecting the top three rows with highest budget
+top_three = df_sorted.head(3)['Budget']
+
+# Printing the top three highest budget
+print(top_three)
+                        ```
+                    
+2023-06-22 16:07:05 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)['Budget']
+print(top_three)
+```
+2023-06-22 16:07:05 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-22 16:07:05 [INFO] 127.0.0.1 - - [22/Jun/2023 16:07:05] "POST / HTTP/1.1" 200 -
+2023-06-22 16:07:24 [INFO] Running PandasAI with openai LLM...
+2023-06-22 16:07:24 [INFO] Prompt ID: 77182a6b-aa78-4e4b-bbbe-441a9e316694
+2023-06-22 16:07:37 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+
+# read the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# print the metadata of the dataframe
+print(df.info())
+
+# find the highest budget
+highest_budget = df['Budget'].max()
+
+print(highest_budget)
+                        ```
+                    
+2023-06-22 16:07:37 [INFO] 
+Code running:
+```
+print(df.info())
+highest_budget = df['Budget'].max()
+print(highest_budget)
+```
+2023-06-22 16:07:37 [INFO] Answer: 322000000.0
+2023-06-22 16:07:37 [INFO] 127.0.0.1 - - [22/Jun/2023 16:07:37] "POST / HTTP/1.1" 200 -
+2023-06-22 16:07:58 [INFO] Running PandasAI with openai LLM...
+2023-06-22 16:07:58 [INFO] Prompt ID: 5dce025c-b65f-4974-8d5e-4ed924ae37d6
+2023-06-22 16:08:04 [INFO] 
+                        Code generated:
+                        ```
+                        # Import pandas library
+import pandas as pd
+
+# Read the dataframe
+df = pd.read_csv('data.csv')
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Select the top three projects with the highest budget
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+
+# Print the top three projects with the highest budget
+print(top_three)
+                        ```
+                    
+2023-06-22 16:08:04 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_three = sorted_df[['Project Title', 'Budget']].head(3)
+print(top_three)
+```
+2023-06-22 16:08:04 [INFO] Answer:                                          Project Title        Budget
+297  Projet d’Electrification  Rurale en Zones Isol...  3.220000e+08
+262  Provision & Installation of Solar Powered Stre...  8.632392e+07
+87                       EU4Schools Phase II (Albania)  6.775257e+07
+2023-06-22 16:08:04 [INFO] 127.0.0.1 - - [22/Jun/2023 16:08:04] "POST / HTTP/1.1" 200 -
+2023-06-22 16:08:24 [INFO] Running PandasAI with openai LLM...
+2023-06-22 16:08:24 [INFO] Prompt ID: d5a48e86-8e4b-4962-aea2-b36e8a9ae1f4
+2023-06-22 16:08:29 [INFO] 
+                        Code generated:
+                        ```
+                        import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the dataframe
+df = pd.read_csv('data.csv')
+
+# sort the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# select the top five projects with the highest budget
+top_five = df_sorted.head(5)
+
+# plot the top five projects with the highest budget
+plt.bar(top_five['Project Title'], top_five['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with the Highest Budget')
+plt.show()
+                        ```
+                    
+2023-06-22 16:08:29 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/d5a48e86-8e4b-4962-aea2-b36e8a9ae1f4
+2023-06-22 16:08:29 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_five = df_sorted.head(5)
+plt.bar(top_five['Project Title'], top_five['Budget'])
+plt.xticks(rotation=90)
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with the Highest Budget')
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/d5a48e86-8e4b-4962-aea2-b36e8a9ae1f4/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-06-22 16:08:29 [INFO] Answer: None
+2023-06-22 16:08:29 [INFO] 127.0.0.1 - - [22/Jun/2023 16:08:29] "POST / HTTP/1.1" 200 -
+2023-06-22 16:13:50 [INFO] Running PandasAI with openai LLM...
+2023-06-22 16:13:50 [INFO] Prompt ID: 59d8b9a0-5134-41dd-9519-e40d8f67bdfb
+2023-06-22 16:13:54 [INFO] 
+                        Code generated:
+                        ```
+                        # Importing pandas library
+import pandas as pd
+
+# Reading the dataframe from a csv file
+df = pd.read_csv('data.csv')
+
+# Calculating the total number of beneficiaries
+total_beneficiaries = df['Direct Beneficiaries'].sum() + df['Indirect Beneficiaries'].sum()
+
+# Printing the total number of beneficiaries
+print("Total number of beneficiaries:", total_beneficiaries)
+                        ```
+                    
+2023-06-22 16:13:54 [INFO] 
+Code running:
+```
+total_beneficiaries = df['Direct Beneficiaries'].sum() + df[
+    'Indirect Beneficiaries'].sum()
+print('Total number of beneficiaries:', total_beneficiaries)
+```
+2023-06-22 16:13:54 [INFO] Answer: ('Total number of beneficiaries:', 3038444119.4773827)
+2023-06-22 16:13:54 [INFO] 127.0.0.1 - - [22/Jun/2023 16:13:54] "POST / HTTP/1.1" 200 -
+2023-06-24 11:19:55 [INFO]  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2023-06-24 11:20:48 [INFO] Running PandasAI with openai LLM...
+2023-06-24 11:20:48 [INFO] Prompt ID: b4cdc223-2836-45a9-b365-5ac5c55d0da9
+2023-06-24 11:20:52 [INFO] 
+                        Code generated:
+                        ```
+                        # Importing pandas library
+import pandas as pd
+
+# Reading the dataframe
+df = pd.read_csv('data.csv')
+
+# Sorting the dataframe by budget in descending order
+df_sorted = df.sort_values(by='Budget', ascending=False)
+
+# Selecting the top three rows with highest budget
+top_three = df_sorted.head(3)
+
+# Extracting only the budget column
+top_three_budget = top_three['Budget']
+
+# Printing the result
+print(top_three_budget)
+                        ```
+                    
+2023-06-24 11:20:52 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+top_three_budget = top_three['Budget']
+print(top_three_budget)
+```
+2023-06-24 11:20:52 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-24 11:20:52 [INFO] 127.0.0.1 - - [24/Jun/2023 11:20:52] "POST / HTTP/1.1" 200 -
+2023-06-24 11:44:58 [INFO]  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2023-06-24 11:45:07 [INFO] Running PandasAI with openai LLM...
+2023-06-24 11:45:07 [INFO] Prompt ID: 64c53bbf-442c-4a9d-9b4b-841731e613d5
+2023-06-24 11:45:07 [INFO] Using cached response
+2023-06-24 11:45:07 [INFO] 
+Code running:
+```
+df_sorted = df.sort_values(by='Budget', ascending=False)
+top_three = df_sorted.head(3)
+top_three_budget = top_three['Budget']
+print(top_three_budget)
+```
+2023-06-24 11:45:07 [INFO] Answer: 297    3.220000e+08
+262    8.632392e+07
+87     6.775257e+07
+Name: Budget, dtype: float64
+2023-06-24 11:45:07 [INFO] 127.0.0.1 - - [24/Jun/2023 11:45:07] "POST / HTTP/1.1" 200 -
+2023-06-24 11:45:51 [INFO] Running PandasAI with openai LLM...
+2023-06-24 11:45:51 [INFO] Prompt ID: 5bd151a1-036b-4b00-8b07-346c9901bbe0
+2023-06-24 11:45:57 [INFO] 
+                        Code generated:
+                        ```
+                        df['Title']
+                        ```
+                    
+2023-06-24 11:45:57 [INFO] 
+Code running:
+```
+df['Title']
+```
+2023-06-24 11:45:57 [INFO] Answer: 0      Comoros national child project - Africa Minigr...
+1      Comoros national child project - Africa Minigr...
+2      Comoros national child project - Africa Minigr...
+3      Comoros national child project - Africa Minigr...
+4                                     Comoros Geothermal
+                             ...                        
+125                             E-Mobility Strategy Peru
+126                                   Low Carbon project
+127                                   Low Carbon project
+128                                   Low Carbon project
+129                                   Low Carbon project
+Name: Title, Length: 130, dtype: object
+2023-06-24 11:45:57 [INFO] 127.0.0.1 - - [24/Jun/2023 11:45:57] "POST / HTTP/1.1" 200 -
+2023-06-24 11:46:47 [INFO] Running PandasAI with openai LLM...
+2023-06-24 11:46:47 [INFO] Prompt ID: 4995ad99-ada5-448b-8693-45affa1ec059
+2023-06-24 11:46:51 [INFO] 
+                        Code generated:
+                        ```
+                        df[df['Budget'] > 1000000]
+                        ```
+                    
+2023-06-24 11:46:51 [INFO] 
+Code running:
+```
+df[df['Budget'] > 1000000]
+```
+2023-06-24 11:46:51 [INFO] Answer:      Project ID                                      Project Title       Budget     Country  ...                                             Donors Direct Beneficiaries  Indirect Beneficiaries Old Beneficiaries
+0        117913      Résilience des communautés et des écosystèmes    3459600.0        Togo  ...                 ['UNITED NATIONS DEVELOPMENT PRO']                    0                     0.0               0.0
+1        134793  Accès aux énergies renouvelables en milieu rur...    1431552.0        Togo  ...                 ['UNITED NATIONS DEVELOPMENT PRO']                    0                     0.0            6090.0
+2         91204   Apoyo A La Modernización De La Gestión Ambiental    2158828.0      Panama  ...                                                NaN                    0                     0.0               NaN
+3        136701                      Strategic Contribution to GRZ    8805909.0      Zambia  ...  ['EUROPEAN COMMISSION', 'FOOD AND AGRICULTURE ...                    0                     0.0               0.0
+4          6613                          Africa Mini-grids Program    1363947.0      Zambia  ...                                                NaN                    0                     0.0               NaN
+..          ...                                                ...          ...         ...  ...                                                ...                  ...                     ...               ...
+293        6249                              Green Sharm El Sheikh    6212694.0       Egypt  ...                                                GEF                    0                     0.0               NaN
+294        4998      Grid-connected Small-Scale Photovoltaic Syste    3536364.0       Egypt  ...                                                GEF                    0                     0.0               NaN
+295      130275                    Promote small-scale PV-UNDP-EGY    1103288.0       Egypt  ...                                              Japan                    0                     0.0               NaN
+296      130610                      Multilateral Support to COP27    1500000.0       Egypt  ...                                                 EU                    0                     0.0               NaN
+297      132688  Projet d’Electrification  Rurale en Zones Isol...  322000000.0  Mauritania  ...                                                NaN                    0                     0.0               NaN
+
+[206 rows x 14 columns]
+2023-06-24 11:46:51 [INFO] 127.0.0.1 - - [24/Jun/2023 11:46:51] "POST / HTTP/1.1" 200 -
+2023-06-24 18:07:46 [INFO]  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2023-06-24 18:08:02 [INFO] Running PandasAI with openai LLM...
+2023-06-24 18:08:02 [INFO] Prompt ID: 905dec95-7a36-4f3e-b91b-a0968f1471f3
+2023-06-24 18:08:04 [INFO] 
+                        Code generated:
+                        ```
+                        df[df['Budget'] > 1000000]
+                        ```
+                    
+2023-06-24 18:08:04 [INFO] 
+Code running:
+```
+df[df['Budget'] > 1000000]
+```
+2023-06-24 18:08:04 [INFO] Answer:      Project ID                                      Project Title       Budget  ... Direct Beneficiaries Indirect Beneficiaries Old Beneficiaries
+0        117913      Résilience des communautés et des écosystèmes    3459600.0  ...                    0                    0.0               0.0
+1        134793  Accès aux énergies renouvelables en milieu rur...    1431552.0  ...                    0                    0.0            6090.0
+2         91204   Apoyo A La Modernización De La Gestión Ambiental    2158828.0  ...                    0                    0.0               NaN
+3        136701                      Strategic Contribution to GRZ    8805909.0  ...                    0                    0.0               0.0
+4          6613                          Africa Mini-grids Program    1363947.0  ...                    0                    0.0               NaN
+..          ...                                                ...          ...  ...                  ...                    ...               ...
+293        6249                              Green Sharm El Sheikh    6212694.0  ...                    0                    0.0               NaN
+294        4998      Grid-connected Small-Scale Photovoltaic Syste    3536364.0  ...                    0                    0.0               NaN
+295      130275                    Promote small-scale PV-UNDP-EGY    1103288.0  ...                    0                    0.0               NaN
+296      130610                      Multilateral Support to COP27    1500000.0  ...                    0                    0.0               NaN
+297      132688  Projet d’Electrification  Rurale en Zones Isol...  322000000.0  ...                    0                    0.0               NaN
+
+[206 rows x 14 columns]
+2023-06-24 18:08:04 [INFO] 127.0.0.1 - - [24/Jun/2023 18:08:04] "POST / HTTP/1.1" 200 -
+2023-08-23 11:55:19 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-08-23 11:55:19 [INFO] [33mPress CTRL+C to quit[0m
+2023-08-23 11:55:27 [INFO] Running PandasAI with openai LLM...
+2023-08-23 11:55:27 [INFO] Prompt ID: 0549dd52-db25-4229-adfd-e06b6872712c
+2023-08-23 11:55:29 [INFO] 
+                        Code generated:
+                        ```
+                        total_projects = len(df)
+total_projects
+                        ```
+                    
+2023-08-23 11:55:29 [INFO] 
+Code running:
+```
+total_projects = len(df)
+total_projects
+```
+2023-08-23 11:55:29 [INFO] Answer: 130
+2023-08-23 11:55:29 [INFO] 127.0.0.1 - - [23/Aug/2023 11:55:29] "POST / HTTP/1.1" 200 -
+2023-08-23 11:56:04 [INFO] Running PandasAI with openai LLM...
+2023-08-23 11:56:04 [INFO] Prompt ID: 9dcab9d8-f150-4c87-b850-577e990f5665
+2023-08-23 11:56:10 [INFO] 
+                        Code generated:
+                        ```
+                        import matplotlib.pyplot as plt
+
+# Sort the dataframe by budget in descending order
+sorted_df = df.sort_values(by='Budget', ascending=False)
+
+# Get the top five projects with the highest budget
+top_five_projects = sorted_df.head(5)
+
+# Plot the top five projects with the highest budget
+plt.bar(top_five_projects['Project Title'], top_five_projects['Budget'])
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with Highest Budget')
+plt.xticks(rotation=90)
+plt.show()
+                        ```
+                    
+2023-08-23 11:56:10 [INFO] Charts saving to: /Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/9dcab9d8-f150-4c87-b850-577e990f5665
+2023-08-23 11:56:10 [INFO] 
+Code running:
+```
+sorted_df = df.sort_values(by='Budget', ascending=False)
+top_five_projects = sorted_df.head(5)
+plt.bar(top_five_projects['Project Title'], top_five_projects['Budget'])
+plt.xlabel('Project Title')
+plt.ylabel('Budget')
+plt.title('Top Five Projects with Highest Budget')
+plt.xticks(rotation=90)
+plt.savefig(
+    '/Users/gaomingrui/opt/anaconda3/envs/UNDP/lib/python3.11/site-packages/exports/charts/9dcab9d8-f150-4c87-b850-577e990f5665/chart.png'
+    )
+plt.show()
+plt.close('all')
+```
+2023-08-23 11:56:10 [INFO] Answer: None
+2023-08-23 11:56:10 [INFO] 127.0.0.1 - - [23/Aug/2023 11:56:10] "POST / HTTP/1.1" 200 -
+2023-08-23 13:52:55 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-08-23 13:52:55 [INFO] [33mPress CTRL+C to quit[0m
+2023-08-23 13:53:03 [INFO] Running PandasAI with openai LLM...
+2023-08-23 13:53:03 [INFO] Prompt ID: 22e23c72-12b1-4690-aa05-07581549f388
+2023-08-23 13:53:03 [INFO] Using cached response
+2023-08-23 13:53:03 [INFO] 
+Code running:
+```
+total_projects = len(df)
+total_projects
+```
+2023-08-23 13:53:03 [INFO] Answer: 130
+2023-08-23 13:53:03 [INFO] 127.0.0.1 - - [23/Aug/2023 13:53:03] "POST / HTTP/1.1" 200 -
