@@ -19,7 +19,7 @@ docker build -t <name-of-image> .
 ```
 Run the docker image:
 ```bash
- docker run -e API_KEY= <YOUR-OPENAI-API-KEY> -p 5000:5000 backend-flask
+ docker run -e API_KEY= <YOUR-OPENAI-API-KEY> -p 5000:5000 <name-of-image>
 ```
 
 The app will be running at http://127.0.0.1:5000/ in your browser.
