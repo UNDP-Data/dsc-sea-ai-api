@@ -1,0 +1,8 @@
+Flask==2.2.5
+Flask-Cors==4.0.0
+langchain==0.0.271
+matplotlib==3.7.1
+pandas==1.5.3
+pandasai==0.6.3
+Pillow==10.0.0
+python-dotenv==1.0.0
