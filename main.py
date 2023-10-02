@@ -10,10 +10,15 @@ import matplotlib
 matplotlib.use('agg')
 from flask_cors import CORS, cross_origin
 import re
+import openai
 
 app = Flask(__name__)
 sheets = pd.read_excel('Moonshot Tracker Results.xlsx', sheet_name=None)
 CORS(app)
+
+openai.api_type = "azure"
+openai.api_base = "https://undp-ngd-openai-datafutures-dev-2.openai.azure.com/"
+openai.api_version = "2023-05-15"
 
 load_dotenv()
 API_KEY = os.environ['OPENAI_API_KEY']
