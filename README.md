@@ -11,6 +11,40 @@ python main.py
 
 Find the list of the modules and packages required in requirements.txt.
 
+## Endpoints
+
+### 1. Semantic Search and Response Generation
+
+- **Endpoint:** `/llm`
+- **Method:** POST
+
+  ```json
+  {
+    "prompt": "user query"
+  }
+
+### 2. PandasAI Data Analysis
+
+- **Endpoint:** `/pandasai`
+- **Method:** POST
+
+  ```json
+  {
+  "table_name": "table name",
+  "prompt": "user prompt"
+  }
+
+### 3. Get DataFrame Header
+
+- **Endpoint:** `/header`
+- **Method:** GET
+
+  ```json
+  {
+    "table_name": "table name"
+  }
+
+
 ## Running the App Using Docker
 
 Build the docker image:
