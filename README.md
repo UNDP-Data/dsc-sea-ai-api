@@ -44,6 +44,9 @@ Find the list of the modules and packages required in requirements.txt.
     "table_name": "table name"
   }
 
+## Testing with Jupyter Notebook
+
+Testing cases can be found in 'test.ipynb'
 
 ## Running the App Using Docker
 
