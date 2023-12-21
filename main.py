@@ -23,6 +23,12 @@ import faiss
 from dotenv import load_dotenv
 import openai
 import spacy
+from langchain.indexes.graph import NetworkxEntityGraph
+from langchain.chat_models import AzureChatOpenAI
+
+from langchain.indexes import GraphIndexCreator
+from langchain.chains import GraphQAChain
+from langchain.prompts import PromptTemplate
 
 app = Flask(__name__)
 CORS(app)
@@ -37,9 +43,10 @@ CORS(app)
 
 from dotenv import load_dotenv
 load_dotenv()
+openai_deployment = "sdgi-gpt-35-turbo-16k" 
 
 llm = AzureOpenAI(
-    deployment_name='sdgi-gpt-35-turbo-16k',
+    deployment_name=openai_deployment,
     api_token=os.getenv('OPENAI_API_KEY'),
     api_base=os.getenv('OPENAI_API_BASE'),
     api_version=os.getenv('OPENAI_API_VERSION'),
@@ -101,6 +108,19 @@ def get_answer(user_question, content):
     )
     return response
 
+def response_generating_KG_Model(user_query):
+    #Load the KG Model
+    loaded_graph = NetworkxEntityGraph.from_gml("moonshot_AI_graph_model_v1.gml")
+    prompt =  "Use the following knowledge triplets to answer the question at the end. If you don't know the answer, look out for potential factors in the knowledge triplets else just say I don't know based on my knowledge base, don't try to make up an answer. If a term like a Continent is used e.g Africa, Asia, replace the continent with all african countries available in the knowledge triplets. E.g Nigeria, South Africa and Egypt are under Africa. In your answer, Always refer to knowledge triplets as knowledge base.\n\n{context}\n\nQuestion: {question}\nHelpful Answer:"
+    prompt_entity="Extract all entities from the following text. As a guideline, a proper noun is generally capitalized. You should definitely extract all names,places, Dates and Times, Numbers, Organizations, Products and Brands, Events, Roles and Positions, Keywords and Topics, Email Addresses and URLs, References to External Entities, Emotional Tone, Quantities and Units, Codes and Identifiers, Languages, Social Media Handles, Currencies..\n\nReturn the output as a single comma-separated list, or NONE if there is nothing of note to return.\n\nEXAMPLE\ni'm trying to improve Langchain's interfaces, the UX, its integrations with various products the user might want ... a lot of stuff.\nOutput: Langchain\nEND OF EXAMPLE\n\nEXAMPLE\ni'm trying to improve Langchain's interfaces, the UX, its integrations with various products the user might want ... a lot of stuff. I'm working with Sam.\nOutput: Langchain, Sam\nEND OF EXAMPLE\n\nBegin!\n\n{input}\nOutput:"
+    chain = GraphQAChain.from_llm(AzureChatOpenAI(temperature=0, deployment_name= openai_deployment), graph=loaded_graph, verbose=False,
+    qa_prompt=PromptTemplate(input_variables=['context', 'question'], template=prompt),
+    entity_prompt=PromptTemplate(input_variables=['input'], template=prompt_entity)
+    )
+    response = chain.run(user_query) 
+    return response
+
+
 def response_generating(user_query):
     df, distances, indices = search_embeddings(user_query)
     dis = distances[0][::-1]
@@ -160,8 +180,22 @@ def send_promt_pandasai():
 def send_promt_llm():
     try: 
         promt_llm = request.get_json()['prompt']
-        answer = response_generating(promt_llm)
-        return json.dumps({'answer': answer})
+        answer_search_embeddings = response_generating(promt_llm)
+        answer_kg_model = response_generating_KG_Model(promt_llm)
+        return json.dumps({
+                        'answers': [
+                           {
+                               'source': 'search_embeddings',
+                                'value': answer_search_embeddings,
+                                'model_version': '1.0.0'
+                           },
+                                                      {
+                               'source': 'knowledge_graph_model',
+                                'value': answer_kg_model,
+                                'model_version': '1.0.0' 
+                           }  
+                            ], 
+                         })
     except:
         return json.dumps("I did not find anything from the existing documents")
 
