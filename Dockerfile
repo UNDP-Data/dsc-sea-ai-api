@@ -10,6 +10,10 @@ RUN python3.9 -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install bs4
 RUN pip install openpyxl
+RUN pip install langchain
+RUN pip install --upgrade sqlalchemy
+RUN python -m spacy download en
+RUN pip install networkx
 
 COPY . /python-docker
 ENV FLASK_APP=/python-docker/main.py
