@@ -61,7 +61,7 @@ openai.api_version = "2023-05-15"
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 nlp = spacy.load("en_core_web_sm")
-df = pd.read_pickle('df_embed_EN.pkl')
+df = pd.read_pickle('models/df_embed_EN.pkl')
 
 def find_mentioned_countries(text):
     doc = nlp(text)
@@ -110,7 +110,7 @@ def get_answer(user_question, content):
 
 def response_generating_KG_Model(user_query):
     #Load the KG Model
-    loaded_graph = NetworkxEntityGraph.from_gml("moonshot_AI_graph_model_v1.gml")
+    loaded_graph = NetworkxEntityGraph.from_gml("models/moonshot_AI_graph_model_v1.gml")
     prompt =  "Use the following knowledge triplets to answer the question at the end. If you don't know the answer, look out for potential factors in the knowledge triplets else just say I don't know based on my knowledge base, don't try to make up an answer. If a term like a Continent is used e.g Africa, Asia, replace the continent with all african countries available in the knowledge triplets. E.g Nigeria, South Africa and Egypt are under Africa. In your answer, Always refer to knowledge triplets as knowledge base.\n\n{context}\n\nQuestion: {question}\nHelpful Answer:"
     prompt_entity="Extract all entities from the following text. As a guideline, a proper noun is generally capitalized. You should definitely extract all names,places, Dates and Times, Numbers, Organizations, Products and Brands, Events, Roles and Positions, Keywords and Topics, Email Addresses and URLs, References to External Entities, Emotional Tone, Quantities and Units, Codes and Identifiers, Languages, Social Media Handles, Currencies..\n\nReturn the output as a single comma-separated list, or NONE if there is nothing of note to return.\n\nEXAMPLE\ni'm trying to improve Langchain's interfaces, the UX, its integrations with various products the user might want ... a lot of stuff.\nOutput: Langchain\nEND OF EXAMPLE\n\nEXAMPLE\ni'm trying to improve Langchain's interfaces, the UX, its integrations with various products the user might want ... a lot of stuff. I'm working with Sam.\nOutput: Langchain, Sam\nEND OF EXAMPLE\n\nBegin!\n\n{input}\nOutput:"
     chain = GraphQAChain.from_llm(AzureChatOpenAI(temperature=0, deployment_name= openai_deployment), graph=loaded_graph, verbose=False,
