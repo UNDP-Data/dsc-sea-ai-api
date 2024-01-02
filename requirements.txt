@@ -10,3 +10,7 @@ pandasai==1.4.8
 Pillow==9.0.1
 python-dotenv==1.0.0
 spacy==3.6.1
+langchain
+sqlalchemy>=1.4.49
+openpyxl
+networkx

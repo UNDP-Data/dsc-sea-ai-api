@@ -223,7 +223,9 @@ def send_promt_llm():
                         'entities': [],
                         'prompts': []
                          })
-    except:
+    except Exception as e:
+
+        print(e)
 
         # I did not find anything from the existing documents
         return jsonify(
