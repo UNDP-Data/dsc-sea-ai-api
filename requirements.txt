@@ -1,4 +1,4 @@
-faiss==1.7.4
+# faiss==1.7.4
 faiss_cpu==1.7.4
 Flask==3.0.0
 Flask_Cors==4.0.0
@@ -8,6 +8,9 @@ openai==0.27.10
 pandas==1.5.3
 pandasai==1.4.8
 Pillow==9.0.1
-Pillow==10.1.0
 python-dotenv==1.0.0
 spacy==3.6.1
+langchain
+sqlalchemy>=1.4.49
+openpyxl
+networkx
