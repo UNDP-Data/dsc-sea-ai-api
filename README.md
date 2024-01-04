@@ -1,11 +1,12 @@
 # Demo Backend
 
-## Flask App 
+## Flask App
 
 The app will be running at http://127.0.0.1:5000/.
 
 Run main.py to start the App.
-``` bash
+
+```bash
 python main.py
 ```
 
@@ -22,6 +23,7 @@ Find the list of the modules and packages required in requirements.txt.
   {
     "prompt": "user query"
   }
+  ```
 
 ### 2. PandasAI Data Analysis
 
@@ -30,9 +32,10 @@ Find the list of the modules and packages required in requirements.txt.
 
   ```json
   {
-  "table_name": "table name",
-  "prompt": "user prompt"
+    "table_name": "table name",
+    "prompt": "user prompt"
   }
+  ```
 
 ### 3. Get DataFrame Header
 
@@ -43,6 +46,7 @@ Find the list of the modules and packages required in requirements.txt.
   {
     "table_name": "table name"
   }
+  ```
 
 ## Testing with Jupyter Notebook
 
@@ -51,12 +55,35 @@ Testing cases can be found in 'test.ipynb'
 ## Running the App Using Docker
 
 Build the docker image:
+
 ```bash
 docker build -t <name-of-image> .
 ```
+
 Run the docker image:
+
 ```bash
  docker run -e API_KEY= <YOUR-OPENAI-API-KEY> -p 5000:5000 <name-of-image>
 ```
 
 The app will be running at http://127.0.0.1:5000/ in your browser.
+
+## Running app using Virtual enviroment
+
+It’s advisable to create a virtual environments (optional but recommended)
+
+E.g
+python3.9 -m venv myenv
+source myenv/bin/activate
+
+Then install dependencies
+
+pip install -r requirements.txt
+
+Run this once to install spacy english data on the environment
+
+python3.9 -m spacy download en
+
+Finally run the file :
+
+python3.9 main.py
