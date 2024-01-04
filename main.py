@@ -1,34 +1,38 @@
-import json
-from flask import Flask, request,jsonify
-import pandas as pd
-from dotenv import load_dotenv
+# standard library
 import os
-from pandasai import PandasAI
-import pandasai
-from pandasai.llm.openai import OpenAI
-from pandasai.llm import AzureOpenAI
-from json_image import image_to_json
-import matplotlib
-matplotlib.use('agg')
-from flask_cors import CORS, cross_origin
+import json
 import re
-import openai
-from pandasai import SmartDataframe
-import pandas as pd
-import pandas as pd
+
+# web
+from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
+
+# wrangling
 import numpy as np
-import json
-import os
+import pandas as pd
 import faiss
-from dotenv import load_dotenv
-import openai
 import spacy
+import openai
+import pandasai
+from pandasai import SmartDataframe
+from pandasai.llm import AzureOpenAI
+
 from langchain.indexes.graph import NetworkxEntityGraph
 from langchain.chat_models import AzureChatOpenAI
-
-# from langchain.indexes import GraphIndexCreator
 from langchain.chains import GraphQAChain
 from langchain.prompts import PromptTemplate
+
+# utils
+from dotenv import load_dotenv
+load_dotenv()
+
+# visualisation
+import matplotlib
+matplotlib.use('agg')
+
+# local
+from src.json_image import image_to_json
+
 
 app = Flask(__name__)
 CORS(app)
@@ -41,8 +45,6 @@ CORS(app)
 # if os.path.exists(cache_db_wal_file):
 #     os.remove(cache_db_wal_file)
 
-from dotenv import load_dotenv
-load_dotenv()
 deployment_model=os.getenv('OPENAI_DEPLOYMENT_MODEL')
 llm = AzureOpenAI(
     deployment_name=deployment_model,

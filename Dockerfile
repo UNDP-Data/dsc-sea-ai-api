@@ -5,15 +5,9 @@ FROM python:3.9.17-slim-bullseye
 WORKDIR /python-docker
 
 COPY requirements.txt requirements.txt
-RUN python3.9 -m venv venv
 RUN python3.9 -m pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip install bs4
-RUN pip install openpyxl
-RUN pip install langchain
-RUN pip install --upgrade sqlalchemy
-RUN python -m spacy download en
-RUN pip install networkx
+RUN pip install --upgrade sqlalchemy  # required to resolve ImportError: cannot import name 'URL' from 'sqlalchemy'
 
 COPY . /python-docker
 ENV FLASK_APP=/python-docker/main.py
