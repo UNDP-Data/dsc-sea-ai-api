@@ -166,3 +166,9 @@ cython_debug/
 # Virtual environment
 myenv/
 env/
+
+# Manually added
+**/.DS_Store
+**/pandasai.log
+**/*.png
+cache/
