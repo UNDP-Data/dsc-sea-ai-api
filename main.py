@@ -7,7 +7,7 @@ from pandasai import PandasAI
 import pandasai
 from pandasai.llm.openai import OpenAI
 from pandasai.llm import AzureOpenAI
-from json_image import image_to_json
+from src.json_image import image_to_json
 import matplotlib
 matplotlib.use('agg')
 from flask_cors import CORS, cross_origin
