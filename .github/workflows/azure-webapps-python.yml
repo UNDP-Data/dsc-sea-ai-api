@@ -39,9 +39,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: python-app
-          path: |
-            .
-            !venv/
+          path: .
 
   deploy:
     permissions:
