@@ -49,7 +49,8 @@ deployment_model=os.getenv('OPENAI_DEPLOYMENT_MODEL')
 llm = AzureOpenAI(
     deployment_name=deployment_model,
     api_token=os.getenv('OPENAI_API_KEY'),
-    api_base=os.getenv('OPENAI_API_BASE'),
+    api_base=os.g
+    etenv('OPENAI_API_BASE'),
     api_version=os.getenv('OPENAI_API_VERSION'),
     # is_chat_model=True,
 )
@@ -193,8 +194,9 @@ def send_promt_pandasai():
         return output.to_json()
     else:
         return json.dumps(output)
-    
-    
+
+
+
 @app.route('/llm', methods = ['POST'])
 @cross_origin() 
 def send_promt_llm():
