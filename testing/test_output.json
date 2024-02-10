@@ -5,7 +5,6 @@
         "bert_score": [
             0.8387247323989868
         ],
-        "meteor_score": 0,
         "moonshot_model_answer": "<p>The role of USAID in supporting Albania's energy sector strategy is to provide assistance and support to Albania in various areas, including the energy sector strategy. USAID aims to promote global development and humanitarian assistance by providing aid and support to countries in need. In the case of Albania, USAID works to enhance capacity for low emission development strategies and contribute to the development of domestic energy sources. This support is aimed at creating a regional integrated and diversified energy system based on market principles, ensuring security and quality of supply, environmental protection, and climate action. USAID's efforts in Albania's energy sector strategy align with its mission to foster sustainable development and improve lives worldwide<a data-id='doc-16'>[1]</a>.</p>"
     },
     {
@@ -14,7 +13,7 @@
         "bert_score": [
             0.7757923007011414
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The Gender Development Index (GDI) is relevant to UNDP's work in Albania as it is used by the United Nations Development Programme (UNDP) to assess gender equality and women's empowerment in different countries, including Albania<a data-id='doc-13'>[1]</a>. The GDI takes into account factors such as education, health, and income to determine the level of development and opportunities available to women compared to men. By using the GDI, UNDP can identify areas where gender inequality exists and work towards promoting gender equality and empowering women in Albania.</p>\n\n<p>UNDP, as a global organization, aims to eradicate poverty, reduce inequalities, and promote sustainable development<a data-id='doc-13'>[1]</a>. In Albania, UNDP operates within the United Nations Sustainable Development Cooperation Framework and focuses on various program priorities and partnerships<a data-id='doc-13'>[1]</a>. The GDI provides valuable data and insights that help UNDP in designing and implementing programs and initiatives that address gender inequality and promote women's empowerment in Albania.</p>\n\n<p>Albania, a small Balkan country in Southeast Europe, has a high Gender Development Index (GDI) of 0.967<a data-id='doc-13'>[1]</a>. This indicates a relatively high level of gender equality and women's empowerment in the country. However, there may still be areas where gender inequality persists, and UNDP's work in Albania aims to address these issues and promote further progress towards gender equality.</p>\n\n<p>Overall, the Gender Development Index (GDI) is a crucial tool used by UNDP to assess and address gender inequality and women's empowerment in Albania<a data-id='doc-13'>[1]</a>. It helps guide UNDP's work in designing and implementing programs and initiatives that promote gender equality and empower women in the country.</p>\n\n<p><strong>Sources:</strong></p>\n<ol>\n<li><a href='https://digitallibrary.un.org/record/3933636/files/DP_DCP_ALB_3-EN.pdf?ln=en' target='_blank'>UN Country programme document for Albania (2022\u20132026)</a></li>\n</ol>"
     },
     {
@@ -23,7 +22,7 @@
         "bert_score": [
             0.7933781743049622
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The United Nations Development Programme (UNDP) contributes to the Sustainable Development Goals (SDGs) in the Western Balkan Regional Economic Area by providing support to countries in areas such as governance, climate change, and crisis response. The SDGs are a set of 17 global objectives established by the United Nations to address the world's most pressing social, economic, and environmental challenges. These goals aim to eradicate poverty, promote equality, protect the planet, and ensure prosperity for all by 2030<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p>The Western Balkan Regional Economic Area is an initiative aimed at promoting economic integration and cooperation among the countries of the Western Balkans. While there is no direct relation mentioned between the UNDP and the Western Balkan Regional Economic Area in the given information, the UNDP's work towards achieving the SDGs aligns with the goals of the regional initiative. By promoting sustainable development and enhancing economic cooperation, the UNDP indirectly contributes to the goals of the Western Balkan Regional Economic Area<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p>Overall, the UNDP's efforts in the Western Balkan Regional Economic Area contribute to the achievement of the SDGs by addressing various global challenges, promoting sustainable development, and fostering economic growth and stability in the region<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p><b>Sources:</b></p>\n<p><a href='source-link-1'>[1]</a> Excerpt from Source 1</p>"
     },
     {
@@ -32,7 +31,7 @@
         "bert_score": [
             0.8450966477394104
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The partnership between the Kabul Conference and the United Nations aims to enhance the UN system's effectiveness in Afghanistan by bringing together Afghan leaders and representatives from over 70 countries and organizations to discuss the country's security, governance, and development. The conference focuses on transitioning security responsibilities to Afghan forces and promoting stability and progress in the region<a data-id='doc-1'>[1]</a>. The United Nations, as an international organization, is part of the UN system, which aims to improve the effectiveness of international cooperation. It addresses global challenges such as poverty, climate change, human rights, and sustainable development<a data-id='doc-11'>[2]</a>. By collaborating with the Kabul Conference, the United Nations can leverage its expertise and resources to support Afghanistan's efforts in achieving these goals.</p>"
     },
     {
@@ -41,7 +40,7 @@
         "bert_score": [
             0.7809395790100098
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The collaboration between the United Nations Country Team and the United Nations Working Group contributes to Afghanistan's development by providing coordinated and integrated assistance to support national development priorities, promote sustainable development, human rights, and peace<a data-id='doc-1'>[1]</a>. The United Nations Country Team is a group of UN agencies, funds, and programs working together in Afghanistan to achieve these goals<a data-id='doc-1'>[1]</a>. The United Nations Working Group, on the other hand, is a body composed of independent experts appointed by the UN Human Rights Council, working towards the prevention and eradication of enforced disappearances worldwide<a data-id='doc-1'>[1]</a>.</p>"
     },
     {
@@ -50,25 +49,17 @@
         "bert_score": [
             0.8261057734489441
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The United Nations supports Afghanistan's transition and development through various programs and initiatives. One such program is the Country Programme Document for Afghanistan (2015-2019) which outlines the priorities and partnerships for the country's development. The document emphasizes the importance of Afghanistan's sovereignty and self-reliance in political, security, and development processes. The United Nations, along with the international community, will continue to support Afghanistan in its journey towards self-reliance<a data-id='doc-1'>[1]</a>.</p>"
     },
-    {
-        "query": "What is the Human Development Index (HDI) value for Albania as mentioned in the document?",
-        "sample_answer": "",
-        "bert_score": [
-            0.0
-        ],
-        "meteor_score": 0,
-        "moonshot_model_answer": "<p>The Human Development Index (HDI) value for Albania is 0.791<a data-id='doc-13'>[1]</a>.</p>"
-    },
+
     {
         "query": "Which United Nations agencies does UNDP partner with to support development in Albania?",
         "sample_answer": "UNDP partners with various UN agencies, including UNICEF, UNFPA, UN Women, and WHO, to support development in Albania.",
         "bert_score": [
             0.8329195380210876
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The United Nations Development Programme (UNDP) partners with several United Nations agencies to support development in Albania. According to the UN Country programme document for Albania (2022\u20132026), the UNDP collaborates with the United Nations Population Fund (UNFPA) and the United Nations Office for Project Services (UNOPS) to implement development programs in the country<a data-id='doc-13'>[1]</a>.</p>"
     },
     {
@@ -77,7 +68,7 @@
         "bert_score": [
             0.8005071878433228
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The UNDP is implementing several strategies to support Angola's Bureau of External Relations and Advocacy. These strategies are carefully planned and organized approaches to achieve specific goals or objectives. They involve analyzing the current situation, setting clear targets, and determining the best course of action to reach those targets<a data-id='doc-31'>[1]</a>. Effective strategies often involve leveraging strengths, mitigating weaknesses, and adapting to changing circumstances<a data-id='entities'>[2]</a>.</p>"
     },
     {
@@ -86,7 +77,7 @@
         "bert_score": [
             0.7316871285438538
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>Angola is addressing the Sustainable Development Goals (SDGs) with a focus on poverty eradication through various strategies. The SDGs are a set of 17 global objectives established by the United Nations to address pressing global challenges and ensure sustainable development by 2030<a data-id='doc-31'>[1]</a>. </p>\n\n<p>Angola's efforts to address poverty eradication include:</p>\n<ul>\n  <li>Strengthening democratic governance, justice, and human rights<a data-id='doc-31'>[1]</a>.</li>\n  <li>Fighting corruption<a data-id='doc-31'>[1]</a>.</li>\n  <li>Creating elected local governments in 2020<a data-id='doc-31'>[1]</a>.</li>\n  <li>Implementing strategies to provide access to education, healthcare, employment opportunities, and social protection<a data-id='entities'>[2]</a>.</li>\n</ul>\n\n<p>These efforts aim to eliminate extreme deprivation and improve the living conditions of individuals and communities in Angola<a data-id='entities'>[2]</a>.</p>\n\n<p>For more information, you can refer to the <a href='https://digitallibrary.un.org/record/3813093/files/DP_DCP_AGO_4-EN.pdf?ln=en'>UN Country programme document for Angola (2020-2022)</a><a data-id='doc-31'>[1]</a>.</p>"
     },
     {
@@ -95,7 +86,7 @@
         "bert_score": [
             0.7543869614601135
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The Ministry of Environment's support for the Paris Agreement on Climate Change manifests in Argentina's environmental policies through various measures and initiatives. Argentina's environmental policies aim to protect its diverse ecosystems and natural resources, promote sustainable development, conserve biodiversity, and reduce greenhouse gas emissions<a data-id='doc-38'>[1]</a>. These policies are implemented and enforced by the Ministry of Environment, which is responsible for formulating and implementing regulations, programs, and policies to address environmental issues such as pollution, climate change, and biodiversity loss<a data-id='entities'>[2]</a>.</p>\n\n<p>The Paris Agreement on Climate Change is a global agreement adopted in 2015, with the goal of combating climate change and limiting global warming to well below 2 degrees Celsius above pre-industrial levels<a data-id='entities'>[2]</a>. It encourages countries to reduce greenhouse gas emissions, enhance resilience to climate impacts, and provide financial support to developing nations for climate action<a data-id='doc-38'>[1]</a>. Both the Ministry of Environment and Argentina's environmental policies contribute to the goals and objectives of the Paris Agreement<a data-id='entities'>[2]</a>.</p>\n\n<p>Argentina's environmental policies include the creation of protected areas, promotion of renewable energy, improvements in waste management, and efforts to combat deforestation and pollution<a data-id='entities'>[2]</a>. These policies align with the objectives of the Paris Agreement and demonstrate Argentina's commitment to addressing climate change and protecting the environment<a data-id='doc-38'>[1]</a>.</p>\n\n<p>Overall, the Ministry of Environment's support for the Paris Agreement is reflected in Argentina's environmental policies, which prioritize sustainable development, conservation of biodiversity, and reduction of greenhouse gas emissions<a data-id='entities'>[2]</a>.</p>\n\n<p><strong>Sources:</strong></p>\n<ol>\n<li><a href='https://www.irena.org/-/media/Files/IRENA/Agency/Statistics/Statistical_Profiles/South-America/Argentina_South-America_RE_SP.pdf?country=Argentina&regionID=&countryID=4cb8dac7-5309-4f5f-8f42-1478bc8597d1' target='_blank'>Energy Profile Argentina IRENA</a></li>\n<li><a href='https://www.undp.org/sites/g/files/zskgke326/files/2022-08/undp-rblac-ARG-2021-2025-ENG%20%282%29.pdf' target='_blank'>UN Country programme document for Argentina (2021-2025)</a></li>\n</ol>\n<p><strong>Entities:</strong></p>\n<ol>\n<li>The Ministry of Environment</li>\n<li>The Paris Agreement on Climate Change</li>\n<li>Argentina's environmental policies</li>\n</ol>\n<p><strong>Relations:</strong></p>\n<p>The Ministry of Environment is responsible for implementing and enforcing environmental policies. Argentina's environmental policies are related to the Ministry of Environment as they are implemented and enforced by this ministry. The Paris Agreement on Climate Change is a global agreement that aims to combat climate change and reduce greenhouse gas emissions. Both the Ministry of Environment and Argentina's environmental policies are related to the Paris Agreement as they contribute to the goals and objectives of this agreement.</p>"
     },
     {
@@ -104,7 +95,7 @@
         "bert_score": [
             0.7965060472488403
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The Paris Agreement plays a crucial role in sustainable energy development. It is an international treaty adopted in 2015 by nearly every country in the world. The goal of the Paris Agreement is to combat climate change by limiting global warming to well below 2 degrees Celsius above pre-industrial levels, and to pursue efforts to limit the temperature increase to 1.5 degrees Celsius<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p>Sustainable energy development refers to the process of harnessing and utilizing renewable energy sources in a manner that minimizes environmental impact and promotes long-term viability. It involves the adoption of clean technologies, such as solar, wind, and hydro power, to meet energy needs while reducing greenhouse gas emissions and preserving natural resources<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p>The Paris Agreement directly supports sustainable energy development by encouraging countries to transition to renewable energy sources and reduce their reliance on fossil fuels. It promotes the use of clean technologies and the development of sustainable energy infrastructure. By limiting global warming, the Paris Agreement helps to create a more favorable environment for the growth and expansion of sustainable energy initiatives<a data-id='test-doc-1'>[1]</a>.</p>"
     },
     {
@@ -113,7 +104,7 @@
         "bert_score": [
             0.7355111837387085
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The National Social Policy Coordination Council in Argentina contributes to human rights by ensuring that social policies align with human rights principles and promote the well-being of all individuals in the country<a data-id='doc-36'>[1]</a>. The council is responsible for coordinating and implementing social policies in Argentina, aiming to address social issues, promote social welfare, and enhance the overall well-being of the population<a data-id='entities'>[2]</a>.</p>\n\n<p>Human rights are fundamental entitlements and freedoms that every individual possesses by virtue of being human. They include the right to life, liberty, and security, freedom from discrimination, torture, and slavery, as well as the right to education, healthcare, and a fair trial. Human rights promote dignity, equality, and justice for all<a data-id='entities'>[2]</a>.</p>\n\n<p>Argentina is a vibrant South American country known for its diverse landscapes, rich culture, and passionate people. From the bustling streets of Buenos Aires to the breathtaking beauty of Patagonia, Argentina offers a mix of cosmopolitan cities, stunning natural wonders, and a deep love for tango, football, and delicious cuisine<a data-id='entities'>[2]</a>.</p>\n\n<p><strong>Sources:</strong></p>\n<ol>\n<li><a href='https://www.undp.org/sites/g/files/zskgke326/files/2022-08/undp-rblac-ARG-2021-2025-ENG%20%282%29.pdf'>UN Country programme document for Argentina (2021-2025)</a></li>\n<li><a href='https://www.irena.org/-/media/Files/IRENA/Agency/Statistics/Statistical_Profiles/South-America/Argentina_South-America_RE_SP.pdf?country=Argentina&regionID=&countryID=4cb8dac7-5309-4f5f-8f42-1478bc8597d1'>Energy Profile Argentina IRENA</a></li>\n</ol>\n\n<p><strong>References:</strong></p>\n<ol>\n<li><a href='https://www.undp.org/sites/g/files/zskgke326/files/2022-08/undp-rblac-ARG-2021-2025-ENG%20%282%29.pdf'>[1]</a> UN Country programme document for Argentina (2021-2025)</li>\n<li><a href='https://www.irena.org/-/media/Files/IRENA/Agency/Statistics/Statistical_Profiles/South-America/Argentina_South-America_RE_SP.pdf?country=Argentina&regionID=&countryID=4cb8dac7-5309-4f5f-8f42-1478bc8597d1'>[2]</a> Entity and Relation info</li>\n</ol>"
     },
     {
@@ -122,7 +113,7 @@
         "bert_score": [
             0.7946892380714417
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The National Social Policy Coordination Council contributes to human rights by ensuring effective collaboration between various government agencies and stakeholders to address social issues, promote social welfare, and enhance the overall well-being of the population<a data-id='test-doc-1'>[1]</a>. Human rights are fundamental entitlements and freedoms that every individual possesses by virtue of being human. They include the right to life, liberty, and security, freedom from discrimination, torture, and slavery, as well as the right to education, healthcare, and a fair trial<a data-id='test-doc-1'>[1]</a>. Human rights promote dignity, equality, and justice for all<a data-id='test-doc-1'>[1]</a>.</p>"
     },
     {
@@ -131,7 +122,7 @@
         "bert_score": [
             0.7991971969604492
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The key railway upgrade plans for Colombo and its suburbs aim to improve the efficiency, capacity, and reliability of the existing rail networks. These plans involve modernizing infrastructure, such as tracks, signaling systems, and stations, to accommodate higher speeds and increased train frequencies. The upgrades also focus on enhancing connectivity, reducing journey times, and promoting sustainable transportation options<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p>Colombo is the bustling capital city of Sri Lanka, located on the western coast of the island. It offers a blend of modernity and colonial charm, with bustling markets and colonial-era architecture. The city showcases the country's rich history and diverse heritage<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p>Suburbs are residential areas located on the outskirts of cities or towns. They offer a quieter and more spacious living environment compared to urban centers. Suburbs typically have a mix of single-family homes, parks, schools, and shopping centers, providing a balance between city amenities and a suburban lifestyle<a data-id='test-doc-1'>[1]</a>.</p>"
     },
     {
@@ -140,7 +131,7 @@
         "bert_score": [
             0.7784727215766907
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The Ceylon Petroleum Corporation (CPC) contributes to the Results Delivery Framework by playing a vital role in Sri Lanka's energy sector. CPC is responsible for the importation, refining, and distribution of petroleum products in the country. It operates oil refineries, fuel stations, and storage facilities, which are essential for the implementation of action plans and monitoring progress within the Results Delivery Framework<a data-id='test-doc-1'>[1]</a>.</p>\n\n<p>The Results Delivery Framework is a strategic management tool used to achieve desired outcomes and drive performance improvement. It provides a structured approach to setting goals, defining key performance indicators, implementing action plans, and monitoring progress. By ensuring the availability and distribution of petroleum products, CPC contributes to the successful implementation of the Results Delivery Framework<a data-id='test-doc-2'>[2]</a>.</p>\n\n<p>References:</p>\n<ol>\n<li><a href='https://example.com/doc1'>Source 1</a></li>\n<li><a href='https://example.com/doc2'>Source 2</a></li>\n</ol>"
     },
     {
@@ -149,7 +140,7 @@
         "bert_score": [
             0.7715157270431519
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>North Macedonia's strategic priorities in partnership with the United Nations Sustainable Development Cooperation Framework for 2021-2025 are focused on achieving sustainable development goals. The partnership aims to address social, economic, and environmental challenges in the country.</p>\n\n<p>Strategic priorities refer to the key areas or goals that an organization or individual focuses on to achieve long-term success<a data-id='relations'>[1]</a>. In this case, North Macedonia has identified priority areas in collaboration with the United Nations Sustainable Development Cooperation Framework for the period of 2021-2025<a data-id='entities'>[2]</a>. These priorities guide decision-making and resource allocation to drive growth, innovation, efficiency, and sustainability.</p>\n\n<p>Partnership refers to a collaborative relationship between two or more individuals or entities who agree to work together towards a common goal<a data-id='entities'>[3]</a>. In the context of North Macedonia and the United Nations Sustainable Development Cooperation Framework, the partnership involves sharing resources, responsibilities, risks, and rewards to achieve mutual success.</p>\n\n<p>The United Nations Sustainable Development Cooperation Framework is a strategic document that outlines the collaboration between the United Nations and a specific country to achieve sustainable development goals<a data-id='entities'>[4]</a>. It identifies priority areas, sets targets, and establishes a roadmap for joint action to address social, economic, and environmental challenges.</p>\n\n<p>Overall, North Macedonia's strategic priorities in partnership with the United Nations Sustainable Development Cooperation Framework for 2021-2025 aim to achieve sustainable development goals and address the challenges faced by the country<a data-id='entities'>[2]</a><a data-id='entities'>[4]</a>.</p>\n\n<p><b>Sources:</b></p>\n<p>[1] The entity \"North Macedonia\" has a relation with \"strategic priorities\" and \"partnership\". Additionally, it has a relation with the \"United Nations Sustainable Development Cooperation Framework\" for the period of 2021-2025.</p>\n<p>[2] Strategic priorities refer to the key areas or goals that an organization or individual focuses on to achieve long-term success. These priorities are carefully chosen based on the organization's mission, vision, and competitive landscape, and guide decision-making and resource allocation to drive growth, innovation, efficiency, and sustainability.</p>\n<p>[3] Partnership refers to a collaborative relationship between two or more individuals or entities who agree to work together towards a common goal. It involves sharing resources, responsibilities, risks, and rewards, with each partner contributing their unique skills and expertise to achieve mutual success.</p>\n<p>[4] The United Nations Sustainable Development Cooperation Framework is a strategic document that outlines the collaboration between the United Nations and a specific country to achieve sustainable development goals. It identifies priority areas, sets targets, and establishes a roadmap for joint action to address social, economic, and environmental challenges.</p>"
     },
     {
@@ -158,7 +149,7 @@
         "bert_score": [
             0.8251040577888489
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The UNDP program in North Macedonia focuses on innovation. Innovation plays a crucial role in the program as it is the process of introducing new ideas, methods, or products that bring about positive change. It involves thinking creatively, challenging existing norms, and finding unique solutions to problems. Innovation drives progress, fosters growth, and enables individuals and organizations to adapt and thrive in an ever-evolving world.</p>\n\n<p>Source: <a data-id='test-doc-1'>[1]</a></p>"
     },
     {
@@ -167,7 +158,7 @@
         "bert_score": [
             0.8785446882247925
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>According to the available information, it is not specified what percentage of Niger's population has access to electricity for productive use.</p>"
     },
     {
@@ -176,7 +167,7 @@
         "bert_score": [
             0.8141663074493408
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The UNDP supports the resilience of communities in the Diffa region of Niger by working with them to enhance their ability to withstand and recover from shocks and stresses. The Diffa region, located in southeastern Niger, faces numerous challenges, including insecurity due to the presence of Boko Haram, displacement, and humanitarian crises<a data-id='doc-465'>[1]</a>. The UNDP, as a global organization, aims to eradicate poverty, reduce inequalities, and promote sustainable development. It provides support to countries in areas such as governance, climate change, and crisis response<a data-id='doc-465'>[1]</a>. By focusing on resilience, the UNDP helps communities in the Diffa region build their inner strength, adapt to difficult circumstances, and thrive<a data-id='doc-465'>[1]</a>.</p>"
     },
     {
@@ -185,7 +176,7 @@
         "bert_score": [
             0.7963569164276123
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The main goals of Niger's Vision 2035 are outlined in the country's development plan for the future. Vision 2035 serves as a roadmap, highlighting key objectives and targets to be achieved by the year 2035. These goals are aimed at guiding decision-making and resource allocation towards a successful and prosperous future for Niger.</p>\n\n<p>Sources:</p>\n<ol>\n    <li><a data-id='doc-465'>Country programme document for Niger (2023\u20132027)</a></li>\n</ol>"
     },
     {
@@ -194,7 +185,7 @@
         "bert_score": [
             0.7657901644706726
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The national development priorities of Niger for the period of 2022-2026 are focused on achieving sustainable growth and progress in key areas or sectors. These priorities include:</p>\n<ol>\n<li>Infrastructure development</li>\n<li>Education and skills enhancement</li>\n<li>Healthcare improvement</li>\n<li>Poverty reduction</li>\n<li>Environmental sustainability</li>\n<li>Innovation and technology advancement</li>\n<li>Social welfare enhancement</li>\n</ol>\n<p>These priorities are crucial for addressing the socioeconomic, environmental, and security constraints that Niger faces in its development <a data-id='doc-465'>[1]</a>.</p>"
     },
     {
@@ -203,7 +194,7 @@
         "bert_score": [
             0.8126609325408936
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>The primary development financing challenges in Nigeria include limited access to capital, high interest rates, insufficient domestic resources, lack of financial infrastructure, political instability, and the need for innovative financing mechanisms to address complex development issues and achieve the Sustainable Development Goals<a data-id='doc-470'>[1]</a>. Nigeria, as Africa's largest economy, faces these challenges in securing adequate funds for sustainable development projects<a data-id='doc-470'>[1]</a>.</p>"
     },
     {
@@ -212,7 +203,7 @@
         "bert_score": [
             0.832941472530365
         ],
-        "meteor_score": 0,
+        
         "moonshot_model_answer": "<p>Nigeria's poverty rate according to the World Bank in 2020 reflects the economic challenges faced by the country. The World Bank reported that Nigeria's poverty rate increased in 2020 due to these challenges<a data-id='doc-470'>[1]</a>.</p>"
     }
 ]
