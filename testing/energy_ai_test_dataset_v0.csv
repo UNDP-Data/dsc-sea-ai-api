@@ -1,3 +1,3 @@
-﻿query,expected response,difficulty,expected indicators,category
+﻿query,expected response, gpt response, search response, difficulty,expected indicators,category, score
 What are the sustainable energy priorities for UNDP?,temp text,3,none,strategy
 What is solar power,temp text,1,none,information
