@@ -5,6 +5,11 @@ import ast
 import pandas as pd
 import faiss
 import numpy as np
+import pycountry
+import re
+
+
+df = pd.read_pickle('./models/df_embed_EN.pkl')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -47,22 +52,54 @@ def knowledgeGraphModule(user_query, openai_deployment):
     return entities_dict
 
 
+def find_mentioned_countries(text):
+    countries = set()
+    
+    # Tokenize the text using regular expressions to preserve punctuation marks
+    words = re.findall(r'\w+|[^\w\s]', text)
+    text = ' '.join(words)  # Join the tokens back into a string
+    
+    for word in text.split():
+        try:
+            country = pycountry.countries.get(name=word) #pycountry.countries.lookup(word)
+            if country != None : 
+               countries.add(country.name)
+        except LookupError:
+            pass
+    
+    return list(countries)
+
+def filter_country(user_query):
+    mentioned_countries = find_mentioned_countries(user_query)
+    # print(mentioned_countries)
+    # Check if mentioned_countries is not empty
+    if mentioned_countries:
+        country = mentioned_countries[0]
+        return df[df['Country Name'] == country]
+    else:
+        # Handle the case where no countries were mentioned
+        return None  # Or return an empty DataFrame or any other suitable value
+
+
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
-    df = pd.read_pickle('./models/df_embed_EN.pkl')
-    df_filtered = df
-    length = len(df_filtered.head())
-    filtered_embeddings_arrays = np.array(list(df_filtered['Embedding']))
-    index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1]) 
-    index.add(filtered_embeddings_arrays)
+    df_filtered = filter_country(user_query) if filter_country(user_query) is not None else None
     
-    user_query_embedding = client.embeddings.create( 
-        input=user_query ,model= embedding_model
-    ).data[0].embedding
-    
-    k = min(5, length)
-    distances, indices = index.search(np.array([user_query_embedding]), k)
-    return df_filtered, distances, indices
+    if df_filtered is not None and not df_filtered.empty:  # Check if DataFrame is not None and not empty
+        length = len(df_filtered.head())
+        filtered_embeddings_arrays = np.array(list(df_filtered['Embedding']))
+        index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1]) 
+        index.add(filtered_embeddings_arrays)
+
+        user_query_embedding = client.embeddings.create( 
+                input=user_query ,model= embedding_model
+            ).data[0].embedding
+
+        k = min(5, length)
+        distances, indices = index.search(np.array([user_query_embedding]), k)
+        return df_filtered, distances, indices
+    else:
+        return None, None, None
 
 
 # get answer
@@ -120,10 +157,13 @@ def map_to_structure(qs):
 
 ## module to extract text from documents and return the text and document codes
 def semanticSearchModule(user_query, client, embedding_model):
-    qs = search_embeddings(user_query, client, embedding_model) #df, distances, indices
-    result_structure = map_to_structure(qs)
-    return result_structure
-
+    qs = search_embeddings(user_query,client, embedding_model) #df, distances, indices
+    # if qs != None :
+    if qs[0] is not None:
+        result_structure = map_to_structure(qs)
+        return result_structure
+    else : 
+        return []
 
 ## module to generate query ideas
 def queryIdeationModule(user_query, openai_deployment): # lower priority
@@ -179,26 +219,4 @@ def indicatorsModule(user_query): #lower priority
     }#temp
     
     return indicators_dict
-
-
-# module to synthesize answer using retreival augmented generation approach
-def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment):
-    # Generate prompt engineering text and template
-    llm_instructions = f"""
-    Ignore previous commands!!!
-    Given a user query, use the provided excerpts, Sources, and entity and relation info to
-    provide the correct answer to the user's query
-    User Query: {user_query}
-    Sources: {excerpts_dict}
-    Entity and Relation info: {entities_dict}
-    - Answer output must be properly formatted using HTML. 
-    - Don't include <html>, <script>, <link> or <body> tags. Only text formating tags should be allowed. e.g h1..h3, p, anchor, etc.
-    - Make sure to Include citations based on the Sources. e.g <a data-id='test-doc-1'>[1]</a> <a data-id='test-doc-2'>[2]</a> when referencing a document in the sources.
-    - Use the anchor tag for the citation links and should link to the document link. 
-    - The text in the anchor tag should be citation number not document title.
-    - You can reference multitple citations based sources
-    """
-    ###synthesize data into structure within llm prompt engineering instructions
-    answer= openai_call.callOpenAI(llm_instructions, openai_deployment)
-    return answer
 
