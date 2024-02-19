@@ -51,7 +51,6 @@ def check_api_key():
         return jsonify({'error': 'Unauthorized access'}), 401
 
 
-
 @app.route('/llm', methods = ['POST'])
 @cross_origin() 
 def send_promt_llm():
