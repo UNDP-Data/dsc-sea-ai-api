@@ -7,9 +7,11 @@ import faiss
 import numpy as np
 import pycountry
 import re
+from sentence_transformers import SentenceTransformer
 
 
-df = pd.read_pickle('./models/df_embed_EN.pkl')
+df = pd.read_pickle('./models/df_embed_EN_All.pkl')
+model_bert = SentenceTransformer('bert-base-uncased')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -81,9 +83,45 @@ def filter_country(user_query):
         return None  # Or return an empty DataFrame or any other suitable value
 
 
+#This contains all filters for the semantic search
+#Context Similarity takes two queries and find how similar they are "context wise"
+#E.g "My house is empty today" and "Nobody is at my home" are same context but not word similarity
+# - Filter country relevant documents when mentioned 
+# - Filter by Context similarity in user_query and title, journal, content etc.
+def filter_semantics(user_query):
+    mentioned_countries = find_mentioned_countries(user_query)
+    
+    if mentioned_countries:
+        country = mentioned_countries[0]
+        filtered_df = df[df['Country Name'] == country]
+    else:
+        filtered_df = df  # If no country mentioned, consider all documents
+    
+    # Calculate the encoding for the user query
+    query_encoding = model_bert.encode(user_query)
+    
+    # Calculate similarity scores for each document
+    similarity_scores = []
+    for title in filtered_df['Document Title']:
+        if pd.isnull(title):
+            title_encoding = model_bert.encode('')
+        else:
+            title_encoding = model_bert.encode(title)
+        similarity = np.dot(query_encoding, title_encoding) / (np.linalg.norm(query_encoding) * np.linalg.norm(title_encoding))
+        similarity_scores.append(similarity)
+    
+    # Sort the similarity scores and get indices of top 10 scores
+    top_10_indices = np.argsort(similarity_scores)[::-1][:10]
+    
+    # Get the top 10 documents based on the indices
+    top_10_documents = filtered_df.iloc[top_10_indices]
+    
+    return top_10_documents
+
+
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
-    df_filtered = filter_country(user_query) if filter_country(user_query) is not None else None
+    df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
     
     if df_filtered is not None and not df_filtered.empty:  # Check if DataFrame is not None and not empty
         length = len(df_filtered.head())
