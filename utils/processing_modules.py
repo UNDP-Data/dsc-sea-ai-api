@@ -7,9 +7,13 @@ import faiss
 import numpy as np
 import pycountry
 import re
-from sentence_transformers import SentenceTransformer
+import transformers
+import torch
+from sklearn.metrics.pairwise import cosine_similarity
 
-model_bert = SentenceTransformer('bert-base-uncased')
+
+model = transformers.BertModel.from_pretrained('bert-base-uncased')
+tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
 df = pd.read_pickle('./models/df_embed_EN_All.pkl')
 
@@ -83,11 +87,36 @@ def filter_country(user_query):
         return None  # Or return an empty DataFrame or any other suitable value
 
 
+#Context similarity
+def contextualSimilarity(user_query,df_title) :
+
+    user_query = str(user_query)
+    df_title = str(df_title)
+    # Tokenize and encode the sentences
+    tokens1 = tokenizer(user_query, return_tensors='pt', max_length=512, truncation=True)
+    tokens2 = tokenizer(df_title, return_tensors='pt', max_length=512, truncation=True)
+
+    # Forward pass through the BERT model
+    with torch.no_grad():
+        output1 = model(**tokens1)
+        output2 = model(**tokens2)
+
+    # Get the embeddings (CLS token)
+    embedding1 = output1.last_hidden_state[:, 0, :]
+    embedding2 = output2.last_hidden_state[:, 0, :]
+
+    # Calculate cosine similarity
+    context_similarity = cosine_similarity(embedding1, embedding2)
+    return context_similarity[0][0]
+ 
+
+
 #This contains all filters for the semantic search
 #Context Similarity takes two queries and find how similar they are "context wise"
 #E.g "My house is empty today" and "Nobody is at my home" are same context but not word similarity
 # - Filter country relevant documents when mentioned 
 # - Filter by Context similarity in user_query and title, journal, content etc.
+
 def filter_semantics(user_query):
     mentioned_countries = find_mentioned_countries(user_query)
     
@@ -95,33 +124,38 @@ def filter_semantics(user_query):
         country = mentioned_countries[0]
         filtered_df = df[df['Country Name'] == country]
     else:
-        filtered_df = df  # If no country mentioned, consider all documents
-    
-    # Calculate the encoding for the user query
-    query_encoding = model_bert.encode(user_query)
-    
-    # Batch processing: Encode document titles in batches
-    batch_size = 64
-    num_batches = (len(filtered_df) + batch_size - 1) // batch_size
-    title_encodings = []
-    for batch_idx in range(num_batches):
-        batch_start = batch_idx * batch_size
-        batch_end = min((batch_idx + 1) * batch_size, len(filtered_df))
-        batch_titles = filtered_df.iloc[batch_start:batch_end]['Document Title'].fillna('').tolist()
-        batch_encodings = model_bert.encode(batch_titles)
-        title_encodings.extend(batch_encodings)
-    
-    # Calculate similarity scores for each document batch
-    similarity_scores = np.dot(query_encoding, np.array(title_encodings).T)
-    similarity_scores /= np.linalg.norm(query_encoding) * np.linalg.norm(np.array(title_encodings), axis=1)
-    
-    # Get the indices of top 10 scores
-    top_10_indices = np.argsort(similarity_scores)[::-1][:10]
-    
-    # Get the top 10 documents based on the indices
-    top_10_documents = filtered_df.iloc[top_10_indices]
-    
-    return top_10_documents
+        # Calculate contextual similarity for each document title
+        similarity_scores = []
+        titles_with_scores = []  # Keep track of titles with scores
+        
+        # Track the number of similarity scores collected
+        count = 0
+        
+        for title in df['Document Title']:
+            if title is not None:
+                similarity_score = contextualSimilarity(user_query, title)
+                if similarity_score > 0.8:
+                    similarity_scores.append(similarity_score)
+                    titles_with_scores.append(title)
+                    count += 1
+                    if count >= 10:  # Break once 10 scores are collected
+                        break
+        
+        # Check if any titles have similarity scores
+        if not similarity_scores:
+            print("No documents found with a similarity score greater than 0.85.")
+            return None
+        
+        # Create a DataFrame to store the similarity scores
+        similarity_df = pd.DataFrame({'Document Title': titles_with_scores, 'Similarity Score': similarity_scores})
+        
+        # Sort the DataFrame by the similarity scores in descending order
+        similarity_df = similarity_df.sort_values(by='Similarity Score', ascending=False)
+        
+        # Return the top 10 results
+        filtered_df = df[df['Document Title'].isin(similarity_df['Document Title'])]
+
+    return filtered_df
 
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
