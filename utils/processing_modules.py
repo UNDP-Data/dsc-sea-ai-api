@@ -9,9 +9,9 @@ import pycountry
 import re
 from sentence_transformers import SentenceTransformer
 
+model_bert = SentenceTransformer('bert-base-uncased')
 
 df = pd.read_pickle('./models/df_embed_EN_All.pkl')
-model_bert = SentenceTransformer('bert-base-uncased')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -100,24 +100,28 @@ def filter_semantics(user_query):
     # Calculate the encoding for the user query
     query_encoding = model_bert.encode(user_query)
     
-    # Calculate similarity scores for each document
-    similarity_scores = []
-    for title in filtered_df['Document Title']:
-        if pd.isnull(title):
-            title_encoding = model_bert.encode('')
-        else:
-            title_encoding = model_bert.encode(title)
-        similarity = np.dot(query_encoding, title_encoding) / (np.linalg.norm(query_encoding) * np.linalg.norm(title_encoding))
-        similarity_scores.append(similarity)
+    # Batch processing: Encode document titles in batches
+    batch_size = 64
+    num_batches = (len(filtered_df) + batch_size - 1) // batch_size
+    title_encodings = []
+    for batch_idx in range(num_batches):
+        batch_start = batch_idx * batch_size
+        batch_end = min((batch_idx + 1) * batch_size, len(filtered_df))
+        batch_titles = filtered_df.iloc[batch_start:batch_end]['Document Title'].fillna('').tolist()
+        batch_encodings = model_bert.encode(batch_titles)
+        title_encodings.extend(batch_encodings)
     
-    # Sort the similarity scores and get indices of top 10 scores
+    # Calculate similarity scores for each document batch
+    similarity_scores = np.dot(query_encoding, np.array(title_encodings).T)
+    similarity_scores /= np.linalg.norm(query_encoding) * np.linalg.norm(np.array(title_encodings), axis=1)
+    
+    # Get the indices of top 10 scores
     top_10_indices = np.argsort(similarity_scores)[::-1][:10]
     
     # Get the top 10 documents based on the indices
     top_10_documents = filtered_df.iloc[top_10_indices]
     
     return top_10_documents
-
 
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
