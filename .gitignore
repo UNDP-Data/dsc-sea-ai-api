@@ -172,3 +172,5 @@ env/
 **/pandasai.log
 **/*.png
 cache/
+
+data/documents_all.json

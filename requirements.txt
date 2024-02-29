@@ -16,3 +16,4 @@ sqlalchemy>=1.4.49
 openpyxl==3.1.2
 networkx==3.1
 pycountry
+sentence_transformers
