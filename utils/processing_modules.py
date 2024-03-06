@@ -7,13 +7,9 @@ import faiss
 import numpy as np
 import pycountry
 import re
-import transformers
-import torch
-from sklearn.metrics.pairwise import cosine_similarity
 
-
-model = transformers.BertModel.from_pretrained('bert-base-uncased')
-tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
+# model = transformers.BertModel.from_pretrained('bert-base-uncased')
+# tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
 df = pd.read_pickle('./models/df_embed_EN_All.pkl')
 
@@ -86,29 +82,19 @@ def filter_country(user_query):
         # Handle the case where no countries were mentioned
         return None  # Or return an empty DataFrame or any other suitable value
 
-
-#Context similarity
-def contextualSimilarity(user_query,df_title) :
-
-    user_query = str(user_query)
-    df_title = str(df_title)
-    # Tokenize and encode the sentences
-    tokens1 = tokenizer(user_query, return_tensors='pt', max_length=512, truncation=True)
-    tokens2 = tokenizer(df_title, return_tensors='pt', max_length=512, truncation=True)
-
-    # Forward pass through the BERT model
-    with torch.no_grad():
-        output1 = model(**tokens1)
-        output2 = model(**tokens2)
-
-    # Get the embeddings (CLS token)
-    embedding1 = output1.last_hidden_state[:, 0, :]
-    embedding2 = output2.last_hidden_state[:, 0, :]
-
-    # Calculate cosine similarity
-    context_similarity = cosine_similarity(embedding1, embedding2)
-    return context_similarity[0][0]
  
+
+# Function to calculate Jaccard similarity between two texts
+def jaccard_similarity(text1, text2):
+    # Tokenize texts
+    tokens1 = set(text1.lower().split())
+    tokens2 = set(text2.lower().split())
+    
+    # Calculate Jaccard similarity
+    intersection = len(tokens1.intersection(tokens2))
+    union = len(tokens1.union(tokens2))
+    
+    return intersection / union if union > 0 else 0
 
 
 #This contains all filters for the semantic search
@@ -119,43 +105,36 @@ def contextualSimilarity(user_query,df_title) :
 
 def filter_semantics(user_query):
     mentioned_countries = find_mentioned_countries(user_query)
-    
     if mentioned_countries:
         country = mentioned_countries[0]
         filtered_df = df[df['Country Name'] == country]
+        return filtered_df
+        
     else:
-        # Calculate contextual similarity for each document title
+
+        #Use basic Jaccard for now as Bert Contextual similarity is not working fine on this current
+        #memory type
+
+
+        # Calculate similarity scores for each document title
         similarity_scores = []
-        titles_with_scores = []  # Keep track of titles with scores
-        
-        # Track the number of similarity scores collected
-        count = 0
-        
+        document_titles = []
+
+        # Iterate through each document title and calculate similarity score
         for title in df['Document Title']:
             if title is not None:
-                similarity_score = contextualSimilarity(user_query, title)
-                if similarity_score > 0.8:
-                    similarity_scores.append(similarity_score)
-                    titles_with_scores.append(title)
-                    count += 1
-                    if count >= 10:  # Break once 10 scores are collected
-                        break
+                similarity_score = jaccard_similarity(user_query, title)
+                similarity_scores.append(similarity_score)
+                document_titles.append(title)
         
-        # Check if any titles have similarity scores
-        if not similarity_scores:
-            print("No documents found with a similarity score greater than 0.85.")
-            return None
+        # Create DataFrame only with valid similarity scores
+        similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
         
-        # Create a DataFrame to store the similarity scores
-        similarity_df = pd.DataFrame({'Document Title': titles_with_scores, 'Similarity Score': similarity_scores})
-        
-        # Sort the DataFrame by the similarity scores in descending order
-        similarity_df = similarity_df.sort_values(by='Similarity Score', ascending=False)
-        
-        # Return the top 10 results
-        filtered_df = df[df['Document Title'].isin(similarity_df['Document Title'])]
+        # Filter documents where similarity score is above a threshold (e.g., 0.3)
+        threshold = 0.2
+        filtered_df = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
 
-    return filtered_df
+        return  filtered_df.head(10)
 
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
