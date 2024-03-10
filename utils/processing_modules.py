@@ -131,7 +131,7 @@ def filter_semantics(user_query):
         similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
         
         # Filter documents where similarity score is above a threshold (e.g., 0.3)
-        threshold = 0.2
+        threshold = 0.01
         filtered_df = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
 
         return  filtered_df.head(10)
@@ -224,11 +224,11 @@ def semanticSearchModule(user_query, client, embedding_model):
 def queryIdeationModule(user_query, openai_deployment): # lower priority
     
     # Generate query ideas using OpenAI GPT-3
-    prompt = f"""Generate query ideas based on the user query: {user_query}
-    
+    prompt = f"""Generate prompt ideas based on the user query: {user_query}
+
+    -Prompt shoud not be answer to the user query but synonyms and other contextual ways of representing the user query !!!
     -You Must return output in array format e.g ['idea 1', 'idea2'] !!!
     -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
-    
     """
     response = openai_call.callOpenAI(prompt, openai_deployment)
     return response
