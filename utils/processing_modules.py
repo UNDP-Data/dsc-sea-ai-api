@@ -8,8 +8,10 @@ import numpy as np
 import pycountry
 import re
 
+# model = transformers.BertModel.from_pretrained('bert-base-uncased')
+# tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
-df = pd.read_pickle('./models/df_embed_EN.pkl')
+df = pd.read_pickle('./models/df_embed_EN_All.pkl')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -80,10 +82,63 @@ def filter_country(user_query):
         # Handle the case where no countries were mentioned
         return None  # Or return an empty DataFrame or any other suitable value
 
+ 
+
+# Function to calculate Jaccard similarity between two texts
+def jaccard_similarity(text1, text2):
+    # Tokenize texts
+    tokens1 = set(text1.lower().split())
+    tokens2 = set(text2.lower().split())
+    
+    # Calculate Jaccard similarity
+    intersection = len(tokens1.intersection(tokens2))
+    union = len(tokens1.union(tokens2))
+    
+    return intersection / union if union > 0 else 0
+
+
+#This contains all filters for the semantic search
+#Context Similarity takes two queries and find how similar they are "context wise"
+#E.g "My house is empty today" and "Nobody is at my home" are same context but not word similarity
+# - Filter country relevant documents when mentioned 
+# - Filter by Context similarity in user_query and title, journal, content etc.
+
+def filter_semantics(user_query):
+    mentioned_countries = find_mentioned_countries(user_query)
+    if mentioned_countries:
+        country = mentioned_countries[0]
+        filtered_df = df[df['Country Name'] == country]
+        return filtered_df
+        
+    else:
+
+        #Use basic Jaccard for now as Bert Contextual similarity is not working fine on this current
+        #memory type
+
+
+        # Calculate similarity scores for each document title
+        similarity_scores = []
+        document_titles = []
+
+        # Iterate through each document title and calculate similarity score
+        for title in df['Document Title']:
+            if title is not None:
+                similarity_score = jaccard_similarity(user_query, title)
+                similarity_scores.append(similarity_score)
+                document_titles.append(title)
+        
+        # Create DataFrame only with valid similarity scores
+        similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
+        
+        # Filter documents where similarity score is above a threshold (e.g., 0.3)
+        threshold = 0.01
+        filtered_df = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
+
+        return  filtered_df.head(10)
 
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
-    df_filtered = filter_country(user_query) if filter_country(user_query) is not None else None
+    df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
     
     if df_filtered is not None and not df_filtered.empty:  # Check if DataFrame is not None and not empty
         length = len(df_filtered.head())
@@ -169,11 +224,12 @@ def semanticSearchModule(user_query, client, embedding_model):
 def queryIdeationModule(user_query, openai_deployment): # lower priority
     
     # Generate query ideas using OpenAI GPT-3
-    prompt = f"""Generate query ideas based on the user query: {user_query}
-    
+    prompt = f"""Generate prompt ideas based on the user query: {user_query}
+
+    -Prompt shoud not be answer to the user query but give other contextual ways of representing the user query !!!
     -You Must return output in array format e.g ['idea 1', 'idea2'] !!!
+    - Each generated ideas should be very dinstinct but contextual. Not repeatitive or using same words
     -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
-    
     """
     response = openai_call.callOpenAI(prompt, openai_deployment)
     return response

@@ -23,6 +23,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+print(openai.VERSION)
  
 # OpenAI API configuration
 openai.api_type = "azure"
@@ -62,7 +63,7 @@ def send_promt_llm():
         excerpts_dict=processing_modules.semanticSearchModule(user_query,client,embedding_model)
         indicators_dict=processing_modules.indicatorsModule(user_query) ##lower priority
         query_idea_list=processing_modules.queryIdeationModule(user_query, openai_deployment) ##lower priority
-            
+         
         ##synthesis module
         answer= processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
         # ##structure response
