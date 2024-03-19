@@ -215,8 +215,8 @@ def filter_semantics(user_query):
 
         # Filter df based on similarity scores greater than threshold for filtered_df_others
         filtered_df_others = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
-        filtered_df_backup_reference = pd.concat([filtered_df_backup_reference,  df_temp[df_temp['Document Title'].isin(similarity_df[(similarity_df['Similarity Score'] >= 0.1) & (similarity_df['Similarity Score'] < 0.45)]['Document Title'])] ])
-
+        filtered_df_backup_reference = pd.concat([filtered_df_backup_reference,  df_temp[df_temp['Document Title'].isin(similarity_df[(similarity_df['Similarity Score'] >= 0.28) & (similarity_df['Similarity Score'] < 0.45)]['Document Title'])] ])
+        
         #Check for location related e.g by country, language, locals
         if label in ['GPE', 'NORP', 'LANGUAGE', 'FAC']:
             filtered_df_country = pd.concat([filtered_df_country, df[df['Country Name'] == entity]])
@@ -357,7 +357,7 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     - Citation should follow formats: [reference content]<a href='link here' data-id='doc-n'>[i]</a> . The reference bracket should be the reference link
     - Give output writing tone like a academic research tone
     - Strictly use IEEE Citation Style 
-    - If no <Sources> are provided, simply say you don't have that information   
+    - If no <Sources> are provided, try to make suggestives or  simply say you don't have that information   
     - Remove new line or tab characters from your output
 
     """
