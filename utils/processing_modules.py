@@ -8,6 +8,12 @@ import numpy as np
 import pycountry
 import re
 
+import spacy
+from sklearn.metrics.pairwise import cosine_similarity
+from spacy.lang.en.stop_words import STOP_WORDS
+nlp = spacy.load("en_core_web_sm")
+
+
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
@@ -96,6 +102,39 @@ def jaccard_similarity(text1, text2):
     
     return intersection / union if union > 0 else 0
 
+# Load the English language model
+# Function to calculate the average word embedding for a sentence
+def average_word_embedding(sentence):
+    # Parse the sentence using SpaCy
+    doc = nlp(sentence)
+    # Get word vectors and average them
+    word_vectors = [token.vector for token in doc if token.has_vector]
+    if not word_vectors:
+        return None
+    return np.mean(word_vectors, axis=0)
+
+# Function to calculate context similarity between two sentences using word embedding averaging
+def calculate_context_similarity(sentence1, sentence2):
+    # Get average word embeddings for each sentence
+    avg_embedding1 = average_word_embedding(sentence1)
+    avg_embedding2 = average_word_embedding(sentence2)
+    if avg_embedding1 is None or avg_embedding2 is None:
+        return None
+    # Calculate cosine similarity between the embeddings
+    similarity = cosine_similarity([avg_embedding1], [avg_embedding2])[0][0]
+    return similarity
+
+#Simple helps
+def title_contains_entity(entity, title):
+    # Convert both entity and title to lowercase for case-insensitive comparison
+    entity_lower = entity.lower()
+    title_lower = title.lower()
+
+    # Check if the lowercase entity is contained within the lowercase title
+    if entity_lower in title_lower:
+        return 1
+    else:
+        return 0
 
 #This contains all filters for the semantic search
 #Context Similarity takes two queries and find how similar they are "context wise"
@@ -104,6 +143,88 @@ def jaccard_similarity(text1, text2):
 # - Filter by Context similarity in user_query and title, journal, content etc.
 
 def filter_semantics(user_query):
+
+    #Allow parallels
+    #Extract notable entities in query e.g ORG, NAME, Place, country, location etc.
+    #Location related: 
+    # GPE: Countries, cities, states.
+    # NORP: Nationalities, religious and political groups.
+    # LANGUAGE: Any named language. 
+    # FAC: Buildings, airports, highways, bridges, etc.
+
+    #Other/General:
+    # PERSON: People, including fictional entities.
+    # ORG: Companies, agencies, institutions, etc.
+    # LOC: Non-GPE locations, mountain ranges, bodies of water.
+    # PRODUCT: Objects, vehicles, foods, etc. (Not services)
+    # EVENT: Named hurricanes, battles, wars, sports events, etc.
+    # WORK_OF_ART: Titles of books, songs, etc.
+    # LAW: Named documents made into laws.
+    # LANGUAGE: Any named language.
+    # DATE: Absolute or relative dates or periods.
+    # TIME: Times smaller than a day.
+    # PERCENT: Percentage, including "%".
+    # MONEY: Monetary values, including unit.
+    # QUANTITY: Measurements, as numerical values with units.
+    # ORDINAL: "first", "second", etc.
+    # CARDINAL: Numerals that do not fall under another type.
+
+    doc = nlp(user_query)
+    # Extract all entities
+    # entities = [(ent.text, ent.label_) for ent in doc.ents]
+    entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
+    entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN","PROPN", "PRON", "PROPN", "NUM", "SYM", "X","ABBR"] or token.is_alpha)
+
+    # Remove stop words
+    entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
+    
+    # Print the extracted entities
+    # print("All Entities and POS:", entities)
+    # Generate DFs for main entities
+    filtered_df_country = pd.DataFrame()  # Initialize an empty DataFrame
+    filtered_df_others = pd.DataFrame()  # Initialize an empty DataFrame
+
+    for entity, label in entities:
+        # print(entity)
+        #Check for all entities for documents e.g UN documents, Journal and Publications
+        # filtered_df_others = pd.concat([filtered_df_others, df[df['Document Title'].lower().str.contains(entity.lower(), na=False)]])
+        filtered_df_others = pd.concat([filtered_df_others, df[df['Document Title'].str.lower().str.contains(entity.lower(), na=False)]])
+
+        #Calculate similarity scores for each document title
+        similarity_scores = []
+        document_titles = []
+
+        # Iterate through each document title and calculate similarity score
+        for title in filtered_df_others['Document Title']:
+            if title is not None:
+                similarity_score = calculate_context_similarity(user_query,title) 
+                # print(similarity_score)
+                # print(user_query)
+                # print(title)
+                # print("=================================")    
+                similarity_scores.append(similarity_score)
+                document_titles.append(title)
+        
+        # Create DataFrame only with valid similarity scores
+        similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
+        
+        # Filter documents where similarity score is above a threshold (e.g., 0.3)
+        threshold = 0.5
+        filtered_df_others = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
+        
+        #Check for location related e.g by country, language, locals
+        if label in ['GPE', 'NORP', 'LANGUAGE', 'FAC']:
+            # print(label)
+            # filtered_df_country = df[df['Country Name'] == entity]
+            filtered_df_country = pd.concat([filtered_df_country, df[df['Country Name'] == entity]])
+
+
+    merged_df = pd.concat([filtered_df_country,filtered_df_others])
+
+    return merged_df
+
+
+def filter_semanticsold(user_query):
     mentioned_countries = find_mentioned_countries(user_query)
     if mentioned_countries:
         country = mentioned_countries[0]
@@ -229,6 +350,7 @@ def queryIdeationModule(user_query, openai_deployment): # lower priority
     -Prompt shoud not be answer to the user query but give other contextual ways of representing the user query !!!
     -You Must return output in array format e.g ['idea 1', 'idea2'] !!!
     - Each generated ideas should be very dinstinct but contextual. Not repeatitive or using same words
+    - The query idea should be in a question form and not an answer form.
     -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
     """
     response = openai_call.callOpenAI(prompt, openai_deployment)
@@ -241,29 +363,34 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     # Generate prompt engineering text and template
     llm_instructions = f"""
     Ignore previous commands!!!
-    Given a user query, use the provided excerpts, Sources, and entity and relation info to
-    provide the correct answer to the user's query
+    Given a user query, use the provided <Sources> extract section of the JSON only to provide the correct answer to the user's query.
     
     User Query: {user_query}
     
     Sources: {excerpts_dict}
     
-    Entity and Relation info: {entities_dict}
-
     - Answer output must be properly formatted using HTML. 
-    - Don't include <html>, <script>, <link> or <body> tags. Only text formating tags should be allowed. e.g h1..h3, p, anchor, etc.
-    - Make sure to Include citations based on the Sources. e.g Text excerpt here<a data-id='test-doc-1'>[1]</a> when referencing a document in the sources. using 1 ...nth
-    - The citations anchor be single and not follow each other.
-    - Use the anchor tag for the citation links and should link to the document link. 
-      For example Undp operates in afganistan <a data-id='test-doc-1'>[1]</a>. UNDP offers health relationships <a data-id='test-doc-2'>[2]</a>.
-    - Use MUST one citation per excerots. Don't list multiple anchors side by side for citation !!!
-    - The text in the anchor tag should be citation number not document title.
-    - You can reference multitple citations based sources
+    - Don't include <html>, <script>, <link> or <body> tags. Only text formating tags should be allowed. e.g h1..h3, p, anchor, etc. Strictly HTML only
+    - Strictly infer your answers from the <Sources> Only and make citations to Source extract referenced 
+    - The Source as format like: "doc-n": {{
+        "title": "title of the relate document",
+        "extract": "content",
+        "category": "",
+        "link": "",
+        "thumbnail": ""
+    }}, where doc-n can be doc-1, doc-24 etc.. n is in integer.
+    - Reference the extract and title of all document sources provided in the json and summarise it into a coherent answer that relates to the <User Query>
+    - Citation should follow formats: [reference content]<a href='link here' data-id='doc-n'>[i]</a> . The reference bracket should be the reference link
+    - Give output writing tone like a academic research tone
+    - Strictly use IEEE Citation Style 
+    - If no <Sources> are provided, simply say you don't have that information   
+    - Remove new line or tab characters from your output
+
     """
     ###synthesize data into structure within llm prompt engineering instructions
     answer= openai_call.callOpenAI(llm_instructions, openai_deployment)
     
-    return answer
+    return answer.replace("</p>\n\n<p>", "<br/>").replace("</p>\n<p>","<br/>").replace("\n","<br/>")
 
 ## module to get data for specific indicators which are identified is relevant to the user query
 def indicatorsModule(user_query): #lower priority
