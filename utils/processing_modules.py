@@ -183,11 +183,11 @@ def filter_semantics(user_query):
     # Generate DFs for main entities
     filtered_df_country = pd.DataFrame()  # Initialize an empty DataFrame
     filtered_df_others = pd.DataFrame()  # Initialize an empty DataFrame
+    filtered_df_backup_reference = pd.DataFrame() # Initialize an empty DataFrame
+    allow_low = True
 
     for entity, label in entities:
         # print(entity)
-        #Check for all entities for documents e.g UN documents, Journal and Publications
-        # filtered_df_others = pd.concat([filtered_df_others, df[df['Document Title'].lower().str.contains(entity.lower(), na=False)]])
         filtered_df_others = pd.concat([filtered_df_others, df[df['Document Title'].str.lower().str.contains(entity.lower(), na=False)]])
 
         #Calculate similarity scores for each document title
@@ -198,6 +198,7 @@ def filter_semantics(user_query):
         for title in filtered_df_others['Document Title']:
             if title is not None:
                 similarity_score = calculate_context_similarity(user_query,title) 
+                # print(entity)
                 # print(similarity_score)
                 # print(user_query)
                 # print(title)
@@ -208,54 +209,27 @@ def filter_semantics(user_query):
         # Create DataFrame only with valid similarity scores
         similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
         
-        # Filter documents where similarity score is above a threshold (e.g., 0.3)
+        df_temp = pd.concat([df])
+
         threshold = 0.5
+
+        # Filter df based on similarity scores greater than threshold for filtered_df_others
         filtered_df_others = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
-        
+        filtered_df_backup_reference = pd.concat([filtered_df_backup_reference,  df_temp[df_temp['Document Title'].isin(similarity_df[(similarity_df['Similarity Score'] >= 0.1) & (similarity_df['Similarity Score'] < 0.45)]['Document Title'])] ])
+
         #Check for location related e.g by country, language, locals
         if label in ['GPE', 'NORP', 'LANGUAGE', 'FAC']:
-            # print(label)
-            # filtered_df_country = df[df['Country Name'] == entity]
             filtered_df_country = pd.concat([filtered_df_country, df[df['Country Name'] == entity]])
-
-
-    merged_df = pd.concat([filtered_df_country,filtered_df_others])
-
+    merged_df = pd.DataFrame()
+    if filtered_df_others.empty and filtered_df_country.empty:
+       print(f'on the reference df {filtered_df_backup_reference.empty}')
+       merged_df = pd.concat([filtered_df_backup_reference])
+    else :
+       merged_df = pd.concat([filtered_df_country,filtered_df_others])
+    
     return merged_df
 
 
-def filter_semanticsold(user_query):
-    mentioned_countries = find_mentioned_countries(user_query)
-    if mentioned_countries:
-        country = mentioned_countries[0]
-        filtered_df = df[df['Country Name'] == country]
-        return filtered_df
-        
-    else:
-
-        #Use basic Jaccard for now as Bert Contextual similarity is not working fine on this current
-        #memory type
-
-
-        # Calculate similarity scores for each document title
-        similarity_scores = []
-        document_titles = []
-
-        # Iterate through each document title and calculate similarity score
-        for title in df['Document Title']:
-            if title is not None:
-                similarity_score = jaccard_similarity(user_query, title)
-                similarity_scores.append(similarity_score)
-                document_titles.append(title)
-        
-        # Create DataFrame only with valid similarity scores
-        similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
-        
-        # Filter documents where similarity score is above a threshold (e.g., 0.3)
-        threshold = 0.01
-        filtered_df = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
-
-        return  filtered_df.head(10)
 
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
