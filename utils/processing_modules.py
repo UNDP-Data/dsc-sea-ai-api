@@ -193,7 +193,7 @@ def filter_semantics(user_query):
         #Calculate similarity scores for each document title
         similarity_scores = []
         document_titles = []
-
+        
         # Iterate through each document title and calculate similarity score
         for title in filtered_df_others['Document Title']:
             if title is not None:
