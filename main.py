@@ -112,7 +112,7 @@ async def handler(websocket, path):
             await websocket.send(json.dumps({"entities_dict": entities_dict}))
 
             indicators_dict = processing_modules.indicatorsModule(user_query)
-            await websocket.send(json.dumps({"indicators_dict": indicators_dict}))
+            # await websocket.send(json.dumps({"indicators_dict": indicators_dict}))
 
             query_idea_list = processing_modules.queryIdeationModule(user_query, openai_deployment)
             await websocket.send(json.dumps({"query_idea_list": query_idea_list}))
