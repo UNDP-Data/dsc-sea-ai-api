@@ -1,4 +1,5 @@
 
+from html import entities
 import utils.openai_call as openai_call
 import openai
 import ast
@@ -53,7 +54,7 @@ def knowledgeGraphModule(user_query, openai_deployment):
     for entity in my_list:
         # Fetch information about the entity from your knowledge graph
         prompt = f"Give me a short description 50 words of {entity}"
-        entity_info = openai_call.callOpenAI(prompt, openai_deployment)
+        entity_info = '' #openai_call.callOpenAI(prompt, openai_deployment)
         # Add the entity information to the dictionary
         entities_dict["entities"][entity] = entity_info
     
@@ -124,6 +125,10 @@ def calculate_context_similarity(sentence1, sentence2):
     similarity = cosine_similarity([avg_embedding1], [avg_embedding2])[0][0]
     return similarity
 
+
+ 
+
+
 #Simple helps
 def title_contains_entity(entity, title):
     # Convert both entity and title to lowercase for case-insensitive comparison
@@ -169,17 +174,17 @@ def filter_semantics(user_query):
     # ORDINAL: "first", "second", etc.
     # CARDINAL: Numerals that do not fall under another type.
 
-    doc = nlp(user_query)
-    # Extract all entities
-    # entities = [(ent.text, ent.label_) for ent in doc.ents]
-    entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
-    entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN","PROPN", "PRON", "PROPN", "NUM", "SYM", "X","ABBR"] or token.is_alpha)
+    # doc = nlp(user_query)
+    # # Extract all entities
+    # entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
+    # entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN","PROPN", "PRON", "PROPN", "NUM", "SYM", "X","ABBR"] or token.is_alpha)
 
-    # Remove stop words
-    entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
+    # # Remove stop words
+    # entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
     
+    entities = [('the Country Program Document', 'ORG'), ('Afghanistan', 'GPE'), ('the year 2014', 'DATE'), ('Afghanistan', 'GPE'), ('UNDP', 'ORG'), ('2015-2019', 'DATE'), ('looking', 'NOUN'), ('insights', 'NOUN'), ('Country', 'NOUN'), ('Program', 'NOUN'), ('Document', 'NOUN'), ('Afghanistan', 'NOUN'), ('year', 'NOUN'), ('2014', 'NOUN'), ('particularly', 'NOUN'), ('interested', 'NOUN'), ('understanding', 'NOUN'), ('Afghanistan', 'NOUN'), ('strategies', 'NOUN'), ('related', 'NOUN'), ('economic', 'NOUN'), ('development', 'NOUN'), ('governance', 'NOUN'), ('social', 'NOUN'), ('inclusion', 'NOUN'), ('Additionally', 'NOUN'), ('like', 'NOUN'), ('know', 'NOUN'), ('partnerships', 'NOUN'), ('international', 'NOUN'), ('organizations', 'NOUN'), ('UNDP', 'NOUN'), ('poverty', 'NOUN'), ('reduction', 'NOUN'), ('initiatives', 'NOUN'), ('gender', 'NOUN'), ('equality', 'NOUN'), ('measures', 'NOUN'), ('included', 'NOUN'), ('program', 'NOUN'), ('provide', 'NOUN'), ('details', 'NOUN'), ('planned', 'NOUN'), ('address', 'NOUN'), ('security', 'NOUN'), ('issues', 'NOUN'), ('sustainable', 'NOUN'), ('development', 'NOUN'), ('goals', 'NOUN'), ('timeframe', 'NOUN'), ('2015', 'NOUN'), ('-', 'NOUN'), ('2019', 'NOUN')]
     # Print the extracted entities
-    # print("All Entities and POS:", entities)
+    print("All Entities and POS:", entities)
     # Generate DFs for main entities
     filtered_df_country = pd.DataFrame()  # Initialize an empty DataFrame
     filtered_df_others = pd.DataFrame()  # Initialize an empty DataFrame
@@ -197,6 +202,7 @@ def filter_semantics(user_query):
         # Iterate through each document title and calculate similarity score
         for title in filtered_df_others['Document Title']:
             if title is not None:
+
                 similarity_score = calculate_context_similarity(user_query,title) 
                 # print(entity)
                 # print(similarity_score)
@@ -228,7 +234,6 @@ def filter_semantics(user_query):
        merged_df = pd.concat([filtered_df_country,filtered_df_others])
     
     return merged_df
-
 
 
 #run search on the vector pkl embeddings
