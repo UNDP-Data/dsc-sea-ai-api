@@ -110,7 +110,7 @@ async def handler(websocket, path):
             # Process the user query step by step and send responses
             entities_dict = processing_modules.knowledgeGraphModule(user_query, openai_deployment)
             await websocket.send(json.dumps({"entities_dict": entities_dict}))
-
+            
             indicators_dict = processing_modules.indicatorsModule(user_query)
             # await websocket.send(json.dumps({"indicators_dict": indicators_dict}))
 
