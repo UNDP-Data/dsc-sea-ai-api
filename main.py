@@ -30,12 +30,12 @@ print(openai.VERSION)
  
 # OpenAI API configuration
 openai.api_type = "azure"
-openai.api_key = os.getenv("api_key_azure")
+openai.api_key = os.getenv("AZURE_OPENAI_API_KEY")
 openai.api_base = os.getenv("AZURE_OPENAI_ENDPOINT")
 openai.api_version = os.getenv("api_version")
 openai_deployment = "sdgi-gpt-35-turbo-16k"
 client = AzureOpenAI(
-  api_key = os.getenv("api_key_azure"),  
+  api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
   api_version = os.getenv("api_version"),
   azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT") 
 )
