@@ -8,9 +8,11 @@ from openai import AzureOpenAI
 import faiss
 import numpy as np
 import json
-
+import asyncio
+ 
+import websockets
 # web
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS, cross_origin
 
 # import custom utils functions 
@@ -21,18 +23,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+
 CORS(app)
 
 print(openai.VERSION)
  
 # OpenAI API configuration
 openai.api_type = "azure"
-openai.api_key = os.getenv("api_key_azure")
+openai.api_key = os.getenv("AZURE_OPENAI_API_KEY")
 openai.api_base = os.getenv("AZURE_OPENAI_ENDPOINT")
 openai.api_version = os.getenv("api_version")
 openai_deployment = "sdgi-gpt-35-turbo-16k"
 client = AzureOpenAI(
-  api_key = os.getenv("api_key_azure"),  
+  api_key = os.getenv("AZURE_OPENAI_API_KEY"),  
   api_version = os.getenv("api_version"),
   azure_endpoint =os.getenv("AZURE_OPENAI_ENDPOINT") 
 )
@@ -66,6 +69,15 @@ def send_promt_llm():
          
         ##synthesis module
         answer= processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
+     
+        # return jsonify({
+        #         "user_query":user_query,
+        #         "answer":answer,
+        #         "sources":'',
+        #         "query_ideas":'',
+        #         "entities":list(entities_dict["entities"].keys())       
+        #     })
+
         # ##structure response
         return jsonify({
                 "user_query":user_query,
@@ -86,6 +98,44 @@ def send_promt_llm():
                         'prompts': []
                          })
 
-if __name__ == "__main__":
-    app.run()
-    
+
+
+# create handler for each connection 
+async def handler(websocket, path):
+    async for message in websocket:
+        try:
+            data = json.loads(message)
+            user_query = data.get('query')
+
+            # Process the user query step by step and send responses
+            entities_dict = processing_modules.knowledgeGraphModule(user_query, openai_deployment)
+            await websocket.send(json.dumps({"entities_dict": entities_dict}))
+            
+            indicators_dict = processing_modules.indicatorsModule(user_query)
+            # await websocket.send(json.dumps({"indicators_dict": indicators_dict}))
+
+            query_idea_list = processing_modules.queryIdeationModule(user_query, openai_deployment)
+            await websocket.send(json.dumps({"query_idea_list": query_idea_list}))
+            
+            excerpts_dict = processing_modules.semanticSearchModule(user_query, client, embedding_model)
+            await websocket.send(json.dumps({"excerpts_dict": excerpts_dict}))
+            
+            answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict,
+                                                        openai_deployment)
+            await websocket.send(json.dumps({"answer": answer}))
+
+        except Exception as e:
+            error_response = {"error": str(e)}
+            await websocket.send(json.dumps(error_response))
+
+
+start_server = websockets.serve(handler, "localhost", 5000)
+
+asyncio.get_event_loop().run_until_complete(start_server)
+ 
+asyncio.get_event_loop().run_forever()
+
+# if __name__ == "__main__":
+#     app.run()
+ 
+ 
