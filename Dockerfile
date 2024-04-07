@@ -7,6 +7,8 @@ WORKDIR /python-docker
 COPY requirements.txt requirements.txt
 RUN python3.9 -m pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip install -U flask-cors
+
 RUN pip install --upgrade sqlalchemy  # required to resolve ImportError: cannot import name 'URL' from 'sqlalchemy'
 
 COPY . /python-docker
