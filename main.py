@@ -47,12 +47,12 @@ def require_api_key(api_key):
     return api_key in valid_keys
 
 # Apply the before_request decorator to all routes
-@app.before_request
-def check_api_key():
-    # if request.endpoint != 'static_access':
-    api_key = request.headers.get('API-Key')
-    if api_key != os.getenv('API_ACCESS_KEY'):
-        return jsonify({'error': 'Unauthorized access'}), 401
+# @app.before_request
+# def check_api_key():
+#     # if request.endpoint != 'static_access':
+#     api_key = request.headers.get('API-Key')
+#     if api_key != os.getenv('API_ACCESS_KEY'):
+#         return jsonify({'error': 'Unauthorized access'}), 401
 
 
 @app.route('/llm', methods = ['POST'])
