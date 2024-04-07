@@ -129,13 +129,13 @@ async def handler(websocket, path):
             await websocket.send(json.dumps(error_response))
 
 
-start_server = websockets.serve(handler, "0.0.0.0", 5000)
+# start_server = websockets.serve(handler, "0.0.0.0", 5000)
 
-asyncio.get_event_loop().run_until_complete(start_server)
+# asyncio.get_event_loop().run_until_complete(start_server)
  
-asyncio.get_event_loop().run_forever()
+# asyncio.get_event_loop().run_forever()
 
-# if __name__ == "__main__":
-#     app.run()
+if __name__ == "__main__":
+    app.run()
  
  
