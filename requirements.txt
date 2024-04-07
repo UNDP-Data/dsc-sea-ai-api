@@ -19,4 +19,3 @@ pycountry
 transformers
 scikit-learn
 websockets
-flask_cors
