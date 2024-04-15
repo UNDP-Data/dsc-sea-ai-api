@@ -24,6 +24,7 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+ 
 
 print(openai.VERSION)
  
