@@ -13,6 +13,6 @@ RUN pip install --upgrade sqlalchemy  # required to resolve ImportError: cannot 
 
 COPY . /python-docker
 ENV FLASK_APP=/python-docker/main.py
-# EXPOSE 5000
+EXPOSE 5000
 
 CMD [ "python3.9", "-m" , "flask", "run", "--host=0.0.0.0"]
