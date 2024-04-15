@@ -55,7 +55,7 @@ def require_api_key(api_key):
 
 
 @app.route('/llm', methods = ['POST'])
-@cross_origin() 
+# @cross_origin() 
 def send_promt_llm():
     try: 
         user_query = request.get_json()['query']
