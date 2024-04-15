@@ -238,8 +238,12 @@ def filter_semantics(user_query):
 
 #run search on the vector pkl embeddings
 def search_embeddings(user_query, client, embedding_model):
-    df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
-    
+    # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
+    # Call filter_semantics function once and store the result in a variable
+    filtered_result = filter_semantics(user_query)
+    # Check if the result is not None before assigning it to df_filtered
+    df_filtered = filtered_result if filtered_result is not None else None
+
     if df_filtered is not None and not df_filtered.empty:  # Check if DataFrame is not None and not empty
         length = len(df_filtered.head())
         filtered_embeddings_arrays = np.array(list(df_filtered['Embedding']))
@@ -274,7 +278,7 @@ def get_answer(user_question, content, openai_deployment):
     return response
   
 # map to structure
-def map_to_structure(qs):
+def map_to_structure(qs, isInitialRun):
     result_dict = {}
 
     # Extract the DataFrame from the tuple
@@ -304,18 +308,22 @@ def map_to_structure(qs):
         # Increment the counter
         count += 1
 
-        # # Break out of the loop if the counter reaches top 10
-        if count == 10:
+     
+        if isInitialRun and count == 1:
             break
+        #top k-5 docs only
+        elif not isInitialRun and count == 10:  
+            break
+
 
     return result_dict
 
 ## module to extract text from documents and return the text and document codes
-def semanticSearchModule(user_query, client, embedding_model):
+def semanticSearchModule(user_query, client, embedding_model, isInitialRun):
     qs = search_embeddings(user_query,client, embedding_model) #df, distances, indices
     # if qs != None :
     if qs[0] is not None:
-        result_structure = map_to_structure(qs)
+        result_structure = map_to_structure(qs,isInitialRun)
         return result_structure
     else : 
         return []
