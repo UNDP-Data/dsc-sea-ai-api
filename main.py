@@ -1,4 +1,5 @@
 import imp
+from pickle import TRUE
 import pandas as pd
 import openai
 from dotenv import load_dotenv
@@ -9,11 +10,15 @@ import faiss
 import numpy as np
 import json
 import asyncio
-  
+import concurrent.futures
+
+import uuid  # for generating unique session IDs
+
 import websockets
 # web
-from flask import Flask, request, jsonify, Response, stream_with_context
+from flask import Flask, request, jsonify,session
 from flask_cors import CORS, cross_origin
+from flask_session import Session
 
 # import custom utils functions 
 import utils.processing_modules as processing_modules
@@ -23,6 +28,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.getenv("APP_SECRET_KEY")
+# Configure Flask to use the filesystem for session storage
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = '/tmp/flask_session'  # Directory to store session files
+Session(app)
+
 CORS(app)
  
 
@@ -56,48 +67,110 @@ def require_api_key(api_key):
 
 
 @app.route('/llm', methods = ['POST'])
-# @cross_origin() 
-def send_promt_llm():
+@cross_origin() 
+def send_prompt_llm():
     try: 
         user_query = request.get_json()['query']
+        session_id = str(uuid.uuid4())
+        # session_id_query = request.get_json()['session_id'] #optional
+        session_id_query = request.get_json().get('session_id') #optional
 
-         ##run processing modules (in parallel)
-        entities_dict=processing_modules.knowledgeGraphModule(user_query, openai_deployment)
-        excerpts_dict=processing_modules.semanticSearchModule(user_query,client,embedding_model)
-        indicators_dict=processing_modules.indicatorsModule(user_query) ##lower priority
-        query_idea_list=processing_modules.queryIdeationModule(user_query, openai_deployment) ##lower priority
-         
-        ##synthesis module
-        answer= processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
-     
-        # return jsonify({
-        #         "user_query":user_query,
-        #         "answer":answer,
-        #         "sources":'',
-        #         "query_ideas":'',
-        #         "entities":list(entities_dict["entities"].keys())       
-        #     })
+        
+        get_session = session.get('session_id')
+        # print(session_id_query)
+        # print(get_session)
+        # Define a function to run each processing module
+        def run_module(module_func, *args):
+            print('running')
+            return module_func(user_query, *args)
 
-        # ##structure response
-        return jsonify({
-                "user_query":user_query,
-                "answer":answer,
-                "sources":excerpts_dict,
-                "query_ideas":query_idea_list,
-                "entities":list(entities_dict["entities"].keys())       
-            })
+        if session_id_query:
+                print("in session")
+                print(session_id_query)
+                # Delete the session
+                session.clear()
+
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                #user is requering ... get all relevant answers
+                    future_entities = executor.submit(run_module, processing_modules.knowledgeGraphModule, openai_deployment)
+                    future_indicators = executor.submit(run_module, processing_modules.indicatorsModule)
+                    future_query_ideas = executor.submit(run_module, processing_modules.queryIdeationModule, openai_deployment)
+
+                    # Get results from completed futures
+                    entities_dict = future_entities.result()
+                    indicators_dict = future_indicators.result()
+                    query_idea_list = future_query_ideas.result()
+
+                    isInitialRun = False
+                    future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
+                    excerpts_dict = future_excerpts.result()
+
+                    # Run synthesis module
+                    answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
+                    
+                    #Send initial response to user while processing final answer on final documents
+                    response = {
+                        "answer": answer,
+                        "user_query": user_query,
+                        "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
+                        "query_ideas": query_idea_list if query_idea_list else [],
+                        "excerpts_dict" : excerpts_dict
+                    }
+                    
+                            # Return the response
+                return jsonify(response)
+        else : 
+            
+
+            # Create a thread pool executor - run all in parallel to reduce ttl
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                # Submit processing modules to the executor
+                future_entities = executor.submit(run_module, processing_modules.knowledgeGraphModule, openai_deployment)
+                future_indicators = executor.submit(run_module, processing_modules.indicatorsModule)
+                future_query_ideas = executor.submit(run_module, processing_modules.queryIdeationModule, openai_deployment)
+
+                # Get results from completed futures
+                entities_dict = future_entities.result()
+                indicators_dict = future_indicators.result()
+                query_idea_list = future_query_ideas.result()
+
+                isInitialRun = TRUE
+                future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
+                excerpts_dict = future_excerpts.result()
+
+                # Run synthesis module
+                # answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
+                
+                #Send initial response to user while processing final answer on final documents
+                response = {
+                    "answer": "Processing final answer... re-query to retrieve final answer and documents using session id",
+                    "user_query": user_query,
+                    "session_id": session_id,
+                    "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
+                    "query_ideas": query_idea_list if query_idea_list else [],
+                    "excerpts_dict" : excerpts_dict
+                }
+
+                session['session_id'] = session_id #save the session id
+
+
+
+            # Return the response
+            return jsonify(response)
+
     except Exception as e:
         print(e)
-        # I did not find anything from the existing documents
+        # Return error response
         return jsonify(
-                     {
-                        'status':'failed',
-                        'message': 'an error occured',
-                        'answers': [], 
-                        'entities': [],
-                        'prompts': []
-                         })
-
+            {
+                'status': 'failed',
+                'message': 'an error occurred',
+                'session_id': None,
+                'answers': [], 
+                'entities': [],
+                'prompts': []
+            }
+        )
 
 
 # create handler for each connection 
@@ -117,7 +190,7 @@ async def handler(websocket, path):
             query_idea_list = processing_modules.queryIdeationModule(user_query, openai_deployment)
             await websocket.send(json.dumps({"query_idea_list": query_idea_list}))
             
-            excerpts_dict = processing_modules.semanticSearchModule(user_query, client, embedding_model)
+            excerpts_dict = processing_modules.semanticSearchModule(user_query, client, embedding_model, isInitialRun = TRUE)
             await websocket.send(json.dumps({"excerpts_dict": excerpts_dict}))
             
             answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict,
