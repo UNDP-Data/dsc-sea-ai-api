@@ -13,7 +13,7 @@ import asyncio
 import websockets
 # web
 from flask import Flask, request, jsonify, Response, stream_with_context
-# from flask_cors import CORS, cross_origin
+from flask_cors import CORS, cross_origin
 
 # import custom utils functions 
 import utils.processing_modules as processing_modules
@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 
 print(openai.VERSION)
  
@@ -135,5 +135,5 @@ async def handler(websocket, path):
 # asyncio.get_event_loop().run_until_complete(start_server)
 # asyncio.get_event_loop().run_forever()
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     app.run()
