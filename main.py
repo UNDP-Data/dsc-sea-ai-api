@@ -128,7 +128,7 @@ async def handler(websocket, path):
             await websocket.send(json.dumps(error_response))
 
 
-start_server = websockets.serve(handler, "localhost", 5000)
+start_server = websockets.serve(handler, "", 5000)
 
 asyncio.get_event_loop().run_until_complete(start_server)
  
