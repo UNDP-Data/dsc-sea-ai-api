@@ -71,24 +71,22 @@ def require_api_key(api_key):
 def send_prompt_llm():
     try: 
         user_query = request.get_json()['query']
-        session_id = str(uuid.uuid4())
+        # session_id = str(uuid.uuid4())
         # session_id_query = request.get_json()['session_id'] #optional
-        session_id_query = request.get_json().get('session_id') #optional
-
+        query_type = request.get_json().get('query_type') #optional
+        print(user_query)
         
-        get_session = session.get('session_id')
-        # print(session_id_query)
         # print(get_session)
         # Define a function to run each processing module
         def run_module(module_func, *args):
             print('running')
             return module_func(user_query, *args)
 
-        if session_id_query:
+        if query_type == 'full':
                 print("in session")
-                print(session_id_query)
+                print(query_type)
                 # Delete the session
-                session.clear()
+                # session.clear()
 
                 with concurrent.futures.ThreadPoolExecutor() as executor:
                 #user is requering ... get all relevant answers
@@ -145,13 +143,12 @@ def send_prompt_llm():
                 response = {
                     "answer": "Processing final answer... re-query to retrieve final answer and documents using session id",
                     "user_query": user_query,
-                    "session_id": session_id,
                     "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
                     "query_ideas": query_idea_list if query_idea_list else [],
                     "excerpts_dict" : excerpts_dict
                 }
 
-                session['session_id'] = session_id #save the session id
+                # session['session_id'] = session_id #save the session id
 
 
 
