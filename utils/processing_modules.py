@@ -13,6 +13,8 @@ import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 from spacy.lang.en.stop_words import STOP_WORDS
 nlp = spacy.load("en_core_web_sm")
+import os
+import concurrent.futures
 
 
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
@@ -117,16 +119,16 @@ def average_word_embedding(sentence):
 # Function to calculate context similarity between two sentences using word embedding averaging
 def calculate_context_similarity(sentence1, sentence2):
     # Get average word embeddings for each sentence
+
     avg_embedding1 = average_word_embedding(sentence1)
     avg_embedding2 = average_word_embedding(sentence2)
+    # print(avg_embedding1)
+    # print(avg_embedding2)
     if avg_embedding1 is None or avg_embedding2 is None:
         return None
     # Calculate cosine similarity between the embeddings
     similarity = cosine_similarity([avg_embedding1], [avg_embedding2])[0][0]
     return similarity
-
-
- 
 
 
 #Simple helps
@@ -141,48 +143,24 @@ def title_contains_entity(entity, title):
     else:
         return 0
 
+
+
 #This contains all filters for the semantic search
 #Context Similarity takes two queries and find how similar they are "context wise"
 #E.g "My house is empty today" and "Nobody is at my home" are same context but not word similarity
 # - Filter country relevant documents when mentioned 
 # - Filter by Context similarity in user_query and title, journal, content etc.
 
-def filter_semantics(user_query):
-
-    #Allow parallels
-    #Extract notable entities in query e.g ORG, NAME, Place, country, location etc.
-    #Location related: 
-    # GPE: Countries, cities, states.
-    # NORP: Nationalities, religious and political groups.
-    # LANGUAGE: Any named language. 
-    # FAC: Buildings, airports, highways, bridges, etc.
-
-    #Other/General:
-    # PERSON: People, including fictional entities.
-    # ORG: Companies, agencies, institutions, etc.
-    # LOC: Non-GPE locations, mountain ranges, bodies of water.
-    # PRODUCT: Objects, vehicles, foods, etc. (Not services)
-    # EVENT: Named hurricanes, battles, wars, sports events, etc.
-    # WORK_OF_ART: Titles of books, songs, etc.
-    # LAW: Named documents made into laws.
-    # LANGUAGE: Any named language.
-    # DATE: Absolute or relative dates or periods.
-    # TIME: Times smaller than a day.
-    # PERCENT: Percentage, including "%".
-    # MONEY: Monetary values, including unit.
-    # QUANTITY: Measurements, as numerical values with units.
-    # ORDINAL: "first", "second", etc.
-    # CARDINAL: Numerals that do not fall under another type.
-
-    # doc = nlp(user_query)
+def filter_semantics(user_query, isInitialRun):
+    doc = nlp(user_query)
     # # Extract all entities
-    # entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
-    # entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN","PROPN", "PRON", "PROPN", "NUM", "SYM", "X","ABBR"] or token.is_alpha)
+    entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
+    entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN","PROPN", "PRON", "PROPN", "NUM", "SYM", "X","ABBR"] or token.is_alpha)
 
     # # Remove stop words
-    # entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
+    entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
     
-    entities = [('the Country Program Document', 'ORG'), ('Afghanistan', 'GPE'), ('the year 2014', 'DATE'), ('Afghanistan', 'GPE'), ('UNDP', 'ORG'), ('2015-2019', 'DATE'), ('looking', 'NOUN'), ('insights', 'NOUN'), ('Country', 'NOUN'), ('Program', 'NOUN'), ('Document', 'NOUN'), ('Afghanistan', 'NOUN'), ('year', 'NOUN'), ('2014', 'NOUN'), ('particularly', 'NOUN'), ('interested', 'NOUN'), ('understanding', 'NOUN'), ('Afghanistan', 'NOUN'), ('strategies', 'NOUN'), ('related', 'NOUN'), ('economic', 'NOUN'), ('development', 'NOUN'), ('governance', 'NOUN'), ('social', 'NOUN'), ('inclusion', 'NOUN'), ('Additionally', 'NOUN'), ('like', 'NOUN'), ('know', 'NOUN'), ('partnerships', 'NOUN'), ('international', 'NOUN'), ('organizations', 'NOUN'), ('UNDP', 'NOUN'), ('poverty', 'NOUN'), ('reduction', 'NOUN'), ('initiatives', 'NOUN'), ('gender', 'NOUN'), ('equality', 'NOUN'), ('measures', 'NOUN'), ('included', 'NOUN'), ('program', 'NOUN'), ('provide', 'NOUN'), ('details', 'NOUN'), ('planned', 'NOUN'), ('address', 'NOUN'), ('security', 'NOUN'), ('issues', 'NOUN'), ('sustainable', 'NOUN'), ('development', 'NOUN'), ('goals', 'NOUN'), ('timeframe', 'NOUN'), ('2015', 'NOUN'), ('-', 'NOUN'), ('2019', 'NOUN')]
+    # entities = [('the Country Program Document', 'ORG'), ('Afghanistan', 'GPE'), ('the year 2014', 'DATE'), ('Afghanistan', 'GPE'), ('UNDP', 'ORG'), ('2015-2019', 'DATE'), ('looking', 'NOUN'), ('insights', 'NOUN'), ('Country', 'NOUN'), ('Program', 'NOUN'), ('Document', 'NOUN'), ('Afghanistan', 'NOUN'), ('year', 'NOUN'), ('2014', 'NOUN'), ('particularly', 'NOUN'), ('interested', 'NOUN'), ('understanding', 'NOUN'), ('Afghanistan', 'NOUN'), ('strategies', 'NOUN'), ('related', 'NOUN'), ('economic', 'NOUN'), ('development', 'NOUN'), ('governance', 'NOUN'), ('social', 'NOUN'), ('inclusion', 'NOUN'), ('Additionally', 'NOUN'), ('like', 'NOUN'), ('know', 'NOUN'), ('partnerships', 'NOUN'), ('international', 'NOUN'), ('organizations', 'NOUN'), ('UNDP', 'NOUN'), ('poverty', 'NOUN'), ('reduction', 'NOUN'), ('initiatives', 'NOUN'), ('gender', 'NOUN'), ('equality', 'NOUN'), ('measures', 'NOUN'), ('included', 'NOUN'), ('program', 'NOUN'), ('provide', 'NOUN'), ('details', 'NOUN'), ('planned', 'NOUN'), ('address', 'NOUN'), ('security', 'NOUN'), ('issues', 'NOUN'), ('sustainable', 'NOUN'), ('development', 'NOUN'), ('goals', 'NOUN'), ('timeframe', 'NOUN'), ('2015', 'NOUN'), ('-', 'NOUN'), ('2019', 'NOUN')]
     # Print the extracted entities
     print("All Entities and POS:", entities)
     # Generate DFs for main entities
@@ -191,6 +169,7 @@ def filter_semantics(user_query):
     filtered_df_backup_reference = pd.DataFrame() # Initialize an empty DataFrame
     allow_low = True
 
+    # START 
     for entity, label in entities:
         # print(entity)
         filtered_df_others = pd.concat([filtered_df_others, df[df['Document Title'].str.lower().str.contains(entity.lower(), na=False)]])
@@ -198,17 +177,18 @@ def filter_semantics(user_query):
         #Calculate similarity scores for each document title
         similarity_scores = []
         document_titles = []
+        similarity_score = 0
         
         # Iterate through each document title and calculate similarity score
         for title in filtered_df_others['Document Title']:
             if title is not None:
 
-                similarity_score = calculate_context_similarity(user_query,title) 
-                # print(entity)
-                # print(similarity_score)
-                # print(user_query)
-                # print(title)
-                # print("=================================")    
+                # if isInitialRun : 
+                #     similarity_score = jaccard_similarity(user_query,title)   
+                # else :
+                #     similarity_score = calculate_context_similarity(user_query,title)   
+                similarity_score = calculate_context_similarity(user_query,title)   
+
                 similarity_scores.append(similarity_score)
                 document_titles.append(title)
         
@@ -216,8 +196,13 @@ def filter_semantics(user_query):
         similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
         
         df_temp = pd.concat([df])
-
+        # threshold = 0
+        # if isInitialRun : 
+        #     threshold = 0.05
+        # else : 
+        #     threshold = 0.5
         threshold = 0.5
+
 
         # Filter df based on similarity scores greater than threshold for filtered_df_others
         filtered_df_others = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
@@ -226,6 +211,11 @@ def filter_semantics(user_query):
         #Check for location related e.g by country, language, locals
         if label in ['GPE', 'NORP', 'LANGUAGE', 'FAC']:
             filtered_df_country = pd.concat([filtered_df_country, df[df['Country Name'] == entity]])
+   
+    # END
+
+
+
     merged_df = pd.DataFrame()
     if filtered_df_others.empty and filtered_df_country.empty:
        print(f'on the reference df {filtered_df_backup_reference.empty}')
@@ -236,11 +226,12 @@ def filter_semantics(user_query):
     return merged_df
 
 
+ 
 #run search on the vector pkl embeddings
-def search_embeddings(user_query, client, embedding_model):
+def search_embeddings(user_query, client, embedding_model, isInitialRun):
     # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
     # Call filter_semantics function once and store the result in a variable
-    filtered_result = filter_semantics(user_query)
+    filtered_result = filter_semantics(user_query, isInitialRun)
     # Check if the result is not None before assigning it to df_filtered
     df_filtered = filtered_result if filtered_result is not None else None
 
@@ -320,7 +311,7 @@ def map_to_structure(qs, isInitialRun):
 
 ## module to extract text from documents and return the text and document codes
 def semanticSearchModule(user_query, client, embedding_model, isInitialRun):
-    qs = search_embeddings(user_query,client, embedding_model) #df, distances, indices
+    qs = search_embeddings(user_query,client, embedding_model,isInitialRun) #df, distances, indices
     # if qs != None :
     if qs[0] is not None:
         result_structure = map_to_structure(qs,isInitialRun)
