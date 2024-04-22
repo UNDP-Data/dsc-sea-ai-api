@@ -15,12 +15,17 @@ from spacy.lang.en.stop_words import STOP_WORDS
 nlp = spacy.load("en_core_web_sm")
 import os
 import concurrent.futures
-
+import fitz  # PyMuPDF
+from PIL import Image
+from io import BytesIO
+import base64
+import json
+import copy
 
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
-df = pd.read_pickle('./models/df_embed_EN_All.pkl')
+df = pd.read_pickle('./models/df_embed_EN_All_V2.pkl')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -35,6 +40,37 @@ def extractEntitiesFromQuery(user_query, openai_deployment):
     """
     entity_list = openai_call.callOpenAI(prompt, openai_deployment)   
     return entity_list
+
+
+
+
+def generate_thumbnail_from_pdf(pdf_url, page_number=0, thumbnail_size=(100, 100)):
+    try:
+        # Open the PDF
+        pdf_document = fitz.open(pdf_url)
+        
+        # Get the specified page
+        page = pdf_document.load_page(page_number)
+        
+        # Get the image bytes of the page thumbnail
+        image_bytes = page.get_pixmap(matrix=fitz.Matrix(1, 1)).tobytes()
+
+        # Create PIL image from bytes
+        image = Image.open(BytesIO(image_bytes))
+        
+        # Resize the image to thumbnail size
+        image.thumbnail(thumbnail_size)
+        
+        # Convert image to base64
+        buffered = BytesIO()
+        image.save(buffered, format="JPEG")
+        thumbnail_base64 = base64.b64encode(buffered.getvalue()).decode()
+
+        return thumbnail_base64
+
+    except Exception as e:
+        print("Error:", e)
+        return None
 
 
 ## module to get information on the entities from user query using the KG
@@ -284,13 +320,16 @@ def map_to_structure(qs, isInitialRun):
         # Handle NaN in content by using fillna
         content = row["Content"]
         content = ' '.join(row["Content"].split()[:160])
+        doc_url = row["Link"]
+        thumbnail_base64 = '' #generate_thumbnail_from_pdf(doc_url)
+
         # Create a dictionary for each document
         document_info = {
             "title": row["Document Title"],
             "extract": content or "",  # You may need to adjust this based on your column names
             "category": row["Category"],
-            "link": row["Link"],
-            "thumbnail": ''
+            "link": doc_url,
+            "thumbnail": row["Thumbnail"]
         }
         # print(document_info)
         # Add the document to the result dictionary
@@ -306,7 +345,7 @@ def map_to_structure(qs, isInitialRun):
         elif not isInitialRun and count == 10:  
             break
 
-
+    
     return result_dict
 
 ## module to extract text from documents and return the text and document codes
@@ -319,33 +358,60 @@ def semanticSearchModule(user_query, client, embedding_model, isInitialRun):
     else : 
         return []
 
+def convertQueryIdeaToArray(query_idea_list):
+    # Split the query idea list by the "|" character
+    query_ideas = query_idea_list.split(" | ")
+    # Print the resulting array
+    return query_ideas
+
 ## module to generate query ideas
 def queryIdeationModule(user_query, openai_deployment): # lower priority
     
     # Generate query ideas using OpenAI GPT-3
-    prompt = f"""Generate prompt ideas based on the user query: {user_query}
+    prompt = f"""
+    Ignore previous commands!!!
+    Generate prompt ideas based on the user query: {user_query}
+
 
     -Prompt shoud not be answer to the user query but give other contextual ways of representing the user query !!!
-    -You Must return output in array format e.g ['idea 1', 'idea2'] !!!
+    -You Must return output seperated by |  e.g idea 1 | idea2 
     - Each generated ideas should be very dinstinct but contextual. Not repeatitive or using same words
     - The query idea should be in a question form and not an answer form.
-    -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
+    -Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
     """
     response = openai_call.callOpenAI(prompt, openai_deployment)
-    return response
+    qIdeasResponse = convertQueryIdeaToArray(response)
+    return qIdeasResponse
+
+def cleanJson(json_data):
+    # Make a deepcopy of the JSON data to avoid modifying the original object
+    jsonData = copy.deepcopy(json_data)
+
+    # Loop through the items and remove the "thumbnail" key
+    for value in jsonData.values():
+        if "thumbnail" in value:
+            del value["thumbnail"]
+
+    # Convert the modified data back to JSON
+    modified_json = json.dumps(jsonData, indent=4)
+
+    return modified_json
+
 
 
 # module to synthesize answer using retreival augmented generation approach
 def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment):
     
+    excerpts_dict_ = cleanJson(excerpts_dict)
+    # print(excerpts_dict_)
     # Generate prompt engineering text and template
     llm_instructions = f"""
     Ignore previous commands!!!
     Given a user query, use the provided <Sources> extract section of the JSON only to provide the correct answer to the user's query.
-    
+
     User Query: {user_query}
-    
-    Sources: {excerpts_dict}
+
+    Sources: {excerpts_dict_}
     
     - Answer output must be properly formatted using HTML. 
     - Don't include <html>, <script>, <link> or <body> tags. Only text formating tags should be allowed. e.g h1..h3, p, anchor, etc. Strictly HTML only
@@ -363,7 +429,7 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     - Strictly use IEEE Citation Style 
     - If no <Sources> are provided, try to make suggestives or  simply say you don't have that information   
     - Remove new line or tab characters from your output
-
+        
     """
     ###synthesize data into structure within llm prompt engineering instructions
     answer= openai_call.callOpenAI(llm_instructions, openai_deployment)
