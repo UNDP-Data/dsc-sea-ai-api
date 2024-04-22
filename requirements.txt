@@ -21,3 +21,4 @@ scikit-learn
 websockets
 flask_cors
 flask_session
+PyMuPDF
