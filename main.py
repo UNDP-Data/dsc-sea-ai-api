@@ -132,7 +132,6 @@ def send_prompt_llm():
                 entities_dict = future_entities.result()
                 indicators_dict = future_indicators.result()
                 query_idea_list = future_query_ideas.result()
-                query_idea_list_to_array = []
 
                 isInitialRun = TRUE
                 future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
