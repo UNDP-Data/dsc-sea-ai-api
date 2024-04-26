@@ -90,13 +90,13 @@ def send_prompt_llm():
                 with concurrent.futures.ThreadPoolExecutor() as executor:
                 #user is requering ... get all relevant answers
                     future_entities = executor.submit(run_module, processing_modules.knowledgeGraphModule, openai_deployment)
-                    future_indicators = executor.submit(run_module, processing_modules.indicatorsModule)
+                    future_indicators = {} #executor.submit(run_module, processing_modules.indicatorsModule)
                     future_query_ideas = executor.submit(run_module, processing_modules.queryIdeationModule, openai_deployment)
 
                     # Get results from completed futures
                     entities_dict = future_entities.result()
 
-                    indicators_dict = future_indicators.result()
+                    indicators_dict = {} #future_indicators.result()
                     query_idea_list = future_query_ideas.result()
 
                     isInitialRun = False
@@ -124,12 +124,12 @@ def send_prompt_llm():
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 # Submit processing modules to the executor
                 future_entities = executor.submit(run_module, processing_modules.knowledgeGraphModule, openai_deployment)
-                future_indicators = executor.submit(run_module, processing_modules.indicatorsModule)
+                future_indicators ={} #executor.submit(run_module, processing_modules.indicatorsModule)
                 future_query_ideas = executor.submit(run_module, processing_modules.queryIdeationModule, openai_deployment)
 
                 # Get results from completed futures
                 entities_dict = future_entities.result()
-                indicators_dict = future_indicators.result()
+                indicators_dict = {} #future_indicators.result()
                 query_idea_list = future_query_ideas.result()
 
                 isInitialRun = TRUE

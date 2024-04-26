@@ -46,7 +46,7 @@ client = AzureOpenAI(
 encoding = tiktoken.get_encoding('cl100k_base')
 embedding_model = os.getenv("USER_QUERY_EMBEDDING_ENGINE") 
 
-df = pd.read_pickle('../data/indicator_meta_embed.pkl')
+df = pd.read_pickle('models/indicator_meta_embed.pkl')
 
  
 def create_embedding(row):
