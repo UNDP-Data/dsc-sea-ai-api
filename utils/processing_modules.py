@@ -23,6 +23,10 @@ import json
 import copy
 from country_named_entity_recognition import find_countries
 
+# import custom utils functions 
+import utils.indicator as indicator_module
+
+
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
@@ -133,8 +137,8 @@ def find_mentioned_country_code(user_query):
     # check if we have continent
     else:
         words = re.findall(r'\w+|[^\w\s]', user_query)
-        text = ' '.join(words)  # Join the tokens back into a string
-    
+        text = ' '.join(words)  # Join the tokens back into a string    
+
         world_info = awoc.AWOC()
         all_continents = set([continent.lower() for continent in world_info.get_continents_list()])
         for word in text.split():
@@ -466,6 +470,9 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     
     return answer.replace("</p>\n\n<p>", "<br/>").replace("</p>\n<p>","<br/>").replace("\n","<br/>")
 
+##Indicators
+
+
 ## module to get data for specific indicators which are identified is relevant to the user query
 def indicatorsModule(user_query): #lower priority
     
@@ -476,6 +483,7 @@ def indicatorsModule(user_query): #lower priority
     }#temp
     
     return indicators_dict
+
 
 
 
