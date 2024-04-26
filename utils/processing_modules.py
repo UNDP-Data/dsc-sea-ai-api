@@ -475,14 +475,8 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
 
 ## module to get data for specific indicators which are identified is relevant to the user query
 def indicatorsModule(user_query): #lower priority
-    
-    # find relevant indicators based on uesr query and extract values
-    indicators_dict={
-        "indicator-id-1":"value from indicator-id-1",
-        "indicator-id-2":"value from indicator-id-2"
-    }#temp
-    
-    return indicators_dict
+    return indicator_module.indicatorsModule(user_query)
+
 
 
 

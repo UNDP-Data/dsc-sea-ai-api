@@ -113,7 +113,8 @@ def send_prompt_llm():
                         "user_query": user_query,
                         "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
                         "query_ideas": query_idea_list if query_idea_list else [],
-                        "excerpts_dict" : entities_dict_thumbnail
+                        "excerpts_dict" : entities_dict_thumbnail,
+                        "indicators_dict": indicators_dict
                     }
                     
                             # Return the response
@@ -145,7 +146,8 @@ def send_prompt_llm():
                     "user_query": user_query,
                     "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
                     "query_ideas": query_idea_list if query_idea_list else [],
-                    "excerpts_dict" : excerpts_dict
+                    "excerpts_dict" : excerpts_dict,
+                    "indicators_dict": indicators_dict
                 }
 
                 # session['session_id'] = session_id #save the session id
