@@ -102,7 +102,6 @@ def send_prompt_llm():
                     isInitialRun = False
                     future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
                     excerpts_dict = future_excerpts.result()
-                    entities_dict_thumbnail = future_excerpts.result()
 
                     # Run synthesis module
                     answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
@@ -113,7 +112,7 @@ def send_prompt_llm():
                         "user_query": user_query,
                         "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
                         "query_ideas": query_idea_list if query_idea_list else [],
-                        "excerpts_dict" : entities_dict_thumbnail,
+                        "excerpts_dict" : excerpts_dict,
                         "indicators_dict": indicators_dict
                     }
                     
