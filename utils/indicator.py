@@ -29,7 +29,7 @@ load_dotenv()
 # from processing_modules_for_test_indicator import semanticSearchModule
 
 # List of file names
-file_names = ['WDICSV_1.csv', 'WDICSV_2.csv', 'WDICSV_3.csv']
+file_names = ['WDICSV_1.csv', 'WDICSV_2.csv', 'WDICSV_3.csv', 'WDICSV_4.csv', 'WDICSV_5.csv']
 
 # List to store DataFrames
 dfs = []
