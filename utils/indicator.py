@@ -28,7 +28,24 @@ load_dotenv()
 
 # from processing_modules_for_test_indicator import semanticSearchModule
 
-wdi_csv = pd.read_csv('data/WDI_CSV/WDICSV.csv')
+# List of file names
+file_names = ['WDICSV_1.csv', 'WDICSV_2.csv', 'WDICSV_3.csv', 'WDICSV_4.csv', 'WDICSV_5.csv']
+
+# List to store DataFrames
+dfs = []
+
+# Read each CSV file into a DataFrame and append to the list
+for file_name in file_names:
+    df = pd.read_csv(f'data/WDI_CSV/{file_name}')
+    dfs.append(df)
+
+# Concatenate all DataFrames into one
+wdi_csv = pd.concat(dfs, ignore_index=True)
+
+# Display the merged DataFrame
+print(wdi_csv)
+
+# wdi_csv = pd.read_csv('data/WDI_CSV/WDICSV.csv')
 # country meta data
 wdi_country = pd.read_csv('data/WDI_CSV/WDICountry.csv')
 # Series meta data
