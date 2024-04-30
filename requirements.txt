@@ -25,3 +25,4 @@ PyMuPDF
 country-named-entity-recognition
 a-world-of-countries
 tiktoken
+ast
