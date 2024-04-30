@@ -21,6 +21,11 @@ from io import BytesIO
 import base64
 import json
 import copy
+from country_named_entity_recognition import find_countries
+
+# import custom utils functions 
+import utils.indicator as indicator_module
+
 
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
@@ -116,8 +121,37 @@ def find_mentioned_countries(text):
     
     return list(countries)
 
+
+'''
+Previous 'find_mentioned_countries' can detect countries when they are formed correctly.
+
+'''
+# Extract mentioned countries' ISO3 code
+def find_mentioned_country_code(user_query):
+    countries = set()
+    extracted_countries = find_countries(user_query, is_ignore_case=True)
+    # check if we have country first
+    if extracted_countries:
+        for c in extracted_countries:
+            countries.add(c[0].alpha_3)
+    # check if we have continent
+    else:
+        words = re.findall(r'\w+|[^\w\s]', user_query)
+        text = ' '.join(words)  # Join the tokens back into a string    
+
+        world_info = awoc.AWOC()
+        all_continents = set([continent.lower() for continent in world_info.get_continents_list()])
+        for word in text.split():
+            word = word.lower()
+            # check if this continent
+            if word in all_continents:
+                target_countries = world_info.get_countries_list_of(word)
+                for country in target_countries:
+                    countries.add(world_info.get_country_data(country)['ISO3'])
+    return countries
+
 def filter_country(user_query):
-    mentioned_countries = find_mentioned_countries(user_query)
+    mentioned_countries = find_mentioned_country_code(user_query)
     # print(mentioned_countries)
     # Check if mentioned_countries is not empty
     if mentioned_countries:
@@ -436,14 +470,21 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     
     return answer.replace("</p>\n\n<p>", "<br/>").replace("</p>\n<p>","<br/>").replace("\n","<br/>")
 
+##Indicators
+
+
 ## module to get data for specific indicators which are identified is relevant to the user query
 def indicatorsModule(user_query): #lower priority
-    
-    # find relevant indicators based on uesr query and extract values
-    indicators_dict={
-        "indicator-id-1":"value from indicator-id-1",
-        "indicator-id-2":"value from indicator-id-2"
-    }#temp
-    
-    return indicators_dict
+    return indicator_module.indicatorsModule(user_query)
+
+
+
+
+
+
+
+
+
+
+
 
