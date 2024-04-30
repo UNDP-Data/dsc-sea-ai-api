@@ -1,6 +1,6 @@
 
 
-def to_csv_batch(src_csv, dst_dir, size=150000, index=False):
+def to_csv_batch(src_csv, dst_dir, size=90000, index=False):
 
     import pandas as pd
     import math
