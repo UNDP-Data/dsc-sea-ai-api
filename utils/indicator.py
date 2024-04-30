@@ -13,7 +13,6 @@ import spacy
 import csv
 nlp = spacy.load("en_core_web_sm")
 from sklearn.metrics.pairwise import cosine_similarity
-from sutime import SUTime
 import json
 from country_named_entity_recognition import find_countries
 import utils.processing_modules as processing_modules
