@@ -15,10 +15,14 @@ nlp = spacy.load("en_core_web_sm")
 from sklearn.metrics.pairwise import cosine_similarity
 from sutime import SUTime
 import json
-from datetime import datetime
 from country_named_entity_recognition import find_countries
 import utils.processing_modules as processing_modules
 import sys
+import utils.openai_call as openai_call
+import ast
+import datetime
+
+
 sys.path.insert(1, '../utils')
 
 load_dotenv()
@@ -139,10 +143,27 @@ def timex3_to_year_list(timex3_list):
     return list(year_list)
 
 
+# def find_target_period(user_query):
+#     sutime = SUTime(mark_time_ranges = True, include_range = True)
+#     res = sutime.parse(user_query)
+#     return timex3_to_year_list(res)
+
 def find_target_period(user_query):
-    sutime = SUTime(mark_time_ranges = True, include_range = True)
-    res = sutime.parse(user_query)
-    return timex3_to_year_list(res)
+    current_year = datetime.date.today().year
+    gpt_prompt = f"""
+    Identify and extract all the years mentioned in the provided user query, returning them as a list. Current year is {current_year}
+    The format of the output should be a list of strings, each representing a year, e.g., [\"2020\", \"2021\"].
+
+    User Query: {user_query}
+    """
+
+    answer = openai_call.callOpenAI(gpt_prompt,openai_deployment)
+
+    year_list = ast.literal_eval(answer)
+    
+    return year_list if year_list else []
+
+
 
 def map_to_structure(countries, indicators, years):
     # load all indicator dataset
