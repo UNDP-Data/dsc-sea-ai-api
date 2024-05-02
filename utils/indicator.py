@@ -8,7 +8,6 @@ import re
 import tiktoken
 import time
 import faiss
-import awoc
 import spacy
 import csv
 nlp = spacy.load("en_core_web_sm")
@@ -43,7 +42,7 @@ for file_name in file_names:
 wdi_csv = pd.concat(dfs, ignore_index=True)
 
 # Display the merged DataFrame
-print(wdi_csv)
+# print(wdi_csv)
 
 # wdi_csv = pd.read_csv('data/WDI_CSV/WDICSV.csv')
 # country meta data
