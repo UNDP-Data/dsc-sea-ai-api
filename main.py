@@ -124,17 +124,17 @@ def send_prompt_llm():
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 # Submit processing modules to the executor
                 future_entities = executor.submit(run_module, processing_modules.knowledgeGraphModule, openai_deployment)
-                future_indicators =executor.submit(run_module, processing_modules.indicatorsModule)
+                future_indicators = {} #executor.submit(run_module, processing_modules.indicatorsModule)
                 future_query_ideas = executor.submit(run_module, processing_modules.queryIdeationModule, openai_deployment)
 
                 # Get results from completed futures
                 entities_dict = future_entities.result()
-                indicators_dict = future_indicators.result()
+                indicators_dict = {} #future_indicators.result()
                 query_idea_list = future_query_ideas.result()
 
                 isInitialRun = TRUE
-                future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
-                excerpts_dict = future_excerpts.result()
+                # future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
+                excerpts_dict = {}#future_excerpts.result()
 
                 # Run synthesis module
                 # answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
