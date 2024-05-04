@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Hazardous waste": [
+                {
+                    "Relation": "Causes",
+                    "Object": "Pollution",
+                    "Strength": "8",
+                    "Description": "Hazardous waste can cause pollution in air, water, and soil."
+                },
+                {
+                    "Relation": "Poses health risks",
+                    "Object": "Toxicity",
+                    "Strength": "9",
+                    "Description": "Hazardous waste is toxic and can have harmful effects on human health."
+                },
+                {
+                    "Relation": "Leads to",
+                    "Object": "Contamination",
+                    "Strength": "7",
+                    "Description": "Hazardous waste can contaminate the environment, making it unsafe for living organisms."
+                },
+                {
+                    "Relation": "Requires proper",
+                    "Object": "Disposal",
+                    "Strength": "6",
+                    "Description": "Hazardous waste needs to be disposed of properly to prevent harm to the environment and human health."
+                }
+            ]
+        }
+    }
+}

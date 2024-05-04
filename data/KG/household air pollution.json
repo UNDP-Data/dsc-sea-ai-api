@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "household air pollution": [
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Cooking stoves",
+                    "Strength": "8",
+                    "Description": "Household air pollution is primarily caused by inefficient cooking stoves that release harmful pollutants into the air."
+                },
+                {
+                    "Relation": "Caused by",
+                    "Object": "Solid fuels",
+                    "Strength": "9",
+                    "Description": "The use of solid fuels such as wood, coal, and dung for cooking and heating contributes to household air pollution."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Indoor air quality",
+                    "Strength": "10",
+                    "Description": "Household air pollution has a significant impact on indoor air quality, leading to respiratory problems and other health issues."
+                },
+                {
+                    "Relation": "Mitigated by",
+                    "Object": "Ventilation",
+                    "Strength": "7",
+                    "Description": "Proper ventilation systems can help reduce household air pollution by improving air circulation and removing pollutants."
+                }
+            ]
+        }
+    }
+}

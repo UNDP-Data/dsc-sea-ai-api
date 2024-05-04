@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Teachers": [
+                {
+                    "Relation": "Teach",
+                    "Object": "Students",
+                    "Strength": "8",
+                    "Description": "Teachers educate and impart knowledge to students."
+                },
+                {
+                    "Relation": "Design",
+                    "Object": "Curriculum",
+                    "Strength": "9",
+                    "Description": "Teachers design the curriculum to be taught in schools."
+                },
+                {
+                    "Relation": "Work",
+                    "Object": "Schools",
+                    "Strength": "7",
+                    "Description": "Teachers work in schools to deliver education."
+                },
+                {
+                    "Relation": "Communicate",
+                    "Object": "Parents",
+                    "Strength": "6",
+                    "Description": "Teachers communicate with parents to discuss students' progress."
+                },
+                {
+                    "Relation": "Teach",
+                    "Object": "Students",
+                    "Strength": "8",
+                    "Description": "Teachers educate and impart knowledge to students."
+                },
+                {
+                    "Relation": "Design",
+                    "Object": "Curriculum",
+                    "Strength": "9",
+                    "Description": "Teachers design the curriculum to be taught in schools."
+                },
+                {
+                    "Relation": "Work",
+                    "Object": "Schools",
+                    "Strength": "7",
+                    "Description": "Teachers work in schools to deliver education."
+                },
+                {
+                    "Relation": "Communicate",
+                    "Object": "Parents",
+                    "Strength": "6",
+                    "Description": "Teachers communicate with parents to discuss students' progress."
+                }
+            ]
+        }
+    }
+}

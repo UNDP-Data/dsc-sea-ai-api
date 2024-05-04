@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Greenhouse gases": [
+                {
+                    "Relation": "Contribution",
+                    "Object": "Carbon dioxide",
+                    "Strength": "8",
+                    "Description": "Carbon dioxide is the primary greenhouse gas responsible for global warming."
+                },
+                {
+                    "Relation": "Contribution",
+                    "Object": "Methane",
+                    "Strength": "7",
+                    "Description": "Methane is a potent greenhouse gas released from various human activities and natural sources."
+                },
+                {
+                    "Relation": "Contribution",
+                    "Object": "Nitrous oxide",
+                    "Strength": "6",
+                    "Description": "Nitrous oxide is a powerful greenhouse gas emitted from agricultural and industrial activities."
+                },
+                {
+                    "Relation": "Contribution",
+                    "Object": "Water vapor",
+                    "Strength": "5",
+                    "Description": "Water vapor is the most abundant greenhouse gas, but its concentration is influenced by other greenhouse gases."
+                }
+            ]
+        }
+    }
+}

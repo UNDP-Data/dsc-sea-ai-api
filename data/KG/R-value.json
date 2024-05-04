@@ -1,0 +1,106 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "R-value": [
+                {
+                    "Relation": "Improves",
+                    "Object": "Insulation",
+                    "Strength": "8",
+                    "Description": "Insulation materials with higher R-values provide better resistance to heat flow, reducing the amount of energy needed for heating and cooling."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Windows",
+                    "Strength": "6",
+                    "Description": "Windows with low R-values allow more heat transfer, leading to energy loss. Higher R-value windows can improve energy efficiency."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "Thermal Resistance",
+                    "Strength": "10",
+                    "Description": "R-value is a measure of thermal resistance, indicating how well a material or assembly resists heat flow."
+                },
+                {
+                    "Relation": "Influenced by",
+                    "Object": "Air Leakage",
+                    "Strength": "7",
+                    "Description": "Air leakage can reduce the effectiveness of insulation and lower the overall R-value of a building envelope."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Insulation",
+                    "Strength": "8",
+                    "Description": "Insulation materials with higher R-values provide better resistance to heat flow, reducing the amount of energy needed for heating and cooling."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Windows",
+                    "Strength": "6",
+                    "Description": "Windows with low R-values allow more heat transfer, leading to energy loss. Higher R-value windows can improve energy efficiency."
+                },
+                {
+                    "Relation": "Measures",
+                    "Object": "Air Leakage",
+                    "Strength": "7",
+                    "Description": "R-value is used to quantify the resistance to heat flow through air leakage in buildings. Lower air leakage results in higher R-values."
+                },
+                {
+                    "Relation": "Calculates",
+                    "Object": "Thermal Resistance",
+                    "Strength": "9",
+                    "Description": "R-value is a measure of thermal resistance, indicating how well a material or assembly resists heat transfer. It is calculated using the temperature difference and heat flux."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Insulation",
+                    "Strength": "8",
+                    "Description": "Insulation materials with higher R-values provide better resistance to heat flow, reducing the amount of energy needed for heating and cooling."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Windows",
+                    "Strength": "6",
+                    "Description": "Windows with low R-values allow more heat transfer, leading to energy loss. Higher R-value windows can improve energy efficiency."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "Thermal Resistance",
+                    "Strength": "10",
+                    "Description": "R-value is a measure of thermal resistance, indicating how well a material or assembly resists heat flow."
+                },
+                {
+                    "Relation": "Influenced by",
+                    "Object": "Air Leakage",
+                    "Strength": "7",
+                    "Description": "Air leakage can reduce the effectiveness of insulation and lower the overall R-value of a building envelope."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Insulation",
+                    "Strength": "8",
+                    "Description": "Insulation materials with higher R-values provide better resistance to heat flow, reducing the amount of energy needed for heating and cooling."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Windows",
+                    "Strength": "6",
+                    "Description": "Windows with low R-values allow more heat transfer, leading to energy loss. Higher R-value windows can improve energy efficiency."
+                },
+                {
+                    "Relation": "Measures",
+                    "Object": "Air Leakage",
+                    "Strength": "7",
+                    "Description": "R-value is used to quantify the resistance to heat flow through air leakage in buildings. Lower air leakage results in higher R-values."
+                },
+                {
+                    "Relation": "Calculates",
+                    "Object": "Thermal Resistance",
+                    "Strength": "9",
+                    "Description": "R-value is a measure of thermal resistance, indicating how well a material or assembly resists heat transfer. It is calculated using the temperature difference and heat flux."
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,106 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Solar Panel": [
+                {
+                    "Relation": "consists of",
+                    "Object": "Solar Cell",
+                    "Strength": "8",
+                    "Description": "Solar panels consist of multiple solar cells that convert sunlight into electricity."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Inverter",
+                    "Strength": "7",
+                    "Description": "Solar panels require inverters to convert the direct current (DC) electricity they produce into usable alternating current (AC) electricity."
+                },
+                {
+                    "Relation": "stores excess energy in",
+                    "Object": "Battery",
+                    "Strength": "9",
+                    "Description": "Solar panels can store excess energy in batteries for later use, allowing for a more reliable and continuous power supply."
+                },
+                {
+                    "Relation": "can be connected to",
+                    "Object": "Grid",
+                    "Strength": "6",
+                    "Description": "Solar panels can be connected to the electrical grid, allowing for the transfer of excess energy to the grid and the ability to draw power from the grid when needed."
+                },
+                {
+                    "Relation": "consists of",
+                    "Object": "Solar Cell",
+                    "Strength": "8",
+                    "Description": "Solar panels consist of multiple solar cells that convert sunlight into electricity."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Inverter",
+                    "Strength": "7",
+                    "Description": "Solar panels require inverters to convert the direct current (DC) electricity they produce into alternating current (AC) electricity that can be used in homes and businesses."
+                },
+                {
+                    "Relation": "stores excess energy in",
+                    "Object": "Battery",
+                    "Strength": "6",
+                    "Description": "Solar panels can store excess energy in batteries for later use, allowing for a more reliable and continuous power supply."
+                },
+                {
+                    "Relation": "can be connected to",
+                    "Object": "Grid",
+                    "Strength": "9",
+                    "Description": "Solar panels can be connected to the electrical grid, allowing for the transfer of excess energy to the grid and the ability to draw electricity from the grid when solar production is low."
+                },
+                {
+                    "Relation": "consists of",
+                    "Object": "Solar Cell",
+                    "Strength": "8",
+                    "Description": "Solar panels consist of multiple solar cells that convert sunlight into electricity."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Inverter",
+                    "Strength": "7",
+                    "Description": "Solar panels require inverters to convert the direct current (DC) electricity they produce into usable alternating current (AC) electricity."
+                },
+                {
+                    "Relation": "stores excess energy in",
+                    "Object": "Battery",
+                    "Strength": "9",
+                    "Description": "Solar panels can store excess energy in batteries for later use, allowing for a more reliable and continuous power supply."
+                },
+                {
+                    "Relation": "can be connected to",
+                    "Object": "Grid",
+                    "Strength": "6",
+                    "Description": "Solar panels can be connected to the electrical grid, allowing for the transfer of excess energy to the grid and the ability to draw power from the grid when needed."
+                },
+                {
+                    "Relation": "consists of",
+                    "Object": "Solar Cell",
+                    "Strength": "8",
+                    "Description": "Solar panels consist of multiple solar cells that convert sunlight into electricity."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Inverter",
+                    "Strength": "7",
+                    "Description": "Solar panels require inverters to convert the direct current (DC) electricity they produce into alternating current (AC) electricity that can be used in homes and businesses."
+                },
+                {
+                    "Relation": "stores excess energy in",
+                    "Object": "Battery",
+                    "Strength": "6",
+                    "Description": "Solar panels can store excess energy in batteries for later use, allowing for a more reliable and continuous power supply."
+                },
+                {
+                    "Relation": "can be connected to",
+                    "Object": "Grid",
+                    "Strength": "9",
+                    "Description": "Solar panels can be connected to the electrical grid, allowing for the transfer of excess energy to the grid and the ability to draw electricity from the grid when solar production is low."
+                }
+            ]
+        }
+    }
+}

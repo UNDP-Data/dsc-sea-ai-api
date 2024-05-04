@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Women": [
+                {
+                    "Relation": "Empowerment",
+                    "Object": "Education",
+                    "Strength": "8",
+                    "Description": "Access to education is crucial for empowering women and promoting gender equality."
+                },
+                {
+                    "Relation": "Health",
+                    "Object": "Healthcare",
+                    "Strength": "9",
+                    "Description": "Ensuring women have access to quality healthcare is essential for their well-being and the well-being of their families."
+                },
+                {
+                    "Relation": "Employment",
+                    "Object": "Workforce",
+                    "Strength": "7",
+                    "Description": "Promoting women's participation in the workforce is important for economic growth and gender equality."
+                },
+                {
+                    "Relation": "Representation",
+                    "Object": "Politics",
+                    "Strength": "6",
+                    "Description": "Increasing women's representation in politics is crucial for achieving gender equality and inclusive decision-making."
+                }
+            ]
+        }
+    }
+}

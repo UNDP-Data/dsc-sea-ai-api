@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Government agencies": [
+                {
+                    "Relation": "Regulates",
+                    "Object": "Department of Energy",
+                    "Strength": "8",
+                    "Description": "The Department of Energy regulates energy production, distribution, and usage in the United States."
+                },
+                {
+                    "Relation": "Enforces regulations of",
+                    "Object": "Environmental Protection Agency",
+                    "Strength": "9",
+                    "Description": "The Environmental Protection Agency enforces regulations related to environmental protection and sustainability."
+                },
+                {
+                    "Relation": "Oversees",
+                    "Object": "Federal Communications Commission",
+                    "Strength": "6",
+                    "Description": "The Federal Communications Commission oversees the regulation of communication services and infrastructure."
+                },
+                {
+                    "Relation": "Funds research conducted by",
+                    "Object": "National Institutes of Health",
+                    "Strength": "7",
+                    "Description": "The National Institutes of Health funds research related to health and medical advancements."
+                },
+                {
+                    "Relation": "Regulates",
+                    "Object": "Department of Energy",
+                    "Strength": "8",
+                    "Description": "The Department of Energy regulates energy production, distribution, and usage in the United States."
+                },
+                {
+                    "Relation": "Enforces regulations of",
+                    "Object": "Environmental Protection Agency",
+                    "Strength": "9",
+                    "Description": "The Environmental Protection Agency enforces regulations related to environmental protection and sustainability."
+                },
+                {
+                    "Relation": "Oversees",
+                    "Object": "Federal Communications Commission",
+                    "Strength": "6",
+                    "Description": "The Federal Communications Commission oversees the regulation of communication services and infrastructure."
+                },
+                {
+                    "Relation": "Funds research conducted by",
+                    "Object": "National Institutes of Health",
+                    "Strength": "7",
+                    "Description": "The National Institutes of Health funds research related to health and medical advancements."
+                }
+            ]
+        }
+    }
+}

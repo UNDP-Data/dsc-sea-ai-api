@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Photovoltaic cells": [
+                {
+                    "Relation": "convert sunlight into electricity",
+                    "Object": "Solar panels",
+                    "Strength": "9",
+                    "Description": "Photovoltaic cells are the main component of solar panels and they convert sunlight into electricity."
+                }
+            ]
+        }
+    }
+}

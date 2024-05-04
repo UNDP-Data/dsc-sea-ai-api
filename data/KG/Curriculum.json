@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Curriculum": [
+                {
+                    "Relation": "Includes",
+                    "Object": "Subject",
+                    "Strength": "8",
+                    "Description": "The curriculum includes various subjects that students need to study."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Textbook",
+                    "Strength": "7",
+                    "Description": "The curriculum requires the use of specific textbooks for learning."
+                },
+                {
+                    "Relation": "Assesses",
+                    "Object": "Assessment",
+                    "Strength": "9",
+                    "Description": "The curriculum assesses students' understanding through assessments."
+                },
+                {
+                    "Relation": "Aims to achieve",
+                    "Object": "Learning Objective",
+                    "Strength": "10",
+                    "Description": "The curriculum aims to achieve specific learning objectives."
+                },
+                {
+                    "Relation": "Includes",
+                    "Object": "Subject",
+                    "Strength": "8",
+                    "Description": "The curriculum includes various subjects that students need to study."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Textbook",
+                    "Strength": "7",
+                    "Description": "The curriculum requires the use of specific textbooks for learning."
+                },
+                {
+                    "Relation": "Assesses",
+                    "Object": "Assessment",
+                    "Strength": "9",
+                    "Description": "The curriculum assesses students' understanding through assessments."
+                },
+                {
+                    "Relation": "Aims to achieve",
+                    "Object": "Learning Objective",
+                    "Strength": "10",
+                    "Description": "The curriculum aims to achieve specific learning objectives."
+                }
+            ]
+        }
+    }
+}

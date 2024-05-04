@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "methane": [
+                {
+                    "Relation": "contribution to global warming",
+                    "Object": "carbon dioxide",
+                    "Strength": "8",
+                    "Description": "Methane is a potent greenhouse gas that contributes to global warming when released into the atmosphere. It has a much higher warming potential than carbon dioxide."
+                },
+                {
+                    "Relation": "source of energy",
+                    "Object": "natural gas",
+                    "Strength": "9",
+                    "Description": "Methane is the primary component of natural gas, which is used as a source of energy for heating, cooking, and electricity generation."
+                },
+                {
+                    "Relation": "precursor for synthesis",
+                    "Object": "methanol",
+                    "Strength": "6",
+                    "Description": "Methane can be used as a precursor for the synthesis of methanol, a versatile chemical compound used in various industrial processes."
+                },
+                {
+                    "Relation": "consumed by",
+                    "Object": "methanotrophs",
+                    "Strength": "7",
+                    "Description": "Methanotrophs are microorganisms that can consume methane as a source of carbon and energy, playing a role in mitigating methane emissions."
+                },
+                {
+                    "Relation": "contribution to global warming",
+                    "Object": "carbon dioxide",
+                    "Strength": "8",
+                    "Description": "Methane is a potent greenhouse gas that contributes to global warming when released into the atmosphere. It has a much higher warming potential than carbon dioxide."
+                },
+                {
+                    "Relation": "source of energy",
+                    "Object": "natural gas",
+                    "Strength": "9",
+                    "Description": "Methane is the primary component of natural gas, which is used as a source of energy for heating, cooking, and electricity generation."
+                },
+                {
+                    "Relation": "precursor for synthesis",
+                    "Object": "methanol",
+                    "Strength": "6",
+                    "Description": "Methane can be used as a precursor for the synthesis of methanol, a versatile chemical compound used in various industrial processes."
+                },
+                {
+                    "Relation": "consumed by",
+                    "Object": "methanotrophs",
+                    "Strength": "7",
+                    "Description": "Methanotrophs are microorganisms that can consume methane as a source of carbon and energy, playing a role in mitigating methane emissions."
+                }
+            ]
+        }
+    }
+}

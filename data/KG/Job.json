@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Job": [
+                {
+                    "Relation": "requires",
+                    "Object": "Education",
+                    "Strength": "8",
+                    "Description": "The level of education required for the job"
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Experience",
+                    "Strength": "9",
+                    "Description": "The amount of work experience required for the job"
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Skills",
+                    "Strength": "7",
+                    "Description": "The specific skills required for the job"
+                },
+                {
+                    "Relation": "offers",
+                    "Object": "Salary",
+                    "Strength": "10",
+                    "Description": "The salary range offered for the job"
+                }
+            ]
+        }
+    }
+}

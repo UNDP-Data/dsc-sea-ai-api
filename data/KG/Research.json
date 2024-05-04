@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Research": [
+                {
+                    "Relation": "Conducted by",
+                    "Object": "Scientist",
+                    "Strength": "8",
+                    "Description": "Scientists conduct research to explore new discoveries and advancements."
+                },
+                {
+                    "Relation": "Performed at",
+                    "Object": "Laboratory",
+                    "Strength": "9",
+                    "Description": "Research is often performed in specialized laboratories equipped with necessary equipment and resources."
+                },
+                {
+                    "Relation": "Published in",
+                    "Object": "Publication",
+                    "Strength": "7",
+                    "Description": "Research findings are often published in scientific journals or other publications to share knowledge with the scientific community."
+                },
+                {
+                    "Relation": "Funded by",
+                    "Object": "Funding Agency",
+                    "Strength": "6",
+                    "Description": "Research projects often require funding from government agencies, private foundations, or other funding agencies."
+                },
+                {
+                    "Relation": "Conducted by",
+                    "Object": "Scientist",
+                    "Strength": "8",
+                    "Description": "Scientists conduct research to explore new discoveries and advancements."
+                },
+                {
+                    "Relation": "Performed at",
+                    "Object": "Laboratory",
+                    "Strength": "9",
+                    "Description": "Research is often performed in specialized laboratories equipped with necessary equipment and resources."
+                },
+                {
+                    "Relation": "Published in",
+                    "Object": "Publication",
+                    "Strength": "7",
+                    "Description": "Research findings are often published in scientific journals or other publications to share knowledge with the scientific community."
+                },
+                {
+                    "Relation": "Funded by",
+                    "Object": "Funding Agency",
+                    "Strength": "6",
+                    "Description": "Research projects often require funding from government agencies, private foundations, or other funding agencies."
+                }
+            ]
+        }
+    }
+}

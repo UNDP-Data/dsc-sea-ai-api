@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Hydroelectric Power Plant": [
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Water",
+                    "Strength": "9",
+                    "Description": "Hydroelectric power plants use the force of flowing or falling water to generate electricity."
+                },
+                {
+                    "Relation": "Converts",
+                    "Object": "Turbine",
+                    "Strength": "8",
+                    "Description": "The turbine in a hydroelectric power plant converts the kinetic energy of water into mechanical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Generator",
+                    "Strength": "9",
+                    "Description": "The generator in a hydroelectric power plant converts the mechanical energy from the turbine into electrical energy."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Dam",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power plants require a dam to create a reservoir of water, which provides the necessary head or pressure for generating electricity."
+                }
+            ]
+        }
+    }
+}

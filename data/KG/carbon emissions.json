@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Carbon Emissions": [
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Fossil Fuels",
+                    "Strength": "9",
+                    "Description": "Burning fossil fuels releases carbon dioxide, a major greenhouse gas, into the atmosphere."
+                },
+                {
+                    "Relation": "Alternative to",
+                    "Object": "Renewable Energy",
+                    "Strength": "8",
+                    "Description": "Using renewable energy sources like solar or wind power can reduce carbon emissions compared to fossil fuels."
+                },
+                {
+                    "Relation": "Caused by",
+                    "Object": "Transportation",
+                    "Strength": "7",
+                    "Description": "Transportation activities, especially those relying on fossil fuel-powered vehicles, contribute significantly to carbon emissions."
+                },
+                {
+                    "Relation": "Exacerbated by",
+                    "Object": "Deforestation",
+                    "Strength": "6",
+                    "Description": "Deforestation increases carbon emissions as trees absorb carbon dioxide and their removal reduces the planet's capacity to absorb greenhouse gases."
+                }
+            ]
+        }
+    }
+}

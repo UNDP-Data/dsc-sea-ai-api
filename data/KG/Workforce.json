@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Workforce": [
+                {
+                    "Relation": "consists of",
+                    "Object": "Employee",
+                    "Strength": "8",
+                    "Description": "The workforce consists of individual employees who contribute to the organization."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Job",
+                    "Strength": "9",
+                    "Description": "The workforce requires various job positions to fulfill different roles and responsibilities."
+                },
+                {
+                    "Relation": "enhanced by",
+                    "Object": "Training",
+                    "Strength": "7",
+                    "Description": "The workforce can be enhanced through training programs to improve skills and knowledge."
+                },
+                {
+                    "Relation": "measured by",
+                    "Object": "Productivity",
+                    "Strength": "6",
+                    "Description": "The workforce's performance and efficiency can be measured using productivity metrics."
+                }
+            ]
+        }
+    }
+}

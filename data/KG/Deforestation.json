@@ -1,0 +1,178 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Deforestation": [
+                {
+                    "Relation": "Causes",
+                    "Object": "Rainforest",
+                    "Strength": "8",
+                    "Description": "Deforestation is often caused by clearing rainforests for various purposes such as agriculture, logging, or urbanization."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Logging",
+                    "Strength": "9",
+                    "Description": "Deforestation is a direct result of extensive logging activities, where trees are cut down for timber and other wood products."
+                },
+                {
+                    "Relation": "Driven by",
+                    "Object": "Palm Oil Plantations",
+                    "Strength": "7",
+                    "Description": "Deforestation is driven by the expansion of palm oil plantations, which often involves clearing large areas of forests."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Climate Change",
+                    "Strength": "10",
+                    "Description": "Deforestation contributes significantly to climate change as trees absorb carbon dioxide and their removal releases stored carbon into the atmosphere."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Rainforest",
+                    "Strength": "8",
+                    "Description": "Deforestation is often caused by clearing rainforests for various purposes such as agriculture, logging, or urbanization."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Logging",
+                    "Strength": "9",
+                    "Description": "Deforestation is a direct result of extensive logging activities, where trees are cut down for timber and other wood products."
+                },
+                {
+                    "Relation": "Driven by",
+                    "Object": "Palm Oil Plantations",
+                    "Strength": "7",
+                    "Description": "Deforestation is driven by the expansion of palm oil plantations, which often involves clearing large areas of forests."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Climate Change",
+                    "Strength": "10",
+                    "Description": "Deforestation contributes significantly to climate change as trees absorb carbon dioxide and their removal releases stored carbon into the atmosphere."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Rainforest",
+                    "Strength": "8",
+                    "Description": "Deforestation is often caused by clearing rainforests for various purposes such as agriculture, logging, or urbanization."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Logging",
+                    "Strength": "9",
+                    "Description": "Deforestation is a direct result of extensive logging activities, where trees are cut down for timber and other wood products."
+                },
+                {
+                    "Relation": "Driven by",
+                    "Object": "Palm Oil Plantations",
+                    "Strength": "7",
+                    "Description": "Deforestation is driven by the expansion of palm oil plantations, which often involves clearing large areas of forests."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Climate Change",
+                    "Strength": "10",
+                    "Description": "Deforestation contributes significantly to climate change as trees absorb carbon dioxide and their removal releases stored carbon into the atmosphere."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Rainforest",
+                    "Strength": "8",
+                    "Description": "Deforestation is often caused by clearing rainforests for various purposes such as agriculture, logging, or urbanization."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Logging",
+                    "Strength": "9",
+                    "Description": "Deforestation is a direct result of extensive logging activities, where trees are cut down for timber and other wood products."
+                },
+                {
+                    "Relation": "Driven by",
+                    "Object": "Palm Oil Plantations",
+                    "Strength": "7",
+                    "Description": "Deforestation is driven by the expansion of palm oil plantations, which often involves clearing large areas of forests."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Climate Change",
+                    "Strength": "10",
+                    "Description": "Deforestation contributes significantly to climate change as trees absorb carbon dioxide and their removal releases stored carbon into the atmosphere."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Rainforest",
+                    "Strength": "8",
+                    "Description": "Deforestation is often caused by clearing rainforests for various purposes such as agriculture, logging, or urbanization."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Logging",
+                    "Strength": "9",
+                    "Description": "Deforestation is a direct result of extensive logging activities, where trees are cut down for timber and other wood products."
+                },
+                {
+                    "Relation": "Driven by",
+                    "Object": "Palm Oil Plantations",
+                    "Strength": "7",
+                    "Description": "Deforestation is driven by the expansion of palm oil plantations, which often involves clearing large areas of forests."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Climate Change",
+                    "Strength": "10",
+                    "Description": "Deforestation contributes significantly to climate change as trees absorb carbon dioxide and their removal releases stored carbon into the atmosphere."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Rainforest",
+                    "Strength": "8",
+                    "Description": "Deforestation is often caused by clearing rainforests for various purposes such as agriculture, logging, or urbanization."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Logging",
+                    "Strength": "9",
+                    "Description": "Deforestation is a direct result of extensive logging activities, where trees are cut down for timber and other wood products."
+                },
+                {
+                    "Relation": "Driven by",
+                    "Object": "Palm Oil Plantations",
+                    "Strength": "7",
+                    "Description": "Deforestation is driven by the expansion of palm oil plantations, which often involves clearing large areas of forests."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Climate Change",
+                    "Strength": "10",
+                    "Description": "Deforestation contributes significantly to climate change as trees absorb carbon dioxide and their removal releases stored carbon into the atmosphere."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Rainforest",
+                    "Strength": "8",
+                    "Description": "Deforestation is often caused by clearing rainforests for various purposes such as agriculture, logging, or urbanization."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Logging",
+                    "Strength": "9",
+                    "Description": "Deforestation is a direct result of extensive logging activities, where trees are cut down for timber and other wood products."
+                },
+                {
+                    "Relation": "Driven by",
+                    "Object": "Palm Oil Plantations",
+                    "Strength": "7",
+                    "Description": "Deforestation is driven by the expansion of palm oil plantations, which often involves clearing large areas of forests."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Climate Change",
+                    "Strength": "10",
+                    "Description": "Deforestation contributes significantly to climate change as trees absorb carbon dioxide and their removal releases stored carbon into the atmosphere."
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Wind direction": [
+                {
+                    "Relation": "Affects",
+                    "Object": "Wind speed",
+                    "Strength": "8",
+                    "Description": "The wind direction determines the speed and intensity of the wind."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "Compass",
+                    "Strength": "6",
+                    "Description": "The wind direction is measured using a compass to determine the cardinal direction."
+                },
+                {
+                    "Relation": "Indicated by",
+                    "Object": "Weather vane",
+                    "Strength": "7",
+                    "Description": "A weather vane points in the direction from which the wind is blowing, indicating the wind direction."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "Anemometer",
+                    "Strength": "9",
+                    "Description": "An anemometer measures the wind speed and direction, providing information about the wind direction."
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "tire pressure": [
+                {
+                    "Relation": "affects",
+                    "Object": "tire",
+                    "Strength": "8",
+                    "Description": "The tire pressure directly affects the performance and safety of the tire."
+                },
+                {
+                    "Relation": "measures",
+                    "Object": "pressure sensor",
+                    "Strength": "7",
+                    "Description": "Pressure sensors are used to measure and monitor the tire pressure."
+                },
+                {
+                    "Relation": "checks",
+                    "Object": "tire gauge",
+                    "Strength": "6",
+                    "Description": "Tire gauges are used to check and adjust the tire pressure."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "tire maintenance",
+                    "Strength": "9",
+                    "Description": "Proper tire maintenance includes regularly checking and maintaining the tire pressure."
+                }
+            ]
+        }
+    }
+}

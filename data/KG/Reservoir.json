@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Reservoir": [
+                {
+                    "Relation": "Provides water for",
+                    "Object": "Hydropower",
+                    "Strength": "8",
+                    "Description": "Reservoirs store water that can be released to generate electricity through hydropower plants."
+                },
+                {
+                    "Relation": "Supplies water for",
+                    "Object": "Water Supply",
+                    "Strength": "9",
+                    "Description": "Reservoirs serve as a source of water for various purposes, including drinking water supply for communities."
+                },
+                {
+                    "Relation": "Controls water levels for",
+                    "Object": "Flood Control",
+                    "Strength": "7",
+                    "Description": "Reservoirs can regulate water levels to mitigate the risk of flooding in downstream areas."
+                },
+                {
+                    "Relation": "Offers opportunities for",
+                    "Object": "Recreation",
+                    "Strength": "6",
+                    "Description": "Reservoirs provide recreational activities such as boating, fishing, and swimming for local communities and tourists."
+                }
+            ]
+        }
+    }
+}

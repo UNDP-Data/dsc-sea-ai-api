@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Policy": [
+                {
+                    "Relation": "Implementation",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Government implements policies to regulate and promote sustainable energy practices."
+                },
+                {
+                    "Relation": "Compliance",
+                    "Object": "Industry",
+                    "Strength": "7",
+                    "Description": "Industry complies with policies to ensure sustainable energy practices."
+                },
+                {
+                    "Relation": "Incentives",
+                    "Object": "Government",
+                    "Strength": "9",
+                    "Description": "Government provides incentives to encourage adoption of sustainable energy policies."
+                },
+                {
+                    "Relation": "Awareness",
+                    "Object": "Citizens",
+                    "Strength": "6",
+                    "Description": "Citizens' awareness and support influence the development and implementation of sustainable energy policies."
+                },
+                {
+                    "Relation": "Implementation",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Government implements policies to regulate and promote sustainable energy practices."
+                },
+                {
+                    "Relation": "Compliance",
+                    "Object": "Industry",
+                    "Strength": "7",
+                    "Description": "Industry complies with policies to ensure sustainable energy practices."
+                },
+                {
+                    "Relation": "Incentives",
+                    "Object": "Government",
+                    "Strength": "9",
+                    "Description": "Government provides incentives to encourage adoption of sustainable energy policies."
+                },
+                {
+                    "Relation": "Awareness",
+                    "Object": "Citizens",
+                    "Strength": "6",
+                    "Description": "Citizens' awareness and support influence the development and implementation of sustainable energy policies."
+                }
+            ]
+        }
+    }
+}

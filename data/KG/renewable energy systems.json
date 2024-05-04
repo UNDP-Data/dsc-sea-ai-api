@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "renewable energy systems": [
+                {
+                    "Relation": "generate",
+                    "Object": "Solar panels",
+                    "Strength": "8",
+                    "Description": "Solar panels generate electricity from sunlight."
+                },
+                {
+                    "Relation": "generate",
+                    "Object": "Wind turbines",
+                    "Strength": "9",
+                    "Description": "Wind turbines generate electricity from wind energy."
+                },
+                {
+                    "Relation": "generate",
+                    "Object": "Hydroelectric power",
+                    "Strength": "10",
+                    "Description": "Hydroelectric power generates electricity from flowing water."
+                },
+                {
+                    "Relation": "generate",
+                    "Object": "Geothermal energy",
+                    "Strength": "7",
+                    "Description": "Geothermal energy generates electricity from heat stored in the Earth's crust."
+                }
+            ]
+        }
+    }
+}

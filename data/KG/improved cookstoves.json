@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "improved cookstoves": [
+                {
+                    "Relation": "address",
+                    "Object": "clean cooking",
+                    "Strength": "8",
+                    "Description": "Improved cookstoves help address the issue of clean cooking by reducing indoor air pollution and improving the health of households."
+                },
+                {
+                    "Relation": "reduce",
+                    "Object": "household air pollution",
+                    "Strength": "9",
+                    "Description": "Improved cookstoves help reduce household air pollution by burning fuel more efficiently and reducing the emission of harmful pollutants."
+                },
+                {
+                    "Relation": "increase",
+                    "Object": "fuel efficiency",
+                    "Strength": "7",
+                    "Description": "Improved cookstoves increase fuel efficiency by burning less fuel and producing more heat, resulting in reduced fuel consumption and cost savings."
+                },
+                {
+                    "Relation": "decrease",
+                    "Object": "carbon emissions",
+                    "Strength": "6",
+                    "Description": "Improved cookstoves decrease carbon emissions by burning fuel more efficiently, resulting in lower greenhouse gas emissions and mitigating climate change."
+                }
+            ]
+        }
+    }
+}

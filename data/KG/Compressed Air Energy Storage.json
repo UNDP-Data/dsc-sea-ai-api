@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Compressed Air Energy Storage": [
+                {
+                    "Relation": "is a form of",
+                    "Object": "Energy Storage",
+                    "Strength": "8",
+                    "Description": "Compressed Air Energy Storage is a form of energy storage that stores energy in the form of compressed air."
+                },
+                {
+                    "Relation": "can be used with",
+                    "Object": "Renewable Energy",
+                    "Strength": "9",
+                    "Description": "Compressed Air Energy Storage can be used in conjunction with renewable energy sources to store excess energy for later use."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Grid Integration",
+                    "Strength": "7",
+                    "Description": "Compressed Air Energy Storage requires grid integration to effectively store and release energy."
+                },
+                {
+                    "Relation": "promotes",
+                    "Object": "Energy Efficiency",
+                    "Strength": "6",
+                    "Description": "Compressed Air Energy Storage promotes energy efficiency by allowing for the storage and utilization of excess energy."
+                }
+            ]
+        }
+    }
+}

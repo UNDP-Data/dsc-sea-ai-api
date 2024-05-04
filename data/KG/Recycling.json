@@ -1,0 +1,82 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Recycling": [
+                {
+                    "Relation": "Reduces waste",
+                    "Object": "Plastic",
+                    "Strength": "8",
+                    "Description": "Recycling plastic reduces the amount of waste that goes to landfills and helps conserve resources."
+                },
+                {
+                    "Relation": "Conserves energy",
+                    "Object": "Paper",
+                    "Strength": "7",
+                    "Description": "Recycling paper saves energy compared to producing new paper from virgin materials."
+                },
+                {
+                    "Relation": "Reduces greenhouse gas emissions",
+                    "Object": "Glass",
+                    "Strength": "9",
+                    "Description": "Recycling glass reduces the need for new glass production, which requires significant energy and emits greenhouse gases."
+                },
+                {
+                    "Relation": "Preserves natural resources",
+                    "Object": "Metal",
+                    "Strength": "10",
+                    "Description": "Recycling metal helps preserve natural resources and reduces the environmental impact of mining and extraction."
+                },
+                {
+                    "Relation": "Reduces waste",
+                    "Object": "Plastic",
+                    "Strength": "8",
+                    "Description": "Recycling plastic reduces the amount of waste that goes to landfills and helps conserve resources."
+                },
+                {
+                    "Relation": "Conserves energy",
+                    "Object": "Paper",
+                    "Strength": "7",
+                    "Description": "Recycling paper saves energy compared to producing new paper from virgin materials."
+                },
+                {
+                    "Relation": "Reduces greenhouse gas emissions",
+                    "Object": "Glass",
+                    "Strength": "9",
+                    "Description": "Recycling glass reduces the need for new glass production, which requires significant energy and emits greenhouse gases."
+                },
+                {
+                    "Relation": "Preserves natural resources",
+                    "Object": "Metal",
+                    "Strength": "10",
+                    "Description": "Recycling metal helps preserve natural resources and reduces the environmental impact of mining and extraction."
+                },
+                {
+                    "Relation": "Reduces waste",
+                    "Object": "Plastic",
+                    "Strength": "8",
+                    "Description": "Recycling plastic reduces the amount of waste that goes to landfills and helps conserve resources."
+                },
+                {
+                    "Relation": "Conserves energy",
+                    "Object": "Paper",
+                    "Strength": "7",
+                    "Description": "Recycling paper saves energy compared to producing new paper from virgin materials."
+                },
+                {
+                    "Relation": "Reduces greenhouse gas emissions",
+                    "Object": "Glass",
+                    "Strength": "9",
+                    "Description": "Recycling glass reduces the need for new glass production, which requires significant energy and emits greenhouse gases."
+                },
+                {
+                    "Relation": "Preserves natural resources",
+                    "Object": "Metal",
+                    "Strength": "10",
+                    "Description": "Recycling metal helps preserve natural resources and reduces the environmental impact of mining and extraction."
+                }
+            ]
+        }
+    }
+}

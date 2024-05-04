@@ -1,0 +1,82 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Smart Grid": [
+                {
+                    "Relation": "Integration",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "8",
+                    "Description": "Smart Grids enable the integration of renewable energy sources into the electricity grid, allowing for a more sustainable and efficient energy system."
+                },
+                {
+                    "Relation": "Optimization",
+                    "Object": "Energy Storage Systems",
+                    "Strength": "9",
+                    "Description": "Smart Grids optimize the use of energy storage systems, such as batteries, to store excess electricity generated from renewable sources and release it when needed, improving grid reliability and stability."
+                },
+                {
+                    "Relation": "Charging",
+                    "Object": "Electric Vehicles",
+                    "Strength": "7",
+                    "Description": "Smart Grids support the charging infrastructure for electric vehicles, enabling efficient and controlled charging, as well as vehicle-to-grid integration for energy exchange between the grid and EVs."
+                },
+                {
+                    "Relation": "Monitoring",
+                    "Object": "Smart Meters",
+                    "Strength": "6",
+                    "Description": "Smart Grids utilize smart meters to monitor and manage energy consumption in real-time, providing consumers with detailed information and enabling demand response programs for load balancing."
+                },
+                {
+                    "Relation": "Integration",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "8",
+                    "Description": "Smart Grids enable the integration of renewable energy sources into the electricity grid, allowing for a more sustainable and efficient energy system."
+                },
+                {
+                    "Relation": "Optimization",
+                    "Object": "Energy Storage Systems",
+                    "Strength": "9",
+                    "Description": "Smart Grids optimize the use of energy storage systems, such as batteries, to store excess electricity generated from renewable sources and release it when needed, improving grid reliability and stability."
+                },
+                {
+                    "Relation": "Charging",
+                    "Object": "Electric Vehicles",
+                    "Strength": "7",
+                    "Description": "Smart Grids support the charging infrastructure for electric vehicles, enabling efficient and controlled charging, as well as vehicle-to-grid integration for energy exchange between the grid and EVs."
+                },
+                {
+                    "Relation": "Monitoring",
+                    "Object": "Smart Meters",
+                    "Strength": "6",
+                    "Description": "Smart Grids utilize smart meters to monitor and manage energy consumption in real-time, providing consumers with detailed information and enabling demand response programs for load balancing."
+                },
+                {
+                    "Relation": "Integration",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "8",
+                    "Description": "Smart Grids enable the integration of renewable energy sources into the electricity grid, allowing for a more sustainable and efficient energy system."
+                },
+                {
+                    "Relation": "Optimization",
+                    "Object": "Energy Storage Systems",
+                    "Strength": "9",
+                    "Description": "Smart Grids optimize the use of energy storage systems, such as batteries, to store excess electricity generated from renewable sources and release it when needed, improving grid reliability and stability."
+                },
+                {
+                    "Relation": "Charging",
+                    "Object": "Electric Vehicles",
+                    "Strength": "7",
+                    "Description": "Smart Grids support the charging infrastructure for electric vehicles, enabling efficient and controlled charging, as well as vehicle-to-grid integration for energy exchange between the grid and EVs."
+                },
+                {
+                    "Relation": "Monitoring",
+                    "Object": "Smart Meters",
+                    "Strength": "6",
+                    "Description": "Smart Grids utilize smart meters to monitor and manage energy consumption in real-time, providing consumers with detailed information and enabling demand response programs for load balancing."
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Faculty": [
+                {
+                    "Relation": "Teaches",
+                    "Object": "Student",
+                    "Strength": "8",
+                    "Description": "Faculty members teach students in various courses."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "Researcher",
+                    "Strength": "9",
+                    "Description": "Faculty members collaborate with researchers on various projects."
+                },
+                {
+                    "Relation": "Belongs to",
+                    "Object": "Department",
+                    "Strength": "7",
+                    "Description": "Faculty members belong to specific departments within the institution."
+                },
+                {
+                    "Relation": "Publishes",
+                    "Object": "Publication",
+                    "Strength": "6",
+                    "Description": "Faculty members publish their research findings in academic journals and publications."
+                }
+            ]
+        }
+    }
+}

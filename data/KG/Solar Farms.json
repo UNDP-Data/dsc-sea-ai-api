@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Solar farms": [
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Renewable energy",
+                    "Strength": "9",
+                    "Description": "Solar farms utilize renewable energy sources such as sunlight to generate electricity."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Photovoltaic panels",
+                    "Strength": "8",
+                    "Description": "Solar farms consist of large arrays of photovoltaic panels that convert sunlight into electricity."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Grid connection",
+                    "Strength": "7",
+                    "Description": "Solar farms require a grid connection to transmit the electricity they generate to consumers."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Electricity generation",
+                    "Strength": "9",
+                    "Description": "Solar farms contribute significantly to the overall electricity generation capacity, reducing reliance on fossil fuels."
+                }
+            ]
+        }
+    }
+}
