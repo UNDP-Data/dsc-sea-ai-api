@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Renewable Energy Industry": [
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Solar Power",
+                    "Strength": "8",
+                    "Description": "The renewable energy industry extensively utilizes solar power as a clean and sustainable energy source."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Wind Energy",
+                    "Strength": "9",
+                    "Description": "The renewable energy industry heavily relies on wind energy for generating electricity through wind turbines."
+                },
+                {
+                    "Relation": "Harnesses",
+                    "Object": "Hydropower",
+                    "Strength": "7",
+                    "Description": "The renewable energy industry harnesses the power of flowing or falling water to generate electricity using hydropower systems."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Bioenergy",
+                    "Strength": "6",
+                    "Description": "The renewable energy industry utilizes bioenergy, derived from organic matter, as a sustainable source of heat, electricity, and transportation fuels."
+                }
+            ]
+        }
+    }
+}

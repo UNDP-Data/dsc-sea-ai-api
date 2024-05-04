@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Temperature gradient": [
+                {
+                    "Relation": "Affects",
+                    "Object": "Heat transfer",
+                    "Strength": "8",
+                    "Description": "Temperature gradient plays a crucial role in heat transfer processes, as it determines the direction and rate of heat flow."
+                },
+                {
+                    "Relation": "Influences",
+                    "Object": "Thermal conductivity",
+                    "Strength": "7",
+                    "Description": "Temperature gradient affects the thermal conductivity of materials, as it determines the rate at which heat is conducted through them."
+                },
+                {
+                    "Relation": "Indicates",
+                    "Object": "Atmospheric stability",
+                    "Strength": "6",
+                    "Description": "Temperature gradient is used to assess atmospheric stability, as a steep temperature gradient indicates unstable conditions."
+                },
+                {
+                    "Relation": "Determines",
+                    "Object": "Geothermal gradient",
+                    "Strength": "9",
+                    "Description": "Temperature gradient is the primary factor that determines the geothermal gradient, which is the rate of increase in temperature with depth in the Earth's crust."
+                }
+            ]
+        }
+    }
+}

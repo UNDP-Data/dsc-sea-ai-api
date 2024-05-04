@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Private Companies": [
+                {
+                    "Relation": "Investment",
+                    "Object": "Investors",
+                    "Strength": "8",
+                    "Description": "Private companies often rely on investors for funding and financial support."
+                },
+                {
+                    "Relation": "Competition",
+                    "Object": "Competitors",
+                    "Strength": "7",
+                    "Description": "Private companies face competition from other companies operating in the same industry."
+                },
+                {
+                    "Relation": "Employment",
+                    "Object": "Employees",
+                    "Strength": "9",
+                    "Description": "Private companies hire employees to carry out their operations and achieve their goals."
+                },
+                {
+                    "Relation": "Sales",
+                    "Object": "Customers",
+                    "Strength": "6",
+                    "Description": "Private companies sell products or services to customers in order to generate revenue."
+                }
+            ]
+        }
+    }
+}

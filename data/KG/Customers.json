@@ -1,0 +1,154 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Customers": [
+                {
+                    "Relation": "HasPlaced",
+                    "Object": "Orders",
+                    "Strength": "8",
+                    "Description": "Customers can place orders for products"
+                },
+                {
+                    "Relation": "HasPurchased",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Customers can purchase products from the inventory"
+                },
+                {
+                    "Relation": "HasProvided",
+                    "Object": "Feedback",
+                    "Strength": "6",
+                    "Description": "Customers can provide feedback on their experience"
+                },
+                {
+                    "Relation": "HasRaised",
+                    "Object": "SupportTickets",
+                    "Strength": "7",
+                    "Description": "Customers can raise support tickets for assistance"
+                },
+                {
+                    "Relation": "Places Orders",
+                    "Object": "Orders",
+                    "Strength": "8",
+                    "Description": "Customers place orders for products"
+                },
+                {
+                    "Relation": "Purchases Products",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Customers purchase products from the inventory"
+                },
+                {
+                    "Relation": "Makes Payments",
+                    "Object": "Payments",
+                    "Strength": "7",
+                    "Description": "Customers make payments for their purchases"
+                },
+                {
+                    "Relation": "Provides Feedback",
+                    "Object": "Feedback",
+                    "Strength": "6",
+                    "Description": "Customers provide feedback on their experience"
+                },
+                {
+                    "Relation": "HasPlaced",
+                    "Object": "Orders",
+                    "Strength": "8",
+                    "Description": "Customers can place orders for products"
+                },
+                {
+                    "Relation": "HasPurchased",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Customers can purchase products from the inventory"
+                },
+                {
+                    "Relation": "HasProvided",
+                    "Object": "Feedback",
+                    "Strength": "6",
+                    "Description": "Customers can provide feedback on their experience"
+                },
+                {
+                    "Relation": "HasRaised",
+                    "Object": "SupportTickets",
+                    "Strength": "7",
+                    "Description": "Customers can raise support tickets for assistance"
+                },
+                {
+                    "Relation": "Places Orders",
+                    "Object": "Orders",
+                    "Strength": "8",
+                    "Description": "Customers place orders for products"
+                },
+                {
+                    "Relation": "Purchases Products",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Customers purchase products from the inventory"
+                },
+                {
+                    "Relation": "Makes Payments",
+                    "Object": "Payments",
+                    "Strength": "7",
+                    "Description": "Customers make payments for their purchases"
+                },
+                {
+                    "Relation": "Provides Feedback",
+                    "Object": "Feedback",
+                    "Strength": "6",
+                    "Description": "Customers provide feedback on their experience"
+                },
+                {
+                    "Relation": "HasPlaced",
+                    "Object": "Orders",
+                    "Strength": "8",
+                    "Description": "Customers can place orders for products"
+                },
+                {
+                    "Relation": "HasPurchased",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Customers can purchase products from the inventory"
+                },
+                {
+                    "Relation": "HasProvided",
+                    "Object": "Feedback",
+                    "Strength": "6",
+                    "Description": "Customers can provide feedback on their experience"
+                },
+                {
+                    "Relation": "HasRaised",
+                    "Object": "SupportTickets",
+                    "Strength": "7",
+                    "Description": "Customers can raise support tickets for assistance"
+                },
+                {
+                    "Relation": "Places Orders",
+                    "Object": "Orders",
+                    "Strength": "8",
+                    "Description": "Customers place orders for products"
+                },
+                {
+                    "Relation": "Purchases Products",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Customers purchase products from the inventory"
+                },
+                {
+                    "Relation": "Makes Payments",
+                    "Object": "Payments",
+                    "Strength": "7",
+                    "Description": "Customers make payments for their purchases"
+                },
+                {
+                    "Relation": "Provides Feedback",
+                    "Object": "Feedback",
+                    "Strength": "6",
+                    "Description": "Customers provide feedback on their experience"
+                }
+            ]
+        }
+    }
+}

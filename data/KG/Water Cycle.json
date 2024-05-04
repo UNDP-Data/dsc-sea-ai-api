@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Water Cycle": [
+                {
+                    "Relation": "involves",
+                    "Object": "Evaporation",
+                    "Strength": "8",
+                    "Description": "Evaporation is the process by which water changes from a liquid to a gas and enters the atmosphere."
+                },
+                {
+                    "Relation": "leads to",
+                    "Object": "Condensation",
+                    "Strength": "9",
+                    "Description": "Condensation is the process by which water vapor in the air is changed into liquid water."
+                },
+                {
+                    "Relation": "results in",
+                    "Object": "Precipitation",
+                    "Strength": "10",
+                    "Description": "Precipitation is any form of water that falls from the atmosphere to the Earth's surface, such as rain, snow, sleet, or hail."
+                },
+                {
+                    "Relation": "causes",
+                    "Object": "Runoff",
+                    "Strength": "7",
+                    "Description": "Runoff is the flow of water that occurs when excess stormwater, meltwater, or other sources flows over the Earth's surface."
+                }
+            ]
+        }
+    }
+}

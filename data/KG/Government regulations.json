@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Government regulations": [
+                {
+                    "Relation": "Compliance",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "Government regulations require businesses to comply with certain standards and practices."
+                },
+                {
+                    "Relation": "Protection",
+                    "Object": "Consumers",
+                    "Strength": "9",
+                    "Description": "Government regulations aim to protect consumers from unfair practices and ensure product safety."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Environmental organizations",
+                    "Strength": "7",
+                    "Description": "Government regulations often involve collaboration with environmental organizations to develop and enforce environmental policies."
+                },
+                {
+                    "Relation": "Adherence",
+                    "Object": "Industry standards",
+                    "Strength": "6",
+                    "Description": "Government regulations may require adherence to industry standards to ensure quality and safety in various sectors."
+                }
+            ]
+        }
+    }
+}

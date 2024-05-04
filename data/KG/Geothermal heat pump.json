@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Geothermal Heat Pump": [
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Geothermal Energy",
+                    "Strength": "8",
+                    "Description": "Geothermal heat pumps use the natural heat from the Earth to provide heating and cooling for buildings."
+                },
+                {
+                    "Relation": "Variant of",
+                    "Object": "Ground Source Heat Pump",
+                    "Strength": "9",
+                    "Description": "Geothermal heat pumps are a type of ground source heat pump that utilize the constant temperature of the ground to efficiently heat and cool buildings."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Renewable Heat",
+                    "Strength": "7",
+                    "Description": "Geothermal heat pumps contribute to the production of renewable heat, reducing the reliance on fossil fuels for heating and cooling."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Heat Transfer",
+                    "Strength": "6",
+                    "Description": "Geothermal heat pumps rely on the principles of heat transfer to extract and transfer heat between the ground and the building."
+                }
+            ]
+        }
+    }
+}

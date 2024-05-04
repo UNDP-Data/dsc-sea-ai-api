@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Biofuel": [
+                {
+                    "Relation": "Alternative",
+                    "Object": "Ethanol",
+                    "Strength": "8",
+                    "Description": "Ethanol is a type of biofuel that is commonly used as an alternative to gasoline."
+                },
+                {
+                    "Relation": "Alternative",
+                    "Object": "Biodiesel",
+                    "Strength": "7",
+                    "Description": "Biodiesel is a renewable biofuel that can be used as an alternative to diesel fuel."
+                },
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Algae",
+                    "Strength": "9",
+                    "Description": "Algae can be used as a feedstock to produce biofuels such as biodiesel and bioethanol."
+                },
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Waste Cooking Oil",
+                    "Strength": "6",
+                    "Description": "Waste cooking oil can be converted into biodiesel, a type of biofuel."
+                },
+                {
+                    "Relation": "Alternative",
+                    "Object": "Ethanol",
+                    "Strength": "8",
+                    "Description": "Ethanol is a type of biofuel that is commonly used as an alternative to gasoline."
+                },
+                {
+                    "Relation": "Alternative",
+                    "Object": "Biodiesel",
+                    "Strength": "7",
+                    "Description": "Biodiesel is a renewable biofuel that can be used as an alternative to diesel fuel."
+                },
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Algae",
+                    "Strength": "9",
+                    "Description": "Algae can be used as a feedstock to produce biofuels such as biodiesel and bioethanol."
+                },
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Waste Cooking Oil",
+                    "Strength": "6",
+                    "Description": "Waste cooking oil can be converted into biodiesel, a type of biofuel."
+                }
+            ]
+        }
+    }
+}

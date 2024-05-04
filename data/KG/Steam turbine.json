@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Steam turbine": [
+                {
+                    "Relation": "Generates",
+                    "Object": "Generator",
+                    "Strength": "8",
+                    "Description": "The steam turbine generates electricity through the rotation of the generator."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Condenser",
+                    "Strength": "7",
+                    "Description": "The steam turbine produces low-pressure steam that is condensed in the condenser."
+                },
+                {
+                    "Relation": "Receives steam from",
+                    "Object": "Boiler",
+                    "Strength": "9",
+                    "Description": "The steam turbine receives high-pressure steam from the boiler to generate power."
+                },
+                {
+                    "Relation": "Controlled by",
+                    "Object": "Control system",
+                    "Strength": "6",
+                    "Description": "The steam turbine is controlled and monitored by the control system to optimize its performance."
+                }
+            ]
+        }
+    }
+}

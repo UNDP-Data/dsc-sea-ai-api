@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Cooking stoves": [
+                {
+                    "Relation": "are types of",
+                    "Object": "Gas stoves",
+                    "Strength": "8",
+                    "Description": "Gas stoves are a type of cooking stove that uses natural gas or propane as fuel."
+                },
+                {
+                    "Relation": "are types of",
+                    "Object": "Electric stoves",
+                    "Strength": "9",
+                    "Description": "Electric stoves are a type of cooking stove that uses electricity as a source of heat."
+                },
+                {
+                    "Relation": "are types of",
+                    "Object": "Wood-burning stoves",
+                    "Strength": "6",
+                    "Description": "Wood-burning stoves are a type of cooking stove that uses wood as fuel."
+                },
+                {
+                    "Relation": "are types of",
+                    "Object": "Induction stoves",
+                    "Strength": "7",
+                    "Description": "Induction stoves are a type of cooking stove that uses electromagnetic induction to heat the cookware."
+                }
+            ]
+        }
+    }
+}

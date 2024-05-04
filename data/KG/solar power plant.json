@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "solar power plant": [
+                {
+                    "Relation": "utilizes",
+                    "Object": "solar panel",
+                    "Strength": "8",
+                    "Description": "Solar power plants use solar panels to convert sunlight into electricity."
+                },
+                {
+                    "Relation": "connects to",
+                    "Object": "grid connection",
+                    "Strength": "9",
+                    "Description": "Solar power plants are connected to the electrical grid to distribute the generated electricity."
+                },
+                {
+                    "Relation": "incorporates",
+                    "Object": "battery storage",
+                    "Strength": "7",
+                    "Description": "Some solar power plants incorporate battery storage systems to store excess energy for later use."
+                },
+                {
+                    "Relation": "generates",
+                    "Object": "renewable energy certificate",
+                    "Strength": "6",
+                    "Description": "Solar power plants generate renewable energy certificates as proof of producing clean energy."
+                }
+            ]
+        }
+    }
+}

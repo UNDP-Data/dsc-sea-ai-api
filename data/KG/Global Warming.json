@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Global Warming": [
+                {
+                    "Relation": "Contribution",
+                    "Object": "Carbon Dioxide",
+                    "Strength": "8",
+                    "Description": "Carbon dioxide is a major greenhouse gas that contributes to global warming."
+                },
+                {
+                    "Relation": "Impact",
+                    "Object": "Deforestation",
+                    "Strength": "7",
+                    "Description": "Deforestation releases carbon dioxide into the atmosphere, contributing to global warming."
+                },
+                {
+                    "Relation": "Mitigation",
+                    "Object": "Renewable Energy",
+                    "Strength": "9",
+                    "Description": "Increasing the use of renewable energy sources can help reduce greenhouse gas emissions and combat global warming."
+                },
+                {
+                    "Relation": "Consequence",
+                    "Object": "Melting Ice Caps",
+                    "Strength": "10",
+                    "Description": "Global warming leads to the melting of ice caps, causing rising sea levels and other climate-related impacts."
+                }
+            ]
+        }
+    }
+}

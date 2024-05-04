@@ -1,0 +1,106 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Students": [
+                {
+                    "Relation": "Learn from",
+                    "Object": "Teachers",
+                    "Strength": "8",
+                    "Description": "Students learn from teachers in a classroom setting."
+                },
+                {
+                    "Relation": "Supported by",
+                    "Object": "Parents",
+                    "Strength": "9",
+                    "Description": "Parents provide support and guidance to students in their education."
+                },
+                {
+                    "Relation": "Attend",
+                    "Object": "Schools",
+                    "Strength": "10",
+                    "Description": "Students attend schools to receive formal education."
+                },
+                {
+                    "Relation": "Hired by",
+                    "Object": "Employers",
+                    "Strength": "7",
+                    "Description": "Students aim to be hired by employers after completing their education."
+                },
+                {
+                    "Relation": "Learn from",
+                    "Object": "Teachers",
+                    "Strength": "8",
+                    "Description": "Students learn from teachers in a classroom setting."
+                },
+                {
+                    "Relation": "Supported by",
+                    "Object": "Parents",
+                    "Strength": "9",
+                    "Description": "Parents provide support and guidance to students in their education."
+                },
+                {
+                    "Relation": "Attend",
+                    "Object": "Schools",
+                    "Strength": "10",
+                    "Description": "Students attend schools to receive formal education."
+                },
+                {
+                    "Relation": "Hired by",
+                    "Object": "Employers",
+                    "Strength": "7",
+                    "Description": "Students aim to be hired by employers after completing their education."
+                },
+                {
+                    "Relation": "Learn from",
+                    "Object": "Teachers",
+                    "Strength": "8",
+                    "Description": "Students learn from teachers in a classroom setting."
+                },
+                {
+                    "Relation": "Supported by",
+                    "Object": "Parents",
+                    "Strength": "9",
+                    "Description": "Parents provide support and guidance to students in their education."
+                },
+                {
+                    "Relation": "Attend",
+                    "Object": "Schools",
+                    "Strength": "10",
+                    "Description": "Students attend schools to receive formal education."
+                },
+                {
+                    "Relation": "Hired by",
+                    "Object": "Employers",
+                    "Strength": "7",
+                    "Description": "Students aim to be hired by employers after completing their education."
+                },
+                {
+                    "Relation": "Learn from",
+                    "Object": "Teachers",
+                    "Strength": "8",
+                    "Description": "Students learn from teachers in a classroom setting."
+                },
+                {
+                    "Relation": "Supported by",
+                    "Object": "Parents",
+                    "Strength": "9",
+                    "Description": "Parents provide support and guidance to students in their education."
+                },
+                {
+                    "Relation": "Attend",
+                    "Object": "Schools",
+                    "Strength": "10",
+                    "Description": "Students attend schools to receive formal education."
+                },
+                {
+                    "Relation": "Hired by",
+                    "Object": "Employers",
+                    "Strength": "7",
+                    "Description": "Students aim to be hired by employers after completing their education."
+                }
+            ]
+        }
+    }
+}

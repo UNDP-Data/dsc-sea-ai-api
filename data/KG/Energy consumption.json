@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Energy consumption": [
+                {
+                    "Relation": "Reliance on ENTITY2",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "The extent to which energy consumption depends on renewable energy sources."
+                },
+                {
+                    "Relation": "Impact of ENTITY2",
+                    "Object": "Energy efficiency",
+                    "Strength": "9",
+                    "Description": "The effect of energy efficiency measures on reducing energy consumption."
+                },
+                {
+                    "Relation": "Integration with ENTITY2",
+                    "Object": "Smart grid",
+                    "Strength": "7",
+                    "Description": "The incorporation of smart grid technology to optimize energy consumption."
+                },
+                {
+                    "Relation": "Influence of ENTITY2",
+                    "Object": "Consumer behavior",
+                    "Strength": "6",
+                    "Description": "The role of consumer behavior in shaping energy consumption patterns."
+                },
+                {
+                    "Relation": "Reliance on ENTITY2",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "The extent to which energy consumption depends on renewable energy sources."
+                },
+                {
+                    "Relation": "Impact of ENTITY2",
+                    "Object": "Energy efficiency",
+                    "Strength": "9",
+                    "Description": "The effect of energy efficiency measures on reducing energy consumption."
+                },
+                {
+                    "Relation": "Integration with ENTITY2",
+                    "Object": "Smart grid",
+                    "Strength": "7",
+                    "Description": "The incorporation of smart grid technology to optimize energy consumption."
+                },
+                {
+                    "Relation": "Influence of ENTITY2",
+                    "Object": "Consumer behavior",
+                    "Strength": "6",
+                    "Description": "The role of consumer behavior in shaping energy consumption patterns."
+                }
+            ]
+        }
+    }
+}

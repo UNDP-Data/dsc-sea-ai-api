@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Geothermal Reservoir": [
+                {
+                    "Relation": "Supplies",
+                    "Object": "Geothermal Power Plant",
+                    "Strength": "9",
+                    "Description": "Geothermal reservoirs supply the heat necessary for geothermal power plants to generate electricity."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Heat Pump",
+                    "Strength": "7",
+                    "Description": "Geothermal reservoirs are utilized by heat pumps to provide heating and cooling for buildings."
+                },
+                {
+                    "Relation": "Source",
+                    "Object": "Hot Springs",
+                    "Strength": "6",
+                    "Description": "Hot springs are formed when geothermal reservoirs of hot water reach the surface."
+                },
+                {
+                    "Relation": "Result of",
+                    "Object": "Volcanic Activity",
+                    "Strength": "8",
+                    "Description": "Geothermal reservoirs are often formed as a result of volcanic activity, where magma heats underground water."
+                }
+            ]
+        }
+    }
+}

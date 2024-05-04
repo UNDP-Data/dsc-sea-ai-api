@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Unions": [
+                {
+                    "Relation": "Collective Bargaining",
+                    "Object": "Labor",
+                    "Strength": "9",
+                    "Description": "Unions represent and advocate for the rights and interests of workers within the labor sector."
+                }
+            ]
+        }
+    }
+}

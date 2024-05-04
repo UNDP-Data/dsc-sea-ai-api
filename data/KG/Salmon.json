@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Salmon": [
+                {
+                    "Relation": "Habitat",
+                    "Object": "Coral",
+                    "Strength": "5",
+                    "Description": "Salmon rely on coral reefs for shelter and protection during their early life stages."
+                }
+            ]
+        }
+    }
+}

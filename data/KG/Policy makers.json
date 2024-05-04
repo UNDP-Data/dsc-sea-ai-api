@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Policy makers": [
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Policy makers often collaborate with government entities to develop and implement sustainable energy policies."
+                },
+                {
+                    "Relation": "Consult with",
+                    "Object": "Non-governmental organizations",
+                    "Strength": "7",
+                    "Description": "Policy makers consult with non-governmental organizations to gather insights and perspectives on sustainable energy issues."
+                },
+                {
+                    "Relation": "Engage with",
+                    "Object": "Industry associations",
+                    "Strength": "6",
+                    "Description": "Policy makers engage with industry associations to understand the needs and challenges of the sustainable energy sector."
+                },
+                {
+                    "Relation": "Partner with",
+                    "Object": "Academic institutions",
+                    "Strength": "7",
+                    "Description": "Policy makers partner with academic institutions to access research and expertise in the field of sustainable energy."
+                }
+            ]
+        }
+    }
+}

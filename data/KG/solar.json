@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "solar": [
+                {
+                    "Relation": "utilizes",
+                    "Object": "solar panel",
+                    "Strength": "8",
+                    "Description": "Solar panels harness the energy from the sun to generate electricity."
+                },
+                {
+                    "Relation": "provides",
+                    "Object": "solar energy",
+                    "Strength": "9",
+                    "Description": "Solar energy is a renewable and sustainable source of power derived from the sun."
+                },
+                {
+                    "Relation": "generates",
+                    "Object": "solar power plant",
+                    "Strength": "7",
+                    "Description": "Solar power plants use solar panels to generate large-scale electricity from sunlight."
+                },
+                {
+                    "Relation": "originates from",
+                    "Object": "solar radiation",
+                    "Strength": "6",
+                    "Description": "Solar radiation is the electromagnetic radiation emitted by the sun."
+                }
+            ]
+        }
+    }
+}

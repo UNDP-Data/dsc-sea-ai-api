@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Saw Blades": [
+                {
+                    "Relation": "Made of",
+                    "Object": "Steel",
+                    "Strength": "8",
+                    "Description": "Saw blades are commonly made of steel for durability and strength."
+                },
+                {
+                    "Relation": "Used with",
+                    "Object": "Circular Saw",
+                    "Strength": "9",
+                    "Description": "Saw blades are used with circular saws to cut various materials."
+                },
+                {
+                    "Relation": "Cuts",
+                    "Object": "Wood",
+                    "Strength": "7",
+                    "Description": "Saw blades are designed to cut through wood efficiently."
+                },
+                {
+                    "Relation": "Performs",
+                    "Object": "Cutting",
+                    "Strength": "10",
+                    "Description": "Saw blades are the primary tool used for cutting tasks."
+                }
+            ]
+        }
+    }
+}

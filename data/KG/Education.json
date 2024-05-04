@@ -1,0 +1,82 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Education": [
+                {
+                    "Relation": "Involves",
+                    "Object": "Students",
+                    "Strength": "8",
+                    "Description": "Education involves students as the primary learners and beneficiaries."
+                },
+                {
+                    "Relation": "Employs",
+                    "Object": "Teachers",
+                    "Strength": "9",
+                    "Description": "Education employs teachers as the facilitators and instructors."
+                },
+                {
+                    "Relation": "Provides",
+                    "Object": "Schools",
+                    "Strength": "7",
+                    "Description": "Education provides schools as the physical infrastructure for learning."
+                },
+                {
+                    "Relation": "Follows",
+                    "Object": "Curriculum",
+                    "Strength": "6",
+                    "Description": "Education follows a curriculum that outlines the subjects and learning objectives."
+                },
+                {
+                    "Relation": "Involves",
+                    "Object": "Students",
+                    "Strength": "8",
+                    "Description": "Education involves students as the primary learners and beneficiaries."
+                },
+                {
+                    "Relation": "Employs",
+                    "Object": "Teachers",
+                    "Strength": "9",
+                    "Description": "Education employs teachers as the facilitators and instructors."
+                },
+                {
+                    "Relation": "Provides",
+                    "Object": "Schools",
+                    "Strength": "7",
+                    "Description": "Education provides schools as the physical infrastructure for learning."
+                },
+                {
+                    "Relation": "Follows",
+                    "Object": "Curriculum",
+                    "Strength": "6",
+                    "Description": "Education follows a curriculum that outlines the subjects and learning objectives."
+                },
+                {
+                    "Relation": "Involves",
+                    "Object": "Students",
+                    "Strength": "8",
+                    "Description": "Education involves students as the primary learners and beneficiaries."
+                },
+                {
+                    "Relation": "Employs",
+                    "Object": "Teachers",
+                    "Strength": "9",
+                    "Description": "Education employs teachers as the facilitators and instructors."
+                },
+                {
+                    "Relation": "Provides",
+                    "Object": "Schools",
+                    "Strength": "7",
+                    "Description": "Education provides schools as the physical infrastructure for learning."
+                },
+                {
+                    "Relation": "Follows",
+                    "Object": "Curriculum",
+                    "Strength": "6",
+                    "Description": "Education follows a curriculum that outlines the subjects and learning objectives."
+                }
+            ]
+        }
+    }
+}

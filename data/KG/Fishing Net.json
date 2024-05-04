@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Fishing Net": [
+                {
+                    "Relation": "Capture",
+                    "Object": "Fish",
+                    "Strength": "9",
+                    "Description": "Fishing nets are commonly used to catch fish in commercial fishing operations."
+                }
+            ]
+        }
+    }
+}

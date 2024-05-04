@@ -1,0 +1,46 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "anaerobic digestion": [
+                {
+                    "Relation": "produces",
+                    "Object": "biogas",
+                    "Strength": "8",
+                    "Description": "Anaerobic digestion is a process that produces biogas, which can be used as a renewable energy source."
+                },
+                {
+                    "Relation": "improves",
+                    "Object": "waste management",
+                    "Strength": "7",
+                    "Description": "Anaerobic digestion is an effective method for managing organic waste, reducing the amount of waste sent to landfills."
+                },
+                {
+                    "Relation": "reduces",
+                    "Object": "methane",
+                    "Strength": "9",
+                    "Description": "Anaerobic digestion helps in reducing methane emissions, as it captures and utilizes methane produced during the process."
+                },
+                {
+                    "Relation": "produces",
+                    "Object": "biogas",
+                    "Strength": "8",
+                    "Description": "Anaerobic digestion is a process that produces biogas, which can be used as a renewable energy source."
+                },
+                {
+                    "Relation": "improves",
+                    "Object": "waste management",
+                    "Strength": "7",
+                    "Description": "Anaerobic digestion is an effective method for managing organic waste, reducing the amount of waste sent to landfills."
+                },
+                {
+                    "Relation": "reduces",
+                    "Object": "methane",
+                    "Strength": "9",
+                    "Description": "Anaerobic digestion helps in reducing methane emissions, as it captures and utilizes methane produced during the process."
+                }
+            ]
+        }
+    }
+}

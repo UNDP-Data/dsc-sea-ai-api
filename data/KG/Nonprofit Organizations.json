@@ -1,0 +1,226 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Nonprofit Organizations": [
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support various causes and initiatives."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their mission and programs."
+                },
+                {
+                    "Relation": "Impact",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations aim to make a positive impact on the lives of their beneficiaries, whether they are individuals, communities, or specific groups."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support the organization's mission and activities."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their programs and initiatives."
+                },
+                {
+                    "Relation": "Service",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations exist to serve and benefit specific groups of individuals or communities, addressing their needs and improving their well-being."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support the organization's mission and activities."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their programs and initiatives."
+                },
+                {
+                    "Relation": "Service",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations exist to serve and benefit specific groups of individuals or communities, addressing their needs and improving their well-being."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support various causes and initiatives."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their mission and programs."
+                },
+                {
+                    "Relation": "Impact",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations aim to make a positive impact on the lives of their beneficiaries, whether they are individuals, communities, or specific groups."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support the organization's mission and activities."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their programs and initiatives."
+                },
+                {
+                    "Relation": "Service",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations exist to serve and benefit specific groups of individuals or communities, addressing their needs and improving their well-being."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support the organization's mission and activities."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their programs and initiatives."
+                },
+                {
+                    "Relation": "Service",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations exist to serve and benefit specific groups of individuals or communities, addressing their needs and improving their well-being."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support various causes and initiatives."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their mission and programs."
+                },
+                {
+                    "Relation": "Impact",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations aim to make a positive impact on the lives of their beneficiaries, whether they are individuals, communities, or specific groups."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support the organization's mission and activities."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their programs and initiatives."
+                },
+                {
+                    "Relation": "Service",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations exist to serve and benefit specific groups of individuals or communities, addressing their needs and improving their well-being."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Nonprofit organizations often collaborate with government entities to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Nonprofit organizations heavily rely on volunteers who contribute their time and skills to support the organization's mission and activities."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Donors play a crucial role in providing financial support to nonprofit organizations, enabling them to carry out their programs and initiatives."
+                },
+                {
+                    "Relation": "Service",
+                    "Object": "Beneficiaries",
+                    "Strength": "7",
+                    "Description": "Nonprofit organizations exist to serve and benefit specific groups of individuals or communities, addressing their needs and improving their well-being."
+                }
+            ]
+        }
+    }
+}

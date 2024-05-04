@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "maize": [
+                {
+                    "Relation": "is a type of",
+                    "Object": "corn",
+                    "Strength": "7",
+                    "Description": "Maize is a type of corn, which is a staple food in many parts of the world."
+                }
+            ]
+        }
+    }
+}

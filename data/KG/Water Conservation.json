@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Water Conservation": [
+                {
+                    "Relation": "is dependent on",
+                    "Object": "Water",
+                    "Strength": "8",
+                    "Description": "Water conservation aims to reduce the usage and wastage of water resources."
+                },
+                {
+                    "Relation": "is threatened by",
+                    "Object": "Drought",
+                    "Strength": "9",
+                    "Description": "Drought conditions can lead to water scarcity and the need for increased water conservation efforts."
+                },
+                {
+                    "Relation": "is affected by",
+                    "Object": "Water Pollution",
+                    "Strength": "7",
+                    "Description": "Water pollution can degrade water quality and hinder conservation efforts."
+                },
+                {
+                    "Relation": "involves",
+                    "Object": "Water Management",
+                    "Strength": "10",
+                    "Description": "Effective water management practices play a crucial role in achieving water conservation goals."
+                }
+            ]
+        }
+    }
+}

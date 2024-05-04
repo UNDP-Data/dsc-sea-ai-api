@@ -1,0 +1,22 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "biodegradable materials": [
+                {
+                    "Relation": "is made from",
+                    "Object": "Cotton",
+                    "Strength": "8",
+                    "Description": "Cotton is a natural fiber that is biodegradable and can be used to make various products."
+                },
+                {
+                    "Relation": "can be replaced by",
+                    "Object": "Paper",
+                    "Strength": "9",
+                    "Description": "Paper is a biodegradable alternative to plastic for packaging and other single-use items."
+                }
+            ]
+        }
+    }
+}

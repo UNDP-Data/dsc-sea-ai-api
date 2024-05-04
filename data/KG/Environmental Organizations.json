@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Environmental Organizations": [
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government Agencies",
+                    "Strength": "8",
+                    "Description": "Environmental organizations often collaborate with government agencies to develop and implement environmental policies and regulations."
+                },
+                {
+                    "Relation": "Partnership",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "9",
+                    "Description": "Environmental organizations frequently partner with nonprofit organizations to raise awareness, fundraise, and implement conservation projects."
+                },
+                {
+                    "Relation": "Research Collaboration",
+                    "Object": "Research Institutions",
+                    "Strength": "7",
+                    "Description": "Environmental organizations collaborate with research institutions to conduct scientific studies, gather data, and develop sustainable solutions."
+                },
+                {
+                    "Relation": "Corporate Sponsorship",
+                    "Object": "Corporate Partners",
+                    "Strength": "6",
+                    "Description": "Environmental organizations often seek corporate sponsorships to support their initiatives, fund projects, and promote sustainable practices."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government Agencies",
+                    "Strength": "8",
+                    "Description": "Environmental organizations often collaborate with government agencies to develop and implement environmental policies and regulations."
+                },
+                {
+                    "Relation": "Partnership",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "9",
+                    "Description": "Environmental organizations frequently partner with nonprofit organizations to raise awareness, fundraise, and implement conservation projects."
+                },
+                {
+                    "Relation": "Research Collaboration",
+                    "Object": "Research Institutions",
+                    "Strength": "7",
+                    "Description": "Environmental organizations collaborate with research institutions to conduct scientific studies, gather data, and develop sustainable solutions."
+                },
+                {
+                    "Relation": "Corporate Sponsorship",
+                    "Object": "Corporate Partners",
+                    "Strength": "6",
+                    "Description": "Environmental organizations often seek corporate sponsorships to support their initiatives, fund projects, and promote sustainable practices."
+                }
+            ]
+        }
+    }
+}

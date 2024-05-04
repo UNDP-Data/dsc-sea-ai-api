@@ -1,0 +1,250 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Generator": [
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Wind Turbine",
+                    "Strength": "8",
+                    "Description": "A generator is used in a wind turbine to convert wind energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Solar Panel",
+                    "Strength": "7",
+                    "Description": "A generator is used in a solar panel to convert solar energy into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Hydroelectric Power Plant",
+                    "Strength": "9",
+                    "Description": "A generator is used in a hydroelectric power plant to convert the energy of flowing or falling water into electrical energy."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Diesel Generator",
+                    "Strength": "6",
+                    "Description": "A generator is used in a diesel generator to convert diesel fuel into electrical energy."
+                }
+            ]
+        }
+    }
+}

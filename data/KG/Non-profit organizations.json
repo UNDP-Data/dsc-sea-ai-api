@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Non-profit organizations": [
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Non-profit organizations often collaborate with government agencies to address social issues and provide services to the community."
+                },
+                {
+                    "Relation": "Support",
+                    "Object": "Volunteers",
+                    "Strength": "9",
+                    "Description": "Non-profit organizations heavily rely on volunteers who contribute their time and skills to support various causes and initiatives."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "Donors",
+                    "Strength": "10",
+                    "Description": "Non-profit organizations depend on donations from individuals and businesses to fund their programs and operations."
+                },
+                {
+                    "Relation": "Grant",
+                    "Object": "Foundations",
+                    "Strength": "7",
+                    "Description": "Non-profit organizations often receive grants from foundations to support specific projects or initiatives aligned with their mission."
+                }
+            ]
+        }
+    }
+}

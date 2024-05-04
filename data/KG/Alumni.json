@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Alumni": [
+                {
+                    "Relation": "Graduated from",
+                    "Object": "University",
+                    "Strength": "8",
+                    "Description": "Alumni have a strong relationship with their alma mater and often contribute back to the university through donations or mentoring current students."
+                },
+                {
+                    "Relation": "Worked at",
+                    "Object": "Company",
+                    "Strength": "9",
+                    "Description": "Alumni often find employment opportunities through their alma mater's network and maintain a strong connection with the company they work for."
+                },
+                {
+                    "Relation": "Member of",
+                    "Object": "Professional Organization",
+                    "Strength": "6",
+                    "Description": "Alumni may join professional organizations related to their field of study or industry to stay connected with other professionals and access networking opportunities."
+                },
+                {
+                    "Relation": "Guided by",
+                    "Object": "Mentor",
+                    "Strength": "7",
+                    "Description": "Alumni may seek guidance from mentors who have more experience in their field and can provide valuable insights and advice."
+                }
+            ]
+        }
+    }
+}

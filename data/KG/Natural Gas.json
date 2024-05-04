@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Natural gas": [
+                {
+                    "Relation": "Alternative",
+                    "Object": "Renewable Energy",
+                    "Strength": "8",
+                    "Description": "Natural gas can be considered an alternative to renewable energy sources in certain applications."
+                },
+                {
+                    "Relation": "Competitor",
+                    "Object": "Coal",
+                    "Strength": "7",
+                    "Description": "Natural gas competes with coal as a primary source of energy in many industries."
+                },
+                {
+                    "Relation": "Derived Product",
+                    "Object": "Liquefied Natural Gas",
+                    "Strength": "9",
+                    "Description": "Liquefied natural gas (LNG) is a form of natural gas that has been cooled to a liquid state for easier transportation and storage."
+                },
+                {
+                    "Relation": "Environmental Impact",
+                    "Object": "Carbon Emissions",
+                    "Strength": "6",
+                    "Description": "The combustion of natural gas releases carbon emissions, contributing to climate change."
+                },
+                {
+                    "Relation": "Alternative",
+                    "Object": "Renewable Energy",
+                    "Strength": "8",
+                    "Description": "Natural gas can be considered an alternative to renewable energy sources in certain applications."
+                },
+                {
+                    "Relation": "Competitor",
+                    "Object": "Coal",
+                    "Strength": "7",
+                    "Description": "Natural gas competes with coal as a primary source of energy in many industries."
+                },
+                {
+                    "Relation": "Derived Product",
+                    "Object": "Liquefied Natural Gas",
+                    "Strength": "9",
+                    "Description": "Liquefied natural gas (LNG) is a form of natural gas that has been cooled to a liquid state for easier transportation and storage."
+                },
+                {
+                    "Relation": "Environmental Impact",
+                    "Object": "Carbon Emissions",
+                    "Strength": "6",
+                    "Description": "The combustion of natural gas releases carbon emissions, contributing to climate change."
+                }
+            ]
+        }
+    }
+}

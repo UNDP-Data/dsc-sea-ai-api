@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "National Institutes of Health": [
+                {
+                    "Relation": "Funding",
+                    "Object": "National Cancer Institute",
+                    "Strength": "8",
+                    "Description": "The National Institutes of Health provides funding to the National Cancer Institute for cancer research and treatment."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "National Institute of Allergy and Infectious Diseases",
+                    "Strength": "7",
+                    "Description": "The National Institutes of Health collaborates with the National Institute of Allergy and Infectious Diseases to study and combat infectious diseases."
+                },
+                {
+                    "Relation": "Research",
+                    "Object": "National Institute of Mental Health",
+                    "Strength": "9",
+                    "Description": "The National Institutes of Health conducts research on mental health disorders through the National Institute of Mental Health."
+                },
+                {
+                    "Relation": "Research",
+                    "Object": "National Institute of Diabetes and Digestive and Kidney Diseases",
+                    "Strength": "6",
+                    "Description": "The National Institutes of Health conducts research on diabetes, digestive disorders, and kidney diseases through the National Institute of Diabetes and Digestive and Kidney Diseases."
+                },
+                {
+                    "Relation": "Funding",
+                    "Object": "National Cancer Institute",
+                    "Strength": "8",
+                    "Description": "The National Institutes of Health provides funding to the National Cancer Institute for cancer research and treatment."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "National Institute of Allergy and Infectious Diseases",
+                    "Strength": "7",
+                    "Description": "The National Institutes of Health collaborates with the National Institute of Allergy and Infectious Diseases to study and combat infectious diseases."
+                },
+                {
+                    "Relation": "Research",
+                    "Object": "National Institute of Mental Health",
+                    "Strength": "9",
+                    "Description": "The National Institutes of Health conducts research on mental health disorders through the National Institute of Mental Health."
+                },
+                {
+                    "Relation": "Research",
+                    "Object": "National Institute of Diabetes and Digestive and Kidney Diseases",
+                    "Strength": "6",
+                    "Description": "The National Institutes of Health conducts research on diabetes, digestive disorders, and kidney diseases through the National Institute of Diabetes and Digestive and Kidney Diseases."
+                }
+            ]
+        }
+    }
+}
