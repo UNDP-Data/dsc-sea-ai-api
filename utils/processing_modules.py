@@ -233,7 +233,7 @@ def filter_semantics(user_query, isInitialRun):
     
     # entities = [('the Country Program Document', 'ORG'), ('Afghanistan', 'GPE'), ('the year 2014', 'DATE'), ('Afghanistan', 'GPE'), ('UNDP', 'ORG'), ('2015-2019', 'DATE'), ('looking', 'NOUN'), ('insights', 'NOUN'), ('Country', 'NOUN'), ('Program', 'NOUN'), ('Document', 'NOUN'), ('Afghanistan', 'NOUN'), ('year', 'NOUN'), ('2014', 'NOUN'), ('particularly', 'NOUN'), ('interested', 'NOUN'), ('understanding', 'NOUN'), ('Afghanistan', 'NOUN'), ('strategies', 'NOUN'), ('related', 'NOUN'), ('economic', 'NOUN'), ('development', 'NOUN'), ('governance', 'NOUN'), ('social', 'NOUN'), ('inclusion', 'NOUN'), ('Additionally', 'NOUN'), ('like', 'NOUN'), ('know', 'NOUN'), ('partnerships', 'NOUN'), ('international', 'NOUN'), ('organizations', 'NOUN'), ('UNDP', 'NOUN'), ('poverty', 'NOUN'), ('reduction', 'NOUN'), ('initiatives', 'NOUN'), ('gender', 'NOUN'), ('equality', 'NOUN'), ('measures', 'NOUN'), ('included', 'NOUN'), ('program', 'NOUN'), ('provide', 'NOUN'), ('details', 'NOUN'), ('planned', 'NOUN'), ('address', 'NOUN'), ('security', 'NOUN'), ('issues', 'NOUN'), ('sustainable', 'NOUN'), ('development', 'NOUN'), ('goals', 'NOUN'), ('timeframe', 'NOUN'), ('2015', 'NOUN'), ('-', 'NOUN'), ('2019', 'NOUN')]
     # Print the extracted entities
-    print("All Entities and POS:", entities)
+    # print("All Entities and POS:", entities)
     # Generate DFs for main entities
     filtered_df_country = pd.DataFrame()  # Initialize an empty DataFrame
     filtered_df_others = pd.DataFrame()  # Initialize an empty DataFrame
@@ -289,7 +289,7 @@ def filter_semantics(user_query, isInitialRun):
 
     merged_df = pd.DataFrame()
     if filtered_df_others.empty and filtered_df_country.empty:
-       print(f'on the reference df {filtered_df_backup_reference.empty}')
+    #    print(f'on the reference df {filtered_df_backup_reference.empty}')
        merged_df = pd.concat([filtered_df_backup_reference])
     else :
        merged_df = pd.concat([filtered_df_country,filtered_df_others])
@@ -479,13 +479,86 @@ def indicatorsModule(user_query): #lower priority
     return indicator_module.indicatorsModule(user_query)
 
 
+# Function to calculate the similarity score between two strings
+def similarity_score_kg(word1, word2):
+    # print(f""" similarity_score_kg=== {word1} {word2}""")
+    # Convert strings to lowercase for case-insensitive comparison
+    word1_lower = word1.lower()
+    word2_lower = word2.lower()
+    
+    # Split strings into individual words
+    words1 = word1_lower.split()
+    words2 = word2_lower.split()
+    
+    # Calculate the number of overlapping words
+    common_words = set(words1) & set(words2)
+    
+    # Calculate similarity score as percentage of overlapping words
+    similarity = len(common_words) / max(len(words1), len(words2)) * 100
+    
+    return similarity
 
 
+def find_kg(keywords, data_dir):
+    max_score = 0
+    most_similar_file = None
+    final_output = {"knowledge_graph": {"entities": [], "relations": {}}}
 
+    print(f"""  keywords=== {keywords} """)
+    # Iterate over each file in the data directory
+    for filename in os.listdir(data_dir):
+        if filename.endswith(".json"):
+            # Calculate the similarity score between each keyword and the filename
+            for keyword in keywords:
+                score = similarity_score_kg(keyword, filename)
+                # print(f""" score {score} | keyword {keyword} | filename {filename}  """)
+                # Update max_score and most_similar_file if a higher score is found
+                if score > max_score:
+                    max_score = score
+                    most_similar_file = filename
 
+    # Load the content of the most similar file
+    if most_similar_file:
+        with open(os.path.join(data_dir, most_similar_file), "r") as file:
+            content = json.load(file)
+            # Iterate over each relation in the content
+            for relation, objects in content["knowledge graph"]["relations"].items():
+                # Iterate over each object in the relation
+                for obj in objects:
+                    # Check if the object has a "Object" key
+                    if "Object" in obj:
+                        # Search for files with the same name as the object
+                        obj_filename = f"{obj['Object']}.json"
+                        # Check if the file path exists
+                        full_path = os.path.join(data_dir, obj_filename)
 
+                        if os.path.exists(full_path):
+                            # Load the content of the object file
+                            with open(full_path, "r") as obj_file:
+                                obj_content = json.load(obj_file)
+                                print(f""" objects====**** {obj_content}""")
 
+                                # Merge the content of the object file into the final output
+                                final_output["knowledge_graph"]["relations"].setdefault(relation, []).append(obj_content)
+                        else:
+                            # File path does not exist
+                            error = ''
+                            # print(f"The file path {full_path} does not exist.")
 
+    # Merge relations into a single JSON
+    merged_relations = {}
+    for relations_list in final_output["knowledge_graph"]["relations"].values():
+        for relation_item in relations_list:
+            # Check if the "Object" key exists in relation_item
+            relation_name = relation_item.get("Object", "")
+            if relation_name:
+                print(f"""relation_name===**** {relation_name}""")
+            else:
+                print("Object key does not exist in relation_item.")
+            
+            merged_relations.setdefault(relation_name, []).append(relation_item)
+    print(f""" ****merged_relations***#### == {merged_relations} """)
+    final_output["knowledge_graph"]["relations"] = merged_relations
 
-
+    return final_output
 
