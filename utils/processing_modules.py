@@ -531,7 +531,7 @@ def find_kg(keywords, data_dir):
                         obj_filename = f"{obj['Object']}.json"
                         # Check if the file path exists
                         full_path = os.path.join(data_dir, obj_filename)
-
+                        
                         if os.path.exists(full_path):
                             # Load the content of the object file
                             with open(full_path, "r") as obj_file:
