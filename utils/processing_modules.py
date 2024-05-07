@@ -536,7 +536,7 @@ def find_kg(keywords, data_dir):
                             # Load the content of the object file
                             with open(full_path, "r") as obj_file:
                                 obj_content = json.load(obj_file)
-                                print(f""" objects====**** {obj_content}""")
+                                # print(f""" objects====**** {obj_content}""")
 
                                 # Merge the content of the object file into the final output
                                 final_output["knowledge_graph"]["relations"].setdefault(relation, []).append(obj_content)
@@ -551,13 +551,13 @@ def find_kg(keywords, data_dir):
         for relation_item in relations_list:
             # Check if the "Object" key exists in relation_item
             relation_name = relation_item.get("Object", "")
-            if relation_name:
-                print(f"""relation_name===**** {relation_name}""")
-            else:
-                print("Object key does not exist in relation_item.")
+            # if relation_name:
+            #     print(f"""relation_name===**** {relation_name}""")
+            # else:
+            #     print("Object key does not exist in relation_item.")
             
             merged_relations.setdefault(relation_name, []).append(relation_item)
-    print(f""" ****merged_relations***#### == {merged_relations} """)
+    # print(f""" ****merged_relations***#### == {merged_relations} """)
     final_output["knowledge_graph"]["relations"] = merged_relations
 
     return final_output
