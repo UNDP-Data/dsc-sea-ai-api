@@ -481,11 +481,11 @@ def indicatorsModule(user_query): #lower priority
 
 # Function to calculate the similarity score between two strings
 def similarity_score_kg(word1, word2):
-    # print(f""" similarity_score_kg=== {word1} {word2}""")
     # Convert strings to lowercase for case-insensitive comparison
     word1_lower = word1.lower()
-    word2_lower = word2.lower()
-    
+    word2_lower = word2[:-5].lower()
+
+
     # Split strings into individual words
     words1 = word1_lower.split()
     words2 = word2_lower.split()
@@ -504,46 +504,88 @@ def find_kg(keywords, data_dir):
     most_similar_file = None
     final_output = {"knowledge_graph": {"entities": [], "relations": {}}}
 
-    print(f"""  keywords=== {keywords} """)
-    # Iterate over each file in the data directory
+    # Extract the first keyword from the list
+    first_keyword = keywords[0] if keywords else None
+
+    # Calculate the similarity score with the first keyword
     for filename in os.listdir(data_dir):
         if filename.endswith(".json"):
-            # Calculate the similarity score between each keyword and the filename
-            for keyword in keywords:
-                score = similarity_score_kg(keyword, filename)
-                # print(f""" score {score} | keyword {keyword} | filename {filename}  """)
-                # Update max_score and most_similar_file if a higher score is found
-                if score > max_score:
-                    max_score = score
-                    most_similar_file = filename
+            score = similarity_score_kg(first_keyword, filename)
+            # print(f""" first_keyword === {first_keyword} filename {filename} score {score}  """)
 
+            if score > max_score:
+                max_score = score
+                most_similar_file = filename
+                # Break the loop after finding the first matching file
+                break
+    initial_root = most_similar_file[:-5]
+    print(initial_root)
     # Load the content of the most similar file
     if most_similar_file:
         with open(os.path.join(data_dir, most_similar_file), "r") as file:
-            content = json.load(file)
+            content = json.load(file)            
             # Iterate over each relation in the content
             for relation, objects in content["knowledge graph"]["relations"].items():
-                # Iterate over each object in the relation
-                for obj in objects:
-                    # Check if the object has a "Object" key
-                    if "Object" in obj:
-                        # Search for files with the same name as the object
-                        obj_filename = f"{obj['Object']}.json"
-                        # Check if the file path exists
-                        full_path = os.path.join(data_dir, obj_filename)
-                        
-                        if os.path.exists(full_path):
-                            # Load the content of the object file
-                            with open(full_path, "r") as obj_file:
-                                obj_content = json.load(obj_file)
-                                # print(f""" objects====**** {obj_content}""")
+                # print(f""" most_similar_file === {objects} """)
+ 
 
-                                # Merge the content of the object file into the final output
-                                final_output["knowledge_graph"]["relations"].setdefault(relation, []).append(obj_content)
-                        else:
-                            # File path does not exist
-                            error = ''
-                            # print(f"The file path {full_path} does not exist.")
+                # Dictionary to store found JSON files
+                found_files = {}
+
+                # Iterate through each dictionary in 'data'
+                for item in objects:
+                    # Extract the 'Object' name
+                    object_name = item.get('Object')
+
+                    # Construct the paths for both original and lowercase filenames
+                    json_file_original = os.path.join(data_dir, f"{object_name}.json")
+                    json_file_lowercase = os.path.join(data_dir, f"{object_name.lower()}.json")
+                    
+                    # Check if a corresponding JSON file exists
+                    # json_file = os.path.join(data_dir, f"{object_name}.json")
+
+                    if os.path.exists(json_file_original) or os.path.exists(json_file_lowercase):
+                        # Choose the correct filename based on existence
+                        json_file = json_file_original if os.path.exists(json_file_original) else json_file_lowercase
+                        
+                    # if os.path.exists(json_file):
+                        # Load the content of the JSON file
+                        print(f"""*****json_file=== {json_file} """)
+
+                        with open(json_file, "r") as file:
+                            try: 
+                                file_content = json.load(file)
+                                print(f"""*****object_name=== {file} """)
+
+                                # Add the content to the 'found_files' dictionary
+                                found_files[object_name] = file_content
+                            except Exception as e:
+                                print("Error:", e)
+                                return None
+                # 'found_files' now contains the content of JSON files with object names as keys
+                # print(found_files)
+
+                # Iterate over each object in the relation
+                # for obj in objects:
+                #     # Check if the object has a "Object" key
+                #     if "Object" in obj:
+                #         # Search for files with the same name as the object
+                #         obj_filename = f"{obj['Object']}.json"
+                #         # Check if the file path exists
+                #         full_path = os.path.join(data_dir, obj_filename)
+                        
+                #         if os.path.exists(full_path):
+                #             # Load the content of the object file
+                #             with open(full_path, "r") as obj_file:
+                #                 obj_content = json.load(obj_file)
+                #                 # print(f""" objects====**** {obj_content}""")
+
+                #                 # Merge the content of the object file into the final output
+                #                 final_output["knowledge_graph"]["relations"].setdefault(relation, []).append(obj_content)
+                #         else:
+                #             # File path does not exist
+                #             error = ''
+                #             # print(f"The file path {full_path} does not exist.")
 
     # Merge relations into a single JSON
     merged_relations = {}

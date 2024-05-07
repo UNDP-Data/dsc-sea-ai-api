@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "Entity": "Sustainable Development Goals",
+    "Description": "The Sustainable Development Goals are a global call to action to end poverty, protect the planet, and ensure that all people enjoy peace and prosperity by 2030."
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "Sustainable Development Goals": [
+        {
+          "Relation": "addresses",
+          "Object": "Goal 1: No Poverty",
+          "Description": "The SDGs aim to end poverty in all its forms everywhere, focusing on the most vulnerable, including children and the elderly.",
+          "Strength": 9
+        },
+        {
+          "Relation": "promotes",
+          "Object": "Goal 7: Affordable and Clean Energy",
+          "Description": "The SDGs promote access to affordable, reliable, sustainable, and modern energy for all, enhancing global energy security and environmental sustainability.",
+          "Strength": 10
+        },
+        {
+          "Relation": "advocates",
+          "Object": "Goal 13: Climate Action",
+          "Description": "The SDGs advocate for urgent action to combat climate change and its impacts through international agreements and local initiatives.",
+          "Strength": 10
+        },
+        {
+          "Relation": "supports",
+          "Object": "Goal 4: Quality Education",
+          "Description": "The SDGs support quality education to ensure inclusive and equitable quality education and promote lifelong learning opportunities for all.",
+          "Strength": 8
+        },
+        {
+          "Relation": "focuses on",
+          "Object": "Goal 3: Good Health and Well-being",
+          "Description": "The SDGs focus on ensuring healthy lives and promoting well-being for all at all ages, which includes efforts to reduce mortality and combat diseases.",
+          "Strength": 9
+        },
+        {
+          "Relation": "relies on",
+          "Object": "Global Partnerships",
+          "Description": "The SDGs rely on revitalized global partnerships for sustainable development, including partnerships with governments, the private sector, and civil society.",
+          "Strength": 7
+        },
+        {
+          "Relation": "aims to improve",
+          "Object": "Economic Growth",
+          "Description": "The SDGs aim to improve global economic growth by promoting inclusive and sustainable economic activities, employment, and decent work for all.",
+          "Strength": 8
+        }
+      ]
+    }
+  }
+}
