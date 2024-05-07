@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "Entity": "Clean Technology Innovation Framework",
+    "Description": "The Clean Technology Innovation Framework aims to foster the development and adoption of advanced technologies that reduce environmental impacts and improve energy efficiency across multiple sectors."
+  },
+  "knowledge graph": {
+    "entities": [
+      "Research and Development",
+      "Startup Ecosystem",
+      "Renewable Energy Technologies",
+      "Smart Grids",
+      "Electric Vehicles",
+      "Energy Efficiency Measures"
+    ],
+    "relations": {
+      "Clean Technology Innovation Framework": [
+        {
+          "Relation": "fosters",
+          "Object": "Research and Development",
+          "Description": "The framework fosters research and development in new clean technologies that promise to reduce energy consumption and minimize carbon footprints.",
+          "Strength": 10
+        },
+        {
+          "Relation": "supports",
+          "Object": "Startup Ecosystem",
+          "Description": "It supports the startup ecosystem by providing funding, mentorship, and resources to innovators focusing on clean technology solutions.",
+          "Strength": 8
+        },
+        {
+          "Relation": "promotes",
+          "Object": "Renewable Energy Technologies",
+          "Description": "The framework promotes the adoption and integration of renewable energy technologies in both public and private sectors.",
+          "Strength": 9
+        },
+        {
+          "Relation": "integrates",
+          "Object": "Smart Grids",
+          "Description": "It integrates smart grids into the energy system to enhance energy distribution efficiency and support the incorporation of renewable energy sources.",
+          "Strength": 7
+        },
+        {
+          "Relation": "advocates",
+          "Object": "Electric Vehicles",
+          "Description": "The framework advocates for the rapid adoption of electric vehicles to reduce reliance on fossil fuels and decrease greenhouse gas emissions.",
+          "Strength": 8
+        },
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Measures",
+          "Description": "It implements energy efficiency measures across industries to improve performance and reduce energy wastage.",
+          "Strength": 7
+        }
+      ]
+    }
+  }
+}

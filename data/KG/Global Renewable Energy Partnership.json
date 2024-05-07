@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "Entity": "Global Renewable Energy Partnership",
+    "Description": "The Global Renewable Energy Partnership (GREP) is an international collaborative effort designed to promote the development and dissemination of renewable energy technologies worldwide, enhancing global energy security and environmental sustainability."
+  },
+  "knowledge graph": {
+    "entities": [
+      "Technology Transfer",
+      "Capacity Building",
+      "Funding Mechanisms",
+      "Policy Harmonization",
+      "Renewable Energy Markets",
+      "Sustainable Development"
+    ],
+    "relations": {
+      "Global Renewable Energy Partnership": [
+        {
+          "Relation": "facilitates",
+          "Object": "Technology Transfer",
+          "Description": "GREP facilitates technology transfer among countries to accelerate the adoption of advanced renewable technologies.",
+          "Strength": 9
+        },
+        {
+          "Relation": "conducts",
+          "Object": "Capacity Building",
+          "Description": "It conducts capacity building programs to enhance the skills and knowledge necessary for developing renewable energy infrastructures.",
+          "Strength": 8
+        },
+        {
+          "Relation": "provides",
+          "Object": "Funding Mechanisms",
+          "Description": "GREP provides diverse funding mechanisms, including grants and low-interest loans, to support renewable energy projects in developing nations.",
+          "Strength": 7
+        },
+        {
+          "Relation": "supports",
+          "Object": "Policy Harmonization",
+          "Description": "It supports policy harmonization efforts to create a more cohesive regulatory environment for renewable energy across different regions.",
+          "Strength": 6
+        },
+        {
+          "Relation": "expands",
+          "Object": "Renewable Energy Markets",
+          "Description": "GREP works to expand renewable energy markets by promoting investments and reducing trade barriers.",
+          "Strength": 8
+        },
+        {
+          "Relation": "advocates",
+          "Object": "Sustainable Development",
+          "Description": "The partnership advocates for sustainable development by integrating renewable energy solutions that address economic, social, and environmental dimensions.",
+          "Strength": 10
+        }
+      ]
+    }
+  }
+}

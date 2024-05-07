@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "Entity": "Decentralized Renewable Energy Framework",
+    "Description": "The Decentralized Renewable Energy Framework focuses on promoting local, small-scale renewable energy solutions to enhance energy access in remote and rural areas, supporting energy independence and sustainability."
+  },
+  "knowledge graph": {
+    "entities": [
+      "Microgrids",
+      "Solar Home Systems",
+      "Community Energy Planning",
+      "Local Energy Governance",
+      "Technology Adaptation"
+    ],
+    "relations": {
+      "Decentralized Renewable Energy Framework": [
+        {
+          "Relation": "supports",
+          "Object": "Microgrids",
+          "Description": "The framework supports the development of microgrids, which provide reliable, renewable energy to small, isolated communities.",
+          "Strength": 9
+        },
+        {
+          "Relation": "promotes",
+          "Object": "Solar Home Systems",
+          "Description": "It promotes the use of solar home systems to provide off-grid energy solutions that are scalable and sustainable.",
+          "Strength": 8
+        },
+        {
+          "Relation": "guides",
+          "Object": "Community Energy Planning",
+          "Description": "The framework guides community energy planning to integrate local renewable energy resources effectively.",
+          "Strength": 7
+        },
+        {
+          "Relation": "enhances",
+          "Object": "Local Energy Governance",
+          "Description": "It enhances local energy governance by empowering communities to manage and control their energy resources.",
+          "Strength": 6
+        },
+        {
+          "Relation": "facilitates",

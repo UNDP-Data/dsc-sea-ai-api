@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "Entity": "Derisking Renewable Energy Investment (DREI) framework",
+    "Description": "The Derisking Renewable Energy Investment (DREI) framework is designed to support governments and investors in developing financial instruments that effectively reduce the financial risks and barriers that hinder the investment in renewable energy technologies."
+  },
+  "knowledge graph": {
+    "entities": [
+      "Financial Instruments",
+      "Government Policies",
+      "Private Sector Partnerships",
+      "Renewable Energy Projects",
+      "Risk Assessment Models",
+      "Investment Strategies"
+    ],
+    "relations": {
+      "Derisking Renewable Energy Investment (DREI) framework": [
+        {
+          "Relation": "develops",
+          "Object": "Financial Instruments",
+          "Description": "The DREI framework develops tailored financial instruments such as guarantees and insurance products to mitigate risks for investors in renewable energy.",
+          "Strength": 10
+        },
+        {
+          "Relation": "influences",
+          "Object": "Government Policies",
+          "Description": "The DREI framework influences government policies by providing data and strategies that support the creation of favorable regulatory environments for renewable energy investments.",
+          "Strength": 9
+        },
+        {
+          "Relation": "partners with",
+          "Object": "Private Sector Partnerships",
+          "Description": "The DREI framework partners with the private sector to mobilize capital for renewable energy projects and to leverage private expertise in energy solutions.",
+          "Strength": 8
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Projects",
+          "Description": "The DREI framework supports renewable energy projects by reducing the cost of capital and enhancing investor confidence through risk mitigation.",
+          "Strength": 9
+        },
+        {
+          "Relation": "utilizes",
+          "Object": "Risk Assessment Models",
+          "Description": "The DREI framework utilizes sophisticated risk assessment models to identify, quantify, and manage financial risks associated with renewable energy investments.",
+          "Strength": 7
+        },
+        {
+          "Relation": "shapes",
+          "Object": "Investment Strategies",
+          "Description": "The DREI framework shapes investment strategies by offering analytical tools that help investors and policymakers optimize the allocation of resources in renewable energy sectors.",
+          "Strength": 6
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "Entity": "Sustainable Transport Policy",
+    "Description": "Sustainable Transport Policy aims to transition public and private transportation systems to more sustainable practices, including the use of renewable energy, enhancing energy efficiency, and reducing greenhouse gas emissions."
+  },
+  "knowledge graph": {
+    "entities": [
+      "Public Transit Upgrades",
+      "Cycling Infrastructure",
+      "Electric Mobility",
+      "Urban Planning",
+      "Freight Transport Solutions",
+      "Pollution Control Measures"
+    ],
+    "relations": {
+      "Sustainable Transport Policy": [
+        {
+          "Relation": "upgrades",
+          "Object": "Public Transit",
+          "Description": "The policy upgrades public transit systems to be more efficient and less polluting, encouraging public use over private vehicles.",
+          "Strength": 9
+        },
+        {
+          "Relation": "develops",
+          "Object": "Cycling Infrastructure",
+          "Description": "It develops comprehensive cycling infrastructure to promote cycling as a healthy and environmentally friendly mode of transport.",
+          "Strength": 8
+        },
+        {
+          "Relation": "advocates",
+          "Object": "Electric Mobility",
+          "Description": "The policy advocates for electric mobility, supporting the transition to electric vehicles and charging infrastructure development.",
+          "Strength": 10
+        },
+        {
+          "Relation": "coordinates",
+          "Object": "Urban Planning",
+          "Description": "It coordinates with urban planning to ensure that city layouts facilitate sustainable transport options, reducing the need for long commutes.",
+          "Strength": 7
+        },
+        {
+          "Relation": "reforms",
+          "Object": "Freight Transport Solutions",
+          "Description": "The policy reforms freight transport solutions to improve logistics efficiency and reduce emissions from heavy-duty vehicles.",
+          "Strength": 8
+        },
+        {
+          "Relation": "implements",
+          "Object": "Pollution Control Measures",
+          "Description": "It implements pollution control measures that target emissions from transport, significantly improving air quality in urban areas.",
+          "Strength": 9
+        }
+      ]
+    }
+  }
+}
