@@ -550,20 +550,20 @@ def find_kg(keywords, data_dir):
                         
                     # if os.path.exists(json_file):
                         # Load the content of the JSON file
-                        print(f"""*****json_file=== {json_file} """)
+                        # print(f"""*****json_file=== {json_file} """)
 
                         with open(json_file, "r") as file:
                             try: 
                                 file_content = json.load(file)
-                                print(f"""*****object_name=== {file} """)
-
+                                # print(f"""*****object_name=== {file_content} """)
+                                
                                 # Add the content to the 'found_files' dictionary
                                 found_files[object_name] = file_content
                             except Exception as e:
                                 print("Error:", e)
                                 return None
                 # 'found_files' now contains the content of JSON files with object names as keys
-                # print(found_files)
+                print(f""" found_files === {found_files}""")
 
                 # Iterate over each object in the relation
                 # for obj in objects:
@@ -593,14 +593,9 @@ def find_kg(keywords, data_dir):
         for relation_item in relations_list:
             # Check if the "Object" key exists in relation_item
             relation_name = relation_item.get("Object", "")
-            # if relation_name:
-            #     print(f"""relation_name===**** {relation_name}""")
-            # else:
-            #     print("Object key does not exist in relation_item.")
-            
             merged_relations.setdefault(relation_name, []).append(relation_item)
     # print(f""" ****merged_relations***#### == {merged_relations} """)
     final_output["knowledge_graph"]["relations"] = merged_relations
 
-    return final_output
+    return found_files
 
