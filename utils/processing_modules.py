@@ -519,7 +519,12 @@ def find_kg(keywords, data_dir):
                 # Break the loop after finding the first matching file
                 break
     initial_root = most_similar_file[:-5]
-    print(initial_root)
+    # print(initial_root)
+    initial_kg = {}
+    with open(os.path.join(data_dir, f"""{initial_root}.json"""), "r") as file:
+         initial_kg = json.load(file)  
+    #get the initial root file 
+
     # Load the content of the most similar file
     if most_similar_file:
         with open(os.path.join(data_dir, most_similar_file), "r") as file:
@@ -530,8 +535,9 @@ def find_kg(keywords, data_dir):
  
 
                 # Dictionary to store found JSON files
-                found_files = {}
-
+                # found_files = {}
+                found_files = []
+                found_files.append(initial_kg)
                 # Iterate through each dictionary in 'data'
                 for item in objects:
                     # Extract the 'Object' name
@@ -558,7 +564,10 @@ def find_kg(keywords, data_dir):
                                 # print(f"""*****object_name=== {file_content} """)
                                 
                                 # Add the content to the 'found_files' dictionary
-                                found_files[object_name] = file_content
+                                # found_files[object_name] = file_content
+                                found_files.append(file_content)
+                                # found_files = file_content
+
                             except Exception as e:
                                 print("Error:", e)
                                 return None
@@ -588,14 +597,15 @@ def find_kg(keywords, data_dir):
                 #             # print(f"The file path {full_path} does not exist.")
 
     # Merge relations into a single JSON
-    merged_relations = {}
-    for relations_list in final_output["knowledge_graph"]["relations"].values():
-        for relation_item in relations_list:
-            # Check if the "Object" key exists in relation_item
-            relation_name = relation_item.get("Object", "")
-            merged_relations.setdefault(relation_name, []).append(relation_item)
-    # print(f""" ****merged_relations***#### == {merged_relations} """)
-    final_output["knowledge_graph"]["relations"] = merged_relations
+    # merged_relations = {}
+    # for relations_list in final_output["knowledge_graph"]["relations"].values():
+    #     for relation_item in relations_list:
+    #         # Check if the "Object" key exists in relation_item
+    #         relation_name = relation_item.get("Object", "")
+    #         merged_relations.setdefault(relation_name, []).append(relation_item)
+    # # print(f""" ****merged_relations***#### == {merged_relations} """)
+    # final_output["knowledge_graph"]["relations"] = merged_relations
 
+    
     return found_files
 
