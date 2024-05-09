@@ -1,0 +1,154 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Electricity generation": [
+                {
+                    "Relation": "Relies on",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "Electricity generation can rely on renewable energy sources such as solar, wind, and geothermal power."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Fossil fuels",
+                    "Strength": "9",
+                    "Description": "Electricity generation often relies on fossil fuels like coal, oil, and natural gas, although this is not sustainable in the long term."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Nuclear power",
+                    "Strength": "7",
+                    "Description": "Some countries generate electricity through nuclear power plants, which use nuclear reactions to produce heat and generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hydropower",
+                    "Strength": "6",
+                    "Description": "Hydropower plants generate electricity by harnessing the energy of flowing or falling water."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "Electricity generation can rely on renewable energy sources such as solar, wind, and geothermal power."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Fossil fuels",
+                    "Strength": "9",
+                    "Description": "Electricity generation often relies on fossil fuels like coal, oil, and natural gas, although this is not sustainable in the long term."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Nuclear power",
+                    "Strength": "7",
+                    "Description": "Some countries generate electricity through nuclear power plants, which use nuclear reactions to produce heat and generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hydropower",
+                    "Strength": "6",
+                    "Description": "Hydropower plants generate electricity by harnessing the energy of flowing or falling water."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "Electricity generation can rely on renewable energy sources such as solar, wind, and geothermal power."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Fossil fuels",
+                    "Strength": "9",
+                    "Description": "Electricity generation often relies on fossil fuels like coal, oil, and natural gas, although this is not sustainable in the long term."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Nuclear power",
+                    "Strength": "7",
+                    "Description": "Some countries generate electricity through nuclear power plants, which use nuclear reactions to produce heat and generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hydropower",
+                    "Strength": "6",
+                    "Description": "Hydropower plants generate electricity by harnessing the energy of flowing or falling water."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "Electricity generation can rely on renewable energy sources such as solar, wind, and geothermal power."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Fossil fuels",
+                    "Strength": "9",
+                    "Description": "Electricity generation often relies on fossil fuels like coal, oil, and natural gas, although this is not sustainable in the long term."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Nuclear power",
+                    "Strength": "7",
+                    "Description": "Some countries generate electricity through nuclear power plants, which use nuclear reactions to produce heat and generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hydropower",
+                    "Strength": "6",
+                    "Description": "Hydropower plants generate electricity by harnessing the energy of flowing or falling water."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "Electricity generation can rely on renewable energy sources such as solar, wind, and geothermal power."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Fossil fuels",
+                    "Strength": "9",
+                    "Description": "Electricity generation often relies on fossil fuels like coal, oil, and natural gas, although this is not sustainable in the long term."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Nuclear power",
+                    "Strength": "7",
+                    "Description": "Some countries generate electricity through nuclear power plants, which use nuclear reactions to produce heat and generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hydropower",
+                    "Strength": "6",
+                    "Description": "Hydropower plants generate electricity by harnessing the energy of flowing or falling water."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "Electricity generation can rely on renewable energy sources such as solar, wind, and geothermal power."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Fossil fuels",
+                    "Strength": "9",
+                    "Description": "Electricity generation often relies on fossil fuels like coal, oil, and natural gas, although this is not sustainable in the long term."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Nuclear power",
+                    "Strength": "7",
+                    "Description": "Some countries generate electricity through nuclear power plants, which use nuclear reactions to produce heat and generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hydropower",
+                    "Strength": "6",
+                    "Description": "Hydropower plants generate electricity by harnessing the energy of flowing or falling water."
+                }
+            ]
+        }
+    }
+}

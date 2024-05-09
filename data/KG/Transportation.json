@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Transportation": [
+                {
+                    "Relation": "Reduces carbon emissions",
+                    "Object": "Electric Vehicles",
+                    "Strength": "8",
+                    "Description": "Electric vehicles have the potential to significantly reduce carbon emissions compared to traditional gasoline-powered vehicles."
+                },
+                {
+                    "Relation": "Reduces traffic congestion",
+                    "Object": "Public Transportation",
+                    "Strength": "9",
+                    "Description": "Public transportation systems, such as buses and trains, can help reduce traffic congestion by providing an alternative to individual car usage."
+                },
+                {
+                    "Relation": "Promotes physical activity",
+                    "Object": "Bicycles",
+                    "Strength": "7",
+                    "Description": "Using bicycles as a mode of transportation promotes physical activity, leading to improved health and reduced reliance on motor vehicles."
+                },
+                {
+                    "Relation": "Enables global trade",
+                    "Object": "Shipping",
+                    "Strength": "10",
+                    "Description": "Shipping plays a crucial role in enabling global trade by transporting goods across long distances, supporting economic growth and development."
+                },
+                {
+                    "Relation": "Reduces carbon emissions",
+                    "Object": "Electric Vehicles",
+                    "Strength": "8",
+                    "Description": "Electric vehicles have the potential to significantly reduce carbon emissions compared to traditional gasoline-powered vehicles."
+                },
+                {
+                    "Relation": "Reduces traffic congestion",
+                    "Object": "Public Transportation",
+                    "Strength": "9",
+                    "Description": "Public transportation systems, such as buses and trains, can help reduce traffic congestion by providing an alternative to individual car usage."
+                },
+                {
+                    "Relation": "Promotes physical activity",
+                    "Object": "Bicycles",
+                    "Strength": "7",
+                    "Description": "Using bicycles as a mode of transportation promotes physical activity, leading to improved health and reduced reliance on motor vehicles."
+                },
+                {
+                    "Relation": "Enables global trade",
+                    "Object": "Shipping",
+                    "Strength": "10",
+                    "Description": "Shipping plays a crucial role in enabling global trade by transporting goods across long distances, supporting economic growth and development."
+                }
+            ]
+        }
+    }
+}

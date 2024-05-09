@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Policy and Regulation": [
+                {
+                    "Relation": "Influence",
+                    "Object": "Government",
+                    "Strength": "9",
+                    "Description": "Government plays a crucial role in creating and implementing policies and regulations related to sustainable energy."
+                },
+                {
+                    "Relation": "Compliance",
+                    "Object": "Industry",
+                    "Strength": "8",
+                    "Description": "Industry needs to comply with the policies and regulations set by the government to ensure sustainable energy practices."
+                },
+                {
+                    "Relation": "Impact",
+                    "Object": "Citizens",
+                    "Strength": "7",
+                    "Description": "Policies and regulations on sustainable energy have a direct impact on the behavior and choices of citizens."
+                },
+                {
+                    "Relation": "Advocacy",
+                    "Object": "Environmental Organizations",
+                    "Strength": "6",
+                    "Description": "Environmental organizations advocate for stronger policies and regulations to promote sustainable energy practices."
+                }
+            ]
+        }
+    }
+}

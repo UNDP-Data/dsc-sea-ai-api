@@ -1,0 +1,28 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Energy Star": [
+                {
+                    "Relation": "Administered by",
+                    "Object": "U.S. Environmental Protection Agency",
+                    "Strength": "9",
+                    "Description": "The U.S. Environmental Protection Agency administers the Energy Star program."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "Department of Energy",
+                    "Strength": "8",
+                    "Description": "Energy Star collaborates with the Department of Energy to promote energy efficiency."
+                },
+                {
+                    "Relation": "Focuses on",
+                    "Object": "Energy Efficiency",
+                    "Strength": "10",
+                    "Description": "Energy Star focuses on promoting energy efficiency in various sectors."
+                }
+            ]
+        }
+    }
+}

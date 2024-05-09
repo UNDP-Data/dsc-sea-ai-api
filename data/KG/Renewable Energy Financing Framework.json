@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "Entity": "Renewable Energy Financing Framework",
+    "Description": "The Renewable Energy Financing Framework is designed to streamline and enhance the accessibility of financial resources for renewable energy projects, aiming to boost investment in sustainable energy technologies globally."
+  },
+  "knowledge graph": {
+    "entities": [
+      "Investment Incentives",
+      "Risk Mitigation Instruments",
+      "Public-Private Partnerships",
+      "Sustainable Energy Hub (SEH)",
+      "International Renewable Energy Agency (IRENA)"
+    ],
+    "relations": {
+      "Renewable Energy Financing Framework": [
+        {
+          "Relation": "offers",
+          "Object": "Investment Incentives",
+          "Description": "The framework offers various investment incentives, including tax breaks and subsidies, to attract private sector funding into renewable energy.",
+          "Strength": 9
+        },
+        {
+          "Relation": "implements",
+          "Object": "Risk Mitigation Instruments",
+          "Description": "It implements risk mitigation instruments like guarantees and insurance products to reduce the financial risk associated with renewable energy projects.",
+          "Strength": 8
+        },
+        {
+          "Relation": "facilitates",
+          "Object": "Public-Private Partnerships",
+          "Description": "The framework facilitates public-private partnerships to leverage private investment in large-scale renewable energy deployments.",
+          "Strength": 7
+        },
+        {
+          "Relation": "is a part of",
+          "Object": "Sustainable Energy Hub (SEH)",
+          "Description": "This financing framework is a critical part of SEH's efforts to ensure sustainable energy projects receive the necessary capital to succeed.",
+          "Strength": 5
+        },
+        {
+          "Relation": "is endorsed by",
+          "Object": "International Renewable Energy Agency (IRENA)",
+          "Description": "IRENA endorses this framework as part of its global strategy to increase financial flows into renewable energy.",
+          "Strength": 6
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Clean technology": [
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Renewable energy",
+                    "Strength": "9",
+                    "Description": "Clean technology plays a crucial role in the development and implementation of renewable energy sources, such as solar, wind, and hydro power."
+                },
+                {
+                    "Relation": "Enhances",
+                    "Object": "Energy efficiency",
+                    "Strength": "8",
+                    "Description": "Clean technology enables the improvement of energy efficiency in various sectors, reducing energy consumption and minimizing environmental impact."
+                },
+                {
+                    "Relation": "Enables",
+                    "Object": "Waste management",
+                    "Strength": "7",
+                    "Description": "Clean technology provides innovative solutions for efficient waste management, including recycling, waste-to-energy conversion, and pollution control."
+                },
+                {
+                    "Relation": "Integrates with",
+                    "Object": "Smart grid",
+                    "Strength": "6",
+                    "Description": "Clean technology integrates with smart grid systems to optimize energy distribution, enable demand response, and facilitate the integration of renewable energy sources."
+                }
+            ]
+        }
+    }
+}

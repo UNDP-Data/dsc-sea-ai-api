@@ -1,0 +1,64 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Suppliers": [
+                {
+                    "Relation": "Business Partnership",
+                    "Object": "Customers",
+                    "Strength": "8",
+                    "Description": "Suppliers have a business partnership with customers to provide them with products and services."
+                },
+                {
+                    "Relation": "Supply Chain",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Suppliers are responsible for the supply chain of products, ensuring their availability and quality."
+                },
+                {
+                    "Relation": "Logistics Support",
+                    "Object": "Logistics",
+                    "Strength": "7",
+                    "Description": "Suppliers collaborate with logistics companies to ensure efficient transportation and delivery of goods."
+                },
+                {
+                    "Relation": "Business Partnership",
+                    "Object": "Customers",
+                    "Strength": "8",
+                    "Description": "Suppliers have a business partnership with customers to provide them with products and services."
+                },
+                {
+                    "Relation": "Supply Chain",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Suppliers are responsible for the supply chain of products, ensuring their availability and quality."
+                },
+                {
+                    "Relation": "Logistics Support",
+                    "Object": "Logistics",
+                    "Strength": "7",
+                    "Description": "Suppliers collaborate with logistics companies to ensure efficient transportation and delivery of goods."
+                },
+                {
+                    "Relation": "Business Partnership",
+                    "Object": "Customers",
+                    "Strength": "8",
+                    "Description": "Suppliers have a business partnership with customers to provide them with products and services."
+                },
+                {
+                    "Relation": "Supply Chain",
+                    "Object": "Products",
+                    "Strength": "9",
+                    "Description": "Suppliers are responsible for the supply chain of products, ensuring their availability and quality."
+                },
+                {
+                    "Relation": "Logistics Support",
+                    "Object": "Logistics",
+                    "Strength": "7",
+                    "Description": "Suppliers collaborate with logistics companies to ensure efficient transportation and delivery of goods."
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Workers": [
+                {
+                    "Relation": "Employment",
+                    "Object": "Labor",
+                    "Strength": "8",
+                    "Description": "Workers are an essential component of labor, providing the necessary skills and labor for various industries."
+                }
+            ]
+        }
+    }
+}

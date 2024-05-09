@@ -1,0 +1,46 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "River": [
+                {
+                    "Relation": "Supports",
+                    "Object": "Fish",
+                    "Strength": "7",
+                    "Description": "Rivers provide habitat and food for various fish species."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Hydropower",
+                    "Strength": "9",
+                    "Description": "Rivers are used to generate electricity through hydropower plants."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Flood",
+                    "Strength": "6",
+                    "Description": "Heavy rainfall or snowmelt can cause rivers to flood, leading to potential damage."
+                },
+                {
+                    "Relation": "Supports",
+                    "Object": "Fish",
+                    "Strength": "7",
+                    "Description": "Rivers provide habitat and food for various fish species."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Hydropower",
+                    "Strength": "9",
+                    "Description": "Rivers are used to generate electricity through hydropower plants."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Flood",
+                    "Strength": "6",
+                    "Description": "Heavy rainfall or snowmelt can cause rivers to flood, leading to potential damage."
+                }
+            ]
+        }
+    }
+}

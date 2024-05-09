@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "solar cell": [
+                {
+                    "Relation": "is a component of",
+                    "Object": "solar panel",
+                    "Strength": "8",
+                    "Description": "Solar cells are the building blocks of solar panels, which convert sunlight into electricity."
+                },
+                {
+                    "Relation": "is also known as",
+                    "Object": "photovoltaic cell",
+                    "Strength": "9",
+                    "Description": "Solar cells are commonly referred to as photovoltaic cells, as they convert sunlight into electricity using the photovoltaic effect."
+                },
+                {
+                    "Relation": "generates",
+                    "Object": "solar energy",
+                    "Strength": "10",
+                    "Description": "Solar cells generate solar energy by converting sunlight into electricity."
+                },
+                {
+                    "Relation": "is a key technology in",
+                    "Object": "renewable energy",
+                    "Strength": "7",
+                    "Description": "Solar cells play a crucial role in the production of renewable energy, as they harness the power of the sun to generate electricity."
+                }
+            ]
+        }
+    }
+}

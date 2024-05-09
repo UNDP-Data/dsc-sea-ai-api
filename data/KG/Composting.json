@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Composting": [
+                {
+                    "Relation": "involves",
+                    "Object": "Organic waste",
+                    "Strength": "8",
+                    "Description": "Composting involves the decomposition of organic waste materials."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Microorganisms",
+                    "Strength": "9",
+                    "Description": "Composting requires the presence of microorganisms to break down the organic matter."
+                },
+                {
+                    "Relation": "provides",
+                    "Object": "Nutrients",
+                    "Strength": "7",
+                    "Description": "Composting provides valuable nutrients for plants and soil."
+                },
+                {
+                    "Relation": "improves",
+                    "Object": "Soil",
+                    "Strength": "6",
+                    "Description": "Composting improves soil structure, fertility, and water-holding capacity."
+                },
+                {
+                    "Relation": "involves",
+                    "Object": "Organic waste",
+                    "Strength": "8",
+                    "Description": "Composting involves the decomposition of organic waste materials."
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Microorganisms",
+                    "Strength": "9",
+                    "Description": "Composting requires the presence of microorganisms to break down the organic matter."
+                },
+                {
+                    "Relation": "provides",
+                    "Object": "Nutrients",
+                    "Strength": "7",
+                    "Description": "Composting provides valuable nutrients for plants and soil."
+                },
+                {
+                    "Relation": "improves",
+                    "Object": "Soil",
+                    "Strength": "6",
+                    "Description": "Composting improves soil structure, fertility, and water-holding capacity."
+                }
+            ]
+        }
+    }
+}

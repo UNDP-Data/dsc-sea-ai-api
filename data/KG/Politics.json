@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Politics": [
+                {
+                    "Relation": "Influences",
+                    "Object": "Government",
+                    "Strength": "8",
+                    "Description": "Politics influences the functioning and decisions of the government."
+                },
+                {
+                    "Relation": "Determines",
+                    "Object": "Election",
+                    "Strength": "9",
+                    "Description": "Politics determines the process and outcome of elections."
+                },
+                {
+                    "Relation": "Shapes",
+                    "Object": "Policy",
+                    "Strength": "7",
+                    "Description": "Politics shapes the development and implementation of policies."
+                },
+                {
+                    "Relation": "Represents",
+                    "Object": "Citizen",
+                    "Strength": "6",
+                    "Description": "Politics represents the interests and voices of citizens."
+                }
+            ]
+        }
+    }
+}

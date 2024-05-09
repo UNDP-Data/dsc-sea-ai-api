@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Microgrids": [
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "8",
+                    "Description": "Microgrids often rely on renewable energy sources such as solar or wind power to generate electricity."
+                },
+                {
+                    "Relation": "Integrates with",
+                    "Object": "Energy Storage Systems",
+                    "Strength": "9",
+                    "Description": "Microgrids can incorporate energy storage systems to store excess energy generated during low demand periods for use during high demand periods."
+                },
+                {
+                    "Relation": "Connected to",
+                    "Object": "Smart Grids",
+                    "Strength": "7",
+                    "Description": "Microgrids can be connected to smart grids to enable efficient energy management and grid stability."
+                },
+                {
+                    "Relation": "Includes",
+                    "Object": "Distributed Energy Resources",
+                    "Strength": "6",
+                    "Description": "Microgrids often include distributed energy resources such as small-scale generators or renewable energy systems."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "8",
+                    "Description": "Microgrids often rely on renewable energy sources such as solar or wind power to generate electricity."
+                },
+                {
+                    "Relation": "Integrates with",
+                    "Object": "Energy Storage Systems",
+                    "Strength": "9",
+                    "Description": "Microgrids can incorporate energy storage systems to store excess energy generated during low demand periods for use during high demand periods."
+                },
+                {
+                    "Relation": "Connected to",
+                    "Object": "Smart Grids",
+                    "Strength": "7",
+                    "Description": "Microgrids can be connected to smart grids to enable efficient energy management and grid stability."
+                },
+                {
+                    "Relation": "Includes",
+                    "Object": "Distributed Energy Resources",
+                    "Strength": "6",
+                    "Description": "Microgrids often include distributed energy resources such as small-scale generators or renewable energy systems."
+                }
+            ]
+        }
+    }
+}

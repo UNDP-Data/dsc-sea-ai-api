@@ -1,0 +1,22 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Fish": [
+                {
+                    "Relation": "Predator-Prey",
+                    "Object": "Salmon",
+                    "Strength": "7",
+                    "Description": "Salmon are a food source for many larger fish species."
+                },
+                {
+                    "Relation": "Predator-Prey",
+                    "Object": "Salmon",
+                    "Strength": "7",
+                    "Description": "Salmon are a food source for many larger fish species."
+                }
+            ]
+        }
+    }
+}

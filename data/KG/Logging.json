@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Logging": [
+                {
+                    "Relation": "Captures",
+                    "Object": "Data",
+                    "Strength": "8",
+                    "Description": "Logging captures and stores data for future analysis and troubleshooting."
+                },
+                {
+                    "Relation": "Supports",
+                    "Object": "Monitoring",
+                    "Strength": "9",
+                    "Description": "Logging supports monitoring by providing real-time data on system performance and errors."
+                },
+                {
+                    "Relation": "Enables",
+                    "Object": "Analysis",
+                    "Strength": "7",
+                    "Description": "Logging enables analysis of system behavior and identification of patterns or anomalies."
+                },
+                {
+                    "Relation": "Triggers",
+                    "Object": "Alerting",
+                    "Strength": "6",
+                    "Description": "Logging triggers alerting mechanisms when specific events or errors occur."
+                }
+            ]
+        }
+    }
+}

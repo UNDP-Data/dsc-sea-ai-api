@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "bioplastics": [
+                {
+                    "Relation": "made from",
+                    "Object": "biodegradable materials",
+                    "Strength": "8",
+                    "Description": "Bioplastics are often made from biodegradable materials, which means they can break down naturally and reduce environmental impact."
+                },
+                {
+                    "Relation": "derived from",
+                    "Object": "renewable resources",
+                    "Strength": "9",
+                    "Description": "Bioplastics are derived from renewable resources such as plants, which makes them a more sustainable alternative to traditional plastics."
+                },
+                {
+                    "Relation": "used in",
+                    "Object": "packaging industry",
+                    "Strength": "7",
+                    "Description": "Bioplastics are commonly used in the packaging industry as an eco-friendly alternative to conventional plastic packaging."
+                },
+                {
+                    "Relation": "contributes to",
+                    "Object": "sustainable development",
+                    "Strength": "6",
+                    "Description": "The use of bioplastics contributes to sustainable development by reducing reliance on fossil fuels and minimizing waste."
+                }
+            ]
+        }
+    }
+}

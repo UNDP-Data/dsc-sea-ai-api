@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Aquarium": [
+                {
+                    "Relation": "Display",
+                    "Object": "Fish",
+                    "Strength": "6",
+                    "Description": "Aquariums provide a controlled environment for keeping and observing fish."
+                }
+            ]
+        }
+    }
+}

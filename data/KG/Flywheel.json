@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Flywheel": [
+                {
+                    "Relation": "Power Storage",
+                    "Object": "Battery Storage",
+                    "Strength": "8",
+                    "Description": "Flywheels and battery storage systems are both used for storing energy and providing power when needed."
+                },
+                {
+                    "Relation": "Energy Management",
+                    "Object": "Smart Grid",
+                    "Strength": "7",
+                    "Description": "Flywheels can be integrated into smart grid systems to help manage and balance the supply and demand of electricity."
+                },
+                {
+                    "Relation": "Renewable Energy",
+                    "Object": "Wind Turbine",
+                    "Strength": "9",
+                    "Description": "Flywheels can be used in conjunction with wind turbines to store excess energy generated during periods of low demand."
+                },
+                {
+                    "Relation": "Transportation",
+                    "Object": "Electric Vehicle",
+                    "Strength": "6",
+                    "Description": "Flywheels can be used in electric vehicles to store and release energy, improving efficiency and range."
+                },
+                {
+                    "Relation": "Power Storage",
+                    "Object": "Battery Storage",
+                    "Strength": "8",
+                    "Description": "Flywheels and battery storage systems are both used for storing energy and providing power when needed."
+                },
+                {
+                    "Relation": "Energy Management",
+                    "Object": "Smart Grid",
+                    "Strength": "7",
+                    "Description": "Flywheels can be integrated into smart grid systems to help manage and balance the supply and demand of electricity."
+                },
+                {
+                    "Relation": "Renewable Energy",
+                    "Object": "Wind Turbine",
+                    "Strength": "9",
+                    "Description": "Flywheels can be used in conjunction with wind turbines to store excess energy generated during periods of low demand."
+                },
+                {
+                    "Relation": "Transportation",
+                    "Object": "Electric Vehicle",
+                    "Strength": "6",
+                    "Description": "Flywheels can be used in electric vehicles to store and release energy, improving efficiency and range."
+                }
+            ]
+        }
+    }
+}

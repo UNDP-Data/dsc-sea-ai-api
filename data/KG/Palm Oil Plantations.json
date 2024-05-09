@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Palm Oil Plantations": [
+                {
+                    "Relation": "Affects",
+                    "Object": "Environmental Impact",
+                    "Strength": "8",
+                    "Description": "Palm oil plantations have a significant impact on the environment, including deforestation, habitat destruction, and greenhouse gas emissions."
+                },
+                {
+                    "Relation": "Engages with",
+                    "Object": "Local Communities",
+                    "Strength": "7",
+                    "Description": "Palm oil plantations often interact with local communities, affecting their livelihoods, land rights, and social well-being."
+                },
+                {
+                    "Relation": "Threatens",
+                    "Object": "Biodiversity",
+                    "Strength": "9",
+                    "Description": "Palm oil plantations pose a major threat to biodiversity, leading to the loss of habitat for many species and contributing to the decline of endangered animals."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Sustainable Sourcing",
+                    "Strength": "6",
+                    "Description": "The palm oil industry is increasingly pressured to adopt sustainable sourcing practices to minimize negative impacts on the environment, society, and economy."
+                }
+            ]
+        }
+    }
+}

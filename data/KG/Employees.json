@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Employees": [
+                {
+                    "Relation": "Reports to",
+                    "Object": "Managers",
+                    "Strength": "8",
+                    "Description": "The relationship between employees and their managers"
+                },
+                {
+                    "Relation": "Belongs to",
+                    "Object": "Departments",
+                    "Strength": "9",
+                    "Description": "The relationship between employees and the departments they work in"
+                },
+                {
+                    "Relation": "Works on",
+                    "Object": "Projects",
+                    "Strength": "7",
+                    "Description": "The relationship between employees and the projects they are assigned to"
+                },
+                {
+                    "Relation": "Receives",
+                    "Object": "Salaries",
+                    "Strength": "10",
+                    "Description": "The relationship between employees and their salaries"
+                }
+            ]
+        }
+    }
+}

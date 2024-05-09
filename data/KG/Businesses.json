@@ -1,0 +1,82 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Businesses": [
+                {
+                    "Relation": "Serve",
+                    "Object": "Customers",
+                    "Strength": "8",
+                    "Description": "Businesses serve customers by providing products or services."
+                },
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Suppliers",
+                    "Strength": "7",
+                    "Description": "Businesses collaborate with suppliers to obtain necessary resources or materials."
+                },
+                {
+                    "Relation": "Employ",
+                    "Object": "Employees",
+                    "Strength": "9",
+                    "Description": "Businesses employ individuals to perform various tasks and contribute to the organization's success."
+                },
+                {
+                    "Relation": "Comply with",
+                    "Object": "Government",
+                    "Strength": "6",
+                    "Description": "Businesses comply with government regulations and policies to ensure legal and ethical operations."
+                },
+                {
+                    "Relation": "Serve",
+                    "Object": "Customers",
+                    "Strength": "8",
+                    "Description": "Businesses serve customers by providing products or services."
+                },
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Suppliers",
+                    "Strength": "7",
+                    "Description": "Businesses collaborate with suppliers to obtain necessary resources or materials."
+                },
+                {
+                    "Relation": "Employ",
+                    "Object": "Employees",
+                    "Strength": "9",
+                    "Description": "Businesses employ individuals to perform various tasks and contribute to the organization's success."
+                },
+                {
+                    "Relation": "Comply with",
+                    "Object": "Government",
+                    "Strength": "6",
+                    "Description": "Businesses comply with government regulations and policies to ensure legal and ethical operations."
+                },
+                {
+                    "Relation": "Serve",
+                    "Object": "Customers",
+                    "Strength": "8",
+                    "Description": "Businesses serve customers by providing products or services."
+                },
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Suppliers",
+                    "Strength": "7",
+                    "Description": "Businesses collaborate with suppliers to obtain necessary resources or materials."
+                },
+                {
+                    "Relation": "Employ",
+                    "Object": "Employees",
+                    "Strength": "9",
+                    "Description": "Businesses employ individuals to perform various tasks and contribute to the organization's success."
+                },
+                {
+                    "Relation": "Comply with",
+                    "Object": "Government",
+                    "Strength": "6",
+                    "Description": "Businesses comply with government regulations and policies to ensure legal and ethical operations."
+                }
+            ]
+        }
+    }
+}

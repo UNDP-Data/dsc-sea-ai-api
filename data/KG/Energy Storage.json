@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Energy storage": [
+                {
+                    "Relation": "is commonly used with",
+                    "Object": "Battery",
+                    "Strength": "8",
+                    "Description": "Batteries are widely used for energy storage in various applications."
+                },
+                {
+                    "Relation": "is an alternative to",
+                    "Object": "Flywheel",
+                    "Strength": "6",
+                    "Description": "Flywheels can be used as an alternative to batteries for energy storage."
+                },
+                {
+                    "Relation": "can be produced by",
+                    "Object": "Hydrogen Fuel Cell",
+                    "Strength": "9",
+                    "Description": "Hydrogen fuel cells can produce electricity for energy storage."
+                },
+                {
+                    "Relation": "can be utilized in",
+                    "Object": "Compressed Air Energy Storage",
+                    "Strength": "7",
+                    "Description": "Compressed air energy storage systems can store energy for later use."
+                }
+            ]
+        }
+    }
+}

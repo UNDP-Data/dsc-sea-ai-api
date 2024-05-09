@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "sustainable energy policy": [
+                {
+                    "Relation": "implements",
+                    "Object": "Government",
+                    "Strength": "9",
+                    "Description": "The government implements sustainable energy policies to promote the use of renewable energy sources and reduce carbon emissions."
+                },
+                {
+                    "Relation": "collaborates with",
+                    "Object": "Renewable Energy Industry",
+                    "Strength": "8",
+                    "Description": "The renewable energy industry collaborates with policymakers to develop and implement sustainable energy policies that support the growth of renewable energy technologies."
+                },
+                {
+                    "Relation": "advocates for",
+                    "Object": "Environmental Organizations",
+                    "Strength": "7",
+                    "Description": "Environmental organizations advocate for the adoption of sustainable energy policies to mitigate climate change and protect the environment."
+                },
+                {
+                    "Relation": "provides research to",
+                    "Object": "Research Institutions",
+                    "Strength": "6",
+                    "Description": "Research institutions provide valuable research and expertise to inform the development of effective sustainable energy policies."
+                }
+            ]
+        }
+    }
+}

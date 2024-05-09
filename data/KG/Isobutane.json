@@ -1,0 +1,46 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Isobutane": [
+                {
+                    "Relation": "Isomer",
+                    "Object": "Butane",
+                    "Strength": "7",
+                    "Description": "Isobutane is an isomer of butane, meaning they have the same chemical formula but different structural arrangements."
+                },
+                {
+                    "Relation": "Alkane",
+                    "Object": "Propane",
+                    "Strength": "9",
+                    "Description": "Isobutane and propane are both alkane hydrocarbons, commonly used as fuels."
+                },
+                {
+                    "Relation": "Hydrocarbon",
+                    "Object": "Methane",
+                    "Strength": "6",
+                    "Description": "Isobutane and methane are both hydrocarbon compounds, but isobutane has a higher molecular weight and boiling point."
+                },
+                {
+                    "Relation": "Isomer",
+                    "Object": "Butane",
+                    "Strength": "7",
+                    "Description": "Isobutane is an isomer of butane, meaning they have the same chemical formula but different structural arrangements."
+                },
+                {
+                    "Relation": "Alkane",
+                    "Object": "Propane",
+                    "Strength": "9",
+                    "Description": "Isobutane and propane are both alkane hydrocarbons, commonly used as fuels."
+                },
+                {
+                    "Relation": "Hydrocarbon",
+                    "Object": "Methane",
+                    "Strength": "6",
+                    "Description": "Isobutane and methane are both hydrocarbon compounds, but isobutane has a higher molecular weight and boiling point."
+                }
+            ]
+        }
+    }
+}

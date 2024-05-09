@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Scientists": [
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Physicists",
+                    "Strength": "8",
+                    "Description": "Scientists often collaborate with physicists to study the fundamental laws of nature and develop new technologies."
+                },
+                {
+                    "Relation": "Study under",
+                    "Object": "Biologists",
+                    "Strength": "6",
+                    "Description": "Scientists may study under biologists to gain expertise in biological systems and contribute to fields like genetics and ecology."
+                },
+                {
+                    "Relation": "Consult with",
+                    "Object": "Chemists",
+                    "Strength": "7",
+                    "Description": "Scientists frequently consult with chemists to understand chemical reactions and develop new materials for various applications."
+                },
+                {
+                    "Relation": "Work alongside",
+                    "Object": "Engineers",
+                    "Strength": "9",
+                    "Description": "Scientists often work alongside engineers to design and optimize technologies for different industries, including sustainable energy."
+                },
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Physicists",
+                    "Strength": "8",
+                    "Description": "Scientists often collaborate with physicists to study the fundamental laws of nature and develop new technologies."
+                },
+                {
+                    "Relation": "Study under",
+                    "Object": "Biologists",
+                    "Strength": "6",
+                    "Description": "Scientists may study under biologists to gain expertise in biological systems and contribute to fields like genetics and ecology."
+                },
+                {
+                    "Relation": "Consult with",
+                    "Object": "Chemists",
+                    "Strength": "7",
+                    "Description": "Scientists frequently consult with chemists to understand chemical reactions and develop new materials for various applications."
+                },
+                {
+                    "Relation": "Work alongside",
+                    "Object": "Engineers",
+                    "Strength": "9",
+                    "Description": "Scientists often work alongside engineers to design and optimize technologies for different industries, including sustainable energy."
+                }
+            ]
+        }
+    }
+}

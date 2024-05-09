@@ -1,0 +1,154 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Heat exchanger": [
+                {
+                    "Relation": "Contains",
+                    "Object": "Fluid",
+                    "Strength": "8",
+                    "Description": "Heat exchangers contain fluids that transfer heat between two or more streams."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Tube",
+                    "Strength": "9",
+                    "Description": "Heat exchangers consist of tubes through which the fluid flows, facilitating heat transfer."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Shell",
+                    "Strength": "7",
+                    "Description": "Heat exchangers consist of a shell that encloses the tubes and provides structural support."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Heat Transfer Surface",
+                    "Strength": "6",
+                    "Description": "Heat exchangers utilize heat transfer surfaces to enhance the efficiency of heat exchange."
+                },
+                {
+                    "Relation": "Contains",
+                    "Object": "Fluid",
+                    "Strength": "8",
+                    "Description": "Heat exchangers contain fluids that transfer heat between two or more streams."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Tube",
+                    "Strength": "9",
+                    "Description": "Heat exchangers consist of tubes through which the fluid flows, facilitating heat transfer."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Shell",
+                    "Strength": "7",
+                    "Description": "Heat exchangers consist of a shell that encloses the tubes and provides structural support."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Heat Transfer Surface",
+                    "Strength": "6",
+                    "Description": "Heat exchangers utilize heat transfer surfaces to enhance the efficiency of heat exchange."
+                },
+                {
+                    "Relation": "Contains",
+                    "Object": "Fluid",
+                    "Strength": "8",
+                    "Description": "Heat exchangers contain fluids that transfer heat between two or more streams."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Tube",
+                    "Strength": "9",
+                    "Description": "Heat exchangers consist of tubes through which the fluid flows, facilitating heat transfer."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Shell",
+                    "Strength": "7",
+                    "Description": "Heat exchangers consist of a shell that encloses the tubes and provides structural support."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Heat Transfer Surface",
+                    "Strength": "6",
+                    "Description": "Heat exchangers utilize heat transfer surfaces to enhance the efficiency of heat exchange."
+                },
+                {
+                    "Relation": "Contains",
+                    "Object": "Fluid",
+                    "Strength": "8",
+                    "Description": "Heat exchangers contain fluids that transfer heat between two or more streams."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Tube",
+                    "Strength": "9",
+                    "Description": "Heat exchangers consist of tubes through which the fluid flows, facilitating heat transfer."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Shell",
+                    "Strength": "7",
+                    "Description": "Heat exchangers consist of a shell that encloses the tubes and provides structural support."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Heat Transfer Surface",
+                    "Strength": "6",
+                    "Description": "Heat exchangers utilize heat transfer surfaces to enhance the efficiency of heat exchange."
+                },
+                {
+                    "Relation": "Contains",
+                    "Object": "Fluid",
+                    "Strength": "8",
+                    "Description": "Heat exchangers contain fluids that transfer heat between two or more streams."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Tube",
+                    "Strength": "9",
+                    "Description": "Heat exchangers consist of tubes through which the fluid flows, facilitating heat transfer."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Shell",
+                    "Strength": "7",
+                    "Description": "Heat exchangers consist of a shell that encloses the tubes and provides structural support."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Heat Transfer Surface",
+                    "Strength": "6",
+                    "Description": "Heat exchangers utilize heat transfer surfaces to enhance the efficiency of heat exchange."
+                },
+                {
+                    "Relation": "Contains",
+                    "Object": "Fluid",
+                    "Strength": "8",
+                    "Description": "Heat exchangers contain fluids that transfer heat between two or more streams."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Tube",
+                    "Strength": "9",
+                    "Description": "Heat exchangers consist of tubes through which the fluid flows, facilitating heat transfer."
+                },
+                {
+                    "Relation": "Consists of",
+                    "Object": "Shell",
+                    "Strength": "7",
+                    "Description": "Heat exchangers consist of a shell that encloses the tubes and provides structural support."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Heat Transfer Surface",
+                    "Strength": "6",
+                    "Description": "Heat exchangers utilize heat transfer surfaces to enhance the efficiency of heat exchange."
+                }
+            ]
+        }
+    }
+}

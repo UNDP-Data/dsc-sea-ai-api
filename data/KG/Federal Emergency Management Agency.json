@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Federal Emergency Management Agency": [
+                {
+                    "Relation": "Part of",
+                    "Object": "Department of Homeland Security",
+                    "Strength": "8",
+                    "Description": "FEMA is an agency within the Department of Homeland Security."
+                },
+                {
+                    "Relation": "Operates in",
+                    "Object": "FEMA Region",
+                    "Strength": "7",
+                    "Description": "FEMA is divided into regions to coordinate emergency management efforts in different parts of the country."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "National Incident Management Assistance Teams",
+                    "Strength": "9",
+                    "Description": "FEMA works closely with these teams to provide on-the-ground support during disasters and emergencies."
+                },
+                {
+                    "Relation": "Administers",
+                    "Object": "National Flood Insurance Program",
+                    "Strength": "6",
+                    "Description": "FEMA is responsible for managing and overseeing the National Flood Insurance Program."
+                }
+            ]
+        }
+    }
+}

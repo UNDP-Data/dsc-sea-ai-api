@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Air pressure": [
+                {
+                    "Relation": "Directly Proportional",
+                    "Object": "Temperature",
+                    "Strength": "8",
+                    "Description": "As air temperature increases, air pressure also increases."
+                },
+                {
+                    "Relation": "Inverse Proportional",
+                    "Object": "Altitude",
+                    "Strength": "9",
+                    "Description": "As altitude increases, air pressure decreases."
+                },
+                {
+                    "Relation": "Directly Proportional",
+                    "Object": "Humidity",
+                    "Strength": "6",
+                    "Description": "Higher humidity levels can lead to an increase in air pressure."
+                },
+                {
+                    "Relation": "No Significant Relationship",
+                    "Object": "Wind Speed",
+                    "Strength": "2",
+                    "Description": "Wind speed does not have a significant impact on air pressure."
+                }
+            ]
+        }
+    }
+}
