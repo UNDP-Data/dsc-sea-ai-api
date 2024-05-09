@@ -1,0 +1,16 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Aircraft": [
+                {
+                    "Relation": "Powered by",
+                    "Object": "Gas Turbines",
+                    "Strength": "7",
+                    "Description": "Gas turbines, specifically jet engines, are the primary power source for aircraft, providing the necessary thrust for flight."
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Home automation": [
+                {
+                    "Relation": "Controls",
+                    "Object": "Smart thermostat",
+                    "Strength": "8",
+                    "Description": "Home automation systems can control the temperature of a house through a smart thermostat."
+                },
+                {
+                    "Relation": "Manages",
+                    "Object": "Smart lighting",
+                    "Strength": "7",
+                    "Description": "Home automation systems can manage the lighting in a house by controlling smart lighting devices."
+                },
+                {
+                    "Relation": "Integrates with",
+                    "Object": "Smart security system",
+                    "Strength": "9",
+                    "Description": "Home automation systems can integrate with smart security systems to provide enhanced security features."
+                },
+                {
+                    "Relation": "Connects to",
+                    "Object": "Smart home hub",
+                    "Strength": "10",
+                    "Description": "Smart home hubs act as a central control point for home automation systems, connecting and managing various devices."
+                }
+            ]
+        }
+    }
+}

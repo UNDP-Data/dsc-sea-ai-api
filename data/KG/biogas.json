@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Biogas": [
+                {
+                    "Relation": "Produced from",
+                    "Object": "Anaerobic Digestion",
+                    "Strength": "8",
+                    "Description": "Biogas is produced through the anaerobic digestion process, where organic materials such as agricultural waste, food waste, and sewage sludge are broken down by bacteria in the absence of oxygen."
+                },
+                {
+                    "Relation": "Main component",
+                    "Object": "Methane",
+                    "Strength": "9",
+                    "Description": "Methane is the primary component of biogas, typically accounting for 50-75% of its composition. It is a potent greenhouse gas and can be used as a fuel for heating, electricity generation, and vehicle fuel."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Renewable Energy",
+                    "Strength": "10",
+                    "Description": "Biogas is considered a renewable energy source as it is produced from organic waste materials that would otherwise decompose and release methane into the atmosphere. It can be used to generate heat and electricity, reducing reliance on fossil fuels."
+                },
+                {
+                    "Relation": "Used in",
+                    "Object": "Waste Management",
+                    "Strength": "7",
+                    "Description": "Biogas plays a crucial role in waste management as it provides a sustainable solution for treating and disposing of organic waste. It can be used to produce energy while reducing the environmental impact of waste disposal."
+                },
+                {
+                    "Relation": "Produced from",
+                    "Object": "Anaerobic Digestion",
+                    "Strength": "8",
+                    "Description": "Biogas is produced through the anaerobic digestion process, where organic materials such as agricultural waste, food waste, and sewage sludge are broken down by bacteria in the absence of oxygen."
+                },
+                {
+                    "Relation": "Main component",
+                    "Object": "Methane",
+                    "Strength": "9",
+                    "Description": "Methane is the primary component of biogas, typically accounting for 50-75% of its composition. It is a potent greenhouse gas and can be used as a fuel for heating, electricity generation, and vehicle fuel."
+                },
+                {
+                    "Relation": "Contributes to",
+                    "Object": "Renewable Energy",
+                    "Strength": "10",
+                    "Description": "Biogas is considered a renewable energy source as it is produced from organic waste materials that would otherwise decompose and release methane into the atmosphere. It can be used to generate heat and electricity, reducing reliance on fossil fuels."
+                },
+                {
+                    "Relation": "Used in",
+                    "Object": "Waste Management",
+                    "Strength": "7",
+                    "Description": "Biogas plays a crucial role in waste management as it provides a sustainable solution for treating and disposing of organic waste. It can be used to produce energy while reducing the environmental impact of waste disposal."
+                }
+            ]
+        }
+    }
+}

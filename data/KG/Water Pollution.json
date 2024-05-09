@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Water Pollution": [
+                {
+                    "Relation": "Causes",
+                    "Object": "Industrial Waste",
+                    "Strength": "8",
+                    "Description": "Industrial waste, such as chemicals and toxins, can contaminate water sources and contribute to water pollution."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Agricultural Runoff",
+                    "Strength": "7",
+                    "Description": "Excessive use of fertilizers and pesticides in agriculture can lead to runoff, which carries pollutants into water bodies and causes water pollution."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Sewage",
+                    "Strength": "9",
+                    "Description": "Improperly treated or untreated sewage can release harmful bacteria, viruses, and chemicals into water sources, leading to water pollution."
+                },
+                {
+                    "Relation": "Causes",
+                    "Object": "Oil Spills",
+                    "Strength": "10",
+                    "Description": "Accidental or deliberate oil spills can have devastating effects on water ecosystems, causing severe water pollution and harming aquatic life."
+                }
+            ]
+        }
+    }
+}

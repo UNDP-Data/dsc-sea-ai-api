@@ -1,0 +1,106 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Insulation": [
+                {
+                    "Relation": "Affects",
+                    "Object": "Thermal conductivity",
+                    "Strength": "8",
+                    "Description": "Insulation materials with low thermal conductivity are more effective in reducing heat transfer."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "R-value",
+                    "Strength": "9",
+                    "Description": "R-value is a measure of the thermal resistance provided by insulation."
+                },
+                {
+                    "Relation": "Commonly made of",
+                    "Object": "Fiberglass",
+                    "Strength": "7",
+                    "Description": "Fiberglass is a popular material used for insulation due to its thermal insulation properties."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Energy efficiency",
+                    "Strength": "10",
+                    "Description": "Proper insulation improves energy efficiency by reducing the need for heating and cooling."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Thermal conductivity",
+                    "Strength": "8",
+                    "Description": "Insulation materials with low thermal conductivity are more effective in reducing heat transfer."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "R-value",
+                    "Strength": "9",
+                    "Description": "R-value is a measure of the thermal resistance provided by insulation."
+                },
+                {
+                    "Relation": "Commonly made of",
+                    "Object": "Fiberglass",
+                    "Strength": "7",
+                    "Description": "Fiberglass is a popular material used for insulation due to its thermal insulation properties."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Energy efficiency",
+                    "Strength": "10",
+                    "Description": "Proper insulation improves energy efficiency by reducing the need for heating and cooling."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Thermal conductivity",
+                    "Strength": "8",
+                    "Description": "Insulation materials with low thermal conductivity are more effective in reducing heat transfer."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "R-value",
+                    "Strength": "9",
+                    "Description": "R-value is a measure of the thermal resistance provided by insulation."
+                },
+                {
+                    "Relation": "Commonly made of",
+                    "Object": "Fiberglass",
+                    "Strength": "7",
+                    "Description": "Fiberglass is a popular material used for insulation due to its thermal insulation properties."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Energy efficiency",
+                    "Strength": "10",
+                    "Description": "Proper insulation improves energy efficiency by reducing the need for heating and cooling."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Thermal conductivity",
+                    "Strength": "8",
+                    "Description": "Insulation materials with low thermal conductivity are more effective in reducing heat transfer."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "R-value",
+                    "Strength": "9",
+                    "Description": "R-value is a measure of the thermal resistance provided by insulation."
+                },
+                {
+                    "Relation": "Commonly made of",
+                    "Object": "Fiberglass",
+                    "Strength": "7",
+                    "Description": "Fiberglass is a popular material used for insulation due to its thermal insulation properties."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Energy efficiency",
+                    "Strength": "10",
+                    "Description": "Proper insulation improves energy efficiency by reducing the need for heating and cooling."
+                }
+            ]
+        }
+    }
+}

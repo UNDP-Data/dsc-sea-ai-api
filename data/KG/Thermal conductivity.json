@@ -1,0 +1,46 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Thermal Conductivity": [
+                {
+                    "Relation": "Affects",
+                    "Object": "Thermal Insulation",
+                    "Strength": "8",
+                    "Description": "Thermal conductivity is inversely related to thermal insulation. Materials with low thermal conductivity are good insulators."
+                },
+                {
+                    "Relation": "Varies",
+                    "Object": "Metals",
+                    "Strength": "9",
+                    "Description": "Metals generally have high thermal conductivity due to the presence of free electrons that can easily transfer heat."
+                },
+                {
+                    "Relation": "Varies",
+                    "Object": "Polymers",
+                    "Strength": "6",
+                    "Description": "Polymers typically have low thermal conductivity due to their molecular structure, making them good thermal insulators."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Thermal Insulation",
+                    "Strength": "8",
+                    "Description": "Thermal conductivity is inversely related to thermal insulation. Materials with low thermal conductivity are good insulators."
+                },
+                {
+                    "Relation": "Varies",
+                    "Object": "Metals",
+                    "Strength": "9",
+                    "Description": "Metals generally have high thermal conductivity due to the presence of free electrons that can easily transfer heat."
+                },
+                {
+                    "Relation": "Varies",
+                    "Object": "Polymers",
+                    "Strength": "6",
+                    "Description": "Polymers typically have low thermal conductivity due to their molecular structure, making them good thermal insulators."
+                }
+            ]
+        }
+    }
+}

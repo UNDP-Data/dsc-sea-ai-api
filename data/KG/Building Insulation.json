@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Building Insulation": [
+                {
+                    "Relation": "Enhances",
+                    "Object": "Energy Efficiency",
+                    "Strength": "8",
+                    "Description": "Building insulation improves energy efficiency by reducing heat transfer through walls, floors, and roofs."
+                },
+                {
+                    "Relation": "Affects",
+                    "Object": "Thermal Conductivity",
+                    "Strength": "6",
+                    "Description": "The thermal conductivity of building insulation materials determines their ability to resist heat flow."
+                },
+                {
+                    "Relation": "Measured by",
+                    "Object": "R-value",
+                    "Strength": "9",
+                    "Description": "The R-value measures the thermal resistance of building insulation, indicating its effectiveness in preventing heat transfer."
+                },
+                {
+                    "Relation": "Required for",
+                    "Object": "Green Building Certification",
+                    "Strength": "7",
+                    "Description": "Building insulation is a key requirement for obtaining green building certifications, as it contributes to energy efficiency and sustainability."
+                }
+            ]
+        }
+    }
+}

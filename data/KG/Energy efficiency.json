@@ -1,0 +1,100 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Energy Efficiency": [
+                {
+                    "Relation": "Improves",
+                    "Object": "Energy Management Systems",
+                    "Strength": "8",
+                    "Description": "Energy management systems help optimize energy usage and reduce waste, leading to improved energy efficiency."
+                },
+                {
+                    "Relation": "Enhances",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "9",
+                    "Description": "Using renewable energy sources such as solar or wind power can significantly increase energy efficiency by reducing reliance on fossil fuels."
+                },
+                {
+                    "Relation": "Increases",
+                    "Object": "Building Insulation",
+                    "Strength": "7",
+                    "Description": "Proper insulation in buildings helps reduce heat transfer, resulting in improved energy efficiency by reducing the need for heating or cooling."
+                },
+                {
+                    "Relation": "Optimizes",
+                    "Object": "Smart Grid",
+                    "Strength": "6",
+                    "Description": "Smart grids enable better monitoring and control of energy distribution, leading to optimized energy usage and improved energy efficiency."
+                },
+                {
+                    "Relation": "Focused on by",
+                    "Object": "ENERGY STAR",
+                    "Strength": "10",
+                    "Description": "Energy Star focuses on promoting energy efficiency in various sectors."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Energy Management Systems",
+                    "Strength": "8",
+                    "Description": "Energy management systems help optimize energy usage and reduce waste, leading to improved energy efficiency."
+                },
+                {
+                    "Relation": "Enhances",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "9",
+                    "Description": "Using renewable energy sources such as solar or wind power can significantly increase energy efficiency by reducing reliance on fossil fuels."
+                },
+                {
+                    "Relation": "Increases",
+                    "Object": "Building Insulation",
+                    "Strength": "7",
+                    "Description": "Proper insulation in buildings helps reduce heat transfer, resulting in improved energy efficiency by reducing the need for heating or cooling."
+                },
+                {
+                    "Relation": "Optimizes",
+                    "Object": "Smart Grid",
+                    "Strength": "6",
+                    "Description": "Smart grids enable better monitoring and control of energy distribution, leading to optimized energy usage and improved energy efficiency."
+                },
+                {
+                    "Relation": "Focused on by",
+                    "Object": "ENERGY STAR",
+                    "Strength": "10",
+                    "Description": "Energy Star focuses on promoting energy efficiency in various sectors."
+                },
+                {
+                    "Relation": "Improves",
+                    "Object": "Energy Management Systems",
+                    "Strength": "8",
+                    "Description": "Energy management systems help optimize energy usage and reduce waste, leading to improved energy efficiency."
+                },
+                {
+                    "Relation": "Enhances",
+                    "Object": "Renewable Energy Sources",
+                    "Strength": "9",
+                    "Description": "Using renewable energy sources such as solar or wind power can significantly increase energy efficiency by reducing reliance on fossil fuels."
+                },
+                {
+                    "Relation": "Increases",
+                    "Object": "Building Insulation",
+                    "Strength": "7",
+                    "Description": "Proper insulation in buildings helps reduce heat transfer, resulting in improved energy efficiency by reducing the need for heating or cooling."
+                },
+                {
+                    "Relation": "Optimizes",
+                    "Object": "Smart Grid",
+                    "Strength": "6",
+                    "Description": "Smart grids enable better monitoring and control of energy distribution, leading to optimized energy usage and improved energy efficiency."
+                },
+                {
+                    "Relation": "Focused on by",
+                    "Object": "ENERGY STAR",
+                    "Strength": "10",
+                    "Description": "Energy Star focuses on promoting energy efficiency in various sectors."
+                }
+            ]
+        }
+    }
+}

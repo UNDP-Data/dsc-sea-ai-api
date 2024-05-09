@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Hydrogen Fuel Cell": [
+                {
+                    "Relation": "Produces",
+                    "Object": "Electricity",
+                    "Strength": "8",
+                    "Description": "Hydrogen fuel cells produce electricity through an electrochemical reaction."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Hydrogen",
+                    "Strength": "10",
+                    "Description": "Hydrogen fuel cells require hydrogen as a fuel source."
+                },
+                {
+                    "Relation": "Combines with",
+                    "Object": "Oxygen",
+                    "Strength": "9",
+                    "Description": "In a hydrogen fuel cell, hydrogen combines with oxygen to produce water as a byproduct."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Water",
+                    "Strength": "7",
+                    "Description": "The reaction in a hydrogen fuel cell produces water as a byproduct."
+                }
+            ]
+        }
+    }
+}

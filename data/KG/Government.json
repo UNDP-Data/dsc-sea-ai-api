@@ -1,0 +1,226 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Government": [
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                },
+                {
+                    "Relation": "Regulation",
+                    "Object": "Businesses",
+                    "Strength": "8",
+                    "Description": "The government regulates businesses to ensure fair competition and protect consumers."
+                },
+                {
+                    "Relation": "Public Services",
+                    "Object": "Citizens",
+                    "Strength": "10",
+                    "Description": "The government provides essential public services such as healthcare, education, and infrastructure to its citizens."
+                },
+                {
+                    "Relation": "Collaboration",
+                    "Object": "Nonprofit Organizations",
+                    "Strength": "7",
+                    "Description": "The government collaborates with nonprofit organizations to address social issues and provide assistance to vulnerable populations."
+                },
+                {
+                    "Relation": "Diplomacy",
+                    "Object": "Foreign Governments",
+                    "Strength": "9",
+                    "Description": "The government engages in diplomatic relations with foreign governments to promote peace, trade, and cooperation."
+                }
+            ]
+        }
+    }
+}

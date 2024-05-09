@@ -1,0 +1,82 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Hydroelectric Power": [
+                {
+                    "Relation": "Relies on",
+                    "Object": "Water",
+                    "Strength": "9",
+                    "Description": "Hydroelectric power relies on the flow of water to generate electricity."
+                },
+                {
+                    "Relation": "Uses",
+                    "Object": "Turbine",
+                    "Strength": "8",
+                    "Description": "Hydroelectric power uses turbines to convert the energy of flowing water into mechanical energy."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Dam",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power requires the construction of dams to create reservoirs and control the flow of water."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Electricity",
+                    "Strength": "10",
+                    "Description": "Hydroelectric power produces electricity by harnessing the energy of flowing water."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Water",
+                    "Strength": "9",
+                    "Description": "Hydroelectric power relies on the flow of water to generate electricity."
+                },
+                {
+                    "Relation": "Uses",
+                    "Object": "Turbine",
+                    "Strength": "8",
+                    "Description": "Hydroelectric power uses turbines to convert the energy of flowing water into mechanical energy."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Dam",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power requires the construction of dams to create reservoirs and control the flow of water."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Electricity",
+                    "Strength": "10",
+                    "Description": "Hydroelectric power produces electricity by harnessing the energy of flowing water."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Water",
+                    "Strength": "9",
+                    "Description": "Hydroelectric power relies on the flow of water to generate electricity."
+                },
+                {
+                    "Relation": "Uses",
+                    "Object": "Turbine",
+                    "Strength": "8",
+                    "Description": "Hydroelectric power uses turbines to convert the energy of flowing water into mechanical energy."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Dam",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power requires the construction of dams to create reservoirs and control the flow of water."
+                },
+                {
+                    "Relation": "Produces",
+                    "Object": "Electricity",
+                    "Strength": "10",
+                    "Description": "Hydroelectric power produces electricity by harnessing the energy of flowing water."
+                }
+            ]
+        }
+    }
+}

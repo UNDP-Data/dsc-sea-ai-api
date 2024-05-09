@@ -1,5 +1,6 @@
 import imp
 from pickle import TRUE
+from urllib import response
 import pandas as pd
 import openai
 from dotenv import load_dotenv
@@ -64,6 +65,36 @@ def require_api_key(api_key):
 #     api_key = request.headers.get('API-Key')
 #     if api_key != os.getenv('API_ACCESS_KEY'):
 #         return jsonify({'error': 'Unauthorized access'}), 401
+
+
+
+@app.route('/kg_query', methods=['GET'])
+@cross_origin()
+def get_kg_data():
+    try: 
+
+        # Create an empty array to store the values of "q"
+        root_q_array = []
+        
+        # Get the value(s) of the "q" parameter from the URL
+        root_q_values = request.args.getlist('q')
+        
+        # Append each value of "q" to the array
+        for value in root_q_values:
+            root_q_array.append(value)
+        
+        data_dir = "data/KG"
+        # Find the most similar file
+        kg_content = processing_modules.find_kg(root_q_array, data_dir)
+        # Create a response dictionary with the value of "q"
+        response = {
+            "kg_data": kg_content
+        }
+        
+        # Return the response as JSON
+        return jsonify(response)
+    except Exception as e:
+        print(e)
 
 
 @app.route('/llm', methods = ['POST'])
@@ -137,17 +168,33 @@ def send_prompt_llm():
                 # future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
                 excerpts_dict = {}#future_excerpts.result()
 
+                print(entities_dict)
                 # Run synthesis module
                 # answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
                 
+                entities_array = list(entities_dict["entities"].keys()) if entities_dict else []
+
+                data_dir = "data/KG"
+                # Find the most similar file
+                kg_content = processing_modules.find_kg(entities_array, data_dir)
+                # kg_content = ""
+                # # Load the content of the most similar file
+                # if kg_files:
+                #     with open(os.path.join(data_dir, kg_files), "r") as file:
+                #         kg_content = json.load(file)
+                #         # print("Most similar file:", kg_files)
+                #         # print("Content:", kg_content)
+
+
                 #Send initial response to user while processing final answer on final documents
                 response = {
                     "answer": "Processing final answer... re-query to retrieve final answer and documents using session id",
                     "user_query": user_query,
-                    "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
+                    "entities": entities_array,
                     "query_ideas": query_idea_list if query_idea_list else [],
                     "excerpts_dict" : excerpts_dict,
-                    "indicators_dict": indicators_dict
+                    "indicators_dict": indicators_dict,
+                    "kg_data": kg_content
                 }
 
                 # session['session_id'] = session_id #save the session id

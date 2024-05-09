@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Internet of Things": [
+                {
+                    "Relation": "Enables",
+                    "Object": "Sensors",
+                    "Strength": "8",
+                    "Description": "Internet of Things relies on sensors to collect data from the physical world."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Cloud Computing",
+                    "Strength": "9",
+                    "Description": "Internet of Things leverages cloud computing for data storage, processing, and analysis."
+                },
+                {
+                    "Relation": "Enhanced by",
+                    "Object": "Artificial Intelligence",
+                    "Strength": "7",
+                    "Description": "Internet of Things benefits from AI algorithms for intelligent decision-making and automation."
+                },
+                {
+                    "Relation": "Empowered by",
+                    "Object": "Big Data",
+                    "Strength": "6",
+                    "Description": "Internet of Things relies on big data analytics to extract valuable insights from large volumes of data."
+                },
+                {
+                    "Relation": "Enables",
+                    "Object": "Sensors",
+                    "Strength": "8",
+                    "Description": "Internet of Things relies on sensors to collect data from the physical world."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Cloud Computing",
+                    "Strength": "9",
+                    "Description": "Internet of Things leverages cloud computing for data storage, processing, and analysis."
+                },
+                {
+                    "Relation": "Enhanced by",
+                    "Object": "Artificial Intelligence",
+                    "Strength": "7",
+                    "Description": "Internet of Things benefits from AI algorithms for intelligent decision-making and automation."
+                },
+                {
+                    "Relation": "Empowered by",
+                    "Object": "Big Data",
+                    "Strength": "6",
+                    "Description": "Internet of Things relies on big data analytics to extract valuable insights from large volumes of data."
+                }
+            ]
+        }
+    }
+}

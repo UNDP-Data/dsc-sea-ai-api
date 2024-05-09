@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Election": [
+                {
+                    "Relation": "Involves",
+                    "Object": "Voter",
+                    "Strength": "8",
+                    "Description": "Voters participate in the election process by casting their votes."
+                },
+                {
+                    "Relation": "Involves",
+                    "Object": "Candidate",
+                    "Strength": "9",
+                    "Description": "Candidates run for office and compete in the election."
+                },
+                {
+                    "Relation": "Involves",
+                    "Object": "Political Party",
+                    "Strength": "7",
+                    "Description": "Political parties nominate candidates and campaign for their election."
+                },
+                {
+                    "Relation": "Conducted by",
+                    "Object": "Government",
+                    "Strength": "10",
+                    "Description": "The government is responsible for organizing and conducting elections."
+                }
+            ]
+        }
+    }
+}

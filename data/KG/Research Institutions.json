@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Research institutions": [
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Scientists",
+                    "Strength": "8",
+                    "Description": "Research institutions often collaborate with scientists to conduct studies and experiments."
+                },
+                {
+                    "Relation": "Partner with",
+                    "Object": "Universities",
+                    "Strength": "9",
+                    "Description": "Research institutions often partner with universities to access their resources and expertise."
+                },
+                {
+                    "Relation": "Receive funding from",
+                    "Object": "Government agencies",
+                    "Strength": "7",
+                    "Description": "Research institutions often receive funding from government agencies to support their research projects."
+                },
+                {
+                    "Relation": "Collaborate with",
+                    "Object": "Industry partners",
+                    "Strength": "6",
+                    "Description": "Research institutions often collaborate with industry partners to develop and commercialize their research findings."
+                }
+            ]
+        }
+    }
+}

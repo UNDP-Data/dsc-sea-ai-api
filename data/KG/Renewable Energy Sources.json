@@ -1,0 +1,106 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Renewable energy sources": [
+                {
+                    "Relation": "is a type of",
+                    "Object": "Solar power",
+                    "Strength": "8",
+                    "Description": "Solar power is a type of renewable energy source that harnesses the energy from the sun to generate electricity."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Wind power",
+                    "Strength": "9",
+                    "Description": "Wind power is a type of renewable energy source that converts the kinetic energy of wind into electricity."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Hydroelectric power",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power is a type of renewable energy source that generates electricity by harnessing the energy of flowing or falling water."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Geothermal energy",
+                    "Strength": "6",
+                    "Description": "Geothermal energy is a type of renewable energy source that utilizes heat from the Earth's core to generate electricity or heat buildings."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Solar power",
+                    "Strength": "8",
+                    "Description": "Solar power is a type of renewable energy source that harnesses the energy from the sun."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Wind power",
+                    "Strength": "9",
+                    "Description": "Wind power is a type of renewable energy source that converts wind energy into electricity."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Hydroelectric power",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power is a type of renewable energy source that generates electricity from flowing water."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Geothermal energy",
+                    "Strength": "6",
+                    "Description": "Geothermal energy is a type of renewable energy source that utilizes heat from the Earth's core to generate electricity."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Solar power",
+                    "Strength": "8",
+                    "Description": "Solar power is a type of renewable energy source that harnesses the energy from the sun to generate electricity."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Wind power",
+                    "Strength": "9",
+                    "Description": "Wind power is a type of renewable energy source that converts the kinetic energy of wind into electricity."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Hydroelectric power",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power is a type of renewable energy source that generates electricity by harnessing the energy of flowing or falling water."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Geothermal energy",
+                    "Strength": "6",
+                    "Description": "Geothermal energy is a type of renewable energy source that utilizes heat from the Earth's core to generate electricity or heat buildings."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Solar power",
+                    "Strength": "8",
+                    "Description": "Solar power is a type of renewable energy source that harnesses the energy from the sun."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Wind power",
+                    "Strength": "9",
+                    "Description": "Wind power is a type of renewable energy source that converts wind energy into electricity."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Hydroelectric power",
+                    "Strength": "7",
+                    "Description": "Hydroelectric power is a type of renewable energy source that generates electricity from flowing water."
+                },
+                {
+                    "Relation": "is a type of",
+                    "Object": "Geothermal energy",
+                    "Strength": "6",
+                    "Description": "Geothermal energy is a type of renewable energy source that utilizes heat from the Earth's core to generate electricity."
+                }
+            ]
+        }
+    }
+}

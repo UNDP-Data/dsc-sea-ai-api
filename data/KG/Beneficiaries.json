@@ -1,0 +1,28 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Beneficiaries": [
+                {
+                    "Relation": "Relationship1",
+                    "Object": "Entity2",
+                    "Strength": "8",
+                    "Description": "Description of the relationship between Beneficiaries and Entity2"
+                },
+                {
+                    "Relation": "Relationship2",
+                    "Object": "Entity3",
+                    "Strength": "6",
+                    "Description": "Description of the relationship between Beneficiaries and Entity3"
+                },
+                {
+                    "Relation": "Relationship3",
+                    "Object": "Entity4",
+                    "Strength": "9",
+                    "Description": "Description of the relationship between Beneficiaries and Entity4"
+                }
+            ]
+        }
+    }
+}

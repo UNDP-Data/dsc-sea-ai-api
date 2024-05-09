@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Universities": [
+                {
+                    "Relation": "Educates",
+                    "Object": "Students",
+                    "Strength": "8",
+                    "Description": "Universities provide education and training to students."
+                },
+                {
+                    "Relation": "Employs",
+                    "Object": "Professors",
+                    "Strength": "9",
+                    "Description": "Universities hire professors to teach and conduct research."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "Research Institutes",
+                    "Strength": "7",
+                    "Description": "Universities often collaborate with research institutes to conduct scientific studies and experiments."
+                },
+                {
+                    "Relation": "Engages with",
+                    "Object": "Alumni",
+                    "Strength": "6",
+                    "Description": "Universities maintain relationships with their alumni, involving them in various activities and events."
+                },
+                {
+                    "Relation": "Educates",
+                    "Object": "Students",
+                    "Strength": "8",
+                    "Description": "Universities provide education and training to students."
+                },
+                {
+                    "Relation": "Employs",
+                    "Object": "Professors",
+                    "Strength": "9",
+                    "Description": "Universities hire professors to teach and conduct research."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "Research Institutes",
+                    "Strength": "7",
+                    "Description": "Universities often collaborate with research institutes to conduct scientific studies and experiments."
+                },
+                {
+                    "Relation": "Engages with",
+                    "Object": "Alumni",
+                    "Strength": "6",
+                    "Description": "Universities maintain relationships with their alumni, involving them in various activities and events."
+                }
+            ]
+        }
+    }
+}

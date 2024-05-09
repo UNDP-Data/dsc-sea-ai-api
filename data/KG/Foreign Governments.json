@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Foreign Governments": [
+                {
+                    "Relation": "RELATIONSHIP",
+                    "Object": "ENTITY2",
+                    "Strength": "8",
+                    "Description": "CONTENT DESCRIPTION"
+                },
+                {
+                    "Relation": "RELATIONSHIP",
+                    "Object": "ENTITY3",
+                    "Strength": "6",
+                    "Description": "CONTENT DESCRIPTION"
+                },
+                {
+                    "Relation": "RELATIONSHIP",
+                    "Object": "ENTITY4",
+                    "Strength": "9",
+                    "Description": "CONTENT DESCRIPTION"
+                },
+                {
+                    "Relation": "RELATIONSHIP",
+                    "Object": "ENTITY5",
+                    "Strength": "7",
+                    "Description": "CONTENT DESCRIPTION"
+                }
+            ]
+        }
+    }
+}

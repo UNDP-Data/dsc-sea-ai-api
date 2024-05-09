@@ -1,0 +1,82 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Geothermal Power Plant": [
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Geothermal Energy",
+                    "Strength": "9",
+                    "Description": "Geothermal power plants harness the heat energy from the Earth's core, which is known as geothermal energy, to generate electricity."
+                },
+                {
+                    "Relation": "Uses",
+                    "Object": "Heat Pump",
+                    "Strength": "7",
+                    "Description": "Geothermal power plants often use heat pumps to transfer heat from the Earth's core to generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hot Springs",
+                    "Strength": "6",
+                    "Description": "Hot springs are natural sources of geothermal energy and are often utilized by geothermal power plants for electricity generation."
+                },
+                {
+                    "Relation": "Located near",
+                    "Object": "Volcano",
+                    "Strength": "8",
+                    "Description": "Geothermal power plants are often situated near volcanoes as they provide a readily available source of geothermal energy."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Geothermal Energy",
+                    "Strength": "9",
+                    "Description": "Geothermal power plants harness the heat energy from the Earth's core, which is known as geothermal energy, to generate electricity."
+                },
+                {
+                    "Relation": "Uses",
+                    "Object": "Heat Pump",
+                    "Strength": "7",
+                    "Description": "Geothermal power plants often use heat pumps to transfer heat from the Earth's core to generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hot Springs",
+                    "Strength": "6",
+                    "Description": "Hot springs are natural sources of geothermal energy and are often utilized by geothermal power plants for electricity generation."
+                },
+                {
+                    "Relation": "Located near",
+                    "Object": "Volcano",
+                    "Strength": "8",
+                    "Description": "Geothermal power plants are often situated near volcanoes as they provide a readily available source of geothermal energy."
+                },
+                {
+                    "Relation": "Utilizes",
+                    "Object": "Geothermal Energy",
+                    "Strength": "9",
+                    "Description": "Geothermal power plants harness the heat energy from the Earth's core, which is known as geothermal energy, to generate electricity."
+                },
+                {
+                    "Relation": "Uses",
+                    "Object": "Heat Pump",
+                    "Strength": "7",
+                    "Description": "Geothermal power plants often use heat pumps to transfer heat from the Earth's core to generate electricity."
+                },
+                {
+                    "Relation": "Relies on",
+                    "Object": "Hot Springs",
+                    "Strength": "6",
+                    "Description": "Hot springs are natural sources of geothermal energy and are often utilized by geothermal power plants for electricity generation."
+                },
+                {
+                    "Relation": "Located near",
+                    "Object": "Volcano",
+                    "Strength": "8",
+                    "Description": "Geothermal power plants are often situated near volcanoes as they provide a readily available source of geothermal energy."
+                }
+            ]
+        }
+    }
+}

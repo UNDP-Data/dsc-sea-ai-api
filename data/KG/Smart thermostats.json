@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Smart thermostats": [
+                {
+                    "Relation": "Monitor and control",
+                    "Object": "Energy consumption",
+                    "Strength": "8",
+                    "Description": "Smart thermostats can monitor and control energy consumption in homes, helping to optimize energy usage and reduce waste."
+                },
+                {
+                    "Relation": "Integration",
+                    "Object": "Home automation",
+                    "Strength": "7",
+                    "Description": "Smart thermostats can integrate with home automation systems, allowing users to control their thermostats remotely and create personalized schedules."
+                },
+                {
+                    "Relation": "Connectivity",
+                    "Object": "Internet of Things",
+                    "Strength": "9",
+                    "Description": "Smart thermostats are part of the Internet of Things ecosystem, enabling connectivity and communication with other smart devices in a home."
+                },
+                {
+                    "Relation": "Energy savings",
+                    "Object": "Energy efficiency",
+                    "Strength": "10",
+                    "Description": "Smart thermostats contribute to energy efficiency by automatically adjusting temperature settings based on occupancy and user preferences, leading to energy savings."
+                }
+            ]
+        }
+    }
+}

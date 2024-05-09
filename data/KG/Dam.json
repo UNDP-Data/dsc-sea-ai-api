@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Dam": [
+                {
+                    "Relation": "Supplies water to",
+                    "Object": "Hydropower Plant",
+                    "Strength": "8",
+                    "Description": "Dams provide a reliable source of water to hydropower plants, which generate electricity from the flowing water."
+                },
+                {
+                    "Relation": "Stores water in",
+                    "Object": "Reservoir",
+                    "Strength": "9",
+                    "Description": "Dams create reservoirs by blocking the flow of water, which can be used for various purposes such as irrigation, drinking water supply, and flood control."
+                },
+                {
+                    "Relation": "Regulates flow of",
+                    "Object": "River",
+                    "Strength": "7",
+                    "Description": "Dams control the release of water from the reservoir, ensuring a steady flow in the downstream river, which can be beneficial for navigation, agriculture, and ecosystem stability."
+                },
+                {
+                    "Relation": "Affects habitat of",
+                    "Object": "Fish",
+                    "Strength": "6",
+                    "Description": "Dams can alter the natural habitat of fish by obstructing their migration routes and changing the water temperature and flow, which can impact fish populations and biodiversity."
+                }
+            ]
+        }
+    }
+}

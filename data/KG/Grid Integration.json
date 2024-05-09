@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Grid integration": [
+                {
+                    "Relation": "Enables",
+                    "Object": "Renewable energy sources",
+                    "Strength": "8",
+                    "Description": "Grid integration enables the integration of renewable energy sources into the existing power grid, allowing for the efficient utilization of clean energy."
+                },
+                {
+                    "Relation": "Depends on",
+                    "Object": "Smart grid",
+                    "Strength": "9",
+                    "Description": "Grid integration depends on the implementation of smart grid technologies, which enable the seamless integration of distributed energy resources and efficient management of the power grid."
+                },
+                {
+                    "Relation": "Requires",
+                    "Object": "Energy storage",
+                    "Strength": "7",
+                    "Description": "Grid integration requires the use of energy storage systems to balance the intermittent nature of renewable energy sources and ensure a stable and reliable power supply."
+                },
+                {
+                    "Relation": "Facilitates",
+                    "Object": "Electric vehicles",
+                    "Strength": "6",
+                    "Description": "Grid integration facilitates the integration of electric vehicles into the power grid, enabling vehicle-to-grid (V2G) technologies and the utilization of EV batteries for grid balancing and energy storage."
+                }
+            ]
+        }
+    }
+}

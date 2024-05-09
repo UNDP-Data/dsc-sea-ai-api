@@ -1,0 +1,100 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Department of Energy": [
+                {
+                    "Relation": "Regulates",
+                    "Object": "Nuclear Regulatory Commission",
+                    "Strength": "8",
+                    "Description": "The Department of Energy regulates the nuclear industry through its oversight of the Nuclear Regulatory Commission."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "National Renewable Energy Laboratory",
+                    "Strength": "9",
+                    "Description": "The Department of Energy collaborates with the National Renewable Energy Laboratory to advance research and development in renewable energy technologies."
+                },
+                {
+                    "Relation": "Partners with",
+                    "Object": "ExxonMobil",
+                    "Strength": "6",
+                    "Description": "The Department of Energy partners with ExxonMobil on various initiatives related to energy efficiency and clean energy technologies."
+                },
+                {
+                    "Relation": "Works closely with",
+                    "Object": "International Atomic Energy Agency",
+                    "Strength": "7",
+                    "Description": "The Department of Energy works closely with the International Atomic Energy Agency to promote the peaceful use of nuclear energy and ensure nuclear safety."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "ENERGY STAR",
+                    "Strength": "8",
+                    "Description": "The Department of Energy collaborates with Energy Star to promote energy efficiency."
+                },
+                {
+                    "Relation": "Regulates",
+                    "Object": "Nuclear Regulatory Commission",
+                    "Strength": "8",
+                    "Description": "The Department of Energy regulates the nuclear industry through its oversight of the Nuclear Regulatory Commission."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "National Renewable Energy Laboratory",
+                    "Strength": "9",
+                    "Description": "The Department of Energy collaborates with the National Renewable Energy Laboratory to advance research and development in renewable energy technologies."
+                },
+                {
+                    "Relation": "Partners with",
+                    "Object": "ExxonMobil",
+                    "Strength": "6",
+                    "Description": "The Department of Energy partners with ExxonMobil on various initiatives related to energy efficiency and clean energy technologies."
+                },
+                {
+                    "Relation": "Works closely with",
+                    "Object": "International Atomic Energy Agency",
+                    "Strength": "7",
+                    "Description": "The Department of Energy works closely with the International Atomic Energy Agency to promote the peaceful use of nuclear energy and ensure nuclear safety."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "ENERGY STAR",
+                    "Strength": "8",
+                    "Description": "The Department of Energy collaborates with Energy Star to promote energy efficiency."
+                },
+                {
+                    "Relation": "Regulates",
+                    "Object": "Nuclear Regulatory Commission",
+                    "Strength": "8",
+                    "Description": "The Department of Energy regulates the nuclear industry through its oversight of the Nuclear Regulatory Commission."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "National Renewable Energy Laboratory",
+                    "Strength": "9",
+                    "Description": "The Department of Energy collaborates with the National Renewable Energy Laboratory to advance research and development in renewable energy technologies."
+                },
+                {
+                    "Relation": "Partners with",
+                    "Object": "ExxonMobil",
+                    "Strength": "6",
+                    "Description": "The Department of Energy partners with ExxonMobil on various initiatives related to energy efficiency and clean energy technologies."
+                },
+                {
+                    "Relation": "Works closely with",
+                    "Object": "International Atomic Energy Agency",
+                    "Strength": "7",
+                    "Description": "The Department of Energy works closely with the International Atomic Energy Agency to promote the peaceful use of nuclear energy and ensure nuclear safety."
+                },
+                {
+                    "Relation": "Collaborates with",
+                    "Object": "ENERGY STAR",
+                    "Strength": "8",
+                    "Description": "The Department of Energy collaborates with Energy Star to promote energy efficiency."
+                }
+            ]
+        }
+    }
+}

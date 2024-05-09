@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Photosynthesis": [
+                {
+                    "Relation": "requires",
+                    "Object": "Chlorophyll",
+                    "Strength": "8",
+                    "Description": "Chlorophyll is a pigment that absorbs light energy for photosynthesis"
+                },
+                {
+                    "Relation": "consumes",
+                    "Object": "Carbon Dioxide",
+                    "Strength": "9",
+                    "Description": "Carbon dioxide is a reactant in photosynthesis, which is consumed during the process"
+                },
+                {
+                    "Relation": "utilizes",
+                    "Object": "Water",
+                    "Strength": "10",
+                    "Description": "Water is a crucial molecule used in photosynthesis to provide electrons and hydrogen ions"
+                },
+                {
+                    "Relation": "converts",
+                    "Object": "Sunlight",
+                    "Strength": "7",
+                    "Description": "Sunlight is the primary source of energy that is converted into chemical energy during photosynthesis"
+                },
+                {
+                    "Relation": "requires",
+                    "Object": "Chlorophyll",
+                    "Strength": "8",
+                    "Description": "Chlorophyll is a pigment that absorbs light energy for photosynthesis"
+                },
+                {
+                    "Relation": "consumes",
+                    "Object": "Carbon Dioxide",
+                    "Strength": "9",
+                    "Description": "Carbon dioxide is a reactant in photosynthesis, which is consumed during the process"
+                },
+                {
+                    "Relation": "utilizes",
+                    "Object": "Water",
+                    "Strength": "10",
+                    "Description": "Water is a crucial molecule used in photosynthesis to provide electrons and hydrogen ions"
+                },
+                {
+                    "Relation": "converts",
+                    "Object": "Sunlight",
+                    "Strength": "7",
+                    "Description": "Sunlight is the primary source of energy that is converted into chemical energy during photosynthesis"
+                }
+            ]
+        }
+    }
+}
