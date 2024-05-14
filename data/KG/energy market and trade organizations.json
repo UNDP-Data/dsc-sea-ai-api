@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "energy market and trade organizations",
+    "Description": "Organizations that facilitate and regulate energy market and trade activities.",
+    "Category": "Organization",
+    "Tags": [
+      "Policy",
+      "Economic",
+      "Infrastructure"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "energy market regulations",
+      "energy market integration"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Policy Development",
+      "Energy Market Performance",
+      "Energy Market Integration",
+      "Building Standards",
+      "Renewable Energy Companies",
+      "Renewable Energy Projects",
+      "Energy Market Analysis",
+      "International Energy Trade"
+    ],
+    "relations": {
+      "energy market and trade organizations": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy market and trade organizations implement building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy market and trade organizations provide funding for renewable energy projects to support their development and implementation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Market Analysis",
+          "Description": "Energy market and trade organizations focus on conducting energy market analysis to identify trends and opportunities for growth.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "International Energy Trade",
+          "Description": "Energy market and trade organizations are involved in international energy trade to facilitate the exchange of energy resources between countries.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Renewable Energy Companies",
+          "Description": "Energy market and trade organizations partner with renewable energy companies to promote the adoption and integration of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Policy Development",
+          "Description": "Energy market and trade organizations contribute to the development of energy policies by providing insights and expertise on market dynamics and trends.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Market Performance",
+          "Description": "Energy market and trade organizations monitor the performance of the energy market to ensure fair competition and efficient resource allocation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Market Integration",
+          "Description": "Energy market and trade organizations set targets for energy market integration to promote regional cooperation and harmonization of energy policies.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

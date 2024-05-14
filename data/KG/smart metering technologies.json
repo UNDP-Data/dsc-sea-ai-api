@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "Entity": "smart metering technologies",
+    "Description": "Summary of smart metering technologies.",
+    "Category": "Technology",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "smart grid technology",
+      "battery technologies",
+      "smart metering technology"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Demand Response",
+      "Utility Companies",
+      "Smart Grid",
+      "Energy Efficiency Policy",
+      "Energy Efficiency",
+      "Energy Conservation",
+      "Energy Consumption",
+      "Research and Development"
+    ],
+    "relations": {
+      "smart metering technologies": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Smart metering technologies contribute funds to research and development projects for improving energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Demand Response",
+          "Description": "Smart metering technologies focus on enabling demand response programs to optimize energy usage.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Smart Grid",
+          "Description": "Smart metering technologies are an integral part of the smart grid infrastructure for efficient energy management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Utility Companies",
+          "Description": "Smart metering technologies partner with utility companies to enable accurate billing and efficient energy management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Conservation",
+          "Description": "Smart metering technologies contribute to energy conservation efforts by providing insights into energy usage patterns.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Smart metering technologies monitor energy consumption in real-time to identify opportunities for energy savings.",
+          "Importance": 4
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Smart metering technologies target improved energy efficiency by providing data-driven insights for energy management.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "Entity": "micro-finance",
+    "Description": "Financial services, such as loans, savings, and insurance, provided to low-income individuals or small businesses.",
+    "Category": "Finance",
+    "Tags": [
+      "Microfinance",
+      "Financial Services",
+      "Poverty Alleviation"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "microfinance programs"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Energy Investments",
+      "Energy Access Programs",
+      "Energy Access",
+      "Energy Poverty",
+      "Local NGOs",
+      "Clean Energy Projects",
+      "Women Entrepreneurs",
+      "Energy Access Gap",
+      "Renewable Energy Startups"
+    ],
+    "relations": {
+      "micro-finance": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Access Programs",
+          "Description": "Micro-finance implements energy access programs that provide financial support for clean energy projects in underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Startups",
+          "Description": "Micro-finance funds renewable energy startups that develop innovative solutions for sustainable energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Poverty",
+          "Description": "Micro-finance focuses on addressing energy poverty by providing financial services for clean energy solutions to marginalized communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Investments",
+          "Description": "Micro-finance plays a role in sustainable energy investments by providing financial resources for renewable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local NGOs",
+          "Description": "Micro-finance partners with local NGOs to support sustainable energy initiatives in marginalized communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Access",
+          "Description": "Micro-finance contributes to improving energy access by providing financial services for clean energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Clean Energy Projects",
+          "Description": "Micro-finance monitors the progress and impact of clean energy projects that it supports financially.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Women Entrepreneurs",
+          "Description": "Micro-finance targets women entrepreneurs in the sustainable energy sector by providing financial support and resources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access Gap",
+          "Description": "Micro-finance addresses the energy access gap by providing financial services for clean energy solutions in underserved communities.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

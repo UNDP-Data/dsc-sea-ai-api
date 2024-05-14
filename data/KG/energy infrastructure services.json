@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "energy infrastructure services",
+    "Description": "Services related to the development, maintenance, and operation of energy infrastructure such as power plants, transmission lines, and distribution networks.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Policy",
+      "Social",
+      "Economic",
+      "Crisis"
+    ],
+    "Dimension": "Intersectionality",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy infrastructure planning"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Government Agencies",
+      "Climate Change Mitigation",
+      "Energy Efficiency",
+      "Energy Transition Initiatives",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "energy infrastructure services": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy infrastructure services implement building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy infrastructure services provide funding for renewable energy projects to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "Energy infrastructure services focus on improving energy access for communities without reliable electricity supply.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Transition Initiatives",
+          "Description": "Energy infrastructure services play a role in energy transition initiatives to shift from fossil fuels to renewable energy sources.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Government Agencies",
+          "Description": "Energy infrastructure services collaborate and partner with government agencies to implement sustainable energy policies and projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy infrastructure services contribute to climate change mitigation efforts by promoting the use of renewable energy and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy infrastructure services monitor energy consumption patterns to identify areas for improvement and optimize energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Energy infrastructure services set targets for energy efficiency improvements to reduce energy waste and promote sustainable energy practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

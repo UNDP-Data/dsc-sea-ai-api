@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "Entity": "community-led solutions",
+    "Description": "Approaches and initiatives that are driven and implemented by local communities to address sustainable energy challenges and meet their specific needs.",
+    "Category": "Strategy",
+    "Tags": [
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "community-based energy solutions",
+      "community-based organizations"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "community-led solutions": []
+    }
+  }
+}

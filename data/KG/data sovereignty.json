@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "data sovereignty",
+    "Description": "The concept that data is subject to the laws and governance of the country in which it is collected, stored, and processed.",
+    "Category": "Policy",
+    "Tags": [
+      "Data Governance",
+      "Data Protection",
+      "Data Privacy"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "data sovereignty": []
+    }
+  }
+}

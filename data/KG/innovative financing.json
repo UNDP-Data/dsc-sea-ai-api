@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "Entity": "innovative financing",
+    "Description": "New and creative ways of raising funds for projects or initiatives.",
+    "Category": "Finance",
+    "Tags": [
+      "Economic",
+      "Finance"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "UN Sustainable Development Goals",
+      "energy innovation funds",
+      "financial innovation",
+      "green bonds",
+      "impact investing",
+      "development banks",
+      "startups"
+    ],
+    "relations": {
+      "innovative financing": [
+        {
+          "Relation": "employs",
+          "Object": "green bonds",
+          "Description": "Innovative financing employs green bonds as a financial instrument to raise funds for sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "development banks",
+          "Description": "Innovative financing collaborates with development banks to leverage their expertise and resources for financing sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "startups",
+          "Description": "Innovative financing supports startups in the sustainable energy sector by providing funding and mentorship to accelerate their growth and impact.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "energy innovation funds",
+          "Description": "Innovative financing administers energy innovation funds to support research and development of new and advanced sustainable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "impact investing",
+          "Description": "Innovative financing measures the impact of investments in sustainable energy projects through impact investing metrics and frameworks.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "UN Sustainable Development Goals",
+          "Description": "Innovative financing aligns with the UN Sustainable Development Goals to ensure that investments in sustainable energy contribute to broader social and environmental objectives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "financial innovation",
+          "Description": "Innovative financing is an instance of financial innovation that aims to mobilize capital for sustainable energy projects through novel approaches and mechanisms.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

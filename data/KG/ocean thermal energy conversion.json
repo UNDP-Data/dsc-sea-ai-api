@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "Entity": "ocean thermal energy conversion",
+    "Description": "A technology that harnesses the temperature difference between warm surface water and cold deep water to generate electricity.",
+    "Category": "Technology",
+    "Tags": [
+      "Environmental"
+    ],
+    "Dimension": "Environmental",
+    "Acronym": "OTEC",
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Change Adaptation",
+      "Sustainable Development Goals",
+      "Ocean Temperature",
+      "Government Incentive Programs",
+      "Ocean Energy",
+      "Renewable Energy Research",
+      "Coastal Communities",
+      "Heat Exchangers"
+    ],
+    "relations": {
+      "ocean thermal energy conversion": [
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change Adaptation",
+          "Description": "Ocean thermal energy conversion addresses climate change adaptation by providing a sustainable energy solution that reduces reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Heat Exchangers",
+          "Description": "Ocean thermal energy conversion employs heat exchangers to convert temperature differences in ocean water into usable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Coastal Communities",
+          "Description": "Ocean thermal energy conversion collaborates with coastal communities to implement sustainable energy solutions and support local economies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Research",
+          "Description": "Ocean thermal energy conversion supports research in renewable energy technologies to improve efficiency and expand the use of sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Government Incentive Programs",
+          "Description": "Ocean thermal energy conversion administers government incentive programs to promote the adoption of sustainable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Ocean Temperature",
+          "Description": "Ocean thermal energy conversion measures ocean temperature to identify suitable locations for harnessing thermal energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Ocean thermal energy conversion aligns with the Sustainable Development Goals by providing a clean and renewable energy source for sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Ocean Energy",
+          "Description": "Ocean thermal energy conversion is an instance of ocean energy, which utilizes temperature differences in ocean water to generate electricity.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

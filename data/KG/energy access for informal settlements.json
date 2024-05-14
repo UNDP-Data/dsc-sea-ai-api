@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "energy access for informal settlements",
+    "Description": "Summary of energy access for informal settlements.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Development Goals",
+      "Energy Poverty",
+      "Local NGOs",
+      "Urban Areas",
+      "Energy Inequality",
+      "Community Engagement",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "energy access for informal settlements": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy access for informal settlements implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy access for informal settlements funds renewable energy projects to provide sustainable and clean energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Community Engagement",
+          "Description": "Energy access for informal settlements focuses on community engagement to raise awareness and promote energy access initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Urban Areas",
+          "Description": "Energy access for informal settlements is implemented in urban areas to address the energy needs of informal settlements.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local NGOs",
+          "Description": "Energy access for informal settlements partners with local NGOs to collaborate on energy access projects and initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy access for informal settlements contributes to the achievement of Sustainable Development Goals by providing clean and affordable energy access.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy access for informal settlements monitors energy consumption to identify areas for improvement and optimize energy access initiatives.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Energy access for informal settlements targets energy poverty by providing access to reliable and affordable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Inequality",
+          "Description": "Energy access for informal settlements addresses energy inequality by ensuring equal access to energy resources and services.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

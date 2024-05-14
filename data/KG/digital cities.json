@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "digital cities",
+    "Description": "A concept that refers to the use of digital technologies and data to improve the efficiency, sustainability, and livability of cities.",
+    "Category": "Technology",
+    "Tags": [
+      "Smart Cities",
+      "Urban Development",
+      "Digital Transformation"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Generation",
+      "Clean Energy Companies",
+      "Smart Grid Technology",
+      "Energy Efficiency Policy",
+      "Carbon Emission Reduction",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Sustainable Energy Transition Initiative"
+    ],
+    "relations": {
+      "digital cities": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Digital cities implement energy efficiency policies to promote sustainable energy usage.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Digital cities provide funding for renewable energy projects to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Smart Grid Technology",
+          "Description": "Digital cities focus on implementing smart grid technology to optimize energy distribution and consumption.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Transition Initiative",
+          "Description": "Digital cities participate in the Sustainable Energy Transition Initiative to accelerate the adoption of sustainable energy practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Clean Energy Companies",
+          "Description": "Digital cities form partnerships with clean energy companies to promote the development and deployment of clean energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Carbon Emission Reduction",
+          "Description": "Digital cities contribute to carbon emission reduction through the implementation of sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Digital cities monitor energy consumption to identify areas for improvement and optimize energy usage.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Generation",
+          "Description": "Digital cities set targets for increasing renewable energy generation to reduce reliance on fossil fuels.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

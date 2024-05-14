@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "undp accelerator labs",
+    "Description": "A network of innovation labs established by the United Nations Development Programme (UNDP) to address complex development challenges through experimentation and collaboration.",
+    "Category": "Organization",
+    "Tags": [
+      "Innovation",
+      "Experimentation",
+      "Collaboration"
+    ],
+    "Dimension": "Strategy",
+    "Acronym": "UNDP AL",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Private Sector Companies",
+      "Energy Consumption Patterns",
+      "Energy Poverty",
+      "Energy Efficiency Policy",
+      "Renewable Energy Access",
+      "Climate Change Mitigation",
+      "Sustainable Energy Solutions",
+      "Renewable Energy Projects",
+      "Partnership with Local Governments"
+    ],
+    "relations": {
+      "undp accelerator labs": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "undp accelerator labs implements Energy Efficiency Policy to promote energy-saving practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "undp accelerator labs funds Renewable Energy Projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Sustainable Energy Solutions",
+          "Description": "undp accelerator labs focuses on developing and promoting Sustainable Energy Solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Partnership with Local Governments",
+          "Description": "undp accelerator labs operates in partnership with local governments to implement sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector Companies",
+          "Description": "undp accelerator labs partners with private sector companies to drive innovation in sustainable energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "undp accelerator labs contributes to climate change mitigation through the promotion of sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption Patterns",
+          "Description": "undp accelerator labs monitors energy consumption patterns to identify areas for improvement and energy-saving opportunities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Access",
+          "Description": "undp accelerator labs targets increased access to renewable energy for communities in need.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "undp accelerator labs addresses energy poverty by implementing sustainable energy solutions in underserved areas.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

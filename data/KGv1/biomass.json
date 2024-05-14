@@ -1,0 +1,82 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Biomass": [
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Wood",
+                    "Strength": "8",
+                    "Description": "Wood is a common feedstock for biomass energy production."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biofuel",
+                    "Strength": "9",
+                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biogas",
+                    "Strength": "7",
+                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
+                },
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Wood",
+                    "Strength": "8",
+                    "Description": "Wood is a common feedstock for biomass energy production."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biofuel",
+                    "Strength": "9",
+                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biogas",
+                    "Strength": "7",
+                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
+                },
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Wood",
+                    "Strength": "8",
+                    "Description": "Wood is a common feedstock for biomass energy production."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biofuel",
+                    "Strength": "9",
+                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biogas",
+                    "Strength": "7",
+                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
+                },
+                {
+                    "Relation": "Feedstock",
+                    "Object": "Wood",
+                    "Strength": "8",
+                    "Description": "Wood is a common feedstock for biomass energy production."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biofuel",
+                    "Strength": "9",
+                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
+                },
+                {
+                    "Relation": "Conversion",
+                    "Object": "Biogas",
+                    "Strength": "7",
+                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
+                }
+            ]
+        }
+    }
+}

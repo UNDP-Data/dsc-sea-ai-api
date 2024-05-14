@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "reliance of fuel imports",
+    "Description": "Reliance on fuel imports refers to the dependence of a country or region on imported fuels for meeting its energy needs.",
+    "Category": "Economic",
+    "Tags": [
+      "Fuel Imports",
+      "Economic"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Domestic Energy Production",
+      "Energy Security",
+      "Energy Import Policies",
+      "Energy Independence Index",
+      "Energy Transition Goals",
+      "Energy Security Challenge",
+      "Energy Exporting Countries",
+      "Energy Diversification Strategies"
+    ],
+    "relations": {
+      "reliance of fuel imports": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Security",
+          "Description": "Addressing the reliance of fuel imports is crucial for ensuring energy security and reducing vulnerability to supply disruptions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Energy Diversification Strategies",
+          "Description": "Reducing the reliance of fuel imports requires the employment of energy diversification strategies, such as promoting renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Energy Exporting Countries",
+          "Description": "Addressing the reliance of fuel imports involves collaboration with energy exporting countries to ensure stable and sustainable energy supply.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Domestic Energy Production",
+          "Description": "Reducing the reliance of fuel imports requires support for domestic energy production, such as investing in renewable energy infrastructure.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Import Policies",
+          "Description": "Administering energy import policies is necessary to regulate the reliance of fuel imports and ensure energy security.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Independence Index",
+          "Description": "Measuring the reliance of fuel imports is important to track progress towards achieving energy independence and reducing dependence on external sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Energy Transition Goals",
+          "Description": "Reducing the reliance of fuel imports aligns with the goals of transitioning to a sustainable and renewable energy future.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Energy Security Challenge",
+          "Description": "The reliance of fuel imports is an instance of the energy security challenge faced by many countries.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "heating and cooling",
+    "Description": "Heating and cooling systems are technologies used to control the temperature and humidity of indoor spaces for comfort and energy efficiency.",
+    "Category": "Technology",
+    "Tags": [
+      "HVAC",
+      "Energy Efficiency",
+      "Thermal Comfort"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Improvements",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "District Heating Systems",
+      "Energy Service Companies",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Sustainable Energy Transition"
+    ],
+    "relations": {
+      "heating and cooling": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Heating and cooling implements Energy Efficiency Policy to promote energy-saving practices in buildings.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Heating and cooling funds renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "District Heating Systems",
+          "Description": "Heating and cooling focuses on district heating systems to improve energy efficiency and reduce emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Transition",
+          "Description": "Heating and cooling plays a crucial role in the sustainable energy transition.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Energy Service Companies",
+          "Description": "Heating and cooling partners with energy service companies to provide energy-efficient solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Heating and cooling contributes to climate change mitigation efforts through energy-efficient practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Heating and cooling monitors energy consumption to identify opportunities for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency Improvements",
+          "Description": "Heating and cooling targets energy efficiency improvements to reduce energy waste.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

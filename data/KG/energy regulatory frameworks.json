@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "energy regulatory frameworks",
+    "Description": "Legal and institutional frameworks that govern the energy sector.",
+    "Category": "Policy",
+    "Tags": [
+      "Policy",
+      "Social"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Renewable Energy Standards",
+      "Energy Access",
+      "Renewable Energy Incentives",
+      "Government Agencies",
+      "Energy Performance",
+      "Climate Change Agreements",
+      "Government Policy"
+    ],
+    "relations": {
+      "energy regulatory frameworks": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access",
+          "Description": "Energy regulatory frameworks address the issue of energy access by promoting policies and regulations that ensure affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Standards",
+          "Description": "Energy regulatory frameworks employ renewable energy standards to encourage the adoption of clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Government Agencies",
+          "Description": "Energy regulatory frameworks collaborate with government agencies to develop and enforce energy policies and regulations that promote sustainable energy practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Energy regulatory frameworks support energy efficiency programs to encourage energy conservation and reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Renewable Energy Incentives",
+          "Description": "Energy regulatory frameworks administer renewable energy incentives to promote the adoption of renewable energy technologies and attract investments in the sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Performance",
+          "Description": "Energy regulatory frameworks measure energy performance to assess the effectiveness of energy policies and regulations in achieving sustainable energy goals.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Change Agreements",
+          "Description": "Energy regulatory frameworks align with international climate change agreements to ensure the implementation of sustainable energy practices and reduction of greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Government Policy",
+          "Description": "Energy regulatory frameworks are an instance of government policy that aims to regulate and promote sustainable energy practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "digital twins",
+    "Description": "A digital representation of a physical object or system that can be used for various purposes such as monitoring, simulation, and optimization.",
+    "Category": "Technology",
+    "Tags": [
+      "Internet of Things",
+      "Simulation",
+      "Optimization"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Internet of Things",
+      "Smart Cities Initiative",
+      "Building Information Modeling",
+      "Data Security",
+      "Energy Management Systems",
+      "Infrastructure",
+      "Predictive Maintenance",
+      "Asset Performance Optimization",
+      "Smart Manufacturing"
+    ],
+    "relations": {
+      "digital twins": [
+        {
+          "Relation": "implements",
+          "Object": "Building Information Modeling",
+          "Description": "Digital twins implements Building Information Modeling to create virtual representations of physical assets for better monitoring and management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Smart Cities Initiative",
+          "Description": "Digital twins funds the Smart Cities Initiative to develop innovative solutions for urban planning and management.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Predictive Maintenance",
+          "Description": "Digital twins focuses on predictive maintenance to optimize asset performance and reduce downtime.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Internet of Things",
+          "Description": "Digital twins operates in the Internet of Things ecosystem to collect real-time data for analysis and decision-making.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Energy Management Systems",
+          "Description": "Digital twins partners with Energy Management Systems to optimize energy consumption and improve efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Asset Performance Optimization",
+          "Description": "Digital twins contributes to asset performance optimization by providing real-time insights and predictive analytics.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Infrastructure",
+          "Description": "Digital twins monitors infrastructure to detect anomalies, predict failures, and enable proactive maintenance.",
+          "Importance": 4
+        },
+        {
+          "Relation": "targets",
+          "Object": "Smart Manufacturing",
+          "Description": "Digital twins targets smart manufacturing to improve production efficiency and quality through virtual simulations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Data Security",
+          "Description": "Digital twins addresses data security concerns by implementing robust encryption and access control measures.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

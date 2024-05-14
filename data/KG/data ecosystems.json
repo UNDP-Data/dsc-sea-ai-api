@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "data ecosystems",
+    "Description": "Refers to the interconnected network of individuals, organizations, and systems that share and utilize data.",
+    "Category": "Technology",
+    "Tags": [
+      "Data Sharing",
+      "Data Collaboration",
+      "Data Governance"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "UN Sustainable Development Goals",
+      "Artificial Intelligence",
+      "Digital Transformation",
+      "Energy Data Management",
+      "Energy Startups",
+      "Energy Efficiency",
+      "Energy Data Platform",
+      "Research Institutions"
+    ],
+    "relations": {
+      "data ecosystems": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Data Management",
+          "Description": "Data ecosystems address the challenges of energy data management to enable effective analysis and decision-making in the sustainable energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Artificial Intelligence",
+          "Description": "Data ecosystems employ artificial intelligence technologies to analyze energy data and derive insights for sustainable energy planning.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Research Institutions",
+          "Description": "Data ecosystems collaborate with research institutions to enhance data-driven research and innovation in the sustainable energy field.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Startups",
+          "Description": "Data ecosystems support energy startups by providing access to data and resources for developing innovative sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Data Platform",
+          "Description": "Data ecosystems administer an energy data platform to facilitate data sharing and collaboration among stakeholders in the sustainable energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Efficiency",
+          "Description": "Data ecosystems measure energy efficiency to assess the impact of sustainable energy initiatives and identify areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "UN Sustainable Development Goals",
+          "Description": "Data ecosystems align with the UN Sustainable Development Goals to contribute to the achievement of sustainable energy targets.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Digital Transformation",
+          "Description": "Data ecosystems are an instance of digital transformation in the sustainable energy sector, leveraging data-driven technologies for improved energy management.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

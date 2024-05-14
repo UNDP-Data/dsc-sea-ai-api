@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "technical capacity-building initiatives",
+    "Description": "Programs and activities aimed at enhancing the technical skills and knowledge of individuals and organizations in the field of sustainable energy.",
+    "Category": "Skill",
+    "Tags": [
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "National Development Plans",
+      "Training Programs",
+      "Universities",
+      "Energy Experts",
+      "Capacity Development",
+      "Impact",
+      "Skills Gap",
+      "Entrepreneurship"
+    ],
+    "relations": {
+      "technical capacity-building initiatives": [
+        {
+          "Relation": "addresses",
+          "Object": "Skills Gap",
+          "Description": "Technical capacity-building initiatives address the skills gap by providing training and education programs in sustainable energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Energy Experts",
+          "Description": "Technical capacity-building initiatives employ energy experts who deliver training and mentorship programs to enhance technical skills in the sustainable energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Universities",
+          "Description": "Technical capacity-building initiatives collaborate with universities to develop curriculum and research projects that support the development of sustainable energy skills.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Entrepreneurship",
+          "Description": "Technical capacity-building initiatives support entrepreneurship by providing resources and mentorship to individuals and organizations in the sustainable energy sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Training Programs",
+          "Description": "Technical capacity-building initiatives administer training programs that equip individuals with the necessary skills and knowledge in sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Impact",
+          "Description": "Technical capacity-building initiatives measure the impact of their programs in terms of increased technical skills and knowledge in the sustainable energy sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "National Development Plans",
+          "Description": "Technical capacity-building initiatives align with national development plans to ensure the integration of sustainable energy skills in the overall development agenda.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Capacity Development",
+          "Description": "Technical capacity-building initiatives are an instance of capacity development efforts aimed at enhancing skills and knowledge in the sustainable energy sector.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

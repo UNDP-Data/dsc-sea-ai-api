@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "undp country offices",
+    "Description": "United Nations Development Programme (UNDP) offices at the country level.",
+    "Category": "Organization",
+    "Tags": [
+      "Policy",
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Policy",
+    "Acronym": "UNDP",
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Access to Clean Energy",
+      "Renewable Energy Generation",
+      "Private Sector Companies",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Partnership with Local Governments"
+    ],
+    "relations": {
+      "undp country offices": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "UNDP country offices implement Energy Efficiency Policy to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "UNDP country offices provide funding for renewable energy projects to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Access to Clean Energy",
+          "Description": "UNDP country offices focus on improving access to clean energy for communities in need.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Partnership with Local Governments",
+          "Description": "UNDP country offices work in partnership with local governments to implement sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector Companies",
+          "Description": "UNDP country offices partner with private sector companies to promote sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "UNDP country offices contribute to climate change mitigation through the implementation of sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "UNDP country offices monitor energy consumption to identify areas for improvement and promote energy efficiency.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Generation",
+          "Description": "UNDP country offices set targets for increasing renewable energy generation to reduce reliance on fossil fuels.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

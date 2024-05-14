@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "women's economic empowerment",
+    "Description": "Women's economic empowerment refers to the ability of women to participate and have control over economic activities, resources, and decision-making processes. It aims to promote gender equality and women's rights in the economic sphere.",
+    "Category": "Social",
+    "Tags": [
+      "Gender Equality",
+      "Women's Rights",
+      "Economic Empowerment"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "women's economic empowerment": []
+    }
+  }
+}

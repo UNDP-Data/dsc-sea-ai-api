@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "blockchain for energy trading",
+    "Description": "Summary of blockchain for energy trading.",
+    "Category": "Technology",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Providers",
+      "Energy Transition",
+      "Energy Certificates",
+      "Distributed Ledger Technology",
+      "Smart Contracts",
+      "Energy Traceability",
+      "Decentralization",
+      "Transparency"
+    ],
+    "relations": {
+      "blockchain for energy trading": [
+        {
+          "Relation": "addresses",
+          "Object": "Transparency",
+          "Description": "Blockchain for energy trading addresses the need for transparency in energy transactions by providing a decentralized and immutable ledger.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Smart Contracts",
+          "Description": "Blockchain for energy trading employs smart contracts to automate and enforce the terms of energy transactions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Renewable Energy Providers",
+          "Description": "Blockchain for energy trading collaborates with renewable energy providers to enable peer-to-peer energy trading.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Decentralization",
+          "Description": "Blockchain for energy trading supports the decentralization of energy markets by enabling direct transactions between energy producers and consumers.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Certificates",
+          "Description": "Blockchain for energy trading administers the issuance and tracking of energy certificates for renewable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Traceability",
+          "Description": "Blockchain for energy trading measures energy traceability by providing a transparent and auditable record of energy transactions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Energy Transition",
+          "Description": "Blockchain for energy trading aligns with the goal of energy transition by enabling the integration of renewable energy sources into the grid.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Distributed Ledger Technology",
+          "Description": "Blockchain for energy trading is an instance of distributed ledger technology that revolutionizes energy markets.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

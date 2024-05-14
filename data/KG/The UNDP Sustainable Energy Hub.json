@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "Entity": "The UNDP Sustainable Energy Hub",
+    "Description": null,
+    "Category": null,
+    "Tags": null,
+    "Dimension": null,
+    "Acronym": null,
+    "Importance": null,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "carbon offset programs"
+    ],
+    "relations": {
+      "The UNDP Sustainable Energy Hub": [
+        {
+          "Relation": "implements",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub implements carbon offset programs to reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub provides funding for carbon offset programs to support their implementation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub focuses on carbon offset programs as a key strategy for sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub is involved in carbon offset programs to mitigate climate change.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub partners with organizations implementing carbon offset programs to enhance collaboration.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub contributes to the success of carbon offset programs through its expertise and resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub monitors the progress and impact of carbon offset programs to ensure their effectiveness.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub sets targets for carbon offset programs to achieve specific emission reduction goals.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "carbon offset programs",
+          "Description": "The UNDP Sustainable Energy Hub addresses the challenges and opportunities associated with carbon offset programs.",
+          "Importance": 2
+        }
+      ]
+    }
+  }
+}

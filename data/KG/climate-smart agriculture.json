@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "climate-smart agriculture",
+    "Description": "Agricultural practices that sustainably increase productivity, resilience, and reduce greenhouse gas emissions.",
+    "Category": "Technology",
+    "Tags": [
+      "Agriculture",
+      "Climate Change",
+      "Sustainability"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "research and development",
+      "crop yields",
+      "rural communities",
+      "smallholder farmers",
+      "local farmers",
+      "sustainable farming practices",
+      "sustainable development goals",
+      "climate change mitigation"
+    ],
+    "relations": {
+      "climate-smart agriculture": [
+        {
+          "Relation": "implements",
+          "Object": "sustainable farming practices",
+          "Description": "Climate-smart agriculture implements sustainable farming practices that reduce greenhouse gas emissions and promote climate resilience.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Climate-smart agriculture funds research and development projects to improve agricultural practices and technologies for climate adaptation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "climate change mitigation",
+          "Description": "Climate-smart agriculture focuses on climate change mitigation by implementing practices that reduce carbon emissions and enhance carbon sequestration.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "rural communities",
+          "Description": "Climate-smart agriculture is implemented in rural communities to improve food security, livelihoods, and resilience to climate impacts.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "local farmers",
+          "Description": "Climate-smart agriculture partners with local farmers to promote the adoption of sustainable and climate-resilient farming practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "sustainable development goals",
+          "Description": "Climate-smart agriculture contributes to the achievement of sustainable development goals, particularly those related to food security, poverty reduction, and climate action.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "crop yields",
+          "Description": "Climate-smart agriculture monitors crop yields to assess the effectiveness of sustainable farming practices and identify areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "smallholder farmers",
+          "Description": "Climate-smart agriculture targets smallholder farmers to provide them with the knowledge, resources, and support needed to adopt climate-resilient farming practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

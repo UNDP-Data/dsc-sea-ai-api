@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "biofuels",
+    "Description": "Biofuels are fuels produced from biomass, such as ethanol or biodiesel, that can be used as alternatives to fossil fuels.",
+    "Category": "Technology",
+    "Tags": [
+      "Renewable Energy",
+      "Transportation"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Environmental Impact",
+      "Energy Efficiency Policy",
+      "Reducing Carbon Emissions",
+      "Transportation Sector",
+      "Renewable Energy Companies",
+      "Energy Security",
+      "Research and Development",
+      "Renewable Energy Goals"
+    ],
+    "relations": {
+      "biofuels": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Biofuels are implemented as part of the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Investment in biofuels is funded by the Research and Development department to support the development of sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Reducing Carbon Emissions",
+          "Description": "The use of biofuels focuses on reducing carbon emissions and mitigating the impact of fossil fuels on climate change.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Transportation Sector",
+          "Description": "Biofuels are used as an alternative fuel source in the transportation sector to reduce reliance on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Renewable Energy Companies",
+          "Description": "Biofuel producers partner with renewable energy companies to enhance the production and distribution of biofuels.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Security",
+          "Description": "The use of biofuels contributes to energy security by diversifying the energy sources and reducing dependence on imported fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Environmental Impact",
+          "Description": "The environmental impact of biofuels is monitored to ensure sustainable production and minimize negative effects on ecosystems.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Goals",
+          "Description": "Biofuels are targeted to contribute to the achievement of renewable energy goals and reduce greenhouse gas emissions.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

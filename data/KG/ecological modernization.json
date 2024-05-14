@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "ecological modernization",
+    "Description": "Ecological modernization refers to the process of integrating ecological principles and practices into modernization efforts.",
+    "Category": "Strategy",
+    "Tags": [
+      "Ecological Modernization",
+      "Strategy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Generation",
+      "Clean Energy Companies",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Renewable Energy Research",
+      "Energy Consumption",
+      "Circular Economy",
+      "Sustainable Energy Transition"
+    ],
+    "relations": {
+      "ecological modernization": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Ecological modernization implements energy efficiency policies that promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Research",
+          "Description": "Ecological modernization funds research on renewable energy technologies to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Circular Economy",
+          "Description": "Ecological modernization focuses on promoting a circular economy that minimizes waste and maximizes resource efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Transition",
+          "Description": "Ecological modernization plays a crucial role in the sustainable energy transition by promoting renewable energy and sustainable practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Clean Energy Companies",
+          "Description": "Ecological modernization partners with clean energy companies to accelerate the adoption of sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Ecological modernization contributes to climate change mitigation efforts by promoting sustainable energy practices and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Ecological modernization monitors energy consumption patterns to identify areas for improvement and promote energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Generation",
+          "Description": "Ecological modernization targets increased renewable energy generation to reduce reliance on fossil fuels and promote sustainable energy sources.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

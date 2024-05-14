@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "energy scenario analysis",
+    "Description": "Analysis of different scenarios related to energy",
+    "Category": "Policy",
+    "Tags": [
+      "Energy",
+      "Scenario",
+      "Analysis"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Academic Institutions",
+      "Climate Change Mitigation",
+      "Renewable Energy Research",
+      "Renewable Energy Deployment",
+      "Building Standards",
+      "Energy Consumption",
+      "Energy Transition Strategies",
+      "Energy Policy"
+    ],
+    "relations": {
+      "energy scenario analysis": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy scenario analysis implements building standards to assess the energy requirements and potential of different scenarios.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Research",
+          "Description": "Energy scenario analysis funds research on renewable energy technologies and their potential for sustainable energy production.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Transition Strategies",
+          "Description": "Energy scenario analysis focuses on developing strategies for a smooth and sustainable transition to clean energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Policy",
+          "Description": "Energy scenario analysis is an integral part of energy policy formulation to ensure informed decision-making.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Academic Institutions",
+          "Description": "Energy scenario analysis partners with academic institutions to leverage their expertise in energy research and analysis.",
+          "Importance": 2
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy scenario analysis contributes to climate change mitigation efforts by identifying sustainable energy options and their impact on emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy scenario analysis monitors energy consumption patterns to identify areas for improvement and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Deployment",
+          "Description": "Energy scenario analysis sets targets for renewable energy deployment based on the analysis of different energy scenarios.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access",
+          "Description": "Energy scenario analysis addresses the challenge of ensuring universal energy access through the identification of sustainable energy solutions.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

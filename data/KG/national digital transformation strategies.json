@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "national digital transformation strategies",
+    "Description": "Strategies developed by governments to guide the digital transformation of their countries.",
+    "Category": "Strategy",
+    "Tags": [
+      "Digital Transformation",
+      "Government Policies",
+      "National Development"
+    ],
+    "Dimension": "Technology",
+    "Acronym": "NDTS",
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "national digital transformation strategies": []
+    }
+  }
+}

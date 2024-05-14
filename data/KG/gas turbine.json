@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "gas turbine",
+    "Description": "A gas turbine is a type of internal combustion engine that converts the energy from the combustion of a fuel, such as natural gas or liquid fuels, into mechanical energy.",
+    "Category": "Technology",
+    "Tags": [
+      "Power Generation",
+      "Energy Efficiency",
+      "Combustion"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "gas turbine": []
+    }
+  }
+}

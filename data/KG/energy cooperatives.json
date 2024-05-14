@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "energy cooperatives",
+    "Description": "Cooperatives that enable individuals or communities to collectively own and manage energy resources.",
+    "Category": "Organization",
+    "Tags": [
+      "Community Ownership",
+      "Renewable Energy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy conservation",
+      "energy experts",
+      "energy companies"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Community-Owned Renewable Energy Projects",
+      "Sustainable Development Goals",
+      "Energy Poverty",
+      "Community Development",
+      "Feed-in Tariff Programs",
+      "Renewable Energy Technologies",
+      "Local Governments",
+      "Energy Consumption"
+    ],
+    "relations": {
+      "energy cooperatives": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Energy cooperatives address energy poverty by providing affordable and sustainable energy solutions to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Energy cooperatives employ renewable energy technologies to generate clean and sustainable energy for their members.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Governments",
+          "Description": "Energy cooperatives collaborate with local governments to implement renewable energy projects and promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Community Development",
+          "Description": "Energy cooperatives support community development by investing in local renewable energy projects and creating job opportunities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Feed-in Tariff Programs",
+          "Description": "Energy cooperatives administer feed-in tariff programs to incentivize the production of renewable energy by their members.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Consumption",
+          "Description": "Energy cooperatives measure energy consumption to identify energy-saving opportunities and promote energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy cooperatives align with the Sustainable Development Goals by promoting clean energy access and reducing carbon emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Community-Owned Renewable Energy Projects",
+          "Description": "Energy cooperatives are an instance of community-owned renewable energy projects that empower communities to take control of their energy sources.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

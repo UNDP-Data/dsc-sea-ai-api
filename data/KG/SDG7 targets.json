@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "Entity": "SDG7 targets",
+    "Description": "Summary of SDG7 targets",
+    "Category": "Policy",
+    "Tags": [
+      "SDG7",
+      "Targets"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "SDG7 targets": []
+    }
+  }
+}

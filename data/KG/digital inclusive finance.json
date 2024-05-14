@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "Entity": "digital inclusive finance",
+    "Description": "Financial services that are accessible and affordable to all individuals and businesses, including those in underserved and marginalized communities.",
+    "Category": "Finance",
+    "Tags": [
+      "Financial Inclusion",
+      "Access",
+      "Affordability"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "inclusive finance"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Development Goals",
+      "Mobile Banking",
+      "Financial Inclusion",
+      "Entrepreneurship",
+      "Inclusive Finance",
+      "Social Impact Bonds",
+      "Microfinance Institutions"
+    ],
+    "relations": {
+      "digital inclusive finance": [
+        {
+          "Relation": "employs",
+          "Object": "Mobile Banking",
+          "Description": "Digital inclusive finance employs mobile banking to provide financial services to underserved populations.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Microfinance Institutions",
+          "Description": "Digital inclusive finance collaborates with microfinance institutions to expand access to financial resources for marginalized communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Entrepreneurship",
+          "Description": "Digital inclusive finance supports entrepreneurship by providing financial resources and business development services.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Social Impact Bonds",
+          "Description": "Digital inclusive finance administers social impact bonds to fund social projects and measure their outcomes.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Financial Inclusion",
+          "Description": "Digital inclusive finance measures financial inclusion by tracking the number of individuals with access to formal financial services.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Digital inclusive finance aligns with the Sustainable Development Goals to promote economic growth and reduce inequality.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Inclusive Finance",
+          "Description": "Digital inclusive finance is an instance of inclusive finance that aims to provide financial services to all segments of society.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

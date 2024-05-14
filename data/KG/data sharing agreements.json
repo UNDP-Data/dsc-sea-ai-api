@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "data sharing agreements",
+    "Description": "Agreements for sharing data",
+    "Category": "Policy",
+    "Tags": [
+      "Data Sharing",
+      "Agreements"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "climate change agreements",
+      "data sharing platforms"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Data Privacy",
+      "Data Quality",
+      "Data Sharing Policy",
+      "Data Sharing Platforms",
+      "Data Governance Principles",
+      "Open Data Initiatives",
+      "Data Analytics",
+      "Research Institutions"
+    ],
+    "relations": {
+      "data sharing agreements": [
+        {
+          "Relation": "addresses",
+          "Object": "Data Privacy",
+          "Description": "Data sharing agreements address data privacy concerns in the context of sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "employs",
+          "Object": "Data Analytics",
+          "Description": "Data sharing agreements employ data analytics techniques to derive insights for sustainable energy decision-making.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Research Institutions",
+          "Description": "Data sharing agreements collaborate with research institutions to enhance knowledge and understanding of sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Open Data Initiatives",
+          "Description": "Data sharing agreements support open data initiatives to promote transparency and accessibility in sustainable energy data.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Data Sharing Platforms",
+          "Description": "Data sharing agreements administer data sharing platforms for the exchange of sustainable energy data.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Data Quality",
+          "Description": "Data sharing agreements measure data quality to ensure the reliability and accuracy of sustainable energy data.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Data Governance Principles",
+          "Description": "Data sharing agreements align with data governance principles to ensure responsible and ethical data sharing practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Data Sharing Policy",
+          "Description": "Data sharing agreements are an instance of a data sharing policy specific to sustainable energy projects.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

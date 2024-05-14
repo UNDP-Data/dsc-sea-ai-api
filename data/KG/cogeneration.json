@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "Entity": "cogeneration",
+    "Description": "Cogeneration, also known as combined heat and power (CHP), is the simultaneous production of electricity and useful heat from the same energy source.",
+    "Category": "Technology",
+    "Tags": [
+      "Energy Efficiency",
+      "Heat and Power"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "power generation"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Industrial Sector",
+      "Research and Development",
+      "Energy Efficiency Policy",
+      "Energy Intensive Industries",
+      "Climate Change Mitigation",
+      "Energy Service Companies",
+      "Energy Consumption",
+      "Energy Security",
+      "Renewable Energy Sources"
+    ],
+    "relations": {
+      "cogeneration": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Cogeneration implements the Energy Efficiency Policy by generating electricity and useful heat simultaneously, resulting in higher energy efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Cogeneration funds research and development activities to improve the efficiency and effectiveness of cogeneration technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Sources",
+          "Description": "Cogeneration focuses on utilizing renewable energy sources such as biomass, geothermal, and solar for generating electricity and heat.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Industrial Sector",
+          "Description": "Cogeneration is commonly used in the industrial sector to meet the energy demands of manufacturing processes and reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Energy Service Companies",
+          "Description": "Cogeneration partners with Energy Service Companies to implement cogeneration projects and provide energy-efficient solutions to clients.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Cogeneration contributes to climate change mitigation by reducing greenhouse gas emissions and promoting the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Cogeneration monitors energy consumption patterns to optimize the operation and performance of cogeneration systems.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Intensive Industries",
+          "Description": "Cogeneration targets energy-intensive industries such as chemical, paper, and food processing sectors to improve energy efficiency and reduce costs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Security",
+          "Description": "Cogeneration addresses energy security concerns by providing a decentralized and reliable source of electricity and heat.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

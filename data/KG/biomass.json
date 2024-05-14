@@ -1,82 +1,79 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "Biomass": [
-                {
-                    "Relation": "Feedstock",
-                    "Object": "Wood",
-                    "Strength": "8",
-                    "Description": "Wood is a common feedstock for biomass energy production."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biofuel",
-                    "Strength": "9",
-                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biogas",
-                    "Strength": "7",
-                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
-                },
-                {
-                    "Relation": "Feedstock",
-                    "Object": "Wood",
-                    "Strength": "8",
-                    "Description": "Wood is a common feedstock for biomass energy production."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biofuel",
-                    "Strength": "9",
-                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biogas",
-                    "Strength": "7",
-                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
-                },
-                {
-                    "Relation": "Feedstock",
-                    "Object": "Wood",
-                    "Strength": "8",
-                    "Description": "Wood is a common feedstock for biomass energy production."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biofuel",
-                    "Strength": "9",
-                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biogas",
-                    "Strength": "7",
-                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
-                },
-                {
-                    "Relation": "Feedstock",
-                    "Object": "Wood",
-                    "Strength": "8",
-                    "Description": "Wood is a common feedstock for biomass energy production."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biofuel",
-                    "Strength": "9",
-                    "Description": "Biomass can be converted into biofuels, such as ethanol and biodiesel."
-                },
-                {
-                    "Relation": "Conversion",
-                    "Object": "Biogas",
-                    "Strength": "7",
-                    "Description": "Biomass can be converted into biogas through anaerobic digestion."
-                }
-            ]
+  "metadata": {
+    "Entity": "biomass",
+    "Description": "Biomass refers to organic matter, such as plants or plant-based materials, that can be used as a renewable energy source.",
+    "Category": "Technology",
+    "Tags": [
+      "Renewable Energy",
+      "Organic Matter"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Transition",
+      "Sustainable Development Goals",
+      "Renewable Energy",
+      "Agricultural Sector",
+      "Energy Generation",
+      "Climate Change Mitigation",
+      "Energy Efficiency",
+      "Research and Development"
+    ],
+    "relations": {
+      "biomass": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Generation",
+          "Description": "Biomass implements energy generation methods that utilize organic materials to produce heat, electricity, or biofuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Biomass funds research and development initiatives to improve the efficiency and sustainability of biomass energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy",
+          "Description": "Biomass focuses on renewable energy sources by utilizing organic materials to generate heat, electricity, or biofuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Transition",
+          "Description": "Biomass plays a role in the energy transition by providing a renewable alternative to fossil fuels for heat and electricity generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Agricultural Sector",
+          "Description": "Biomass partners with the agricultural sector to obtain organic materials for biomass energy production.",
+          "Importance": 2
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Biomass contributes to climate change mitigation by reducing greenhouse gas emissions through the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Efficiency",
+          "Description": "Biomass monitors energy efficiency in biomass energy production processes to optimize resource utilization and minimize waste.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Sustainable Development Goals",
+          "Description": "Biomass targets sustainable development goals by contributing to affordable and clean energy access for all.",
+          "Importance": 4
         }
+      ]
     }
+  }
 }

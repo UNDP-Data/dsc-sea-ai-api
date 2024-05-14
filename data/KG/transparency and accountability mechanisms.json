@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "transparency and accountability mechanisms",
+    "Description": "Mechanisms and practices that promote transparency and accountability in the energy sector.",
+    "Category": "Policy",
+    "Tags": [
+      "Policy",
+      "Social"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Sustainable Development Goals",
+      "Civil Society Organizations",
+      "Energy Governance",
+      "Energy Efficiency",
+      "Renewable Energy Deployment",
+      "Building Standards",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "transparency and accountability mechanisms": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Transparency and accountability mechanisms implement building standards to ensure the use of transparent and accountable practices in the construction sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Transparency and accountability mechanisms provide funding for renewable energy projects to support their development and implementation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "Transparency and accountability mechanisms focus on improving energy access for all by promoting transparency and accountability in the energy sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Governance",
+          "Description": "Transparency and accountability mechanisms play a crucial role in ensuring transparency and accountability in energy governance.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Civil Society Organizations",
+          "Description": "Transparency and accountability mechanisms partner with civil society organizations to promote transparency and accountability in the energy sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals",
+          "Description": "Transparency and accountability mechanisms contribute to the achievement of sustainable development goals by promoting transparency and accountability in the energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Efficiency",
+          "Description": "Transparency and accountability mechanisms monitor energy efficiency to ensure compliance with energy efficiency standards and targets.",
+          "Importance": 4
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Deployment",
+          "Description": "Transparency and accountability mechanisms set targets for renewable energy deployment to promote the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

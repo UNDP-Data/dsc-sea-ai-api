@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "internet of energy",
+    "Description": "A network of interconnected devices and systems that enable the efficient management and distribution of energy.",
+    "Category": "Technology",
+    "Tags": [
+      "IoT",
+      "Energy Management",
+      "Smart Grids"
+    ],
+    "Dimension": "Technology",
+    "Acronym": "IoE",
+    "Importance": 4.0,
+    "Synonyms": [
+      "internet of things",
+      "net zero energy"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Clean Energy Companies",
+      "Energy Access Initiative",
+      "Smart Grid Technology",
+      "Energy Poverty",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "internet of energy": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "The internet of energy implements the Energy Efficiency Policy to promote energy-saving practices and technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "The internet of energy funds various renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Smart Grid Technology",
+          "Description": "The internet of energy focuses on the development and implementation of smart grid technology for efficient energy distribution and management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Access Initiative",
+          "Description": "The internet of energy is involved in the Energy Access Initiative to provide affordable and reliable energy access to underserved communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Clean Energy Companies",
+          "Description": "The internet of energy partners with clean energy companies to foster innovation and collaboration in the sustainable energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "The internet of energy contributes to climate change mitigation efforts by promoting the adoption of renewable energy sources and energy-efficient practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "The internet of energy monitors energy consumption patterns to identify areas for improvement and optimize energy usage.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "The internet of energy targets energy poverty by implementing initiatives to provide affordable and reliable energy access to disadvantaged communities.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

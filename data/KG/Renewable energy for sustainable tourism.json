@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "Entity": "Renewable energy for sustainable tourism",
+    "Description": "The use of renewable energy sources to power sustainable tourism activities.",
+    "Category": "Technology",
+    "Tags": [
+      "Renewable Energy",
+      "Sustainable Tourism"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Carbon Neutrality",
+      "Local Communities",
+      "Tourism Sector",
+      "Energy Poverty",
+      "Climate Change Mitigation",
+      "Renewable Energy Technologies",
+      "Building Standards",
+      "Energy Consumption",
+      "Research and Development"
+    ],
+    "relations": {
+      "Renewable energy for sustainable tourism": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Renewable energy for sustainable tourism implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Renewable energy for sustainable tourism funds research and development projects to explore innovative solutions for sustainable energy in the tourism sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Renewable energy for sustainable tourism focuses on the development and implementation of various renewable energy technologies to reduce the carbon footprint of the tourism industry.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Tourism Sector",
+          "Description": "Renewable energy for sustainable tourism plays a crucial role in the tourism sector by providing clean and sustainable energy solutions for hotels, resorts, and other tourism facilities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Communities",
+          "Description": "Renewable energy for sustainable tourism partners with local communities to promote the adoption of renewable energy practices and empower communities to become active participants in the transition to sustainable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Renewable energy for sustainable tourism contributes to climate change mitigation efforts by reducing greenhouse gas emissions and promoting the use of clean and renewable energy sources in the tourism sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Renewable energy for sustainable tourism monitors energy consumption patterns in the tourism sector to identify opportunities for energy efficiency improvements and the integration of renewable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Carbon Neutrality",
+          "Description": "Renewable energy for sustainable tourism targets carbon neutrality by implementing renewable energy projects and adopting energy-efficient practices to minimize the carbon footprint of the tourism industry.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Renewable energy for sustainable tourism addresses energy poverty by promoting access to clean and affordable energy solutions in communities heavily reliant on tourism for their livelihoods.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

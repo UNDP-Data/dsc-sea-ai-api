@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "Entity": "marginalized communities",
+    "Description": "Groups of people who are socially, economically, or politically disadvantaged and face barriers to accessing resources and opportunities.",
+    "Category": "Social",
+    "Tags": [
+      "Marginalized",
+      "Communities",
+      "Inequality"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "rural communities"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access Challenges",
+      "Energy Access Programs",
+      "Sustainable Development Goals",
+      "Energy Poverty",
+      "Renewable Energy Technologies",
+      "Local Governments",
+      "Energy Efficiency Initiatives"
+    ],
+    "relations": {
+      "marginalized communities": [
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Marginalized communities employ renewable energy technologies to meet their energy needs and reduce reliance on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Governments",
+          "Description": "Marginalized communities collaborate with local governments to implement sustainable energy projects and policies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Access Programs",
+          "Description": "Marginalized communities support energy access programs that provide clean energy solutions and resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Initiatives",
+          "Description": "Marginalized communities administer energy efficiency initiatives to reduce energy consumption and promote sustainable practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Poverty",
+          "Description": "Marginalized communities measure energy poverty to identify areas in need of clean energy solutions and support.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Marginalized communities align their energy initiatives with the Sustainable Development Goals to promote sustainable and inclusive development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Energy Access Challenges",
+          "Description": "Marginalized communities are an instance of energy access challenges that require targeted interventions and support.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

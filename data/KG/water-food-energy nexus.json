@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "water-food-energy nexus",
+    "Description": "The interconnected relationship between water, food, and energy systems, and the need for integrated approaches to ensure sustainability and resilience.",
+    "Category": "Intersectionality",
+    "Tags": [
+      "Water Security",
+      "Food Security",
+      "Energy Security"
+    ],
+    "Dimension": "Sustainable Development",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Transition",
+      "Energy Access",
+      "Sustainable Development Goals",
+      "Government Agencies",
+      "Climate Change Mitigation",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "water-food-energy nexus": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "The water-food-energy nexus implements building standards that promote sustainable use of resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "The water-food-energy nexus funds renewable energy projects to support clean and sustainable energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "The water-food-energy nexus focuses on improving energy access for communities in need.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Development Goals",
+          "Description": "The water-food-energy nexus plays a crucial role in achieving the Sustainable Development Goals.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Government Agencies",
+          "Description": "The water-food-energy nexus partners with government agencies to implement sustainable energy policies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "The water-food-energy nexus contributes to climate change mitigation through sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "The water-food-energy nexus monitors energy consumption patterns to identify areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Transition",
+          "Description": "The water-food-energy nexus targets a transition to renewable energy sources for a sustainable future.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

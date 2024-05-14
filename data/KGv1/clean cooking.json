@@ -1,0 +1,58 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "clean cooking": [
+                {
+                    "Relation": "uses",
+                    "Object": "biomass",
+                    "Strength": "8",
+                    "Description": "Clean cooking often involves the use of biomass fuels like wood, crop residues, and animal dung."
+                },
+                {
+                    "Relation": "utilizes",
+                    "Object": "solar",
+                    "Strength": "7",
+                    "Description": "Clean cooking can be achieved through the utilization of solar cookers and solar-powered stoves."
+                },
+                {
+                    "Relation": "uses",
+                    "Object": "LPG",
+                    "Strength": "9",
+                    "Description": "Clean cooking can be achieved by using LPG (liquefied petroleum gas) as a fuel source, which produces fewer emissions compared to traditional fuels."
+                },
+                {
+                    "Relation": "involves",
+                    "Object": "improved cookstoves",
+                    "Strength": "10",
+                    "Description": "Clean cooking often involves the use of improved cookstoves that are designed to burn fuel more efficiently and reduce harmful emissions."
+                },
+                {
+                    "Relation": "uses",
+                    "Object": "biomass",
+                    "Strength": "8",
+                    "Description": "Clean cooking often involves the use of biomass fuels like wood, crop residues, and animal dung."
+                },
+                {
+                    "Relation": "utilizes",
+                    "Object": "solar",
+                    "Strength": "7",
+                    "Description": "Clean cooking can be achieved through the utilization of solar cookers and solar-powered stoves."
+                },
+                {
+                    "Relation": "uses",
+                    "Object": "LPG",
+                    "Strength": "9",
+                    "Description": "Clean cooking can be achieved by using LPG (liquefied petroleum gas) as a fuel source, which produces fewer emissions compared to traditional fuels."
+                },
+                {
+                    "Relation": "involves",
+                    "Object": "improved cookstoves",
+                    "Strength": "10",
+                    "Description": "Clean cooking often involves the use of improved cookstoves that are designed to burn fuel more efficiently and reduce harmful emissions."
+                }
+            ]
+        }
+    }
+}

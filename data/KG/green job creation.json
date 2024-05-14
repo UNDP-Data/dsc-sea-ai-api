@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "Entity": "green job creation",
+    "Description": "Green job creation refers to the process of generating employment opportunities in sectors that contribute to environmental sustainability, such as renewable energy, energy efficiency, and waste management.",
+    "Category": "Economic",
+    "Tags": [
+      "Employment",
+      "Sustainability",
+      "Green Economy"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Green Economy",
+      "Sustainable Development Goals",
+      "Job Creation Impact",
+      "Renewable Energy Workforce",
+      "Entrepreneurship",
+      "Green Job Programs",
+      "Educational Institutions"
+    ],
+    "relations": {
+      "green job creation": [
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Workforce",
+          "Description": "Green job creation employs a renewable energy workforce to support the growth of the renewable energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Educational Institutions",
+          "Description": "Green job creation collaborates with educational institutions to provide training and education for the renewable energy workforce.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Entrepreneurship",
+          "Description": "Green job creation supports entrepreneurship in the renewable energy sector by providing funding and resources for innovative startups.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Green Job Programs",
+          "Description": "Green job creation administers green job programs to facilitate the creation of employment opportunities in the renewable energy industry.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Job Creation Impact",
+          "Description": "Green job creation measures the impact of job creation in the renewable energy sector on economic growth and sustainability.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Green job creation aligns with the Sustainable Development Goals by promoting inclusive and sustainable economic growth.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Green Economy",
+          "Description": "Green job creation is an instance of the transition to a green economy that prioritizes sustainable and low-carbon industries.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

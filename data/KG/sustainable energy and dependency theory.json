@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "sustainable energy and dependency theory",
+    "Description": "Sustainable energy and dependency theory explores the relationship between sustainable energy practices and the theory of dependency.",
+    "Category": "Policy",
+    "Tags": [
+      "Sustainable Energy",
+      "Dependency Theory",
+      "Policy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Sustainable Development Goals",
+      "Academic Institutions",
+      "Energy Inequality",
+      "Community-Based Renewable Energy Projects",
+      "Energy Access Index",
+      "Renewable Energy Technologies",
+      "Energy Transition Theory"
+    ],
+    "relations": {
+      "sustainable energy and dependency theory": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Inequality",
+          "Description": "Sustainable energy and dependency theory addresses energy inequality by promoting equitable access to sustainable energy resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Sustainable energy and dependency theory employs renewable energy technologies to reduce dependence on fossil fuels and promote environmental sustainability.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Academic Institutions",
+          "Description": "Sustainable energy and dependency theory collaborates with academic institutions to conduct research and develop innovative solutions for sustainable energy development.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Community-Based Renewable Energy Projects",
+          "Description": "Sustainable energy and dependency theory supports community-based renewable energy projects to empower local communities and promote sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Sustainable energy and dependency theory administers energy efficiency programs to promote energy conservation and reduce greenhouse gas emissions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Access Index",
+          "Description": "Sustainable energy and dependency theory measures energy access index to assess the progress and impact of sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Sustainable energy and dependency theory aligns with the Sustainable Development Goals to promote sustainable energy as a key driver of social and economic progress.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Energy Transition Theory",
+          "Description": "Sustainable energy and dependency theory is an instance of energy transition theory that focuses on the role of energy in shaping socio-economic systems.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

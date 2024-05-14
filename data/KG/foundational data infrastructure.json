@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "foundational data infrastructure",
+    "Description": "Foundational data infrastructure refers to the basic infrastructure required for collecting, storing, and managing data.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Data Infrastructure",
+      "Infrastructure"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Data Governance",
+      "Energy Grid Operators",
+      "Energy Access",
+      "Digital Transformation",
+      "Energy Planning",
+      "Energy Efficiency",
+      "Energy Data Platform",
+      "Data Analytics"
+    ],
+    "relations": {
+      "foundational data infrastructure": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access",
+          "Description": "Foundational data infrastructure addresses the issue of energy access by providing accurate and reliable data on energy availability and distribution.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Data Analytics",
+          "Description": "Foundational data infrastructure employs data analytics to analyze energy-related data and derive insights for decision-making and policy formulation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Energy Grid Operators",
+          "Description": "Foundational data infrastructure collaborates with energy grid operators to ensure the efficient and reliable transmission of energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Planning",
+          "Description": "Foundational data infrastructure supports energy planning efforts by providing accurate data on energy consumption, demand, and infrastructure.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Data Platform",
+          "Description": "Foundational data infrastructure administers an energy data platform that centralizes and manages energy-related data for easy access and analysis.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Efficiency",
+          "Description": "Foundational data infrastructure measures energy efficiency by collecting and analyzing data on energy consumption and efficiency measures.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Digital Transformation",
+          "Description": "Foundational data infrastructure aligns with the digital transformation agenda to leverage technology for efficient energy data management and analysis.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Data Governance",
+          "Description": "Foundational data infrastructure is an instance of data governance that ensures the quality, integrity, and accessibility of energy-related data.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

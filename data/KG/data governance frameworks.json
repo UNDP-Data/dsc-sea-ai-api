@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "Entity": "data governance frameworks",
+    "Description": "Frameworks that define how data is collected, managed, and used within an organization or across multiple organizations.",
+    "Category": "Technology",
+    "Tags": [
+      "Policy",
+      "Technology",
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Intersectionality",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "data governance principles",
+      "data governance"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "data governance frameworks": []
+    }
+  }
+}

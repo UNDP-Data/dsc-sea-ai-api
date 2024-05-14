@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "generative AI",
+    "Description": "Artificial intelligence techniques that can generate new content, such as images, music, or text.",
+    "Category": "Technology",
+    "Tags": [
+      "AI",
+      "Machine Learning",
+      "Creative Content"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "generative AI": []
+    }
+  }
+}

@@ -1,34 +1,81 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "battery storage": [
-                {
-                    "Relation": "Enables",
-                    "Object": "Renewable energy",
-                    "Strength": "8",
-                    "Description": "Battery storage enables the integration of renewable energy sources by storing excess energy for later use."
-                },
-                {
-                    "Relation": "Supports",
-                    "Object": "Electric vehicles",
-                    "Strength": "9",
-                    "Description": "Battery storage supports the adoption of electric vehicles by providing a reliable and convenient charging infrastructure."
-                },
-                {
-                    "Relation": "Facilitates",
-                    "Object": "Grid integration",
-                    "Strength": "7",
-                    "Description": "Battery storage facilitates the integration of renewable energy into the grid by providing stability and balancing services."
-                },
-                {
-                    "Relation": "Enhances",
-                    "Object": "Smart homes",
-                    "Strength": "6",
-                    "Description": "Battery storage enhances the capabilities of smart homes by enabling energy management and backup power during outages."
-                }
-            ]
+  "metadata": {
+    "Entity": "battery storage",
+    "Description": "Storage systems that store electrical energy in batteries for later use.",
+    "Category": "Technology",
+    "Tags": [
+      "Technology",
+      "Economic"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "battery performance"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Grid Integration",
+      "Electric Vehicle Manufacturers",
+      "Energy Transition",
+      "Energy Storage Policy",
+      "Battery Performance",
+      "Energy Storage Capacity",
+      "Renewable Energy Projects",
+      "Research and Development"
+    ],
+    "relations": {
+      "battery storage": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Storage Policy",
+          "Description": "Battery storage implements the Energy Storage Policy to promote the use of energy storage technologies for grid stability and renewable energy integration.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Battery storage funds research and development activities to improve battery technologies and enhance energy storage capabilities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Grid Integration",
+          "Description": "Battery storage focuses on grid integration to enable the seamless integration of renewable energy sources and enhance grid stability.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Renewable Energy Projects",
+          "Description": "Battery storage is used in renewable energy projects to store excess energy generated from renewable sources for later use.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Electric Vehicle Manufacturers",
+          "Description": "Battery storage partners with electric vehicle manufacturers to develop advanced battery technologies for electric vehicles.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Transition",
+          "Description": "Battery storage contributes to the energy transition by enabling the integration of renewable energy sources and reducing reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Battery Performance",
+          "Description": "Battery storage monitors battery performance to ensure optimal operation and identify any issues or degradation in performance.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Storage Capacity",
+          "Description": "Battery storage targets the increase of energy storage capacity to support the growth of renewable energy and enhance grid flexibility.",
+          "Importance": 3
         }
+      ]
     }
+  }
 }
