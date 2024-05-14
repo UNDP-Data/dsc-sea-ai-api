@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "energy and modernization",
+    "Description": "Energy and modernization refers to the process of integrating modern energy systems and technologies into various sectors of society.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Energy",
+      "Modernization",
+      "Infrastructure"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy generation",
+      "grid modernization"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Transition",
+      "Energy Access",
+      "Energy Poverty",
+      "Government Agencies",
+      "Climate Change Mitigation",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "energy and modernization": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy and modernization implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy and modernization funds renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "Energy and modernization focuses on improving energy access for all, especially in underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Transition",
+          "Description": "Energy and modernization plays a crucial role in the ongoing energy transition towards renewable and sustainable energy systems.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Government Agencies",
+          "Description": "Energy and modernization partners with government agencies to develop and implement sustainable energy policies and initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy and modernization contributes to climate change mitigation efforts through the promotion of renewable energy and energy efficiency measures.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy and modernization monitors energy consumption patterns to identify areas for improvement and optimize energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Energy and modernization targets the reduction of energy poverty by increasing access to affordable and reliable energy services.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

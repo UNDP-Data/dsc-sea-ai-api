@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "smart energy contracts",
+    "Description": "Summary of smart energy contracts.",
+    "Category": "Technology",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "smart contracts"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Savings",
+      "Energy Efficiency Policy",
+      "Carbon Emission Reduction",
+      "Energy Service Companies",
+      "Demand Response Programs",
+      "Energy Market",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "smart energy contracts": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Smart energy contracts implement the policies outlined in the Energy Efficiency Policy to promote energy-saving practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Smart energy contracts provide funding for various renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Demand Response Programs",
+          "Description": "Smart energy contracts focus on the implementation of demand response programs to manage electricity consumption during peak periods.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Market",
+          "Description": "Smart energy contracts operate within the energy market to facilitate the trading and exchange of energy resources.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Energy Service Companies",
+          "Description": "Smart energy contracts form partnerships with energy service companies to provide energy management solutions to consumers.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Carbon Emission Reduction",
+          "Description": "Smart energy contracts contribute to the reduction of carbon emissions by promoting the use of renewable energy sources and energy-efficient practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Smart energy contracts monitor energy consumption patterns to identify opportunities for energy optimization and efficiency improvements.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Savings",
+          "Description": "Smart energy contracts set targets for energy savings to incentivize consumers and businesses to adopt energy-efficient practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

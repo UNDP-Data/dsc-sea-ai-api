@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "decarbonization",
+    "Description": "The process of reducing or eliminating carbon dioxide emissions from various sectors to mitigate climate change.",
+    "Category": "Technology",
+    "Tags": [
+      "Climate Change",
+      "Greenhouse Gas Emissions",
+      "Renewable Energy"
+    ],
+    "Dimension": "Climate Change",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "decentralization"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "sustainable development",
+      "carbon pricing mechanisms",
+      "carbon emissions",
+      "energy companies",
+      "energy efficiency programs",
+      "Paris Agreement",
+      "carbon footprint",
+      "clean energy technologies"
+    ],
+    "relations": {
+      "decarbonization": [
+        {
+          "Relation": "addresses",
+          "Object": "carbon emissions",
+          "Description": "Decarbonization addresses carbon emissions by implementing strategies and technologies that reduce the reliance on fossil fuels and promote renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "clean energy technologies",
+          "Description": "Decarbonization employs clean energy technologies such as solar power, wind power, and hydropower to reduce greenhouse gas emissions and transition to a low-carbon economy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "energy companies",
+          "Description": "Decarbonization collaborates with energy companies to develop and implement sustainable energy solutions that contribute to the reduction of carbon emissions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "energy efficiency programs",
+          "Description": "Decarbonization supports energy efficiency programs that aim to reduce energy consumption and promote the use of energy-saving technologies in various sectors.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "carbon pricing mechanisms",
+          "Description": "Decarbonization administers carbon pricing mechanisms to incentivize the reduction of carbon emissions and encourage the adoption of cleaner energy alternatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "carbon footprint",
+          "Description": "Decarbonization measures carbon footprint to assess the environmental impact of activities and identify areas for improvement in terms of carbon emissions reduction.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Paris Agreement",
+          "Description": "Decarbonization aligns with the goals and objectives of the Paris Agreement, aiming to limit global warming to well below 2 degrees Celsius and pursue efforts to limit the temperature increase to 1.5 degrees Celsius.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "sustainable development",
+          "Description": "Decarbonization is an instance of sustainable development, as it promotes the transition to a low-carbon economy while considering social, economic, and environmental aspects.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

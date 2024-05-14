@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "energy value chain",
+    "Description": "The sequence of activities involved in the production, transformation, distribution, and consumption of energy, including extraction, generation, transmission, and end-use.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Energy Production",
+      "Energy Distribution",
+      "Energy Consumption"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Climate Resilience",
+      "Energy Access",
+      "Government Agencies",
+      "Sustainable Energy System",
+      "Energy Performance",
+      "Energy Market",
+      "Renewable Energy Technologies"
+    ],
+    "relations": {
+      "energy value chain": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access",
+          "Description": "The energy value chain addresses energy access challenges by improving the availability and affordability of energy services.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "The energy value chain employs renewable energy technologies to promote the use of clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Government Agencies",
+          "Description": "The energy value chain collaborates with government agencies to develop and implement energy policies and regulations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Efficiency Programs",
+          "Description": "The energy value chain supports energy efficiency programs that aim to reduce energy consumption and improve energy productivity.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Market",
+          "Description": "The energy value chain administers the energy market to ensure fair competition and efficient allocation of energy resources.",
+          "Importance": 2
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Performance",
+          "Description": "The energy value chain measures energy performance to assess the efficiency and effectiveness of energy systems and processes.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Resilience",
+          "Description": "The energy value chain aligns with climate resilience strategies to ensure the reliability and sustainability of energy infrastructure.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Sustainable Energy System",
+          "Description": "The energy value chain is an instance of a sustainable energy system that integrates various energy sources and technologies.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

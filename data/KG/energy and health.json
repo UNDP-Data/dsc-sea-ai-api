@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "Entity": "energy and health",
+    "Description": "Summary of energy and health",
+    "Category": "Crisis",
+    "Tags": [
+      "Health",
+      "Energy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy inequality"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Universal Access to Energy",
+      "Ministry of Health",
+      "Research on Renewable Energy",
+      "Sustainable Energy for All Initiative",
+      "Energy Consumption Patterns",
+      "Energy Poverty",
+      "Climate Change Mitigation",
+      "Building Standards",
+      "Access to Clean Cooking Solutions"
+    ],
+    "relations": {
+      "energy and health": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research on Renewable Energy",
+          "Description": "Energy and health funds research on renewable energy to promote sustainable and clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Access to Clean Cooking Solutions",
+          "Description": "Energy and health focuses on improving access to clean cooking solutions to reduce indoor air pollution and promote better health.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy for All Initiative",
+          "Description": "Energy and health is involved in the Sustainable Energy for All Initiative to ensure universal access to sustainable energy and promote health benefits.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Ministry of Health",
+          "Description": "Energy and health partners with the Ministry of Health to integrate energy considerations into healthcare facilities and promote energy-efficient practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy and health contributes to climate change mitigation by promoting renewable energy sources and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption Patterns",
+          "Description": "Energy and health monitors energy consumption patterns to identify areas for improvement and promote energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Universal Access to Energy",
+          "Description": "Energy and health targets universal access to energy to ensure equitable distribution and improve health outcomes.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Energy and health addresses energy poverty by implementing programs and policies to provide affordable and reliable energy services.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

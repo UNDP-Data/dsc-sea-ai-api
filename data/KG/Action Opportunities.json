@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "Entity": "Action Opportunities",
+    "Description": "Summary of Action Opportunities",
+    "Category": "Strategy",
+    "Tags": [
+      "Action",
+      "Opportunities"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "livelihood opportunities"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Transition",
+      "Sustainable Development Goals",
+      "Government Agencies",
+      "Climate Change Mitigation",
+      "Renewable Energy Deployment",
+      "Energy Efficiency Measures",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "Action Opportunities": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Measures",
+          "Description": "Action Opportunities implements energy efficiency measures to reduce energy consumption and promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Action Opportunities funds renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Climate Change Mitigation",
+          "Description": "Action Opportunities focuses on climate change mitigation by promoting sustainable energy solutions and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Transition",
+          "Description": "Action Opportunities is involved in the energy transition towards sustainable and clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Government Agencies",
+          "Description": "Action Opportunities partners with government agencies to implement sustainable energy policies and initiatives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals",
+          "Description": "Action Opportunities contributes to the achievement of sustainable development goals through the promotion of sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Action Opportunities monitors energy consumption to identify areas for improvement and promote energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Deployment",
+          "Description": "Action Opportunities targets increased deployment of renewable energy technologies to accelerate the transition to clean energy.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

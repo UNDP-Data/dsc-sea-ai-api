@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "Entity": "traditional energy technologies",
+    "Description": "Technologies that have been used for energy generation and distribution for a long time.",
+    "Category": "Technology",
+    "Tags": [
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "clean energy technologies",
+      "bioenergy technology"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Clean Cooking Solutions",
+      "Environmental Sustainability",
+      "Energy Access Program",
+      "Local Communities",
+      "Energy Poverty",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Renewable Energy Research",
+      "Energy Consumption"
+    ],
+    "relations": {
+      "traditional energy technologies": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Traditional energy technologies implement the Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Research",
+          "Description": "Traditional energy technologies provide funding for research in renewable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Clean Cooking Solutions",
+          "Description": "Traditional energy technologies focus on developing clean cooking solutions to reduce indoor air pollution and improve health.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Access Program",
+          "Description": "Traditional energy technologies are included in the Energy Access Program to provide affordable and reliable energy to underserved communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Communities",
+          "Description": "Traditional energy technologies collaborate and partner with local communities to ensure their energy needs are met sustainably.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Traditional energy technologies contribute to climate change mitigation efforts by promoting the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Traditional energy technologies monitor energy consumption patterns to identify areas for improvement and energy-saving measures.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Traditional energy technologies target energy poverty by providing affordable and accessible energy solutions to marginalized communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Environmental Sustainability",
+          "Description": "Traditional energy technologies address environmental sustainability by promoting the use of clean and renewable energy sources.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

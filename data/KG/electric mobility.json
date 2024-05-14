@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "electric mobility",
+    "Description": "The use of electric vehicles and other forms of electric transportation to reduce reliance on fossil fuels.",
+    "Category": "Technology",
+    "Tags": [
+      "Clean Transportation",
+      "Emissions Reduction",
+      "Infrastructure Development"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "clean energy transition",
+      "charging infrastructure",
+      "renewable energy sources",
+      "carbon emissions",
+      "urban air pollution",
+      "government incentives",
+      "automobile manufacturers",
+      "climate change mitigation"
+    ],
+    "relations": {
+      "electric mobility": [
+        {
+          "Relation": "addresses",
+          "Object": "urban air pollution",
+          "Description": "Electric mobility addresses the issue of urban air pollution by promoting the use of electric vehicles that produce zero tailpipe emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "renewable energy sources",
+          "Description": "Electric mobility employs renewable energy sources such as solar and wind power for charging electric vehicles, reducing reliance on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "automobile manufacturers",
+          "Description": "Electric mobility collaborates with automobile manufacturers to develop and produce electric vehicles with advanced technologies and improved performance.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "charging infrastructure",
+          "Description": "Electric mobility supports the development and expansion of charging infrastructure to facilitate the widespread adoption of electric vehicles.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "government incentives",
+          "Description": "Electric mobility administers government incentives such as tax credits and subsidies to promote the purchase and use of electric vehicles.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "carbon emissions",
+          "Description": "Electric mobility measures the reduction in carbon emissions achieved through the adoption of electric vehicles as compared to conventional gasoline-powered vehicles.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "climate change mitigation",
+          "Description": "Electric mobility aligns with climate change mitigation efforts by reducing greenhouse gas emissions and promoting sustainable transportation solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "clean energy transition",
+          "Description": "Electric mobility is an instance of the clean energy transition, contributing to the shift towards cleaner and more sustainable energy sources in the transportation sector.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

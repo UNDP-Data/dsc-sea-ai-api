@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "Entity": "indigenous energy mapping",
+    "Description": "Mapping and analysis of energy resources and infrastructure in indigenous communities.",
+    "Category": "Technology",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Data Collection",
+      "Geospatial Analysis",
+      "Community-based Energy Planning",
+      "Energy Resource Potential",
+      "Indigenous Communities",
+      "Indigenous Rights",
+      "Community-led Energy Projects"
+    ],
+    "relations": {
+      "indigenous energy mapping": [
+        {
+          "Relation": "employs",
+          "Object": "Geospatial Analysis",
+          "Description": "Indigenous energy mapping employs geospatial analysis techniques to identify and map potential energy resources in indigenous territories.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Indigenous Communities",
+          "Description": "Indigenous energy mapping collaborates with indigenous communities to ensure their knowledge and perspectives are incorporated in energy planning and decision-making processes.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Community-led Energy Projects",
+          "Description": "Indigenous energy mapping supports community-led energy projects that aim to provide sustainable and locally-owned energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Data Collection",
+          "Description": "Indigenous energy mapping administers the collection and analysis of energy data to inform decision-making and policy development.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Resource Potential",
+          "Description": "Indigenous energy mapping measures the potential of energy resources in indigenous territories to identify opportunities for sustainable energy development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Indigenous Rights",
+          "Description": "Indigenous energy mapping aligns with the principles of indigenous rights, ensuring the protection and respect of indigenous communities' rights in energy planning and development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Community-based Energy Planning",
+          "Description": "Indigenous energy mapping is an instance of community-based energy planning, which involves the active participation and engagement of indigenous communities in energy decision-making processes.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

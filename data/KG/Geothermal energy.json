@@ -1,82 +1,80 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "Geothermal Energy": [
-                {
-                    "Relation": "Utilizes",
-                    "Object": "Geothermal Power Plant",
-                    "Strength": "8",
-                    "Description": "Geothermal energy is harnessed and converted into electricity through geothermal power plants."
-                },
-                {
-                    "Relation": "Utilizes",
-                    "Object": "Geothermal Heat Pump",
-                    "Strength": "7",
-                    "Description": "Geothermal energy is used for heating and cooling purposes through geothermal heat pumps."
-                },
-                {
-                    "Relation": "Originates from",
-                    "Object": "Geothermal Reservoir",
-                    "Strength": "9",
-                    "Description": "Geothermal energy is derived from the heat stored within geothermal reservoirs beneath the Earth's surface."
-                },
-                {
-                    "Relation": "Supported by",
-                    "Object": "Geothermal Energy Association",
-                    "Strength": "6",
-                    "Description": "The Geothermal Energy Association promotes the development and utilization of geothermal energy resources."
-                },
-                {
-                    "Relation": "Utilizes",
-                    "Object": "Geothermal Power Plant",
-                    "Strength": "8",
-                    "Description": "Geothermal energy is harnessed and converted into electricity through geothermal power plants."
-                },
-                {
-                    "Relation": "Utilizes",
-                    "Object": "Geothermal Heat Pump",
-                    "Strength": "7",
-                    "Description": "Geothermal energy is used for heating and cooling purposes through geothermal heat pumps."
-                },
-                {
-                    "Relation": "Originates from",
-                    "Object": "Geothermal Reservoir",
-                    "Strength": "9",
-                    "Description": "Geothermal energy is derived from the heat stored within geothermal reservoirs beneath the Earth's surface."
-                },
-                {
-                    "Relation": "Supported by",
-                    "Object": "Geothermal Energy Association",
-                    "Strength": "6",
-                    "Description": "The Geothermal Energy Association promotes the development and utilization of geothermal energy resources."
-                },
-                {
-                    "Relation": "Utilizes",
-                    "Object": "Geothermal Power Plant",
-                    "Strength": "8",
-                    "Description": "Geothermal energy is harnessed and converted into electricity through geothermal power plants."
-                },
-                {
-                    "Relation": "Utilizes",
-                    "Object": "Geothermal Heat Pump",
-                    "Strength": "7",
-                    "Description": "Geothermal energy is used for heating and cooling purposes through geothermal heat pumps."
-                },
-                {
-                    "Relation": "Originates from",
-                    "Object": "Geothermal Reservoir",
-                    "Strength": "9",
-                    "Description": "Geothermal energy is derived from the heat stored within geothermal reservoirs beneath the Earth's surface."
-                },
-                {
-                    "Relation": "Supported by",
-                    "Object": "Geothermal Energy Association",
-                    "Strength": "6",
-                    "Description": "The Geothermal Energy Association promotes the development and utilization of geothermal energy resources."
-                }
-            ]
+  "metadata": {
+    "Entity": "geothermal energy",
+    "Description": "Geothermal energy is heat derived within the sub-surface of the earth. It is a renewable source of energy that can be used for heating, cooling, and electricity generation.",
+    "Category": "Technology",
+    "Tags": [
+      "Renewable Energy",
+      "Geothermal Power",
+      "Sustainable Energy"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Research and Development",
+      "Local Communities",
+      "Energy Efficiency Policy",
+      "Energy Transition Strategy",
+      "Climate Change Mitigation",
+      "Renewable Energy Capacity",
+      "Renewable Energy Sources",
+      "Energy Production"
+    ],
+    "relations": {
+      "geothermal energy": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Geothermal energy implements Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Geothermal energy funds Research and Development to explore new technologies and improve efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Sources",
+          "Description": "Geothermal energy focuses on Renewable Energy Sources to reduce reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Transition Strategy",
+          "Description": "Geothermal energy is included in the Energy Transition Strategy to achieve a sustainable energy mix.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Communities",
+          "Description": "Geothermal energy partners with Local Communities to ensure their involvement and support in sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Geothermal energy contributes to Climate Change Mitigation by reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Production",
+          "Description": "Geothermal energy monitors Energy Production to optimize efficiency and ensure sustainable operations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Capacity",
+          "Description": "Geothermal energy targets increased Renewable Energy Capacity to meet sustainable energy goals.",
+          "Importance": 4
         }
+      ]
     }
+  }
 }

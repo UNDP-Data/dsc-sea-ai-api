@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "energy justice",
+    "Description": "Energy justice is a concept that focuses on ensuring fair and equitable access to affordable, reliable, and clean energy for all, particularly marginalized and vulnerable communities.",
+    "Category": "Social",
+    "Tags": [
+      "Equity",
+      "Access",
+      "Inclusion"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Social Justice",
+      "Energy Subsidy Programs",
+      "Equitable Energy Pricing",
+      "Energy Poverty",
+      "Community-Based Organizations",
+      "Renewable Energy Access",
+      "Energy Affordability",
+      "Social Equity"
+    ],
+    "relations": {
+      "energy justice": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Energy justice initiatives aim to address energy poverty by ensuring access to affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Equitable Energy Pricing",
+          "Description": "Energy justice employs equitable energy pricing mechanisms to ensure fair and affordable energy costs for marginalized communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Community-Based Organizations",
+          "Description": "Energy justice initiatives collaborate with community-based organizations to implement inclusive and participatory energy programs.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Access",
+          "Description": "Energy justice supports initiatives that promote equitable access to renewable energy resources, particularly in underserved areas.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Subsidy Programs",
+          "Description": "Energy justice administers energy subsidy programs to ensure that vulnerable populations have access to affordable energy services.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Affordability",
+          "Description": "Energy justice measures energy affordability to assess the accessibility of energy services for different socio-economic groups.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Social Equity",
+          "Description": "Energy justice aligns with the principle of social equity, aiming to reduce disparities in energy access and affordability.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Social Justice",
+          "Description": "Energy justice is an instance of the broader concept of social justice, focusing specifically on equitable energy distribution.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

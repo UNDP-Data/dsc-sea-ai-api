@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "Entity": "human development index",
+    "Description": "A composite statistic of life expectancy, education, and per capita income indicators, which are used to rank countries into four tiers of human development.",
+    "Category": "Policy",
+    "Tags": [
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Economic",
+    "Acronym": "HDI",
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Access to Clean Energy",
+      "International Renewable Energy Agency",
+      "Sustainable Energy Hub",
+      "Energy Poverty",
+      "Energy Efficiency Policy",
+      "Universal Energy Access",
+      "Climate Change Mitigation",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "human development index": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "The human development index implements the Energy Efficiency Policy to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "The human development index funds renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Access to Clean Energy",
+          "Description": "The human development index focuses on improving access to clean energy for all communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Hub",
+          "Description": "The human development index is a part of the Sustainable Energy Hub initiative.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "International Renewable Energy Agency",
+          "Description": "The human development index partners with the International Renewable Energy Agency to promote renewable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "The human development index contributes to climate change mitigation efforts through sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "The human development index monitors energy consumption patterns to identify areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Universal Energy Access",
+          "Description": "The human development index targets achieving universal energy access for all individuals.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "The human development index addresses energy poverty by promoting affordable and sustainable energy solutions.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

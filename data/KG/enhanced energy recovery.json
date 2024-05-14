@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "enhanced energy recovery",
+    "Description": "Enhanced energy recovery refers to technologies or processes that increase the efficiency of energy recovery from waste or other sources.",
+    "Category": "Technology",
+    "Tags": [
+      "Energy Efficiency",
+      "Waste Management"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Municipalities",
+      "Waste Management",
+      "Sustainable Development Goals",
+      "Feed-in Tariff Program",
+      "Biogas Production",
+      "Anaerobic Digestion",
+      "Circular Economy Solution",
+      "Circular Economy"
+    ],
+    "relations": {
+      "enhanced energy recovery": [
+        {
+          "Relation": "addresses",
+          "Object": "Waste Management",
+          "Description": "Enhanced energy recovery addresses waste management by utilizing waste as a resource for energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "employs",
+          "Object": "Anaerobic Digestion",
+          "Description": "Enhanced energy recovery employs anaerobic digestion technology to convert organic waste into biogas for energy production.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Municipalities",
+          "Description": "Enhanced energy recovery collaborates with municipalities to establish waste-to-energy facilities and promote sustainable waste management practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Circular Economy",
+          "Description": "Enhanced energy recovery supports the transition to a circular economy by reducing waste and maximizing resource utilization through energy recovery.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Feed-in Tariff Program",
+          "Description": "Enhanced energy recovery administers a feed-in tariff program to incentivize the generation of renewable energy from waste.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Biogas Production",
+          "Description": "Enhanced energy recovery measures biogas production to assess the efficiency and effectiveness of anaerobic digestion processes.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Enhanced energy recovery aligns with the Sustainable Development Goals by promoting sustainable waste management and renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Circular Economy Solution",
+          "Description": "Enhanced energy recovery is an instance of a circular economy solution that maximizes resource utilization and reduces environmental impact.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

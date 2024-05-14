@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "critical minerals",
+    "Description": "Minerals that are essential for various industries and have a high economic and strategic value.",
+    "Category": "Economic",
+    "Tags": [
+      "Critical Minerals",
+      "Minerals",
+      "Economic"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Policy",
+      "Battery Manufacturing",
+      "Mining Companies",
+      "Renewable Energy Technologies",
+      "Supply Chain",
+      "Clean Energy Transition",
+      "Reducing Dependency on Fossil Fuels",
+      "Research and Development"
+    ],
+    "relations": {
+      "critical minerals": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Critical minerals are implemented in the Energy Efficiency Policy to ensure the use of sustainable and efficient energy resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Critical minerals are funded for research and development to explore their potential in sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Critical minerals play a crucial role in the focus on developing and advancing renewable energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Battery Manufacturing",
+          "Description": "Critical minerals are used in battery manufacturing for energy storage solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Mining Companies",
+          "Description": "Critical minerals partner with mining companies to ensure responsible and sustainable extraction practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Clean Energy Transition",
+          "Description": "Critical minerals contribute to the clean energy transition by enabling the development of renewable energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Supply Chain",
+          "Description": "Critical minerals are monitored throughout the supply chain to ensure ethical sourcing and sustainable practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Reducing Dependency on Fossil Fuels",
+          "Description": "Critical minerals are targeted for reducing dependency on fossil fuels and promoting sustainable energy sources.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

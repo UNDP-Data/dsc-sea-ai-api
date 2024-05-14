@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "Entity": "Energy For Development",
+    "Description": null,
+    "Category": null,
+    "Tags": null,
+    "Dimension": null,
+    "Acronym": null,
+    "Importance": null,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Capacity Building",
+      "Sustainable Development Goals",
+      "Local Communities",
+      "Energy Poverty",
+      "Renewable Energy Technologies",
+      "Energy Consumption",
+      "Renewable Energy Organization"
+    ],
+    "relations": {
+      "Energy For Development": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Energy For Development addresses energy poverty by promoting access to affordable and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Energy For Development employs renewable energy technologies to provide clean and sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Communities",
+          "Description": "Energy For Development collaborates with local communities to implement sustainable energy projects and initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Capacity Building",
+          "Description": "Energy For Development supports capacity building efforts to enhance knowledge and skills in sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Energy For Development administers energy efficiency programs to promote energy conservation and reduce carbon emissions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Consumption",
+          "Description": "Energy For Development measures energy consumption to assess the impact of sustainable energy initiatives and identify areas for improvement.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy For Development aligns with the Sustainable Development Goals to contribute to the global agenda for sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Renewable Energy Organization",
+          "Description": "Energy For Development is an instance of a renewable energy organization that promotes sustainable energy practices.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

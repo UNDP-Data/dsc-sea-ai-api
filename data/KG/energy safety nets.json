@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "energy safety nets",
+    "Description": "Summary of energy safety nets",
+    "Category": "Policy",
+    "Tags": [
+      "Energy",
+      "Safety",
+      "Social"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "energy safety nets": []
+    }
+  }
+}

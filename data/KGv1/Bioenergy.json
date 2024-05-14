@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "Bioenergy": [
+                {
+                    "Relation": "Derived from",
+                    "Object": "Biomass",
+                    "Strength": "8",
+                    "Description": "Bioenergy is produced by converting biomass into usable energy through various processes such as combustion or anaerobic digestion."
+                },
+                {
+                    "Relation": "Used as",
+                    "Object": "Biofuel",
+                    "Strength": "9",
+                    "Description": "Bioenergy is commonly used as a biofuel, which is a type of alternative fuel derived from renewable biological sources."
+                },
+                {
+                    "Relation": "Produced from",
+                    "Object": "Biogas",
+                    "Strength": "7",
+                    "Description": "Biogas, which is produced through the anaerobic digestion of organic matter, can be further processed to generate bioenergy."
+                },
+                {
+                    "Relation": "Used in production of",
+                    "Object": "Bioethanol",
+                    "Strength": "6",
+                    "Description": "Bioenergy is utilized in the production of bioethanol, a renewable fuel commonly used as a gasoline additive or standalone fuel."
+                }
+            ]
+        }
+    }
+}

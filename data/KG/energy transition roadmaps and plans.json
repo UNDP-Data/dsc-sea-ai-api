@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "energy transition roadmaps and plans",
+    "Description": "Strategic plans and roadmaps for transitioning to a sustainable energy system.",
+    "Category": "Strategy",
+    "Tags": [
+      "Policy",
+      "Technology",
+      "Social"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Collaboration with Stakeholders",
+      "International Organizations",
+      "Climate Change Mitigation",
+      "Energy Efficiency",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Renewable Energy Capacity"
+    ],
+    "relations": {
+      "energy transition roadmaps and plans": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy transition roadmaps and plans implement rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy transition roadmaps and plans provide funding for renewable energy projects to accelerate the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Efficiency",
+          "Description": "Energy transition roadmaps and plans focus on improving energy efficiency to reduce energy consumption and greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Collaboration with Stakeholders",
+          "Description": "Energy transition roadmaps and plans are developed in collaboration with various stakeholders including government agencies, industry experts, and civil society organizations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "International Organizations",
+          "Description": "Energy transition roadmaps and plans partner with international organizations to exchange knowledge, share best practices, and collaborate on sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy transition roadmaps and plans contribute to climate change mitigation by promoting the use of renewable energy sources and reducing reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy transition roadmaps and plans monitor energy consumption patterns to identify areas of improvement and track progress towards sustainable energy goals.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Capacity",
+          "Description": "Energy transition roadmaps and plans set targets for increasing renewable energy capacity to ensure a sustainable and clean energy future.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

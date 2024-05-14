@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "Entity": "foundational energy infrastructure",
+    "Description": "Foundational energy infrastructure refers to the essential physical structures and systems that support the production, distribution, and consumption of energy.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Energy Systems",
+      "Infrastructure"
+    ],
+    "Dimension": "Infrastructure",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "renewable energy infrastructure"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access Initiative",
+      "Grid Modernization",
+      "Private Sector Companies",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Energy Efficiency",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "foundational energy infrastructure": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Foundational energy infrastructure implements energy efficiency policies that promote the use of energy-saving technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Foundational energy infrastructure funds renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Grid Modernization",
+          "Description": "Foundational energy infrastructure focuses on grid modernization to improve the efficiency and reliability of energy distribution.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Access Initiative",
+          "Description": "Foundational energy infrastructure is involved in the Energy Access Initiative to provide reliable and affordable energy to underserved communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector Companies",
+          "Description": "Foundational energy infrastructure partners with private sector companies to leverage their expertise and resources in sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Foundational energy infrastructure contributes to climate change mitigation efforts by promoting the use of clean and renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Foundational energy infrastructure monitors energy consumption patterns to identify areas for improvement and optimize energy usage.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Foundational energy infrastructure sets targets for energy efficiency to drive the adoption of energy-saving technologies and practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

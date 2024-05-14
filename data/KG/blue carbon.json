@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "blue carbon",
+    "Description": "Blue carbon refers to the carbon stored in coastal and marine ecosystems, such as mangroves, seagrasses, and salt marshes.",
+    "Category": "Policy",
+    "Tags": [
+      "Blue Carbon",
+      "Coastal Ecosystems",
+      "Policy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "blue carbon funds"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Natural Climate Solution",
+      "Coastal Ecosystem Conservation",
+      "Paris Agreement",
+      "Sustainable Fisheries",
+      "Carbon Sequestration",
+      "Blue Carbon Funds",
+      "Carbon Storage Capacity",
+      "Marine Conservation Organizations"
+    ],
+    "relations": {
+      "blue carbon": [
+        {
+          "Relation": "addresses",
+          "Object": "Coastal Ecosystem Conservation",
+          "Description": "Blue carbon addresses the conservation of coastal ecosystems to protect and restore carbon-rich habitats and mitigate climate change.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Carbon Sequestration",
+          "Description": "Blue carbon employs carbon sequestration techniques to capture and store carbon dioxide from the atmosphere, reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Marine Conservation Organizations",
+          "Description": "Blue carbon collaborates with marine conservation organizations to protect and restore coastal ecosystems for climate change mitigation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Sustainable Fisheries",
+          "Description": "Blue carbon supports sustainable fisheries practices that promote the conservation of coastal ecosystems and reduce carbon emissions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Blue Carbon Funds",
+          "Description": "Blue carbon administers blue carbon funds to finance projects that conserve and restore coastal ecosystems for climate change mitigation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Carbon Storage Capacity",
+          "Description": "Blue carbon measures the carbon storage capacity of coastal ecosystems to assess their role in mitigating climate change.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Paris Agreement",
+          "Description": "Blue carbon aligns with the goals and objectives of the Paris Agreement to combat climate change and promote sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Natural Climate Solution",
+          "Description": "Blue carbon is an instance of a natural climate solution that utilizes coastal ecosystems to sequester carbon and mitigate climate change.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

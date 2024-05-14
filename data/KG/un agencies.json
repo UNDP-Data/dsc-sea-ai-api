@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "Entity": "un agencies",
+    "Description": "Organizations that are part of the United Nations system and work on various global issues.",
+    "Category": "Organization",
+    "Tags": [
+      "Policy",
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Performance",
+      "Energy Access Programs",
+      "Renewable Energy Experts",
+      "Sustainable Development Goals",
+      "International Organizations",
+      "Civil Society Organizations",
+      "Climate Finance"
+    ],
+    "relations": {
+      "un agencies": [
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Experts",
+          "Description": "UN agencies employ renewable energy experts to provide technical assistance and expertise in promoting sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Civil Society Organizations",
+          "Description": "UN agencies collaborate with civil society organizations to foster partnerships and promote sustainable energy initiatives at the grassroots level.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Access Programs",
+          "Description": "UN agencies support energy access programs to ensure that underserved communities have access to clean and affordable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Climate Finance",
+          "Description": "UN agencies administer climate finance to support sustainable energy projects and initiatives in developing countries.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Efficiency Performance",
+          "Description": "UN agencies measure the energy efficiency performance of countries and provide recommendations for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "UN agencies align their efforts in the sustainable energy sector with the Sustainable Development Goals to promote global sustainability.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "International Organizations",
+          "Description": "UN agencies are an instance of international organizations that work towards promoting sustainable energy practices and addressing global challenges.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

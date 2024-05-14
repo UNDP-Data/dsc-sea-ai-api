@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "hydrogen for development",
+    "Description": "The use of hydrogen as a clean and sustainable energy source for various sectors to support economic development and decarbonization.",
+    "Category": "Technology",
+    "Tags": [
+      "Hydrogen Energy",
+      "Clean Energy",
+      "Decarbonization"
+    ],
+    "Dimension": "Sustainable Development",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Fuel Cell Technology",
+      "Climate Change Goals",
+      "Clean Energy Initiative",
+      "Carbon Emissions",
+      "Hydrogen Infrastructure",
+      "Renewable Energy Integration",
+      "Energy Storage",
+      "Research Institutions"
+    ],
+    "relations": {
+      "hydrogen for development": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Storage",
+          "Description": "Hydrogen for development addresses the need for efficient energy storage solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Fuel Cell Technology",
+          "Description": "Hydrogen for development employs fuel cell technology for clean and sustainable energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Research Institutions",
+          "Description": "Hydrogen for development collaborates with research institutions to advance hydrogen energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Integration",
+          "Description": "Hydrogen for development supports the integration of renewable energy sources into existing energy systems.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Hydrogen Infrastructure",
+          "Description": "Hydrogen for development administers the development of hydrogen infrastructure for widespread adoption.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Carbon Emissions",
+          "Description": "Hydrogen for development measures carbon emissions reduction achieved through hydrogen energy utilization.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Change Goals",
+          "Description": "Hydrogen for development aligns with global climate change goals for a sustainable future.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Clean Energy Initiative",
+          "Description": "Hydrogen for development is an instance of a clean energy initiative promoting hydrogen energy solutions.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

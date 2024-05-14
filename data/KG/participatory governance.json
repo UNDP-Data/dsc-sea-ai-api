@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "participatory governance",
+    "Description": "Participatory governance is an approach to decision-making and policy development that involves the active participation of citizens and stakeholders in the processes of governance.",
+    "Category": "Policy",
+    "Tags": [
+      "Citizen Engagement",
+      "Collaboration",
+      "Transparency"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Capacity Building",
+      "Democratic Governance",
+      "Multi-Stakeholder Approach",
+      "Public Consultations",
+      "Local Communities",
+      "Good Governance Principles",
+      "Social Inclusion",
+      "Citizen Engagement"
+    ],
+    "relations": {
+      "participatory governance": [
+        {
+          "Relation": "addresses",
+          "Object": "Citizen Engagement",
+          "Description": "Participatory governance addresses the need for citizen engagement in decision-making processes to ensure inclusivity and transparency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Multi-Stakeholder Approach",
+          "Description": "Participatory governance employs a multi-stakeholder approach, involving various actors such as government, civil society, and private sector, in decision-making and policy implementation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Communities",
+          "Description": "Participatory governance collaborates with local communities to ensure their active participation in decision-making processes and the implementation of sustainable energy initiatives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Capacity Building",
+          "Description": "Participatory governance supports capacity building initiatives to empower individuals and organizations to actively engage in sustainable energy decision-making processes.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Public Consultations",
+          "Description": "Participatory governance administers public consultations to gather input and feedback from stakeholders on sustainable energy policies and projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Social Inclusion",
+          "Description": "Participatory governance measures the level of social inclusion in decision-making processes to ensure marginalized groups are represented and their needs are addressed.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Good Governance Principles",
+          "Description": "Participatory governance aligns with good governance principles, such as transparency, accountability, and responsiveness, to ensure effective and inclusive decision-making.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Democratic Governance",
+          "Description": "Participatory governance is an instance of democratic governance, where citizens have the right to participate in decision-making processes that affect their lives.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

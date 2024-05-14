@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "Entity": "carbon-netural fuel",
+    "Description": null,
+    "Category": null,
+    "Tags": null,
+    "Dimension": null,
+    "Acronym": null,
+    "Importance": null,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "carbon-netural fuel": []
+    }
+  }
+}

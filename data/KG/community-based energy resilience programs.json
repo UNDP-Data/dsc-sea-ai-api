@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "Entity": "community-based energy resilience programs",
+    "Description": "Summary of community-based energy resilience programs.",
+    "Category": "Project",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "community-based climate resilience projects",
+      "community-based energy planning"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "community-based energy resilience programs": []
+    }
+  }
+}

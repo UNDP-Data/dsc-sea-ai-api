@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "cybersecurity policy",
+    "Description": "A set of rules, guidelines, and measures designed to protect computer systems, networks, and data from unauthorized access, use, disclosure, disruption, modification, or destruction.",
+    "Category": "Policy",
+    "Tags": [
+      "Security",
+      "Data Protection",
+      "Risk Management"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "data sovereignty"
+    ],
+    "relations": {
+      "cybersecurity policy": [
+        {
+          "Relation": "implements",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy implements measures to ensure data sovereignty and protect sensitive information from unauthorized access.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy allocates funds to support initiatives related to data sovereignty and cybersecurity.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy focuses on ensuring data sovereignty by implementing robust security measures and data protection protocols.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy plays a crucial role in maintaining data sovereignty by establishing guidelines and regulations for data protection.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy partners with organizations and stakeholders to enhance data sovereignty and collaborate on cybersecurity initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy contributes to the achievement of data sovereignty by implementing measures to protect data from cyber threats and breaches.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy monitors the implementation of data sovereignty measures and assesses the effectiveness of cybersecurity protocols.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy sets targets and goals to improve data sovereignty and enhance cybersecurity capabilities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "data sovereignty",
+          "Description": "The cybersecurity policy addresses the challenges and risks associated with data sovereignty by implementing appropriate security measures.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "Entity": "biodigestion",
+    "Description": "Biodigestion is the process of breaking down organic materials, such as food waste or agricultural residues, to produce biogas.",
+    "Category": "Technology",
+    "Tags": [
+      "Organic Waste",
+      "Biogas"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "anaerobic digestion"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Municipalities",
+      "Bioenergy Technology",
+      "Waste Management",
+      "Methane Emissions",
+      "Anaerobic Digestion",
+      "Biogas Incentive Programs",
+      "Circular Economy",
+      "Climate Action"
+    ],
+    "relations": {
+      "biodigestion": [
+        {
+          "Relation": "addresses",
+          "Object": "Waste Management",
+          "Description": "Biodigestion addresses waste management challenges by converting organic waste into biogas and organic fertilizers.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Anaerobic Digestion",
+          "Description": "Biodigestion employs anaerobic digestion processes to break down organic waste and produce biogas.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Municipalities",
+          "Description": "Biodigestion collaborates with municipalities to implement biogas plants for organic waste treatment and energy generation.",
+          "Importance": 2
+        },
+        {
+          "Relation": "supports",
+          "Object": "Circular Economy",
+          "Description": "Biodigestion supports the circular economy by converting organic waste into valuable resources and reducing reliance on landfill disposal.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Biogas Incentive Programs",
+          "Description": "Biodigestion administers biogas incentive programs to promote the adoption of biodigestion technologies for organic waste management.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Methane Emissions",
+          "Description": "Biodigestion measures methane emissions from organic waste and reduces them through the capture and utilization of biogas.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Action",
+          "Description": "Biodigestion aligns with climate action goals by reducing methane emissions and promoting renewable energy generation from organic waste.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Bioenergy Technology",
+          "Description": "Biodigestion is an instance of bioenergy technology that converts organic waste into biogas through anaerobic digestion.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "Entity": "energy for smallholder farmers",
+    "Description": "Access to affordable and sustainable energy solutions for smallholder farmers to improve agricultural productivity and livelihoods.",
+    "Category": "Social",
+    "Tags": [
+      "Agriculture",
+      "Rural Development",
+      "Energy Access"
+    ],
+    "Dimension": "Sustainable Development",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "smallholder farmers"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Change",
+      "Solar Energy",
+      "Energy Poverty",
+      "Local NGOs",
+      "Food Security",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Rural Areas"
+    ],
+    "relations": {
+      "energy for smallholder farmers": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy for smallholder farmers implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy for smallholder farmers funds renewable energy projects to provide sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Solar Energy",
+          "Description": "Energy for smallholder farmers focuses on solar energy as a key source of sustainable energy for agricultural activities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Rural Areas",
+          "Description": "Energy for smallholder farmers is implemented in rural areas to support agricultural activities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local NGOs",
+          "Description": "Energy for smallholder farmers partners with local NGOs to implement sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Food Security",
+          "Description": "Energy for smallholder farmers contributes to food security by providing reliable and sustainable energy for agricultural activities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy for smallholder farmers monitors energy consumption to ensure efficient use of resources.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Energy for smallholder farmers targets energy poverty by providing access to affordable and sustainable energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change",
+          "Description": "Energy for smallholder farmers addresses climate change by promoting the use of renewable energy sources.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "AI for smart grid optimization",
+    "Description": "The application of artificial intelligence techniques to optimize the operation and management of smart grids.",
+    "Category": "Technology",
+    "Tags": [
+      "Artificial Intelligence",
+      "Smart Grids",
+      "Energy Optimization"
+    ],
+    "Dimension": "Technology",
+    "Acronym": "AI-SGO",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "AI for smart grid optimization": []
+    }
+  }
+}

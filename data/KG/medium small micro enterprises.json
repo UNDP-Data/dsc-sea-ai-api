@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "medium small micro enterprises",
+    "Description": "Small businesses that have a limited number of employees and operate at a local or regional level.",
+    "Category": "Economic",
+    "Tags": [
+      "MSMEs",
+      "Small Businesses",
+      "Entrepreneurship"
+    ],
+    "Dimension": "Economic",
+    "Acronym": "MSMEs",
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "financial institutions",
+      "inclusive business models",
+      "economic impact",
+      "local communities",
+      "women entrepreneurs",
+      "microfinance programs",
+      "youth unemployment",
+      "sustainable development goals"
+    ],
+    "relations": {
+      "medium small micro enterprises": [
+        {
+          "Relation": "addresses",
+          "Object": "youth unemployment",
+          "Description": "Medium small micro enterprises address youth unemployment by creating job opportunities and promoting entrepreneurship.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "local communities",
+          "Description": "Medium small micro enterprises employ local communities, contributing to local economic development and poverty reduction.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "financial institutions",
+          "Description": "Medium small micro enterprises collaborate with financial institutions to access capital and financial services for business growth.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "women entrepreneurs",
+          "Description": "Medium small micro enterprises support women entrepreneurs by providing training, mentorship, and access to markets.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "microfinance programs",
+          "Description": "Medium small micro enterprises administer microfinance programs to enable access to credit and financial resources for small businesses.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "economic impact",
+          "Description": "Medium small micro enterprises measure their economic impact to assess their contribution to local and national economies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "sustainable development goals",
+          "Description": "Medium small micro enterprises align with the sustainable development goals by promoting inclusive and sustainable economic growth.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "inclusive business models",
+          "Description": "Medium small micro enterprises are an instance of inclusive business models that prioritize social and environmental impact alongside financial returns.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

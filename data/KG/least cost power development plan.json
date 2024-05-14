@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "least cost power development plan",
+    "Description": "A least cost power development plan is a strategic plan that aims to identify the most cost-effective and efficient mix of power generation technologies and resources to meet the energy demand of a country or region.",
+    "Category": "Policy",
+    "Tags": [
+      "Power Generation",
+      "Energy Planning",
+      "Cost Optimization"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "least cost power development plan": []
+    }
+  }
+}

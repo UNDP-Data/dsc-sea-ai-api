@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "COP28 Targets",
+    "Description": "Summary of COP28 Targets",
+    "Category": "Policy",
+    "Tags": [
+      "COP28",
+      "Targets"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Change Adaptation",
+      "International Organizations",
+      "Climate Finance",
+      "Paris Agreement",
+      "Carbon Footprint",
+      "Renewable Energy Solutions",
+      "Global Climate Conference",
+      "Clean Technology Innovation"
+    ],
+    "relations": {
+      "COP28 Targets": [
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change Adaptation",
+          "Description": "COP28 Targets addresses climate change adaptation by setting targets and goals for resilience-building measures.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Solutions",
+          "Description": "COP28 Targets employs renewable energy solutions to reduce greenhouse gas emissions and mitigate climate change.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "International Organizations",
+          "Description": "COP28 Targets collaborates with international organizations to coordinate efforts in addressing climate change and promoting sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Clean Technology Innovation",
+          "Description": "COP28 Targets supports the development and adoption of clean technology innovations for sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Climate Finance",
+          "Description": "COP28 Targets administers climate finance to support projects and initiatives related to sustainable energy and climate change mitigation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Carbon Footprint",
+          "Description": "COP28 Targets measures carbon footprint to assess the impact of activities and identify opportunities for emissions reduction.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Paris Agreement",
+          "Description": "COP28 Targets aligns with the goals and objectives of the Paris Agreement in addressing climate change and promoting sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Global Climate Conference",
+          "Description": "COP28 Targets is an instance of a global climate conference where countries come together to discuss and negotiate climate-related issues.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

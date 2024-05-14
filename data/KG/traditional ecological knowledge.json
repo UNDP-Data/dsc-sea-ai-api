@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "traditional ecological knowledge",
+    "Description": "The knowledge, practices, and beliefs of indigenous communities regarding the environment and natural resources.",
+    "Category": "Social",
+    "Tags": [
+      "Traditional Ecological Knowledge",
+      "Indigenous",
+      "Environment"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "traditional knowledge"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Change Adaptation",
+      "Community-based Natural Resource Management",
+      "Ecosystem Health",
+      "Scientific Research Institutions",
+      "Biodiversity Conservation",
+      "Intangible Cultural Heritage",
+      "Indigenous Rights",
+      "Agroecology"
+    ],
+    "relations": {
+      "traditional ecological knowledge": [
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change Adaptation",
+          "Description": "Traditional ecological knowledge addresses climate change adaptation by providing valuable insights and practices for sustainable resource management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Agroecology",
+          "Description": "Traditional ecological knowledge employs agroecology principles to promote sustainable and resilient agricultural practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Scientific Research Institutions",
+          "Description": "Traditional ecological knowledge collaborates with scientific research institutions to integrate traditional and scientific knowledge for sustainable resource management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Biodiversity Conservation",
+          "Description": "Traditional ecological knowledge supports biodiversity conservation efforts by providing insights into the relationships between species and ecosystems.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Community-based Natural Resource Management",
+          "Description": "Traditional ecological knowledge administers community-based natural resource management initiatives that promote sustainable livelihoods and conservation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Ecosystem Health",
+          "Description": "Traditional ecological knowledge measures ecosystem health by assessing indicators such as species diversity, water quality, and soil fertility.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Indigenous Rights",
+          "Description": "Traditional ecological knowledge aligns with indigenous rights by recognizing the importance of indigenous peoples' knowledge and practices in sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Intangible Cultural Heritage",
+          "Description": "Traditional ecological knowledge is recognized as an instance of intangible cultural heritage by UNESCO.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

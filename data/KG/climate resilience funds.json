@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "Entity": "climate resilience funds",
+    "Description": "Climate resilience funds are financial mechanisms that provide funding for projects and initiatives aimed at enhancing the resilience of communities, ecosystems, and infrastructure to climate change impacts.",
+    "Category": "Finance",
+    "Tags": [
+      "Resilience",
+      "Adaptation",
+      "Climate Change"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "climate resilience",
+      "climate resilience fund",
+      "climate resilience index"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Adaptation Strategies",
+      "Climate Change Impacts",
+      "Climate Resilience Index",
+      "Climate Finance",
+      "Paris Agreement",
+      "Climate Resilience Fund",
+      "National Disaster Management Agencies",
+      "Community-based Climate Resilience Projects"
+    ],
+    "relations": {
+      "climate resilience funds": [
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change Impacts",
+          "Description": "climate resilience funds address climate change impacts by supporting projects that enhance resilience to climate-related risks.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Climate Adaptation Strategies",
+          "Description": "climate resilience funds employ climate adaptation strategies to build resilience and mitigate the impacts of climate change.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "National Disaster Management Agencies",
+          "Description": "climate resilience funds collaborate with National Disaster Management Agencies to enhance disaster preparedness and response in the face of climate change.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Community-based Climate Resilience Projects",
+          "Description": "climate resilience funds support community-based climate resilience projects to empower local communities in adapting to climate change.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Climate Resilience Fund",
+          "Description": "climate resilience funds administer the Climate Resilience Fund to provide financial support for climate resilience initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Climate Resilience Index",
+          "Description": "climate resilience funds measure climate resilience using the Climate Resilience Index to assess vulnerability and adaptive capacity.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Paris Agreement",
+          "Description": "climate resilience funds align with the goals and objectives of the Paris Agreement to combat climate change and enhance resilience.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Climate Finance",
+          "Description": "climate resilience funds are an instance of climate finance, providing financial resources for climate resilience initiatives.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

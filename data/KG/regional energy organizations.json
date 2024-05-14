@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "Entity": "regional energy organizations",
+    "Description": "Organizations that focus on energy issues within a specific region.",
+    "Category": "Organization",
+    "Tags": [
+      "Policy",
+      "Technology",
+      "Infrastructure"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "international organizations",
+      "environmental organizations",
+      "renewable energy organization",
+      "geological survey organizations"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Transition",
+      "Energy Access",
+      "Energy Poverty",
+      "Government Agencies",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "regional energy organizations": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Regional energy organizations implement energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Regional energy organizations provide funding for renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "Regional energy organizations focus on improving energy access in underserved areas to ensure equitable distribution of sustainable energy resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Government Agencies",
+          "Description": "Regional energy organizations collaborate and partner with government agencies to develop and implement sustainable energy policies and initiatives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Regional energy organizations contribute to climate change mitigation efforts by promoting the use of renewable energy sources and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Regional energy organizations monitor energy consumption patterns to identify areas for improvement and develop strategies for energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Regional energy organizations set targets to address energy poverty and ensure access to affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Transition",
+          "Description": "Regional energy organizations address the challenges and opportunities of the energy transition towards sustainable and clean energy sources.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

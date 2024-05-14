@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "Entity": "technology transfer",
+    "Description": "The process of transferring knowledge, skills, and technology from one entity to another.",
+    "Category": "Technology",
+    "Tags": [
+      "Technology",
+      "Transfer"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "technology transfer programs"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Development Goals",
+      "Technology Diffusion",
+      "Technology Transfer Programs",
+      "Knowledge Exchange",
+      "Entrepreneurship",
+      "Capacity Building Programs",
+      "Research Institutions"
+    ],
+    "relations": {
+      "technology transfer": [
+        {
+          "Relation": "employs",
+          "Object": "Capacity Building Programs",
+          "Description": "Technology transfer employs capacity building programs to enhance the knowledge and skills of individuals and organizations in adopting and implementing sustainable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Research Institutions",
+          "Description": "Technology transfer collaborates with research institutions to facilitate the transfer of knowledge and technologies related to sustainable energy, fostering innovation and advancements in the field.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Entrepreneurship",
+          "Description": "Technology transfer supports entrepreneurship in the sustainable energy sector by providing resources, mentorship, and funding opportunities to individuals and startups working on innovative energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Technology Transfer Programs",
+          "Description": "Technology transfer administers technology transfer programs that facilitate the exchange of sustainable energy technologies and knowledge between different stakeholders, including governments, businesses, and communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Technology Diffusion",
+          "Description": "Technology transfer measures the diffusion of sustainable energy technologies by tracking their adoption and implementation across different sectors and regions, assessing the impact and effectiveness of technology transfer initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Technology transfer aligns with the Sustainable Development Goals by promoting the transfer and adoption of sustainable energy technologies to support the achievement of various goals, such as affordable and clean energy, climate action, and sustainable cities and communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Knowledge Exchange",
+          "Description": "Technology transfer is an instance of knowledge exchange, where expertise, technologies, and best practices related to sustainable energy are shared and transferred between different stakeholders to accelerate the transition to a sustainable energy future.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

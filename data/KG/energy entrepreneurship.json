@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "Entity": "energy entrepreneurship",
+    "Description": "Entrepreneurship focused on sustainable energy solutions and innovations.",
+    "Category": "Economic",
+    "Tags": [
+      "Clean Energy Startups",
+      "Renewable Energy Business"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "entrepreneurship",
+      "women entrepreneurs"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Local Communities",
+      "Energy Poverty",
+      "Climate Change Mitigation",
+      "Clean Energy Sector",
+      "Energy Efficiency",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "energy entrepreneurship": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Energy entrepreneurship implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy entrepreneurship funds renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "Energy entrepreneurship focuses on improving energy access in underserved communities through innovative solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Clean Energy Sector",
+          "Description": "Energy entrepreneurship operates in the clean energy sector, contributing to the growth and development of sustainable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Communities",
+          "Description": "Energy entrepreneurship partners with local communities to co-create and implement energy solutions that meet their specific needs.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy entrepreneurship contributes to climate change mitigation by promoting the adoption of renewable energy sources and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy entrepreneurship monitors energy consumption patterns to identify opportunities for energy efficiency improvements and cost savings.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Energy entrepreneurship targets energy efficiency by implementing measures to reduce energy waste and optimize energy use.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Energy entrepreneurship addresses energy poverty by providing access to affordable and reliable energy services for marginalized communities.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

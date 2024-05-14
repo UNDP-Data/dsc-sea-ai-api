@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "national digital strategy",
+    "Description": "A strategy developed by a country to guide its digital transformation and promote the use of digital technologies.",
+    "Category": "Strategy",
+    "Tags": [
+      "Policy",
+      "Technology",
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Intersectionality",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "data governance frameworks"
+    ],
+    "relations": {
+      "national digital strategy": [
+        {
+          "Relation": "implements",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy implements data governance frameworks to ensure the effective management and protection of data.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy provides funding for the implementation and maintenance of data governance frameworks.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy focuses on the development and enhancement of data governance frameworks to ensure data integrity and privacy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy is embedded in the implementation and enforcement of data governance frameworks.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy collaborates and partners with data governance frameworks to ensure effective data management and governance.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy contributes to the development and improvement of data governance frameworks to enhance data security and privacy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy monitors the implementation and compliance of data governance frameworks to ensure adherence to data management standards.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy sets targets and goals for the implementation and effectiveness of data governance frameworks.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "data governance frameworks",
+          "Description": "The national digital strategy addresses the challenges and issues related to data governance frameworks to ensure their successful implementation and operation.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}
