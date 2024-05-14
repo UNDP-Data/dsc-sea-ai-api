@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "battery recycling",
+    "Description": "Battery recycling is the process of reusing or extracting valuable materials from used batteries to reduce waste and environmental impact.",
+    "Category": "Technology",
+    "Tags": [
+      "Waste Management",
+      "Circular Economy",
+      "Resource Recovery"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "battery recycling program"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Waste Management",
+      "Environmental Impact",
+      "Battery Recycling Program",
+      "Clean Energy Transition",
+      "Circular Economy Principles",
+      "Electronic Manufacturers",
+      "Sustainable Waste Management",
+      "Circular Economy Goals"
+    ],
+    "relations": {
+      "battery recycling": [
+        {
+          "Relation": "addresses",
+          "Object": "Waste Management",
+          "Description": "Battery recycling addresses waste management by safely disposing and recycling used batteries.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Circular Economy Principles",
+          "Description": "Battery recycling employs circular economy principles to minimize resource consumption and maximize recycling.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Electronic Manufacturers",
+          "Description": "Battery recycling collaborates with electronic manufacturers to establish collection and recycling programs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Clean Energy Transition",
+          "Description": "Battery recycling supports the clean energy transition by recycling batteries used in renewable energy systems.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Battery Recycling Program",
+          "Description": "Battery recycling administers the Battery Recycling Program to ensure proper collection and recycling of batteries.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Environmental Impact",
+          "Description": "Battery recycling measures the environmental impact of recycling processes to improve sustainability.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Circular Economy Goals",
+          "Description": "Battery recycling aligns with circular economy goals by promoting resource efficiency and waste reduction.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Sustainable Waste Management",
+          "Description": "Battery recycling is an instance of sustainable waste management practices.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

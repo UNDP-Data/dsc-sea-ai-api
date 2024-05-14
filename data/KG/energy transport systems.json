@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "Entity": "energy transport systems",
+    "Description": "Systems and infrastructure for transporting energy from generation sources to end users.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Technology",
+      "Economic"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy management systems"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Smart Grid Technology",
+      "Energy Losses",
+      "Climate Change Mitigation",
+      "Infrastructure Development",
+      "Energy Market Regulations",
+      "Renewable Energy Developers",
+      "Energy Storage Solutions"
+    ],
+    "relations": {
+      "energy transport systems": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access",
+          "Description": "Energy transport systems address the challenge of providing energy access to remote areas by enabling the efficient distribution of energy resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Smart Grid Technology",
+          "Description": "Energy transport systems employ smart grid technology to optimize the transmission and distribution of energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Renewable Energy Developers",
+          "Description": "Energy transport systems collaborate with renewable energy developers to ensure the seamless integration of renewable energy into the grid.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Storage Solutions",
+          "Description": "Energy transport systems support the implementation of energy storage solutions to enhance grid stability and reliability.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Market Regulations",
+          "Description": "Energy transport systems administer energy market regulations to ensure fair and efficient energy trading and distribution.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Losses",
+          "Description": "Energy transport systems measure energy losses during transmission and distribution to identify areas for improvement and optimization.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy transport systems align with the goal of climate change mitigation by enabling the efficient and sustainable distribution of renewable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Infrastructure Development",
+          "Description": "Energy transport systems are an instance of infrastructure development, specifically focused on the transmission and distribution of energy.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

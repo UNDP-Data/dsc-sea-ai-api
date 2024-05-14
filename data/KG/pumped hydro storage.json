@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "Entity": "pumped hydro storage",
+    "Description": "A type of energy storage that uses the gravitational potential energy of water to store and release energy.",
+    "Category": "Technology",
+    "Tags": [
+      "Technology",
+      "Economic"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Storage Policy",
+      "Energy Storage Performance",
+      "Intermittency of Renewable Energy",
+      "Renewable Energy System",
+      "Energy Storage Capacity",
+      "Climate Change Mitigation",
+      "Electricity Grid Operators",
+      "Grid Stability",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "pumped hydro storage": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Storage Policy",
+          "Description": "Pumped hydro storage implements the Energy Storage Policy to promote the use of energy storage technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Pumped hydro storage funds renewable energy projects to support the development of clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Grid Stability",
+          "Description": "Pumped hydro storage focuses on grid stability by providing a reliable source of energy during peak demand.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Renewable Energy System",
+          "Description": "Pumped hydro storage is an integral part of a renewable energy system to store excess energy for later use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Electricity Grid Operators",
+          "Description": "Pumped hydro storage partners with electricity grid operators to ensure efficient energy distribution and management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Pumped hydro storage contributes to climate change mitigation by enabling the integration of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Storage Performance",
+          "Description": "Pumped hydro storage monitors the performance of energy storage systems to optimize their efficiency and effectiveness.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Storage Capacity",
+          "Description": "Pumped hydro storage targets the expansion of energy storage capacity to meet the growing demand for renewable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Intermittency of Renewable Energy",
+          "Description": "Pumped hydro storage addresses the intermittency of renewable energy sources by providing a reliable and dispatchable power supply.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

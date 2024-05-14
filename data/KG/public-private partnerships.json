@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "public-private partnerships",
+    "Description": "Summary of public-private partnerships",
+    "Category": "Organization",
+    "Tags": [
+      "Public-Private",
+      "Partnerships"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "public-private partnership"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "SDG7 targets"
+    ],
+    "relations": {
+      "public-private partnerships": [
+        {
+          "Relation": "implements",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships implement SDG7 targets by leveraging the resources and expertise of both the public and private sectors.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships provide funding for the implementation of SDG7 targets, ensuring financial support for sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships focus on achieving SDG7 targets, which aim to ensure access to affordable, reliable, sustainable, and modern energy for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships collaborate with SDG7 targets to jointly work towards the goal of sustainable energy for all.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships contribute to the achievement of SDG7 targets by implementing sustainable energy projects and initiatives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships monitor the progress of SDG7 targets to ensure the effective implementation of sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships address the challenges and barriers hindering the achievement of SDG7 targets, working towards overcoming them.",
+          "Importance": 3
+        },
+        {
+          "Relation": "employs",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships employ various strategies and approaches to achieve SDG7 targets, leveraging their combined resources and expertise.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "SDG7 targets",
+          "Description": "Public-private partnerships collaborate closely with SDG7 targets to ensure coordinated efforts towards sustainable energy development.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,58 +1,88 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "clean cooking": [
-                {
-                    "Relation": "uses",
-                    "Object": "biomass",
-                    "Strength": "8",
-                    "Description": "Clean cooking often involves the use of biomass fuels like wood, crop residues, and animal dung."
-                },
-                {
-                    "Relation": "utilizes",
-                    "Object": "solar",
-                    "Strength": "7",
-                    "Description": "Clean cooking can be achieved through the utilization of solar cookers and solar-powered stoves."
-                },
-                {
-                    "Relation": "uses",
-                    "Object": "LPG",
-                    "Strength": "9",
-                    "Description": "Clean cooking can be achieved by using LPG (liquefied petroleum gas) as a fuel source, which produces fewer emissions compared to traditional fuels."
-                },
-                {
-                    "Relation": "involves",
-                    "Object": "improved cookstoves",
-                    "Strength": "10",
-                    "Description": "Clean cooking often involves the use of improved cookstoves that are designed to burn fuel more efficiently and reduce harmful emissions."
-                },
-                {
-                    "Relation": "uses",
-                    "Object": "biomass",
-                    "Strength": "8",
-                    "Description": "Clean cooking often involves the use of biomass fuels like wood, crop residues, and animal dung."
-                },
-                {
-                    "Relation": "utilizes",
-                    "Object": "solar",
-                    "Strength": "7",
-                    "Description": "Clean cooking can be achieved through the utilization of solar cookers and solar-powered stoves."
-                },
-                {
-                    "Relation": "uses",
-                    "Object": "LPG",
-                    "Strength": "9",
-                    "Description": "Clean cooking can be achieved by using LPG (liquefied petroleum gas) as a fuel source, which produces fewer emissions compared to traditional fuels."
-                },
-                {
-                    "Relation": "involves",
-                    "Object": "improved cookstoves",
-                    "Strength": "10",
-                    "Description": "Clean cooking often involves the use of improved cookstoves that are designed to burn fuel more efficiently and reduce harmful emissions."
-                }
-            ]
+  "metadata": {
+    "Entity": "clean cooking",
+    "Description": "The use of clean and efficient cookstoves and fuels to reduce indoor air pollution and improve health, environment, and livelihoods.",
+    "Category": "Technology",
+    "Tags": [
+      "Social",
+      "Health"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "clean cooking solutions"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Biomass",
+      "Health and Well-being",
+      "Energy Poverty",
+      "Local NGOs",
+      "Energy Efficiency Policy",
+      "Gender Equality",
+      "Clean Cooking Technologies",
+      "Renewable Energy Projects",
+      "Rural Areas"
+    ],
+    "relations": {
+      "clean cooking": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Clean cooking implements energy efficiency policies that promote the use of clean and efficient cooking technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Clean cooking funds renewable energy projects that aim to provide clean cooking solutions to communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Sustainable Biomass",
+          "Description": "Clean cooking focuses on the use of sustainable biomass as a clean cooking fuel source.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Rural Areas",
+          "Description": "Clean cooking is implemented in rural areas to provide clean cooking solutions to rural communities.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local NGOs",
+          "Description": "Clean cooking partners with local NGOs to implement clean cooking projects and initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Health and Well-being",
+          "Description": "Clean cooking contributes to improved health and well-being by reducing indoor air pollution and associated health risks.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Clean Cooking Technologies",
+          "Description": "Clean cooking monitors the performance and usage of clean cooking technologies to ensure their effectiveness and efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Clean cooking targets energy poverty by providing clean cooking solutions to communities without access to modern energy services.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Gender Equality",
+          "Description": "Clean cooking addresses gender equality by reducing the burden of traditional cooking methods on women and promoting their empowerment.",
+          "Importance": 4
         }
+      ]
     }
+  }
 }

@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "Entity": "waster-to-energy solutions",
+    "Description": null,
+    "Category": null,
+    "Tags": null,
+    "Dimension": null,
+    "Acronym": null,
+    "Importance": null,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Generation",
+      "Waste Management",
+      "Climate Change Mitigation",
+      "Building Standards",
+      "Local Governments",
+      "Circular Economy",
+      "Renewable Energy Projects",
+      "Energy Production"
+    ],
+    "relations": {
+      "waster-to-energy solutions": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "waster-to-energy solutions implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "waster-to-energy solutions funds renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Waste Management",
+          "Description": "waster-to-energy solutions focuses on waste management to efficiently convert waste into energy and reduce environmental impact.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Circular Economy",
+          "Description": "waster-to-energy solutions operates in the context of the circular economy, where waste is considered a valuable resource for energy production.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Governments",
+          "Description": "waster-to-energy solutions partners with local governments to implement sustainable waste management practices and promote renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "waster-to-energy solutions contributes to climate change mitigation by reducing greenhouse gas emissions through the conversion of waste into energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Production",
+          "Description": "waster-to-energy solutions monitors energy production to ensure efficient and sustainable conversion of waste into energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Generation",
+          "Description": "waster-to-energy solutions targets increased renewable energy generation through the efficient conversion of waste into energy.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

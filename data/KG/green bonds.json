@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "green bonds",
+    "Description": "Green bonds are fixed-income financial instruments that are used to raise capital for projects that have positive environmental or climate benefits.",
+    "Category": "Finance",
+    "Tags": [
+      "Sustainable Finance",
+      "Investment",
+      "Environmental Projects"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Finance",
+      "Environmental Impact",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Clean Energy Transition",
+      "International Climate Finance Institutions",
+      "Renewable Energy Projects",
+      "Renewable Energy Investments"
+    ],
+    "relations": {
+      "green bonds": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Green bonds are used to implement the Energy Efficiency Policy, which promotes the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Green bonds provide funding for various renewable energy projects, such as solar and wind farms.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Climate Change Mitigation",
+          "Description": "Green bonds primarily focus on financing projects that contribute to climate change mitigation efforts.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Finance",
+          "Description": "Green bonds are a key instrument in the field of sustainable finance, promoting investments in environmentally friendly projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "International Climate Finance Institutions",
+          "Description": "Green bonds collaborate with international climate finance institutions to mobilize funds for sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Clean Energy Transition",
+          "Description": "Green bonds contribute to the global clean energy transition by supporting the development and deployment of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Environmental Impact",
+          "Description": "Green bonds monitor the environmental impact of funded projects to ensure compliance with sustainability standards.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Investments",
+          "Description": "Green bonds set targets for increasing investments in renewable energy projects to accelerate the transition to a low-carbon economy.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

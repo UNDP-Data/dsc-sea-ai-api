@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "Entity": "disaster warning networks",
+    "Description": "Systems and networks that provide early warning and preparedness for natural disasters to minimize their impact on communities.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Disaster Preparedness",
+      "Risk Management",
+      "Community Resilience"
+    ],
+    "Dimension": "Disaster Risk Reduction",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Early Warning Systems",
+      "Disaster Risk Reduction Strategies",
+      "Risk Levels",
+      "Emergency Response Teams",
+      "Sensor Technology",
+      "Meteorological Agencies"
+    ],
+    "relations": {
+      "disaster warning networks": [
+        {
+          "Relation": "employs",
+          "Object": "Sensor Technology",
+          "Description": "Disaster warning networks employ sensor technology to detect and alert about potential disasters.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Meteorological Agencies",
+          "Description": "Disaster warning networks collaborate with meteorological agencies to gather and analyze data for accurate disaster predictions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Emergency Response Teams",
+          "Description": "Disaster warning networks support emergency response teams by providing timely and accurate information about potential disasters.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Early Warning Systems",
+          "Description": "Disaster warning networks administer early warning systems to alert communities about potential disasters.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Risk Levels",
+          "Description": "Disaster warning networks measure risk levels to assess the severity of potential disasters.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Disaster Risk Reduction Strategies",
+          "Description": "Disaster warning networks align with disaster risk reduction strategies to enhance preparedness and response to potential disasters.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Early Warning Systems",
+          "Description": "Disaster warning networks are an instance of early warning systems that aim to protect communities from potential disasters.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

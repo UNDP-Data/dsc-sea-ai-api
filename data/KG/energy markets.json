@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "Entity": "energy markets",
+    "Description": "Markets where electricity, natural gas, and other energy commodities are bought and sold.",
+    "Category": "Economic",
+    "Tags": [
+      "Energy",
+      "Markets",
+      "Commodities"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "energy startups",
+      "energy access",
+      "energy audits",
+      "energy market",
+      "energy market monopoly"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "economic sector",
+      "energy pricing mechanisms",
+      "renewable energy technologies",
+      "energy access",
+      "energy consumption",
+      "government agencies",
+      "climate change goals",
+      "clean energy projects"
+    ],
+    "relations": {
+      "energy markets": [
+        {
+          "Relation": "addresses",
+          "Object": "energy access",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "renewable energy technologies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "government agencies",
+          "Description": "Energy markets collaborate with government agencies to develop and implement policies and regulations that promote a sustainable and efficient energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "clean energy projects",
+          "Description": "Energy markets support clean energy projects by providing financial incentives, grants, and subsidies to encourage their development and deployment.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "energy pricing mechanisms",
+          "Description": "Energy markets administer energy pricing mechanisms to ensure fair and transparent pricing of energy resources and promote market competition.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "energy consumption",
+          "Description": "Energy markets measure energy consumption to assess the demand and identify trends for effective energy planning and management.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "climate change goals",
+          "Description": "Energy markets align with climate change goals by promoting the transition to low-carbon and renewable energy sources to mitigate greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "economic sector",
+          "Description": "Energy markets are an instance of the economic sector that deals with the production, distribution, and consumption of energy resources.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

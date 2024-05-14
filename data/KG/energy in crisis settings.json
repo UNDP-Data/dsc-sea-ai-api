@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "energy in crisis settings",
+    "Description": "Summary of energy in crisis settings.",
+    "Category": "Crisis",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Resilience",
+      "Emergency Energy Provision",
+      "Sendai Framework for Disaster Risk Reduction",
+      "Renewable Energy Technologies",
+      "Humanitarian Needs",
+      "Energy Aid Programs",
+      "Disaster Response",
+      "Humanitarian Organizations"
+    ],
+    "relations": {
+      "energy in crisis settings": [
+        {
+          "Relation": "addresses",
+          "Object": "Humanitarian Needs",
+          "Description": "Energy in crisis settings addresses the urgent humanitarian needs of affected populations by providing access to reliable and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Energy in crisis settings employs renewable energy technologies to ensure energy availability in emergency situations and promote resilience.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Humanitarian Organizations",
+          "Description": "Energy in crisis settings collaborates with humanitarian organizations to coordinate energy interventions and meet the energy needs of affected populations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Disaster Response",
+          "Description": "Energy in crisis settings supports disaster response efforts by providing energy solutions for emergency shelters, healthcare facilities, and other critical infrastructure.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Aid Programs",
+          "Description": "Energy in crisis settings administers energy aid programs to ensure the efficient and effective delivery of energy assistance in emergency situations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Resilience",
+          "Description": "Energy in crisis settings measures the resilience of energy systems in crisis settings to identify vulnerabilities and improve preparedness.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sendai Framework for Disaster Risk Reduction",
+          "Description": "Energy in crisis settings aligns with the principles and goals of the Sendai Framework for Disaster Risk Reduction to enhance resilience and reduce disaster risks.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Emergency Energy Provision",
+          "Description": "Energy in crisis settings is an instance of emergency energy provision, which aims to meet the energy needs of populations affected by crises and disasters.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

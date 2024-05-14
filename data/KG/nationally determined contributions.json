@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "nationally determined contributions",
+    "Description": "Commitments made by countries under the Paris Agreement to reduce greenhouse gas emissions.",
+    "Category": "Policy",
+    "Tags": [
+      "Policy",
+      "Social"
+    ],
+    "Dimension": "Social",
+    "Acronym": "NDCs",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "International Organizations",
+      "Adaptation Projects",
+      "Climate Finance",
+      "Climate Change Mitigation",
+      "Paris Agreement",
+      "Climate Action Plans",
+      "Renewable Energy Technologies",
+      "Greenhouse Gas Emissions"
+    ],
+    "relations": {
+      "nationally determined contributions": [
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change Mitigation",
+          "Description": "Nationally determined contributions address climate change mitigation by outlining the actions and targets of each country to reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Nationally determined contributions employ renewable energy technologies to achieve the targets set for climate change mitigation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "International Organizations",
+          "Description": "Nationally determined contributions collaborate with international organizations to enhance the implementation of climate change mitigation measures.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Adaptation Projects",
+          "Description": "Nationally determined contributions support adaptation projects to enhance the resilience of communities and ecosystems to the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Climate Finance",
+          "Description": "Nationally determined contributions administer climate finance to support the implementation of climate change mitigation and adaptation measures.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Greenhouse Gas Emissions",
+          "Description": "Nationally determined contributions measure greenhouse gas emissions to track progress towards the targets set for climate change mitigation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Paris Agreement",
+          "Description": "Nationally determined contributions align with the goals and objectives of the Paris Agreement to enhance global climate change mitigation efforts.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Climate Action Plans",
+          "Description": "Nationally determined contributions are an instance of climate action plans developed by each country to address climate change mitigation and adaptation.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

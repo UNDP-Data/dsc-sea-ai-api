@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "Entity": "South-South and triangular cooperation",
+    "Description": "Collaboration and exchange of resources, knowledge, and expertise among developing countries (South-South cooperation) and between developing countries and other partners (triangular cooperation).",
+    "Category": "Strategy",
+    "Tags": [
+      "Collaboration",
+      "Exchange",
+      "Developing Countries"
+    ],
+    "Dimension": "Strategy",
+    "Acronym": "SSTC",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Performance",
+      "Climate Finance Programs",
+      "International Organizations",
+      "Sustainable Development Goals",
+      "International Cooperation",
+      "Renewable Energy Research",
+      "Capacity Building Programs"
+    ],
+    "relations": {
+      "South-South and triangular cooperation": [
+        {
+          "Relation": "employs",
+          "Object": "Capacity Building Programs",
+          "Description": "South-South and triangular cooperation employs capacity building programs to enhance knowledge and skills in sustainable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "International Organizations",
+          "Description": "South-South and triangular cooperation collaborates with international organizations to promote sustainable energy cooperation among developing countries.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Research",
+          "Description": "South-South and triangular cooperation supports research in renewable energy technologies to foster innovation and knowledge sharing.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Climate Finance Programs",
+          "Description": "South-South and triangular cooperation administers climate finance programs to support sustainable energy projects in developing countries.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Efficiency Performance",
+          "Description": "South-South and triangular cooperation measures energy efficiency performance to track progress and identify areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "South-South and triangular cooperation aligns with the Sustainable Development Goals to promote sustainable energy access and development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "International Cooperation",
+          "Description": "South-South and triangular cooperation is an instance of international cooperation for sustainable energy development.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

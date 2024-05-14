@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "solar home systems",
+    "Description": "Stand-alone solar power systems that provide electricity for individual households.",
+    "Category": "Technology",
+    "Tags": [
+      "Solar Power",
+      "Home Systems",
+      "Renewable Energy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Rural Electrification",
+      "Energy Access",
+      "Energy Access Program",
+      "Local NGOs",
+      "Clean Energy Initiative",
+      "Off-grid Communities",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "solar home systems": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Access Program",
+          "Description": "Solar home systems implement the Energy Access Program, which aims to provide clean and affordable energy to off-grid communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Solar home systems contribute funds to support renewable energy projects, promoting the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Rural Electrification",
+          "Description": "Solar home systems focus on rural electrification, providing electricity to remote areas that are not connected to the main power grid.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Clean Energy Initiative",
+          "Description": "Solar home systems are included in the Clean Energy Initiative, which aims to promote the use of renewable energy sources for a sustainable future.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local NGOs",
+          "Description": "Solar home systems collaborate and partner with local NGOs to implement sustainable energy projects and initiatives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Access",
+          "Description": "Solar home systems contribute to improving energy access, providing electricity to households and communities without reliable power sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Solar home systems monitor energy consumption, helping users track their electricity usage and promote energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Off-grid Communities",
+          "Description": "Solar home systems target off-grid communities, aiming to provide them with clean and reliable energy solutions.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

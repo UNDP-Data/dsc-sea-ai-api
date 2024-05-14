@@ -1,34 +1,88 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "Energy storage": [
-                {
-                    "Relation": "is commonly used with",
-                    "Object": "Battery",
-                    "Strength": "8",
-                    "Description": "Batteries are widely used for energy storage in various applications."
-                },
-                {
-                    "Relation": "is an alternative to",
-                    "Object": "Flywheel",
-                    "Strength": "6",
-                    "Description": "Flywheels can be used as an alternative to batteries for energy storage."
-                },
-                {
-                    "Relation": "can be produced by",
-                    "Object": "Hydrogen Fuel Cell",
-                    "Strength": "9",
-                    "Description": "Hydrogen fuel cells can produce electricity for energy storage."
-                },
-                {
-                    "Relation": "can be utilized in",
-                    "Object": "Compressed Air Energy Storage",
-                    "Strength": "7",
-                    "Description": "Compressed air energy storage systems can store energy for later use."
-                }
-            ]
+  "metadata": {
+    "Entity": "energy storage",
+    "Description": "The process of capturing and storing energy for later use.",
+    "Category": "Technology",
+    "Tags": [
+      "Renewable Energy",
+      "Grid Stability",
+      "Battery Technology"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "energy waste",
+      "energy storage capacity",
+      "energy savings",
+      "energy data",
+      "energy storage solutions",
+      "energy storage policy",
+      "energy surveys"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "electric vehicle industry",
+      "grid stability",
+      "intermittency of renewable energy",
+      "energy transition",
+      "energy storage capacity",
+      "battery technologies",
+      "renewable energy integration",
+      "energy storage incentive programs"
+    ],
+    "relations": {
+      "energy storage": [
+        {
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "battery technologies",
+          "Description": "Energy storage employs battery technologies to store and release energy efficiently, enabling the integration of renewable energy sources into the grid.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "electric vehicle industry",
+          "Description": "Energy storage collaborates with the electric vehicle industry to develop advanced battery technologies for electric vehicle charging and grid integration.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "grid stability",
+          "Description": "Energy storage supports grid stability by providing backup power and balancing supply and demand, especially during peak load periods.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "energy storage incentive programs",
+          "Description": "Energy storage administers incentive programs to promote the adoption of energy storage systems and accelerate the transition to a clean energy future.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "energy storage capacity",
+          "Description": "Energy storage measures the capacity of energy storage systems to assess their performance and optimize their utilization in the energy system.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "renewable energy integration",
+          "Description": "Energy storage aligns with the goal of integrating renewable energy sources into the grid by providing a reliable and flexible energy storage solution.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "energy transition",
+          "Description": "Energy storage is an instance of the broader energy transition towards a more sustainable and resilient energy system.",
+          "Importance": 3
         }
+      ]
     }
+  }
 }

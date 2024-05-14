@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "theory of change",
+    "Description": "A theory of change is a comprehensive and systematic explanation of how and why a desired change is expected to happen. It outlines the causal pathways and assumptions underlying a project or intervention.",
+    "Category": "Strategy",
+    "Tags": [
+      "Change Management",
+      "Impact Assessment",
+      "Program Evaluation"
+    ],
+    "Dimension": "Strategy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Social Impact",
+      "Strategic Planning",
+      "Academic Institutions",
+      "Impact Evaluation Methods",
+      "Barriers to Renewable Energy Adoption",
+      "Innovation in Clean Technologies",
+      "Climate Action Plans"
+    ],
+    "relations": {
+      "theory of change": [
+        {
+          "Relation": "addresses",
+          "Object": "Barriers to Renewable Energy Adoption",
+          "Description": "The theory of change addresses the barriers to renewable energy adoption by identifying and implementing strategies to overcome challenges related to policy, finance, and technology.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Impact Evaluation Methods",
+          "Description": "The theory of change employs impact evaluation methods to assess the effectiveness and outcomes of sustainable energy interventions and initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Academic Institutions",
+          "Description": "The theory of change collaborates with academic institutions to leverage research and expertise in developing evidence-based strategies for sustainable energy transition.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Innovation in Clean Technologies",
+          "Description": "The theory of change supports innovation in clean technologies by providing funding and resources for research and development of sustainable energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "The theory of change administers energy efficiency programs to promote energy conservation and reduce greenhouse gas emissions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Social Impact",
+          "Description": "The theory of change measures the social impact of sustainable energy initiatives by assessing changes in quality of life, access to energy, and environmental outcomes.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Action Plans",
+          "Description": "The theory of change aligns with climate action plans to ensure the integration of sustainable energy goals and targets in broader climate mitigation and adaptation strategies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Strategic Planning",
+          "Description": "The theory of change is an instance of strategic planning that guides the development and implementation of sustainable energy initiatives and interventions.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

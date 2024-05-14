@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "offshore renewable energy",
+    "Description": "Renewable energy generated from sources located in bodies of water, such as wind farms or tidal power plants.",
+    "Category": "Technology",
+    "Tags": [
+      "Environmental"
+    ],
+    "Dimension": "Environmental",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "marine renewable energy",
+      "research on renewable energy",
+      "renewable energy"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Generation",
+      "Wave Energy",
+      "Environmental Impact",
+      "Climate Change Mitigation",
+      "Environmental Organizations",
+      "Building Standards",
+      "Marine Environment",
+      "Research and Development"
+    ],
+    "relations": {
+      "offshore renewable energy": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Offshore renewable energy implements building standards that promote the use of sustainable energy sources and technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Offshore renewable energy funds research and development projects to advance the use of sustainable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Wave Energy",
+          "Description": "Offshore renewable energy focuses on harnessing wave energy as a sustainable energy source.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Marine Environment",
+          "Description": "Offshore renewable energy operates in the marine environment to harness sustainable energy from wind, waves, and tides.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Environmental Organizations",
+          "Description": "Offshore renewable energy partners with environmental organizations to ensure sustainable practices and minimize environmental impact.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Offshore renewable energy contributes to climate change mitigation by reducing greenhouse gas emissions and dependence on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Environmental Impact",
+          "Description": "Offshore renewable energy monitors its environmental impact to ensure sustainable operations and minimize harm to marine ecosystems.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Generation",
+          "Description": "Offshore renewable energy targets increased renewable energy generation to meet sustainable energy goals and reduce reliance on non-renewable sources.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

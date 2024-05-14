@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "integrated resource planning",
+    "Description": "Integrated resource planning is a process that helps utilities and energy providers make informed decisions about the mix of energy resources and technologies to meet future energy demand.",
+    "Category": "Strategy",
+    "Tags": [
+      "Energy Planning",
+      "Resource Optimization",
+      "Energy Transition"
+    ],
+    "Dimension": "Strategy",
+    "Acronym": "IRP",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "integrated resource planning": []
+    }
+  }
+}

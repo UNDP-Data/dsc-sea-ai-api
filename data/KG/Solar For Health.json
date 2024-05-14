@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "Solar For Health",
+    "Description": "Summary of Solar For Health",
+    "Category": "Technology",
+    "Tags": [
+      "Solar",
+      "Health"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Local NGOs",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Off-grid Solar Systems",
+      "Renewable Energy Research",
+      "Energy Consumption",
+      "Partnership with Ministry of Health"
+    ],
+    "relations": {
+      "Solar For Health": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Solar For Health implements the Energy Efficiency Policy to promote the use of energy-saving designs and materials in healthcare facilities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Research",
+          "Description": "Solar For Health funds research on renewable energy technologies to support the development of sustainable energy solutions for healthcare facilities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Off-grid Solar Systems",
+          "Description": "Solar For Health focuses on the deployment of off-grid solar systems to provide reliable and clean energy for healthcare facilities in remote areas.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Partnership with Ministry of Health",
+          "Description": "Solar For Health operates in partnership with the Ministry of Health to ensure the successful implementation of sustainable energy solutions in healthcare facilities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local NGOs",
+          "Description": "Solar For Health partners with local NGOs to leverage their expertise and resources in implementing sustainable energy projects in healthcare facilities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Solar For Health's sustainable energy initiatives contribute to climate change mitigation efforts by reducing greenhouse gas emissions from healthcare facilities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Solar For Health monitors energy consumption in healthcare facilities to identify opportunities for energy efficiency improvements and cost savings.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Access",
+          "Description": "Solar For Health targets improved energy access in healthcare facilities to ensure reliable and uninterrupted provision of essential healthcare services.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

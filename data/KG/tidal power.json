@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "tidal power",
+    "Description": "Tidal power is a form of hydropower that converts the energy from the tides into electricity.",
+    "Category": "Technology",
+    "Tags": [
+      "Renewable Energy",
+      "Tidal Energy",
+      "Ocean Power"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Research and Development",
+      "Energy Transition Plan",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Power Generation",
+      "Renewable Energy Capacity",
+      "Renewable Energy Sources",
+      "Ocean Conservation Organization"
+    ],
+    "relations": {
+      "tidal power": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Tidal power implements Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Tidal power funds Research and Development to explore new technologies and improve efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Sources",
+          "Description": "Tidal power focuses on Renewable Energy Sources to harness clean and sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Transition Plan",
+          "Description": "Tidal power is included in the Energy Transition Plan to diversify the energy mix and reduce reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Ocean Conservation Organization",
+          "Description": "Tidal power partners with Ocean Conservation Organization to ensure minimal impact on marine ecosystems.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Tidal power contributes to Climate Change Mitigation by reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Power Generation",
+          "Description": "Tidal power monitors power generation to optimize efficiency and performance.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Capacity",
+          "Description": "Tidal power targets increased Renewable Energy Capacity to meet sustainability goals.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

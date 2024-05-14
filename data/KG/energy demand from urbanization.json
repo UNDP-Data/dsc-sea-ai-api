@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "energy demand from urbanization",
+    "Description": "Energy demand from urbanization refers to the increasing energy needs of urban areas due to population growth and urban development.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Urbanization",
+      "Energy Demand"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Transition",
+      "Sustainable Development Goals",
+      "Smart Grid Technology",
+      "City Planning Departments",
+      "Energy Efficiency Measures",
+      "Energy Efficiency Incentive Programs",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "energy demand from urbanization": [
+        {
+          "Relation": "addresses",
+          "Object": "Smart Grid Technology",
+          "Description": "The increasing energy demand from urbanization is addressed through the implementation of smart grid technology to optimize energy distribution and consumption.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Energy Efficiency Measures",
+          "Description": "To manage the energy demand from urbanization, various energy efficiency measures are employed to reduce energy consumption and promote sustainable development.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "City Planning Departments",
+          "Description": "Efforts to address the energy demand from urbanization involve collaboration with city planning departments to integrate sustainable energy solutions into urban development plans.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Projects",
+          "Description": "To meet the increasing energy demand from urbanization, support is provided to renewable energy projects that can provide clean and reliable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Incentive Programs",
+          "Description": "To encourage energy efficiency in urban areas, the administration of energy efficiency incentive programs is carried out to promote the adoption of energy-saving practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Consumption",
+          "Description": "The energy demand from urbanization is measured to assess the energy consumption patterns and identify areas for improvement and optimization.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Efforts to address the energy demand from urbanization align with the Sustainable Development Goals, particularly in terms of affordable and clean energy access for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Energy Transition",
+          "Description": "The increasing energy demand from urbanization is an instance of the ongoing global energy transition towards sustainable and low-carbon energy systems.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

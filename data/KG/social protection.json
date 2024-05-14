@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "social protection",
+    "Description": "Policies and programs designed to support individuals and communities in times of economic and social vulnerability.",
+    "Category": "Policy",
+    "Tags": [
+      "Poverty Alleviation",
+      "Inequality Reduction",
+      "Safety Nets"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "social cohesion",
+      "financial protection"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "non-governmental organizations",
+      "social cohesion",
+      "vulnerable populations",
+      "poverty reduction",
+      "social welfare organizations",
+      "national development plans",
+      "program implementation",
+      "government programs"
+    ],
+    "relations": {
+      "social protection": [
+        {
+          "Relation": "implements",
+          "Object": "government programs",
+          "Description": "Social protection implements various government programs that provide financial assistance and support to vulnerable individuals and families.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "social welfare organizations",
+          "Description": "Social protection funds social welfare organizations that work towards improving the well-being and livelihoods of disadvantaged groups.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "poverty reduction",
+          "Description": "Social protection focuses on poverty reduction by implementing policies and programs that aim to alleviate poverty and improve living conditions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "national development plans",
+          "Description": "Social protection is included in national development plans as a key component for achieving inclusive and sustainable development.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "non-governmental organizations",
+          "Description": "Social protection partners with non-governmental organizations to enhance the delivery and effectiveness of social welfare programs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "social cohesion",
+          "Description": "Social protection contributes to social cohesion by reducing inequality, promoting social justice, and ensuring equal opportunities for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "program implementation",
+          "Description": "Social protection monitors the implementation of social welfare programs to ensure their effectiveness and impact on the target beneficiaries.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "vulnerable populations",
+          "Description": "Social protection targets vulnerable populations such as the elderly, disabled individuals, and low-income households for providing necessary support and assistance.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

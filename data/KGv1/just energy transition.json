@@ -1,0 +1,34 @@
+{
+    "metadata": {},
+    "knowledge graph": {
+        "entities": [],
+        "relations": {
+            "just energy transition": [
+                {
+                    "Relation": "Promotes",
+                    "Object": "Renewable energy",
+                    "Strength": "8",
+                    "Description": "Renewable energy plays a crucial role in achieving a just energy transition by reducing reliance on fossil fuels and decreasing greenhouse gas emissions."
+                },
+                {
+                    "Relation": "Enhances",
+                    "Object": "Energy efficiency",
+                    "Strength": "7",
+                    "Description": "Improving energy efficiency is an important aspect of a just energy transition as it reduces energy consumption and promotes sustainability."
+                },
+                {
+                    "Relation": "Supports",
+                    "Object": "Clean technology",
+                    "Strength": "9",
+                    "Description": "Clean technology innovations are essential for a just energy transition as they provide sustainable alternatives to traditional energy sources."
+                },
+                {
+                    "Relation": "Addresses",
+                    "Object": "Climate change",
+                    "Strength": "10",
+                    "Description": "A just energy transition is necessary to address climate change and mitigate its impacts on the environment and society."
+                }
+            ]
+        }
+    }
+}

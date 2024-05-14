@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "Entity": "indigenous land rights",
+    "Description": "The rights of indigenous communities to own, use, and manage their traditional lands.",
+    "Category": "Social",
+    "Tags": [
+      "Indigenous",
+      "Land Rights"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "indigenous rights"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "cultural preservation",
+      "land stewardship",
+      "UN Declaration on the Rights of Indigenous Peoples",
+      "land tenure systems",
+      "local communities",
+      "human rights",
+      "traditional ecological knowledge"
+    ],
+    "relations": {
+      "indigenous land rights": [
+        {
+          "Relation": "employs",
+          "Object": "traditional ecological knowledge",
+          "Description": "Indigenous land rights employ traditional ecological knowledge to manage and protect natural resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "Indigenous land rights collaborate with local communities to ensure sustainable land management practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "cultural preservation",
+          "Description": "Indigenous land rights support cultural preservation to protect the heritage and traditions of indigenous communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "land tenure systems",
+          "Description": "Indigenous land rights administer land tenure systems to secure land rights for indigenous communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "land stewardship",
+          "Description": "Indigenous land rights measure land stewardship to ensure sustainable use and conservation of natural resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "UN Declaration on the Rights of Indigenous Peoples",
+          "Description": "Indigenous land rights align with the UN Declaration on the Rights of Indigenous Peoples to protect the rights of indigenous communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "human rights",
+          "Description": "Indigenous land rights are an instance of human rights, ensuring the rights of indigenous communities to their ancestral lands.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

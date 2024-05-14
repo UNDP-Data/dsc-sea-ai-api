@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "Entity": "small island developing states",
+    "Description": "Island nations facing unique challenges related to sustainable development, climate change, and vulnerability to natural disasters.",
+    "Category": "Location",
+    "Tags": [
+      "Island Nations",
+      "Climate Change",
+      "Sustainable Development"
+    ],
+    "Dimension": "Sustainable Development",
+    "Acronym": "SIDS",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Climate Resilience",
+      "Vulnerable Communities",
+      "International Organizations",
+      "Sustainable Development Goals",
+      "Renewable Energy Technologies",
+      "Renewable Energy Capacity"
+    ],
+    "relations": {
+      "small island developing states": [
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Small island developing states employ renewable energy technologies to reduce dependence on imported fossil fuels and enhance energy self-sufficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "International Organizations",
+          "Description": "Small island developing states collaborate with international organizations to access funding and technical expertise for sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Climate Resilience",
+          "Description": "Small island developing states support climate resilience initiatives by integrating renewable energy and sustainable practices into their infrastructure and policies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Small island developing states administer energy efficiency programs to promote energy conservation and reduce energy costs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Renewable Energy Capacity",
+          "Description": "Small island developing states measure their renewable energy capacity to track progress towards their clean energy targets and identify areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Small island developing states align their sustainable energy efforts with the Sustainable Development Goals to ensure a holistic and integrated approach to development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Vulnerable Communities",
+          "Description": "Small island developing states are an instance of vulnerable communities that are disproportionately affected by climate change and rely on sustainable energy solutions for resilience.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

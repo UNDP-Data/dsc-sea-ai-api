@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "energy democracy",
+    "Description": "Energy democracy is a concept that promotes the democratization of energy systems, giving communities and individuals more control over the production, distribution, and consumption of energy.",
+    "Category": "Social",
+    "Tags": [
+      "Community",
+      "Participation",
+      "Decentralization"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "energy security",
+      "energy demand"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Equity",
+      "Democratic Energy Transition",
+      "Sustainable Development Goals",
+      "Participatory Decision-Making",
+      "Community-Based Organizations",
+      "Energy Inequality",
+      "Renewable Energy Cooperatives",
+      "Feed-in Tariff Programs"
+    ],
+    "relations": {
+      "energy democracy": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Inequality",
+          "Description": "Energy democracy addresses energy inequality by promoting equitable access to clean and affordable energy for all individuals and communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Participatory Decision-Making",
+          "Description": "Energy democracy employs participatory decision-making processes to ensure that all stakeholders have a voice in shaping energy policies and projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Community-Based Organizations",
+          "Description": "Energy democracy collaborates with community-based organizations to empower local communities and facilitate their participation in the energy transition.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Cooperatives",
+          "Description": "Energy democracy supports the establishment and growth of renewable energy cooperatives, enabling communities to collectively own and benefit from renewable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Feed-in Tariff Programs",
+          "Description": "Energy democracy administers feed-in tariff programs that incentivize the generation of renewable energy by allowing individuals and communities to sell excess electricity to the grid.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Equity",
+          "Description": "Energy democracy measures energy equity by assessing the fairness and accessibility of energy systems and ensuring that no one is left behind in the energy transition.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy democracy aligns with the Sustainable Development Goals, particularly Goal 7 on affordable and clean energy, to contribute to the achievement of sustainable development targets.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Democratic Energy Transition",
+          "Description": "Energy democracy is an instance of the democratic energy transition, which aims to democratize energy systems and empower communities in shaping their energy future.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "biochar",
+    "Description": "Biochar is a type of charcoal produced from biomass that is used as a soil amendment.",
+    "Category": "Product",
+    "Tags": [
+      "Biomass",
+      "Soil Amendment"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Soil Fertility",
+      "Carbon Sequestration Technology",
+      "Pyrolysis",
+      "Soil pH",
+      "Agricultural Organizations",
+      "Carbon Sequestration",
+      "Biochar Production Facilities",
+      "Circular Economy Principles"
+    ],
+    "relations": {
+      "biochar": [
+        {
+          "Relation": "addresses",
+          "Object": "Soil Fertility",
+          "Description": "Biochar addresses soil fertility by improving nutrient retention and enhancing soil structure.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Pyrolysis",
+          "Description": "Biochar employs the process of pyrolysis to convert biomass into a stable carbon-rich product that can be used as a soil amendment.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Agricultural Organizations",
+          "Description": "Biochar collaborates with agricultural organizations to promote the use of biochar as a sustainable soil amendment.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Carbon Sequestration",
+          "Description": "Biochar supports carbon sequestration by capturing and storing carbon in the soil for long periods of time.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Biochar Production Facilities",
+          "Description": "Biochar administers biochar production facilities to ensure the quality and availability of biochar for agricultural use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Soil pH",
+          "Description": "Biochar measures soil pH to determine the optimal application rate of biochar for different soil types.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Circular Economy Principles",
+          "Description": "Biochar aligns with circular economy principles by converting agricultural waste into a valuable resource for soil improvement.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Carbon Sequestration Technology",
+          "Description": "Biochar is an instance of carbon sequestration technology that utilizes biomass to capture and store carbon in the soil.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

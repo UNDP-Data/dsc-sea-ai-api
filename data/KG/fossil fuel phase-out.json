@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "fossil fuel phase-out",
+    "Description": "Gradual elimination of fossil fuel usage",
+    "Category": "Policy",
+    "Tags": [
+      "Fossil Fuel",
+      "Phase-out"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Transition",
+      "Carbon Pricing Mechanisms",
+      "Paris Agreement",
+      "Environmental Organizations",
+      "Renewable Energy Technologies",
+      "Greenhouse Gas Emissions",
+      "Air Pollution",
+      "Sustainable Energy Transition"
+    ],
+    "relations": {
+      "fossil fuel phase-out": [
+        {
+          "Relation": "addresses",
+          "Object": "Air Pollution",
+          "Description": "Fossil fuel phase-out addresses air pollution by reducing the combustion of fossil fuels and transitioning to cleaner energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Fossil fuel phase-out employs renewable energy technologies as alternatives to fossil fuel-based energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Environmental Organizations",
+          "Description": "Fossil fuel phase-out collaborates with environmental organizations to promote sustainable energy policies and advocate for the reduction of fossil fuel use.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Transition",
+          "Description": "Fossil fuel phase-out supports the transition to renewable energy sources by providing incentives and policies that promote their adoption.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Carbon Pricing Mechanisms",
+          "Description": "Fossil fuel phase-out administers carbon pricing mechanisms to internalize the environmental costs of fossil fuel use and incentivize cleaner alternatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Greenhouse Gas Emissions",
+          "Description": "Fossil fuel phase-out measures greenhouse gas emissions to track progress in reducing carbon emissions and achieving climate goals.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Paris Agreement",
+          "Description": "Fossil fuel phase-out aligns with the goals and targets of the Paris Agreement to limit global warming and mitigate climate change.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Sustainable Energy Transition",
+          "Description": "Fossil fuel phase-out is an instance of a sustainable energy transition strategy that aims to reduce reliance on fossil fuels and promote renewable energy.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

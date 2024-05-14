@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "Entity": "energy resilience",
+    "Description": "The ability of an energy system to withstand and recover from disruptions, such as natural disasters or cyber attacks, and continue to provide reliable and sustainable energy services.",
+    "Category": "Policy",
+    "Tags": [
+      "Social",
+      "Environmental",
+      "Crisis"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "disaster resilience",
+      "grid resilience",
+      "energy resilience grants"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Resilience Grants",
+      "Climate Change Impacts",
+      "Sustainable Development Goals",
+      "Microgrid Systems",
+      "Resilient Energy Systems",
+      "Disaster Management Agencies",
+      "Energy Security",
+      "Renewable Energy Integration"
+    ],
+    "relations": {
+      "energy resilience": [
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change Impacts",
+          "Description": "Energy resilience addresses the challenges posed by climate change impacts to ensure a reliable and sustainable energy supply.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Microgrid Systems",
+          "Description": "Energy resilience employs microgrid systems to enhance the resilience and reliability of energy infrastructure.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Disaster Management Agencies",
+          "Description": "Energy resilience collaborates with disaster management agencies to develop strategies for energy supply during emergencies and natural disasters.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Integration",
+          "Description": "Energy resilience supports the integration of renewable energy sources into the energy system to enhance resilience and reduce dependence on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Resilience Grants",
+          "Description": "Energy resilience administers grants to support projects and initiatives that enhance energy resilience in vulnerable communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Security",
+          "Description": "Energy resilience measures the level of energy security to identify vulnerabilities and develop strategies for improvement.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy resilience aligns with the Sustainable Development Goals, particularly Goal 7 on affordable and clean energy for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Resilient Energy Systems",
+          "Description": "Energy resilience is an instance of resilient energy systems that are designed to withstand disruptions and ensure continuous energy supply.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "nature-based solutions",
+    "Description": "Approaches that use nature and natural processes to address environmental challenges and promote sustainable development.",
+    "Category": "Policy",
+    "Tags": [
+      "Biodiversity",
+      "Climate Change Adaptation",
+      "Ecosystem Services"
+    ],
+    "Dimension": "Sustainable Development",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Change Adaptation",
+      "Sustainable Development Goals",
+      "Local Communities",
+      "Biodiversity Conservation",
+      "Renewable Energy Technologies",
+      "Carbon Sequestration",
+      "Renewable Energy Solutions",
+      "Ecosystem Restoration"
+    ],
+    "relations": {
+      "nature-based solutions": [
+        {
+          "Relation": "addresses",
+          "Object": "Biodiversity Conservation",
+          "Description": "nature-based solutions addresses biodiversity conservation by promoting the use of natural processes and ecosystems to provide sustainable energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "nature-based solutions employs renewable energy technologies to harness the power of nature and provide sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Communities",
+          "Description": "nature-based solutions collaborates with local communities to implement sustainable energy solutions that are in harmony with nature.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Ecosystem Restoration",
+          "Description": "nature-based solutions supports ecosystem restoration to enhance the capacity of natural systems to provide sustainable energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Climate Change Adaptation",
+          "Description": "nature-based solutions administers climate change adaptation measures by utilizing natural processes and ecosystems to provide resilient energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Carbon Sequestration",
+          "Description": "nature-based solutions measures carbon sequestration to quantify the climate change mitigation potential of natural energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "nature-based solutions aligns with the Sustainable Development Goals by providing sustainable energy solutions that contribute to multiple objectives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Renewable Energy Solutions",
+          "Description": "nature-based solutions is an instance of renewable energy solutions that utilize natural processes and ecosystems for energy generation.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

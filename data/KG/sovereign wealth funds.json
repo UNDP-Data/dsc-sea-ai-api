@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "Entity": "sovereign wealth funds",
+    "Description": "Funds owned by a state and invested in various financial assets.",
+    "Category": "Finance",
+    "Tags": [
+      "Economic",
+      "Finance"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "sustainable energy projects",
+      "innovative financing",
+      "renewable energy infrastructure",
+      "energy poverty",
+      "energy transition",
+      "long-term investments",
+      "clean energy companies",
+      "investment performance",
+      "climate change mitigation"
+    ],
+    "relations": {
+      "sovereign wealth funds": [
+        {
+          "Relation": "implements",
+          "Object": "innovative financing",
+          "Description": "Sovereign wealth funds implement innovative financing strategies to support sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "sustainable energy projects",
+          "Description": "Sovereign wealth funds provide funds for sustainable energy projects to promote clean and renewable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "long-term investments",
+          "Description": "Sovereign wealth funds focus on making long-term investments in sustainable energy projects to ensure their viability and impact.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "energy transition",
+          "Description": "Sovereign wealth funds play a crucial role in investing in the energy transition towards a more sustainable and low-carbon future.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "clean energy companies",
+          "Description": "Sovereign wealth funds partner with clean energy companies to accelerate the development and deployment of sustainable energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "Sovereign wealth funds contribute to climate change mitigation by investing in sustainable energy projects and technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "investment performance",
+          "Description": "Sovereign wealth funds closely monitor the performance of their investments in sustainable energy projects to ensure optimal returns and impact.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "renewable energy infrastructure",
+          "Description": "Sovereign wealth funds set targets for investing in renewable energy infrastructure to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "energy poverty",
+          "Description": "Sovereign wealth funds address energy poverty by investing in sustainable energy projects that provide access to affordable and clean energy for underserved communities.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

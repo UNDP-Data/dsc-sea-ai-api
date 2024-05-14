@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "Entity": "energy forecasting",
+    "Description": "Energy forecasting is the process of estimating future energy demand, supply, and prices based on various factors such as population growth, economic development, technological advancements, and policy changes.",
+    "Category": "Technology",
+    "Tags": [
+      "Energy Demand",
+      "Energy Supply",
+      "Energy Prices"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Energy Planning",
+      "Energy Consumption",
+      "Renewable Energy Integration",
+      "Energy Demand"
+    ],
+    "relations": {
+      "energy forecasting": [
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Planning",
+          "Description": "Energy forecasting contributes to energy planning by providing insights and data for informed decision-making.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy forecasting monitors energy consumption patterns to identify trends and potential areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Integration",
+          "Description": "Energy forecasting supports the integration of renewable energy sources by providing accurate predictions and forecasts.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Energy forecasting administers energy efficiency programs to promote energy conservation and sustainable practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Demand",
+          "Description": "Energy forecasting measures energy demand to ensure sufficient supply and efficient distribution.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

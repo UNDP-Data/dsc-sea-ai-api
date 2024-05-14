@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "Entity": "gender mainstreaming",
+    "Description": "The process of assessing the implications for women and men of any planned action, including legislation, policies, or programs.",
+    "Category": "Social",
+    "Tags": [
+      "Gender",
+      "Equality",
+      "Inclusion"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "gender mainstreaming program",
+      "gender mainstreaming strategy",
+      "gender mainstreaming programs"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "UN Sustainable Development Goals",
+      "Gender Experts",
+      "Gender Disparities",
+      "Gender Inequality",
+      "Gender Mainstreaming Program",
+      "Gender Equality",
+      "Inclusive Energy Planning",
+      "Women's Rights Organizations"
+    ],
+    "relations": {
+      "gender mainstreaming": [
+        {
+          "Relation": "addresses",
+          "Object": "Gender Inequality",
+          "Description": "Gender mainstreaming addresses gender inequality in the energy sector, promoting equal opportunities and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Gender Experts",
+          "Description": "Gender mainstreaming employs gender experts who provide guidance and expertise in integrating gender perspectives into sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Women's Rights Organizations",
+          "Description": "Gender mainstreaming collaborates with women's rights organizations to ensure the inclusion and empowerment of women in the energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Gender Equality",
+          "Description": "Gender mainstreaming supports gender equality in the energy sector, advocating for equal rights, opportunities, and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Gender Mainstreaming Program",
+          "Description": "Gender mainstreaming administers a program that promotes the integration of gender perspectives into sustainable energy policies and practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Gender Disparities",
+          "Description": "Gender mainstreaming measures gender disparities in the energy sector, identifying areas for improvement and targeted interventions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "UN Sustainable Development Goals",
+          "Description": "Gender mainstreaming aligns with the UN Sustainable Development Goals, particularly Goal 5 on gender equality and Goal 7 on sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Inclusive Energy Planning",
+          "Description": "Gender mainstreaming is an instance of inclusive energy planning, which aims to ensure the equitable and inclusive distribution of energy resources.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

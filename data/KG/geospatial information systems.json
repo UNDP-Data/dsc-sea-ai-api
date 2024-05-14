@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "geospatial information systems",
+    "Description": "Systems that capture, store, analyze, and manage spatial and geographic data.",
+    "Category": "Technology",
+    "Tags": [
+      "GIS",
+      "Spatial Data",
+      "Geographic Analysis"
+    ],
+    "Dimension": "Technology",
+    "Acronym": "GIS",
+    "Importance": 2.0,
+    "Synonyms": [
+      "geographic information system"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Disaster Resilience",
+      "Energy Infrastructure Planning",
+      "Sustainable Development Goals",
+      "Renewable Energy Mapping",
+      "Geographic Information System",
+      "Carbon Footprint",
+      "Urban Planning Departments"
+    ],
+    "relations": {
+      "geospatial information systems": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Infrastructure Planning",
+          "Description": "Geospatial information systems are used to address energy infrastructure planning by providing accurate data and analysis for informed decision-making.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Mapping",
+          "Description": "Geospatial information systems employ renewable energy mapping techniques to identify suitable locations for renewable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Urban Planning Departments",
+          "Description": "Geospatial information systems collaborate with urban planning departments to integrate energy considerations into urban development plans.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Disaster Resilience",
+          "Description": "Geospatial information systems support disaster resilience efforts by providing real-time data and analysis for effective emergency response and recovery.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Geospatial information systems administer energy efficiency programs by monitoring and evaluating energy-saving initiatives and their impact.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Carbon Footprint",
+          "Description": "Geospatial information systems measure carbon footprint by analyzing energy consumption patterns and emissions data.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Geospatial information systems align with the Sustainable Development Goals by providing data and analysis for monitoring progress and informing policy decisions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Geographic Information System",
+          "Description": "Geospatial information systems are an instance of a geographic information system, specialized for energy-related applications.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "carbon capture and storage",
+    "Description": "Carbon capture and storage (CCS) is a technology that captures carbon dioxide (CO2) emissions from sources such as power plants and stores it underground to prevent it from entering the atmosphere.",
+    "Category": "Technology",
+    "Tags": [
+      "Climate Change",
+      "Emissions Reduction",
+      "Carbon Sequestration"
+    ],
+    "Dimension": "Technology",
+    "Acronym": "CCS",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Change",
+      "Industrial Emissions",
+      "Oil and Gas Companies",
+      "Energy Efficiency Policy",
+      "Energy Transition Strategy",
+      "Climate Change Mitigation",
+      "Carbon Sequestration",
+      "Carbon Dioxide Levels",
+      "Research and Development"
+    ],
+    "relations": {
+      "carbon capture and storage": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Carbon capture and storage implements energy efficiency policies to reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Carbon capture and storage funds research and development projects to improve technology and efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Carbon Sequestration",
+          "Description": "Carbon capture and storage focuses on the process of carbon sequestration to reduce carbon dioxide levels in the atmosphere.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Transition Strategy",
+          "Description": "Carbon capture and storage plays a crucial role in the energy transition strategy to achieve sustainable and clean energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Oil and Gas Companies",
+          "Description": "Carbon capture and storage partners with oil and gas companies to implement carbon capture technologies in their operations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Carbon capture and storage contributes to climate change mitigation efforts by reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Carbon Dioxide Levels",
+          "Description": "Carbon capture and storage monitors carbon dioxide levels to ensure effective capture and storage processes.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Industrial Emissions",
+          "Description": "Carbon capture and storage targets industrial emissions to reduce their impact on the environment.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change",
+          "Description": "Carbon capture and storage addresses the issue of climate change by capturing and storing carbon dioxide emissions.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

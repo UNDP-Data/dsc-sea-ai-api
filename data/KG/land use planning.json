@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "land use planning",
+    "Description": "Planning and management of land use",
+    "Category": "Policy",
+    "Tags": [
+      "Land Use",
+      "Planning"
+    ],
+    "Dimension": "Infrastructure",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Development Goals",
+      "Spatial Analysis",
+      "Climate Change Mitigation",
+      "Integrated Resource Planning",
+      "Community Engagement",
+      "Zoning Regulations",
+      "Land Suitability",
+      "Urban Planning Departments"
+    ],
+    "relations": {
+      "land use planning": [
+        {
+          "Relation": "addresses",
+          "Object": "Sustainable Development Goals",
+          "Description": "Land use planning plays a crucial role in addressing the Sustainable Development Goals by promoting sustainable and efficient use of land for energy-related activities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Spatial Analysis",
+          "Description": "Land use planning employs spatial analysis techniques to identify suitable locations for renewable energy projects and optimize energy infrastructure.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Urban Planning Departments",
+          "Description": "Land use planning collaborates with urban planning departments to integrate energy considerations into urban development plans and ensure sustainable energy practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Community Engagement",
+          "Description": "Land use planning supports community engagement initiatives to involve local residents in decision-making processes related to energy infrastructure and land use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Zoning Regulations",
+          "Description": "Land use planning administers zoning regulations to ensure appropriate allocation of land for different energy-related activities and minimize conflicts.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Land Suitability",
+          "Description": "Land use planning measures land suitability for various energy projects, considering factors such as topography, soil quality, and environmental impact.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Change Mitigation",
+          "Description": "Land use planning aligns with climate change mitigation efforts by promoting sustainable land use practices that reduce greenhouse gas emissions and enhance carbon sequestration.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Integrated Resource Planning",
+          "Description": "Land use planning is an instance of integrated resource planning, which aims to optimize the use of land and energy resources for sustainable development.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

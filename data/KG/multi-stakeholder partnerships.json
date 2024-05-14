@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "Entity": "multi-stakeholder partnerships",
+    "Description": "Collaborative initiatives involving multiple stakeholders, such as governments, businesses, and civil society organizations.",
+    "Category": "Strategy",
+    "Tags": [
+      "Collaboration",
+      "Sustainable Development",
+      "Collective Impact"
+    ],
+    "Dimension": "Social",
+    "Acronym": "MSP",
+    "Importance": 3.0,
+    "Synonyms": [
+      "multi-stakeholder approach"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Private Sector",
+      "Collaborative Decision-Making",
+      "Capacity Building",
+      "Sustainable Development Goals",
+      "Collaborative Governance",
+      "Carbon Footprint"
+    ],
+    "relations": {
+      "multi-stakeholder partnerships": [
+        {
+          "Relation": "employs",
+          "Object": "Collaborative Decision-Making",
+          "Description": "Multi-stakeholder partnerships employ collaborative decision-making processes to ensure diverse perspectives and expertise in sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Private Sector",
+          "Description": "Multi-stakeholder partnerships collaborate with the private sector to leverage resources and expertise for the implementation of sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Capacity Building",
+          "Description": "Multi-stakeholder partnerships support capacity building initiatives to enhance knowledge and skills in sustainable energy practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Multi-stakeholder partnerships administer energy efficiency programs to promote the adoption of energy-saving practices and technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Carbon Footprint",
+          "Description": "Multi-stakeholder partnerships measure carbon footprint to assess the environmental impact of sustainable energy initiatives and identify areas for improvement.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Multi-stakeholder partnerships align with the Sustainable Development Goals to contribute to the achievement of targets related to sustainable energy and climate action.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Collaborative Governance",
+          "Description": "Multi-stakeholder partnerships are an instance of collaborative governance, where diverse stakeholders come together to address sustainable energy challenges.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "levelized cost of electricity",
+    "Description": "A measure of the average cost of generating electricity from a particular source over its lifetime, taking into account the initial investment, operating costs, and expected output.",
+    "Category": "Economic",
+    "Tags": [
+      "Technology",
+      "Finance"
+    ],
+    "Dimension": "Economic",
+    "Acronym": "LCOE",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Transition",
+      "Energy Consumption Patterns",
+      "Electricity Regulatory Authority",
+      "Energy Efficiency Policy",
+      "Cost Reduction Strategies",
+      "Affordable Energy Access",
+      "Renewable Energy Projects",
+      "Energy Market Analysis"
+    ],
+    "relations": {
+      "levelized cost of electricity": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "The levelized cost of electricity is implemented by the Energy Efficiency Policy to ensure cost-effective energy generation and consumption.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "The levelized cost of electricity provides funding for various renewable energy projects to promote sustainable energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Cost Reduction Strategies",
+          "Description": "The levelized cost of electricity focuses on implementing cost reduction strategies to make energy generation more affordable and accessible.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Market Analysis",
+          "Description": "The levelized cost of electricity is used in energy market analysis to assess the competitiveness of different energy sources.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Electricity Regulatory Authority",
+          "Description": "The levelized cost of electricity partners with the Electricity Regulatory Authority to ensure fair pricing and regulation in the energy sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Transition",
+          "Description": "The levelized cost of electricity contributes to the overall energy transition by promoting the adoption of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption Patterns",
+          "Description": "The levelized cost of electricity monitors energy consumption patterns to identify areas for improvement and optimization.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Affordable Energy Access",
+          "Description": "The levelized cost of electricity targets affordable energy access for all, especially in underserved communities.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

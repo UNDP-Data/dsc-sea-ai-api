@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "Load forecasting and demand-side management",
+    "Description": "Load forecasting and demand-side management are strategies used to predict and manage electricity demand in order to optimize energy generation and consumption.",
+    "Category": "Strategy",
+    "Tags": [
+      "Energy Management",
+      "Demand Response",
+      "Smart Grid"
+    ],
+    "Dimension": "Strategy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Utility Companies",
+      "Energy Consumption Patterns",
+      "Grid Stability",
+      "Energy Efficiency",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Peak Demand"
+    ],
+    "relations": {
+      "Load forecasting and demand-side management": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Load forecasting and demand-side management implements building standards that promote energy efficiency and conservation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Load forecasting and demand-side management funds renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Consumption Patterns",
+          "Description": "Load forecasting and demand-side management focuses on analyzing energy consumption patterns to optimize energy usage.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Load forecasting and demand-side management is implemented in energy efficiency programs to reduce energy waste.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Utility Companies",
+          "Description": "Load forecasting and demand-side management partners with utility companies to coordinate energy demand and supply.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Grid Stability",
+          "Description": "Load forecasting and demand-side management contributes to grid stability by managing and balancing energy demand.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Load forecasting and demand-side management monitors energy consumption to identify trends and patterns.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Load forecasting and demand-side management targets energy efficiency by optimizing energy usage and reducing waste.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Peak Demand",
+          "Description": "Load forecasting and demand-side management addresses peak demand by managing and reducing energy usage during high-demand periods.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

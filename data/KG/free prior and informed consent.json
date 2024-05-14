@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "free prior and informed consent",
+    "Description": "The principle that requires the consent of indigenous communities before any decision or action is taken that may affect their rights or lands.",
+    "Category": "Social",
+    "Tags": [
+      "Free Prior and Informed Consent",
+      "Indigenous",
+      "Consent"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Community Development Programs",
+      "Government Policies",
+      "Sustainable Development",
+      "Indigenous Peoples Organizations",
+      "International Human Rights Law",
+      "Building Standards",
+      "Environmental Impact Assessments",
+      "Resource Extraction Projects"
+    ],
+    "relations": {
+      "free prior and informed consent": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Free prior and informed consent implements building standards that ensure the rights of indigenous communities are respected in development projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Community Development Programs",
+          "Description": "Free prior and informed consent provides funding for community development programs that empower indigenous communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Environmental Impact Assessments",
+          "Description": "Free prior and informed consent focuses on conducting environmental impact assessments to ensure the protection of indigenous lands and resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "International Human Rights Law",
+          "Description": "Free prior and informed consent is recognized as a right under international human rights law.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Indigenous Peoples Organizations",
+          "Description": "Free prior and informed consent partners with indigenous peoples organizations to ensure meaningful participation in decision-making processes.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development",
+          "Description": "Free prior and informed consent contributes to sustainable development by promoting the rights and well-being of indigenous communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Resource Extraction Projects",
+          "Description": "Free prior and informed consent monitors resource extraction projects to ensure compliance with indigenous rights and environmental standards.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Government Policies",
+          "Description": "Free prior and informed consent targets government policies to ensure the recognition and protection of indigenous rights.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

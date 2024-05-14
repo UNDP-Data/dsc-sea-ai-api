@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "monitoring and evaluation frameworks",
+    "Description": "Frameworks for monitoring and evaluating projects",
+    "Category": "Policy",
+    "Tags": [
+      "Monitoring",
+      "Evaluation",
+      "Frameworks"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Research and Development",
+      "Government Agencies",
+      "Energy Efficiency Policy",
+      "Policy Development",
+      "Energy Efficiency",
+      "Energy Consumption",
+      "Renewable Energy Sources",
+      "Sustainable Energy Transition"
+    ],
+    "relations": {
+      "monitoring and evaluation frameworks": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Monitoring and evaluation frameworks implement the Energy Efficiency Policy to assess the effectiveness of energy-saving measures.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Monitoring and evaluation frameworks allocate funds for research and development in sustainable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Sources",
+          "Description": "Monitoring and evaluation frameworks focus on assessing the performance and impact of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Transition",
+          "Description": "Monitoring and evaluation frameworks play a crucial role in the successful implementation of the Sustainable Energy Transition.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Government Agencies",
+          "Description": "Monitoring and evaluation frameworks collaborate with government agencies to gather data and assess the progress of sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Policy Development",
+          "Description": "Monitoring and evaluation frameworks contribute valuable insights and data to inform policy development in the field of sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Monitoring and evaluation frameworks monitor energy consumption patterns to identify areas for improvement and energy-saving opportunities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Monitoring and evaluation frameworks set targets for energy efficiency improvements and track progress towards achieving them.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

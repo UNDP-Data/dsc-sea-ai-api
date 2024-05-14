@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "energy and development economics",
+    "Description": "The study of the economic aspects of energy production, consumption, and development.",
+    "Category": "Organization",
+    "Tags": [
+      "Policy",
+      "Economic",
+      "Technology"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "International Organizations",
+      "Sustainable Development Goals",
+      "Energy Poverty",
+      "Energy Productivity",
+      "Interdisciplinary Field",
+      "Renewable Energy Research",
+      "Cost-Benefit Analysis",
+      "Energy Subsidies"
+    ],
+    "relations": {
+      "energy and development economics": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Energy and development economics address the issue of energy poverty and its impact on socio-economic development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Cost-Benefit Analysis",
+          "Description": "Energy and development economics employ cost-benefit analysis to evaluate the economic viability of sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "International Organizations",
+          "Description": "Energy and development economics collaborate with international organizations to promote sustainable energy solutions globally.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Research",
+          "Description": "Energy and development economics support research on renewable energy technologies and their potential for economic growth.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Subsidies",
+          "Description": "Energy and development economics administer energy subsidies to promote the adoption of clean and affordable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Productivity",
+          "Description": "Energy and development economics measure energy productivity to assess the efficiency of energy use in different sectors.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy and development economics align with the Sustainable Development Goals to ensure energy access and sustainability for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Interdisciplinary Field",
+          "Description": "Energy and development economics is an interdisciplinary field that combines principles of economics and energy studies.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

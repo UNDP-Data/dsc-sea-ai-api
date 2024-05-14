@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "micro grids",
+    "Description": "Small-scale, localized electrical grids that can operate independently or in conjunction with the main grid.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Energy Access",
+      "Resilience",
+      "Decentralization"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "microgrid systems",
+      "smart grids"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Energy Independence",
+      "Distributed Energy Resources",
+      "Local Communities",
+      "Energy Storage Systems",
+      "Energy Generation",
+      "Decentralized Energy Systems",
+      "Renewable Energy Sources"
+    ],
+    "relations": {
+      "micro grids": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access",
+          "Description": "Micro grids address energy access challenges by providing electricity to remote and underserved areas.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Sources",
+          "Description": "Micro grids employ renewable energy sources to generate electricity in a decentralized manner.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Communities",
+          "Description": "Micro grids collaborate with local communities to ensure their energy needs are met sustainably and efficiently.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Independence",
+          "Description": "Micro grids support energy independence by reducing reliance on centralized power grids and promoting local energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Storage Systems",
+          "Description": "Micro grids administer energy storage systems to ensure reliable and uninterrupted power supply.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Generation",
+          "Description": "Micro grids measure energy generation to optimize the utilization of renewable energy resources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Decentralized Energy Systems",
+          "Description": "Micro grids align with decentralized energy systems to promote local energy generation and distribution.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Distributed Energy Resources",
+          "Description": "Micro grids are an instance of distributed energy resources that enable localized energy generation and consumption.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

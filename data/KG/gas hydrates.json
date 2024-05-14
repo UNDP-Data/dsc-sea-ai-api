@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "Entity": "gas hydrates",
+    "Description": "Gas hydrates are ice-like crystalline structures that form when natural gas combines with water under specific temperature and pressure conditions.",
+    "Category": "Technology",
+    "Tags": [
+      "Natural Gas",
+      "Methane",
+      "Energy Resource"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Climate Change Adaptation",
+      "Geological Survey Organizations",
+      "Methane Content",
+      "Renewable Energy Research",
+      "Methane Extraction Technology",
+      "Hydrate Extraction Projects",
+      "Unconventional Energy Resource"
+    ],
+    "relations": {
+      "gas hydrates": [
+        {
+          "Relation": "employs",
+          "Object": "Methane Extraction Technology",
+          "Description": "Gas hydrates employ methane extraction technology to extract methane gas from hydrate deposits.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Geological Survey Organizations",
+          "Description": "Gas hydrates collaborate with geological survey organizations to study and explore hydrate deposits.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Research",
+          "Description": "Gas hydrates support research on renewable energy sources to find alternative solutions to fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Hydrate Extraction Projects",
+          "Description": "Gas hydrates administer projects focused on the extraction of hydrates for energy production.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Methane Content",
+          "Description": "Gas hydrates measure the methane content in hydrate deposits to assess their potential for energy extraction.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Change Adaptation",
+          "Description": "Gas hydrates align with climate change adaptation strategies by providing a potential alternative energy source.",
+          "Importance": 3
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Unconventional Energy Resource",
+          "Description": "Gas hydrates are an instance of unconventional energy resources due to their unique composition and extraction methods.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

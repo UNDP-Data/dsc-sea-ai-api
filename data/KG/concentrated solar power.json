@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "concentrated solar power",
+    "Description": "Solar power generation using concentrated sunlight",
+    "Category": "Technology",
+    "Tags": [
+      "Solar Power",
+      "Concentrated",
+      "Sunlight"
+    ],
+    "Dimension": "Technology",
+    "Acronym": "CSP",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Electricity Grid Operators",
+      "Solar Power Plants",
+      "Clean Energy Transition",
+      "Renewable Energy Portfolio",
+      "Research and Development",
+      "Renewable Energy Capacity"
+    ],
+    "relations": {
+      "concentrated solar power": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Concentrated solar power implements the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Concentrated solar power funds research and development activities to improve the efficiency and effectiveness of solar power technology.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Clean Energy Transition",
+          "Description": "Concentrated solar power focuses on supporting the clean energy transition by providing a sustainable and renewable energy source.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Renewable Energy Portfolio",
+          "Description": "Concentrated solar power is included in the renewable energy portfolio to diversify the energy mix and reduce reliance on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Electricity Grid Operators",
+          "Description": "Concentrated solar power partners with electricity grid operators to ensure the integration and efficient distribution of solar power into the grid.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Concentrated solar power contributes to climate change mitigation by reducing greenhouse gas emissions and promoting sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Solar Power Plants",
+          "Description": "Concentrated solar power monitors the performance and operation of solar power plants to ensure optimal efficiency and maintenance.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Capacity",
+          "Description": "Concentrated solar power targets the increase of renewable energy capacity by expanding the deployment of solar power plants.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

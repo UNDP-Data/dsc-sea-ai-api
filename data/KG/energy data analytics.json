@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "Entity": "energy data analytics",
+    "Description": "The analysis of energy data to gain insights and inform decision-making in the energy sector.",
+    "Category": "Technology",
+    "Tags": [
+      "Data-driven Insights",
+      "Energy Efficiency"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy data management",
+      "energy market analysis",
+      "data analytics",
+      "energy analysts"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Research and Development",
+      "Carbon Footprint Reduction",
+      "Energy Efficiency Policy",
+      "Smart Grid Systems",
+      "Energy Service Companies",
+      "Energy Efficiency",
+      "Energy Consumption",
+      "Renewable Energy Sources"
+    ],
+    "relations": {
+      "energy data analytics": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Energy data analytics implements the Energy Efficiency Policy to optimize energy consumption and reduce waste.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Energy data analytics funds research and development projects to advance sustainable energy technologies and practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Sources",
+          "Description": "Energy data analytics focuses on analyzing data related to renewable energy sources to identify trends and opportunities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Smart Grid Systems",
+          "Description": "Energy data analytics is used in smart grid systems to optimize energy distribution and improve grid efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Energy Service Companies",
+          "Description": "Energy data analytics partners with energy service companies to provide data-driven insights for energy efficiency improvements.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Carbon Footprint Reduction",
+          "Description": "Energy data analytics contributes to carbon footprint reduction by identifying energy-saving opportunities and optimizing energy usage.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy data analytics monitors energy consumption patterns to identify areas for improvement and optimize energy usage.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Energy data analytics targets energy efficiency improvements by analyzing data and identifying energy-saving measures.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

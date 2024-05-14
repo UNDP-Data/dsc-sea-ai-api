@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "Entity": "energy governance",
+    "Description": "The framework and processes for decision-making, policy development, and regulation in the energy sector to ensure sustainable and equitable energy access.",
+    "Category": "Policy",
+    "Tags": [
+      "Energy Policy",
+      "Regulation",
+      "Energy Access"
+    ],
+    "Dimension": "Governance",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy performance",
+      "sustainable energy governance"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Private Sector",
+      "Energy Access",
+      "Energy Poverty",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Energy Consumption",
+      "Energy Security",
+      "Renewable Energy Projects",
+      "National Energy Policy"
+    ],
+    "relations": {
+      "energy governance": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Energy governance implements Energy Efficiency Policy to promote energy-saving practices and policies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy governance funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "Energy governance focuses on improving energy access for all communities, especially in remote and underserved areas.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "National Energy Policy",
+          "Description": "Energy governance operates within the framework of the National Energy Policy to ensure coordinated and effective energy management.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector",
+          "Description": "Energy governance partners with the Private Sector to leverage their expertise and resources in advancing sustainable energy initiatives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy governance contributes to climate change mitigation efforts by promoting the use of renewable energy and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy governance monitors energy consumption patterns to identify areas for improvement and optimize energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Energy governance targets the reduction of energy poverty by implementing policies and programs to ensure affordable and reliable energy access for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Security",
+          "Description": "Energy governance addresses energy security concerns by diversifying energy sources and promoting resilience in the energy sector.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

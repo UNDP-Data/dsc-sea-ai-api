@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "Entity": "energy poverty alleviation",
+    "Description": "Efforts to address and alleviate energy poverty in underserved communities.",
+    "Category": "Social",
+    "Tags": [
+      "Energy Access",
+      "Energy Equity"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "energy poverty alleviation": []
+    }
+  }
+}
