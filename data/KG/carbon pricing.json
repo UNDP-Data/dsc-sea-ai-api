@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "Entity": "carbon pricing",
+    "Description": "A policy instrument that puts a price on carbon emissions, either through a carbon tax or a cap-and-trade system, to incentivize the reduction of greenhouse gas emissions.",
+    "Category": "Policy",
+    "Tags": [
+      "Climate Change",
+      "Emissions Reduction",
+      "Market Mechanism"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "carbon footprint",
+      "carbon pricing mechanisms"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Private Sector",
+      "Sustainable Development Goals",
+      "Emission Reduction",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "High Carbon Intensity Industries",
+      "Carbon Market",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "carbon pricing": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Carbon pricing implements energy efficiency policies that incentivize the reduction of greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Carbon pricing funds renewable energy projects that aim to increase the share of clean energy in the energy mix.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Emission Reduction",
+          "Description": "Carbon pricing focuses on emission reduction strategies to mitigate climate change.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Climate Change Mitigation",
+          "Description": "Carbon pricing plays a role in climate change mitigation efforts by incentivizing the reduction of greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector",
+          "Description": "Carbon pricing partners with the private sector to promote sustainable business practices and investments in clean technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals",
+          "Description": "Carbon pricing contributes to the achievement of sustainable development goals by promoting clean energy and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Carbon Market",
+          "Description": "Carbon pricing monitors the carbon market to ensure the effectiveness and integrity of emissions trading systems.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "High Carbon Intensity Industries",
+          "Description": "Carbon pricing targets high carbon intensity industries to encourage emission reductions and transition to cleaner technologies.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

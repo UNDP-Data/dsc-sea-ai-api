@@ -1,100 +1,89 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "Energy Efficiency": [
-                {
-                    "Relation": "Improves",
-                    "Object": "Energy Management Systems",
-                    "Strength": "8",
-                    "Description": "Energy management systems help optimize energy usage and reduce waste, leading to improved energy efficiency."
-                },
-                {
-                    "Relation": "Enhances",
-                    "Object": "Renewable Energy Sources",
-                    "Strength": "9",
-                    "Description": "Using renewable energy sources such as solar or wind power can significantly increase energy efficiency by reducing reliance on fossil fuels."
-                },
-                {
-                    "Relation": "Increases",
-                    "Object": "Building Insulation",
-                    "Strength": "7",
-                    "Description": "Proper insulation in buildings helps reduce heat transfer, resulting in improved energy efficiency by reducing the need for heating or cooling."
-                },
-                {
-                    "Relation": "Optimizes",
-                    "Object": "Smart Grid",
-                    "Strength": "6",
-                    "Description": "Smart grids enable better monitoring and control of energy distribution, leading to optimized energy usage and improved energy efficiency."
-                },
-                {
-                    "Relation": "Focused on by",
-                    "Object": "ENERGY STAR",
-                    "Strength": "10",
-                    "Description": "Energy Star focuses on promoting energy efficiency in various sectors."
-                },
-                {
-                    "Relation": "Improves",
-                    "Object": "Energy Management Systems",
-                    "Strength": "8",
-                    "Description": "Energy management systems help optimize energy usage and reduce waste, leading to improved energy efficiency."
-                },
-                {
-                    "Relation": "Enhances",
-                    "Object": "Renewable Energy Sources",
-                    "Strength": "9",
-                    "Description": "Using renewable energy sources such as solar or wind power can significantly increase energy efficiency by reducing reliance on fossil fuels."
-                },
-                {
-                    "Relation": "Increases",
-                    "Object": "Building Insulation",
-                    "Strength": "7",
-                    "Description": "Proper insulation in buildings helps reduce heat transfer, resulting in improved energy efficiency by reducing the need for heating or cooling."
-                },
-                {
-                    "Relation": "Optimizes",
-                    "Object": "Smart Grid",
-                    "Strength": "6",
-                    "Description": "Smart grids enable better monitoring and control of energy distribution, leading to optimized energy usage and improved energy efficiency."
-                },
-                {
-                    "Relation": "Focused on by",
-                    "Object": "ENERGY STAR",
-                    "Strength": "10",
-                    "Description": "Energy Star focuses on promoting energy efficiency in various sectors."
-                },
-                {
-                    "Relation": "Improves",
-                    "Object": "Energy Management Systems",
-                    "Strength": "8",
-                    "Description": "Energy management systems help optimize energy usage and reduce waste, leading to improved energy efficiency."
-                },
-                {
-                    "Relation": "Enhances",
-                    "Object": "Renewable Energy Sources",
-                    "Strength": "9",
-                    "Description": "Using renewable energy sources such as solar or wind power can significantly increase energy efficiency by reducing reliance on fossil fuels."
-                },
-                {
-                    "Relation": "Increases",
-                    "Object": "Building Insulation",
-                    "Strength": "7",
-                    "Description": "Proper insulation in buildings helps reduce heat transfer, resulting in improved energy efficiency by reducing the need for heating or cooling."
-                },
-                {
-                    "Relation": "Optimizes",
-                    "Object": "Smart Grid",
-                    "Strength": "6",
-                    "Description": "Smart grids enable better monitoring and control of energy distribution, leading to optimized energy usage and improved energy efficiency."
-                },
-                {
-                    "Relation": "Focused on by",
-                    "Object": "ENERGY STAR",
-                    "Strength": "10",
-                    "Description": "Energy Star focuses on promoting energy efficiency in various sectors."
-                }
-            ]
+  "metadata": {
+    "Entity": "energy efficiency",
+    "Description": "The use of less energy to provide the same level of output or service, resulting in reduced energy consumption, cost savings, and environmental benefits.",
+    "Category": "Technology",
+    "Tags": [
+      "Energy Conservation",
+      "Energy Management",
+      "Sustainability"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "energy efficiency policy",
+      "energy efficiency programs",
+      "energy efficiency goals",
+      "energy efficiency performance",
+      "energy efficiency initiatives",
+      "energy efficiency measures",
+      "energy efficiency improvements",
+      "energy efficiency targets"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Energy Waste",
+      "Sustainable Development Goals",
+      "Industries",
+      "Energy Performance",
+      "Energy Audits",
+      "Energy Conservation",
+      "Renewable Energy Integration"
+    ],
+    "relations": {
+      "energy efficiency": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Waste",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Energy Audits",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Industries",
+          "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Integration",
+          "Description": "Energy efficiency supports the integration of renewable energy sources into the energy system to improve overall energy efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Energy efficiency administers energy efficiency programs to promote energy-saving behaviors and technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Performance",
+          "Description": "Energy efficiency measures energy performance to assess the effectiveness of energy-saving initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy efficiency aligns with the Sustainable Development Goals by contributing to the goal of affordable and clean energy for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Energy Conservation",
+          "Description": "Energy efficiency is an instance of energy conservation, which aims to reduce energy consumption and waste.",
+          "Importance": 4
         }
+      ]
     }
+  }
 }

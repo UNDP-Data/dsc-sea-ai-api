@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "blue economy",
+    "Description": "The sustainable use of ocean resources for economic growth, improved livelihoods, and jobs while preserving the health of the ocean ecosystem.",
+    "Category": "Economic",
+    "Tags": [
+      "Ocean",
+      "Sustainable Development",
+      "Marine Resources"
+    ],
+    "Dimension": "Sustainable Development",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "green economy"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "sustainable aquaculture",
+      "marine renewable energy",
+      "ocean pollution",
+      "sustainable fisheries",
+      "marine research institutions",
+      "coastal communities",
+      "ocean conservation projects",
+      "climate change mitigation"
+    ],
+    "relations": {
+      "blue economy": [
+        {
+          "Relation": "implements",
+          "Object": "sustainable fisheries",
+          "Description": "The blue economy implements sustainable fisheries practices to ensure the long-term health and productivity of marine ecosystems.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "ocean conservation projects",
+          "Description": "The blue economy funds various ocean conservation projects to protect marine biodiversity and ecosystems.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "marine renewable energy",
+          "Description": "The blue economy focuses on the development and utilization of marine renewable energy sources to reduce reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "coastal communities",
+          "Description": "The blue economy operates in coastal communities, supporting sustainable economic activities that benefit both the environment and local populations.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "marine research institutions",
+          "Description": "The blue economy partners with marine research institutions to promote scientific knowledge and innovation in sustainable ocean management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "The blue economy contributes to climate change mitigation efforts by promoting sustainable practices that reduce greenhouse gas emissions from marine activities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "ocean pollution",
+          "Description": "The blue economy monitors ocean pollution levels to identify sources and implement measures to reduce contamination and protect marine ecosystems.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "sustainable aquaculture",
+          "Description": "The blue economy targets the development of sustainable aquaculture practices to ensure the responsible production of seafood without harming the environment.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

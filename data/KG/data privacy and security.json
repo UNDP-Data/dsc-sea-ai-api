@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "data privacy and security",
+    "Description": "Protection of data from unauthorized access and ensuring its confidentiality and integrity.",
+    "Category": "Technology",
+    "Tags": [
+      "Data",
+      "Privacy",
+      "Security"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "data privacy and security": []
+    }
+  }
+}

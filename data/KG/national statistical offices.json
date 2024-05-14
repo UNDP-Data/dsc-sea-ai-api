@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "national statistical offices",
+    "Description": "Government agencies responsible for collecting and analyzing statistical data.",
+    "Category": "Organization",
+    "Tags": [
+      "Policy",
+      "Economic",
+      "Infrastructure"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Sustainable Development Goals",
+      "Energy Access Data",
+      "Government Agencies",
+      "Energy Surveys",
+      "Renewable Energy Capacity",
+      "Energy Analysts",
+      "Research Institutions"
+    ],
+    "relations": {
+      "national statistical offices": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access Data",
+          "Description": "National statistical offices collect and address energy access data to inform policy decisions and improve energy access.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Energy Analysts",
+          "Description": "National statistical offices employ energy analysts to analyze energy data and provide insights for sustainable energy planning.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Research Institutions",
+          "Description": "National statistical offices collaborate with research institutions to conduct studies on energy consumption and trends.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Efficiency Programs",
+          "Description": "National statistical offices support energy efficiency programs by providing data and insights for program development and evaluation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Surveys",
+          "Description": "National statistical offices administer energy surveys to gather data on energy consumption and usage patterns.",
+          "Importance": 2
+        },
+        {
+          "Relation": "measures",
+          "Object": "Renewable Energy Capacity",
+          "Description": "National statistical offices measure renewable energy capacity to track progress towards sustainable energy goals.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "National statistical offices align their energy data collection and reporting with the Sustainable Development Goals.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Government Agencies",
+          "Description": "National statistical offices are government agencies responsible for collecting and analyzing energy data.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

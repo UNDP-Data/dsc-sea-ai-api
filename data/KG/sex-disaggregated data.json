@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "sex-disaggregated data",
+    "Description": "Data that is broken down by sex or gender to better understand and address gender disparities.",
+    "Category": "Social",
+    "Tags": [
+      "Gender",
+      "Data",
+      "Disaggregation"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "gender-responsive planning",
+      "gender equality policy",
+      "gender analysis",
+      "gender-based violence",
+      "gender pay gap",
+      "gender research projects",
+      "women's rights organizations",
+      "gender mainstreaming strategy"
+    ],
+    "relations": {
+      "sex-disaggregated data": [
+        {
+          "Relation": "implements",
+          "Object": "gender equality policy",
+          "Description": "Sex-disaggregated data implements gender equality policy by providing accurate and comprehensive information on gender disparities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "gender research projects",
+          "Description": "Sex-disaggregated data funds gender research projects to support evidence-based decision-making and policy development.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "gender analysis",
+          "Description": "Sex-disaggregated data focuses on gender analysis to identify and address gender inequalities and discrimination.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "gender mainstreaming strategy",
+          "Description": "Sex-disaggregated data is used in the gender mainstreaming strategy to ensure gender perspectives are integrated into all policies and programs.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "women's rights organizations",
+          "Description": "Sex-disaggregated data partners with women's rights organizations to promote gender equality and advocate for women's empowerment.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "gender-responsive planning",
+          "Description": "Sex-disaggregated data contributes to gender-responsive planning by providing insights into the specific needs and experiences of different genders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "gender pay gap",
+          "Description": "Sex-disaggregated data monitors the gender pay gap to track progress towards achieving equal pay for equal work.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "gender-based violence",
+          "Description": "Sex-disaggregated data targets gender-based violence by providing evidence for effective prevention and response strategies.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

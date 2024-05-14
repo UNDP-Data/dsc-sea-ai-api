@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "Entity": "gasification",
+    "Description": "Gasification is a process that converts carbon-based materials, such as coal or biomass, into synthesis gas (syngas) which can be used for power generation or as a chemical feedstock.",
+    "Category": "Technology",
+    "Tags": [
+      "Syngas",
+      "Biomass",
+      "Coal"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "gasification plants"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Biomass",
+      "Clean Energy Production",
+      "Waste Management",
+      "Gasification Plants",
+      "Energy Conversion Technology",
+      "Carbon Capture and Storage",
+      "Renewable Energy Companies",
+      "Research and Development",
+      "Sustainable Energy Systems"
+    ],
+    "relations": {
+      "gasification": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Conversion Technology",
+          "Description": "Gasification implements energy conversion technology that converts carbon-based materials into synthesis gas.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Gasification funds research and development activities to improve the efficiency and effectiveness of gasification processes.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Biomass",
+          "Description": "Gasification focuses on biomass as a feedstock for the gasification process.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Systems",
+          "Description": "Gasification is used in sustainable energy systems to convert biomass into useful energy products.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Renewable Energy Companies",
+          "Description": "Gasification partners with renewable energy companies to develop and deploy gasification technologies for renewable energy production.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Carbon Capture and Storage",
+          "Description": "Gasification contributes to carbon capture and storage efforts by producing synthesis gas that can be captured and stored.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Gasification Plants",
+          "Description": "Gasification monitors the performance and operation of gasification plants to ensure optimal efficiency and safety.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Clean Energy Production",
+          "Description": "Gasification targets clean energy production by converting biomass into clean and sustainable energy products.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Waste Management",
+          "Description": "Gasification addresses waste management challenges by converting waste materials into useful energy products.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

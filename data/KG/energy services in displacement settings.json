@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "Entity": "energy services in displacement settings",
+    "Description": "Energy services provided in settings where people have been displaced due to conflicts, disasters, or other reasons.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Policy",
+      "Social",
+      "Economic",
+      "Crisis"
+    ],
+    "Dimension": "Intersectionality",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access Challenges",
+      "Sustainable Energy Access",
+      "Climate Change Mitigation",
+      "Renewable Energy Technologies",
+      "Energy Consumption",
+      "Livelihood Opportunities",
+      "Humanitarian Organizations",
+      "Energy Assistance Programs"
+    ],
+    "relations": {
+      "energy services in displacement settings": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access Challenges",
+          "Description": "Energy services in displacement settings address the energy access challenges faced by displaced populations, ensuring their basic energy needs are met.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Energy services in displacement settings employ renewable energy technologies to provide clean and sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Humanitarian Organizations",
+          "Description": "Energy services in displacement settings collaborate with humanitarian organizations to ensure the provision of reliable and sustainable energy services.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Livelihood Opportunities",
+          "Description": "Energy services in displacement settings support the creation of livelihood opportunities through the provision of energy for income-generating activities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Assistance Programs",
+          "Description": "Energy services in displacement settings administer energy assistance programs to ensure access to affordable and reliable energy services.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Consumption",
+          "Description": "Energy services in displacement settings measure energy consumption to identify energy-saving opportunities and promote energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy services in displacement settings align with climate change mitigation efforts by promoting the use of clean and renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Sustainable Energy Access",
+          "Description": "Energy services in displacement settings are an instance of sustainable energy access, ensuring the provision of reliable and affordable energy services in challenging settings.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

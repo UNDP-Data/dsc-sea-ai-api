@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "Entity": "electrolysis",
+    "Description": "Electrolysis is a chemical process that uses an electric current to drive a non-spontaneous chemical reaction, such as the splitting of water into hydrogen and oxygen.",
+    "Category": "Technology",
+    "Tags": [
+      "Chemical Process",
+      "Hydrogen Production"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Transition",
+      "Hydrogen Production Facilities",
+      "Fuel Cell Technology",
+      "Decarbonization",
+      "Hydrogen Purity",
+      "Renewable Energy Sources",
+      "Electrochemical Process"
+    ],
+    "relations": {
+      "electrolysis": [
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Sources",
+          "Description": "Electrolysis employs renewable energy sources such as solar and wind to produce hydrogen through the electrolysis process.",
+          "Importance": 4
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Fuel Cell Technology",
+          "Description": "Electrolysis collaborates with fuel cell technology to utilize the produced hydrogen as a clean and efficient energy source.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "Decarbonization",
+          "Description": "Electrolysis supports decarbonization efforts by providing a carbon-free method of producing hydrogen for various applications.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Hydrogen Production Facilities",
+          "Description": "Electrolysis administers hydrogen production facilities where the electrolysis process takes place to produce hydrogen gas.",
+          "Importance": 2
+        },
+        {
+          "Relation": "measures",
+          "Object": "Hydrogen Purity",
+          "Description": "Electrolysis measures the purity of the produced hydrogen to ensure its quality and suitability for various applications.",
+          "Importance": 2
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Renewable Energy Transition",
+          "Description": "Electrolysis aligns with the transition to renewable energy sources by utilizing renewable electricity for the electrolysis process.",
+          "Importance": 3
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Electrochemical Process",
+          "Description": "Electrolysis is an instance of an electrochemical process where an electric current is used to drive a non-spontaneous chemical reaction.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

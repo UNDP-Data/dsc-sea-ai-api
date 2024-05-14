@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "digital ecosystems",
+    "Description": "Digital ecosystems refer to interconnected digital platforms, services, and applications that create a holistic digital environment.",
+    "Category": "Technology",
+    "Tags": [
+      "Digital Ecosystems",
+      "Technology"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access Initiative",
+      "Smart Grid Technology",
+      "Energy Consumption Patterns",
+      "Energy Efficiency Policy",
+      "Clean Energy Startups",
+      "Carbon Emission Reduction",
+      "Sustainable Energy Innovation Lab",
+      "Renewable Energy Research"
+    ],
+    "relations": {
+      "digital ecosystems": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Digital ecosystems implement the Energy Efficiency Policy to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Research",
+          "Description": "Digital ecosystems provide funding for research on renewable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Smart Grid Technology",
+          "Description": "Digital ecosystems focus on the development and implementation of smart grid technology for efficient energy distribution.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Innovation Lab",
+          "Description": "Digital ecosystems operate within the Sustainable Energy Innovation Lab to foster innovation in sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Clean Energy Startups",
+          "Description": "Digital ecosystems collaborate and partner with clean energy startups to support their growth and development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Access Initiative",
+          "Description": "Digital ecosystems contribute to the Energy Access Initiative to provide sustainable energy solutions to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption Patterns",
+          "Description": "Digital ecosystems monitor energy consumption patterns to identify areas for improvement and optimization.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Carbon Emission Reduction",
+          "Description": "Digital ecosystems set targets for carbon emission reduction to mitigate climate change and promote sustainable energy practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

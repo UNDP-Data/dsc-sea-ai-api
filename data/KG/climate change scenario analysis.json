@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "Entity": "climate change scenario analysis",
+    "Description": "Analysis of different scenarios related to climate change",
+    "Category": "Policy",
+    "Tags": [
+      "Climate Change",
+      "Scenario",
+      "Analysis"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "climate change goals"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "climate change scenario analysis": []
+    }
+  }
+}

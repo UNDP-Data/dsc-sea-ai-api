@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "whole-of-society approach",
+    "Description": "A whole-of-society approach refers to a collaborative and inclusive approach that involves all sectors of society, including government, civil society, private sector, and individuals, in addressing complex challenges and achieving sustainable development goals.",
+    "Category": "Strategy",
+    "Tags": [
+      "Collaboration",
+      "Inclusivity",
+      "Sustainable Development"
+    ],
+    "Dimension": "Strategy",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Development Goals",
+      "Energy Poverty",
+      "Energy Transition Strategy",
+      "Community Engagement",
+      "Energy Consumption",
+      "Non-Governmental Organizations",
+      "Renewable Energy Projects",
+      "Energy Policy"
+    ],
+    "relations": {
+      "whole-of-society approach": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Transition Strategy",
+          "Description": "The whole-of-society approach implements the Energy Transition Strategy to ensure the active participation of all stakeholders in achieving sustainable energy goals.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "The whole-of-society approach provides funding for various renewable energy projects to accelerate the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Community Engagement",
+          "Description": "The whole-of-society approach focuses on community engagement to ensure the active involvement and empowerment of local communities in sustainable energy initiatives.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Policy",
+          "Description": "The whole-of-society approach is embedded in the Energy Policy to ensure the integration of diverse perspectives and expertise in decision-making processes.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Non-Governmental Organizations",
+          "Description": "The whole-of-society approach partners with non-governmental organizations to leverage their expertise and resources in implementing sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals",
+          "Description": "The whole-of-society approach contributes to the achievement of Sustainable Development Goals by promoting inclusive and equitable access to sustainable energy for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "The whole-of-society approach monitors energy consumption patterns to identify areas for improvement and optimize energy efficiency measures.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "The whole-of-society approach targets the reduction of energy poverty by implementing targeted interventions and programs to improve access to affordable and reliable energy services.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

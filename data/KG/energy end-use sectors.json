@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "energy end-use sectors",
+    "Description": "Energy end-use sectors refer to the different sectors or industries that consume energy for their operations, such as residential, commercial, industrial, and transportation sectors.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Energy Consumption",
+      "Energy Demand",
+      "Energy Efficiency"
+    ],
+    "Dimension": "Infrastructure",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Programs",
+      "Sustainable Development Goals",
+      "Manufacturing Industry",
+      "Energy Management Systems",
+      "Energy Efficiency",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Energy Demand"
+    ],
+    "relations": {
+      "energy end-use sectors": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Efficiency",
+          "Description": "Energy end-use sectors address Energy Efficiency to reduce energy consumption and improve sustainability.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Energy Management Systems",
+          "Description": "Energy end-use sectors employ Energy Management Systems to optimize energy usage and reduce waste.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Manufacturing Industry",
+          "Description": "Energy end-use sectors collaborate with the Manufacturing Industry to develop energy-efficient processes and technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy end-use sectors support Renewable Energy Projects to increase the share of clean energy in the overall energy mix.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Efficiency Programs",
+          "Description": "Energy end-use sectors administer Energy Efficiency Programs to promote energy-saving practices and technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Consumption",
+          "Description": "Energy end-use sectors measure Energy Consumption to identify areas for improvement and track progress.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "Energy end-use sectors align with Sustainable Development Goals to contribute to global sustainability efforts.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Energy Demand",
+          "Description": "Energy end-use sectors are an instance of Energy Demand, representing the final consumption of energy by end-users.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

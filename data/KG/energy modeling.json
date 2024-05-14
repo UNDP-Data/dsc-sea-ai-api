@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "Entity": "energy modeling",
+    "Description": "The process of creating mathematical models to simulate and analyze energy systems and their performance.",
+    "Category": "Technology",
+    "Tags": [
+      "Energy Simulation",
+      "System Analysis",
+      "Energy Efficiency"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy planning"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Building Energy Performance",
+      "Carbon Footprint Reduction",
+      "Energy Consultants",
+      "Energy Efficiency Policy",
+      "Energy Efficiency Goals",
+      "Sustainable Energy Planning",
+      "Energy Consumption",
+      "Renewable Energy Integration",
+      "Research and Development"
+    ],
+    "relations": {
+      "energy modeling": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Energy modeling implements the Energy Efficiency Policy to optimize energy consumption and reduce waste.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Energy modeling funds research and development projects to improve energy efficiency and renewable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Building Energy Performance",
+          "Description": "Energy modeling focuses on analyzing and improving building energy performance through simulation and optimization techniques.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Planning",
+          "Description": "Energy modeling is an integral part of sustainable energy planning to assess the impact of different energy scenarios and inform decision-making.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Energy Consultants",
+          "Description": "Energy modeling partners with energy consultants to provide expertise and support in energy efficiency analysis and modeling.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Carbon Footprint Reduction",
+          "Description": "Energy modeling contributes to carbon footprint reduction by identifying energy-saving opportunities and optimizing energy systems.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy modeling monitors energy consumption patterns and trends to identify areas for improvement and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency Goals",
+          "Description": "Energy modeling targets energy efficiency goals by identifying strategies and measures to achieve optimal energy performance.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Renewable Energy Integration",
+          "Description": "Energy modeling addresses the challenges and opportunities of renewable energy integration into the existing energy system.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

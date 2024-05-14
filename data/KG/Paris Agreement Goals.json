@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "Paris Agreement Goals",
+    "Description": "The Paris Agreement Goals are the targets and commitments made by countries to combat climate change and reduce greenhouse gas emissions.",
+    "Category": "Policy",
+    "Tags": [
+      "Paris Agreement",
+      "Climate Change",
+      "Policy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "paris agreement"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Net Zero Emissions",
+      "Energy Efficiency Policy",
+      "International Renewable Energy Agency (IRENA)",
+      "Climate Change Mitigation",
+      "Sustainable Development Goals (SDGs)",
+      "Greenhouse Gas Emissions",
+      "Renewable Energy Projects",
+      "United Nations Framework Convention on Climate Change (UNFCCC)"
+    ],
+    "relations": {
+      "Paris Agreement Goals": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Paris Agreement Goals implements Energy Efficiency Policy to promote energy-saving practices and reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Paris Agreement Goals funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Climate Change Mitigation",
+          "Description": "Paris Agreement Goals focuses on Climate Change Mitigation to reduce the impact of global warming and limit temperature rise.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "United Nations Framework Convention on Climate Change (UNFCCC)",
+          "Description": "Paris Agreement Goals is in the framework of the United Nations Framework Convention on Climate Change (UNFCCC) to address climate change issues globally.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "International Renewable Energy Agency (IRENA)",
+          "Description": "Paris Agreement Goals partners with International Renewable Energy Agency (IRENA) to promote renewable energy adoption and collaboration.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals (SDGs)",
+          "Description": "Paris Agreement Goals contributes to the achievement of Sustainable Development Goals (SDGs) by addressing climate change and promoting sustainable practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Greenhouse Gas Emissions",
+          "Description": "Paris Agreement Goals monitors Greenhouse Gas Emissions to track progress towards emission reduction targets.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Net Zero Emissions",
+          "Description": "Paris Agreement Goals targets Net Zero Emissions to achieve a balance between greenhouse gas emissions and removals.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

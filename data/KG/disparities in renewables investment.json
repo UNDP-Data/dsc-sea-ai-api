@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "disparities in renewables investment",
+    "Description": "Inequalities in investment in renewable energy",
+    "Category": "Economic",
+    "Tags": [
+      "Renewable Energy",
+      "Investment",
+      "Disparities"
+    ],
+    "Dimension": "Finance",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "International Renewable Energy Agency",
+      "Developing Countries",
+      "Energy Access Program",
+      "Energy Poverty",
+      "Renewable Energy Access",
+      "Climate Change Mitigation",
+      "Renewable Energy Projects",
+      "Sustainable Energy Transition",
+      "Renewable Energy Investments"
+    ],
+    "relations": {
+      "disparities in renewables investment": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Access Program",
+          "Description": "Disparities in renewables investment implements the Energy Access Program to address the unequal distribution of renewable energy resources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Disparities in renewables investment funds various renewable energy projects to promote equal access to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Developing Countries",
+          "Description": "Disparities in renewables investment focuses on addressing the unequal distribution of renewable energy resources in developing countries.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Transition",
+          "Description": "Disparities in renewables investment plays a role in the overall sustainable energy transition by addressing the unequal distribution of renewable energy resources.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "International Renewable Energy Agency",
+          "Description": "Disparities in renewables investment partners with the International Renewable Energy Agency to collaborate on initiatives to promote equal access to renewable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Disparities in renewables investment contributes to climate change mitigation efforts by promoting the equal distribution of renewable energy resources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Renewable Energy Investments",
+          "Description": "Disparities in renewables investment monitors the allocation and impact of renewable energy investments to ensure equal distribution and effectiveness.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Access",
+          "Description": "Disparities in renewables investment targets the achievement of equal access to renewable energy resources for all communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "Disparities in renewables investment addresses energy poverty by promoting equal access to renewable energy resources for underserved communities.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

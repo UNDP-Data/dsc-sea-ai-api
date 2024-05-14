@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "integrating traditional knowledge",
+    "Description": "The incorporation of indigenous and traditional knowledge systems into sustainable energy planning and decision-making processes.",
+    "Category": "Policy",
+    "Tags": [
+      "Social",
+      "Environmental",
+      "Intersectionality"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Capacity Building",
+      "Research Projects",
+      "Indigenous Communities",
+      "Policy Development",
+      "Knowledge Exchange Programs",
+      "Renewable Energy Technologies",
+      "Building Standards",
+      "Community Empowerment"
+    ],
+    "relations": {
+      "integrating traditional knowledge": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Integrating traditional knowledge implements building standards that incorporate indigenous practices and wisdom.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research Projects",
+          "Description": "Integrating traditional knowledge funds research projects that explore the integration of indigenous knowledge into sustainable energy practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Technologies",
+          "Description": "Integrating traditional knowledge focuses on renewable energy technologies that align with indigenous values and principles.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Policy Development",
+          "Description": "Integrating traditional knowledge is integrated in policy development processes to ensure the inclusion of indigenous perspectives and practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Indigenous Communities",
+          "Description": "Integrating traditional knowledge partners with indigenous communities to co-create sustainable energy solutions that respect and incorporate traditional practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Community Empowerment",
+          "Description": "Integrating traditional knowledge contributes to community empowerment by valuing and utilizing indigenous knowledge in sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Knowledge Exchange Programs",
+          "Description": "Integrating traditional knowledge monitors knowledge exchange programs that facilitate the sharing of indigenous energy practices and experiences.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Capacity Building",
+          "Description": "Integrating traditional knowledge targets capacity building initiatives to enhance the understanding and application of indigenous energy knowledge.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

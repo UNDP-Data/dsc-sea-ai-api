@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "energy diplomacy",
+    "Description": "Energy diplomacy refers to the diplomatic efforts and negotiations related to energy resources, energy security, and energy cooperation between countries and international organizations.",
+    "Category": "Policy",
+    "Tags": [
+      "International Relations",
+      "Energy Security",
+      "Cooperation"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy policy"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "United Nations Framework Convention on Climate Change",
+      "Energy Access",
+      "Energy Transition Progress",
+      "International Energy Agency",
+      "Energy Efficiency Policy",
+      "Sustainable Development Goal 7",
+      "Energy Efficiency",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "energy diplomacy": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Energy diplomacy implements Energy Efficiency Policy to promote sustainable energy practices globally.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "energy diplomacy funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "energy diplomacy focuses on improving energy access in underserved communities to promote sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "International Energy Agency",
+          "Description": "energy diplomacy plays a role in the International Energy Agency to promote international cooperation on energy issues.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "United Nations Framework Convention on Climate Change",
+          "Description": "energy diplomacy partners with the United Nations Framework Convention on Climate Change to address climate change through sustainable energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goal 7",
+          "Description": "energy diplomacy contributes to Sustainable Development Goal 7 by promoting affordable and clean energy for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Transition Progress",
+          "Description": "energy diplomacy monitors the progress of energy transition to ensure the achievement of sustainable energy goals.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "energy diplomacy targets energy efficiency measures to reduce energy consumption and promote sustainable energy practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

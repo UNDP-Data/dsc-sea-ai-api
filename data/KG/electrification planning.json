@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "Entity": "electrification planning",
+    "Description": "The process of developing strategies and plans to increase access to electricity in a specific area or region.",
+    "Category": "Strategy",
+    "Tags": [
+      "Electrification",
+      "Planning",
+      "Energy Access"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "electrification"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "electrification planning": []
+    }
+  }
+}

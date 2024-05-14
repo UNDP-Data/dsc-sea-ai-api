@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "carbon neutrality",
+    "Description": "Carbon neutrality refers to achieving a balance between carbon emissions and carbon removal, resulting in no net increase in atmospheric carbon dioxide levels.",
+    "Category": "Policy",
+    "Tags": [
+      "Carbon Neutrality",
+      "Climate Change",
+      "Policy"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Transition",
+      "Sustainable Development Goals",
+      "Private Sector Companies",
+      "Net Zero Emissions",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "carbon neutrality": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Carbon neutrality implements Energy Efficiency Policy to reduce carbon emissions and promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Carbon neutrality funds Renewable Energy Projects to support the development and implementation of clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Transition",
+          "Description": "Carbon neutrality focuses on the transition to renewable energy sources to reduce reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Development Goals",
+          "Description": "Carbon neutrality is an important component in achieving the Sustainable Development Goals related to climate action and clean energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector Companies",
+          "Description": "Carbon neutrality partners with private sector companies to collaborate on sustainable energy initiatives and reduce carbon footprint.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Carbon neutrality contributes to climate change mitigation efforts by reducing greenhouse gas emissions and promoting sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Carbon neutrality monitors energy consumption patterns to identify areas for improvement and optimize energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Net Zero Emissions",
+          "Description": "Carbon neutrality sets targets for achieving net zero emissions to combat climate change and promote sustainable energy practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

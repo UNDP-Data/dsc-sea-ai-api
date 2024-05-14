@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "Entity": "energy project cycle",
+    "Description": "The stages involved in the development and implementation of an energy project.",
+    "Category": "Technology",
+    "Tags": [
+      "Project Management",
+      "Energy Planning",
+      "Implementation"
+    ],
+    "Dimension": "Energy",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Renewable Energy Generation",
+      "Energy Access Program",
+      "Energy Poverty",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Sustainable Energy Solutions",
+      "Local Governments",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "energy project cycle": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "The energy project cycle implements the Energy Efficiency Policy to ensure energy-saving practices are followed.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "The energy project cycle provides funds for various renewable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Sustainable Energy Solutions",
+          "Description": "The energy project cycle focuses on implementing sustainable energy solutions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Access Program",
+          "Description": "The energy project cycle operates within the Energy Access Program to provide energy access to underserved communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Governments",
+          "Description": "The energy project cycle partners with local governments to implement sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "The energy project cycle contributes to climate change mitigation efforts through the implementation of sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "The energy project cycle monitors energy consumption patterns to identify areas for improvement.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Generation",
+          "Description": "The energy project cycle sets targets for increasing renewable energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Poverty",
+          "Description": "The energy project cycle addresses energy poverty by providing access to affordable and reliable energy sources.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

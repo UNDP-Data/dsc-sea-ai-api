@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "Entity": "blended finance mechanisms",
+    "Description": "Summary of blended finance mechanisms.",
+    "Category": "Finance",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "blended finance mechanisms": []
+    }
+  }
+}

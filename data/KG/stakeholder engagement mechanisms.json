@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "stakeholder engagement mechanisms",
+    "Description": "Mechanisms and processes used to involve and collaborate with stakeholders in decision-making and implementation of projects or policies.",
+    "Category": "Policy",
+    "Tags": [
+      "Policy",
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Intersectionality",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Community Outreach",
+      "Sustainable Development Goals",
+      "Government Agencies",
+      "Energy Efficiency Policy",
+      "Policy Development",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Sustainable Energy Transition"
+    ],
+    "relations": {
+      "stakeholder engagement mechanisms": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Stakeholder engagement mechanisms implement the Energy Efficiency Policy to ensure active participation and input from various stakeholders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Stakeholder engagement mechanisms provide funding for renewable energy projects to support their development and implementation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Community Outreach",
+          "Description": "Stakeholder engagement mechanisms focus on community outreach to raise awareness and promote sustainable energy practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Sustainable Energy Transition",
+          "Description": "Stakeholder engagement mechanisms play a crucial role in the successful implementation of the sustainable energy transition.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Government Agencies",
+          "Description": "Stakeholder engagement mechanisms partner with government agencies to collaborate on sustainable energy initiatives and policies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Policy Development",
+          "Description": "Stakeholder engagement mechanisms contribute to policy development by providing valuable insights and feedback from various stakeholders.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Stakeholder engagement mechanisms monitor energy consumption patterns to identify areas for improvement and promote energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Sustainable Development Goals",
+          "Description": "Stakeholder engagement mechanisms target the achievement of sustainable development goals through the promotion of sustainable energy practices.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

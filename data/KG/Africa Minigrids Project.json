@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "Africa Minigrids Project",
+    "Description": "Summary of Africa Minigrids Project",
+    "Category": "Project",
+    "Tags": [
+      "Africa",
+      "Minigrids",
+      "Energy"
+    ],
+    "Dimension": "Infrastructure",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Rural Electrification",
+      "Energy Access",
+      "Smart Metering Technology",
+      "Sustainable Development Goals",
+      "Public-Private Partnership",
+      "Entrepreneurship",
+      "Local Governments",
+      "Financial Incentives"
+    ],
+    "relations": {
+      "Africa Minigrids Project": [
+        {
+          "Relation": "addresses",
+          "Object": "Rural Electrification",
+          "Description": "The Africa Minigrids Project addresses the challenge of rural electrification by deploying minigrids to provide clean and affordable energy to remote communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Smart Metering Technology",
+          "Description": "The Africa Minigrids Project employs smart metering technology to enable efficient monitoring and management of energy usage in minigrids.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Governments",
+          "Description": "The Africa Minigrids Project collaborates with local governments to ensure the successful implementation and operation of minigrids in their respective regions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Entrepreneurship",
+          "Description": "The Africa Minigrids Project supports entrepreneurship by creating opportunities for local businesses to participate in the development and operation of minigrids.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Financial Incentives",
+          "Description": "The Africa Minigrids Project administers financial incentives to attract private sector investments in minigrid projects and accelerate their deployment.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Access",
+          "Description": "The Africa Minigrids Project measures progress in improving energy access by tracking the number of households and businesses connected to minigrids.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "The Africa Minigrids Project aligns with the Sustainable Development Goals, particularly Goal 7 on ensuring access to affordable, reliable, sustainable, and modern energy for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Public-Private Partnership",
+          "Description": "The Africa Minigrids Project is an instance of a public-private partnership that brings together government, private sector, and development partners to drive the deployment of minigrids.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

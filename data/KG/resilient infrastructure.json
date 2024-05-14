@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "Entity": "resilient infrastructure",
+    "Description": "Resilient infrastructure refers to the design and construction of infrastructure systems that can withstand and recover quickly from natural disasters, climate change impacts, and other shocks and stresses.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Resilience",
+      "Adaptation",
+      "Disaster Risk Reduction"
+    ],
+    "Dimension": "Infrastructure",
+    "Acronym": null,
+    "Importance": 4.0,
+    "Synonyms": [
+      "infrastructure",
+      "charging infrastructure",
+      "hydrogen infrastructure",
+      "green infrastructure"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Private Sector",
+      "Climate Change Adaptation",
+      "Sustainable Development Goals",
+      "Urban Areas",
+      "Infrastructure Performance",
+      "Building Standards",
+      "Resilience Indicators",
+      "Research and Development"
+    ],
+    "relations": {
+      "resilient infrastructure": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Resilient infrastructure implements building standards that ensure the infrastructure can withstand and recover from natural disasters and other shocks.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Resilient infrastructure funds research and development projects that aim to improve the resilience of infrastructure systems.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Climate Change Adaptation",
+          "Description": "Resilient infrastructure focuses on climate change adaptation strategies to ensure infrastructure systems can cope with the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Urban Areas",
+          "Description": "Resilient infrastructure is implemented in urban areas to enhance the resilience of cities and towns.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector",
+          "Description": "Resilient infrastructure partners with the private sector to leverage their expertise and resources in developing and implementing resilient infrastructure projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals",
+          "Description": "Resilient infrastructure contributes to the achievement of various Sustainable Development Goals, such as Goal 9: Industry, Innovation, and Infrastructure.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Infrastructure Performance",
+          "Description": "Resilient infrastructure monitors the performance of infrastructure systems to identify vulnerabilities and areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Resilience Indicators",
+          "Description": "Resilient infrastructure sets targets based on resilience indicators to measure the effectiveness of resilience-building efforts.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,34 +1,81 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "Bioenergy": [
-                {
-                    "Relation": "Derived from",
-                    "Object": "Biomass",
-                    "Strength": "8",
-                    "Description": "Bioenergy is produced by converting biomass into usable energy through various processes such as combustion or anaerobic digestion."
-                },
-                {
-                    "Relation": "Used as",
-                    "Object": "Biofuel",
-                    "Strength": "9",
-                    "Description": "Bioenergy is commonly used as a biofuel, which is a type of alternative fuel derived from renewable biological sources."
-                },
-                {
-                    "Relation": "Produced from",
-                    "Object": "Biogas",
-                    "Strength": "7",
-                    "Description": "Biogas, which is produced through the anaerobic digestion of organic matter, can be further processed to generate bioenergy."
-                },
-                {
-                    "Relation": "Used in production of",
-                    "Object": "Bioethanol",
-                    "Strength": "6",
-                    "Description": "Bioenergy is utilized in the production of bioethanol, a renewable fuel commonly used as a gasoline additive or standalone fuel."
-                }
-            ]
+  "metadata": {
+    "Entity": "bioenergy",
+    "Description": "Energy derived from biomass, such as organic materials or agricultural residues, through processes like combustion or fermentation.",
+    "Category": "Technology",
+    "Tags": [
+      "Policy",
+      "Technology",
+      "Social",
+      "Economic"
+    ],
+    "Dimension": "Intersectionality",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Rural Electrification",
+      "Local Communities",
+      "Sustainable Biomass Production",
+      "Energy Efficiency Policy",
+      "Bioenergy Production",
+      "Climate Change Mitigation",
+      "Renewable Energy Portfolio",
+      "Research and Development"
+    ],
+    "relations": {
+      "bioenergy": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Bioenergy implements the Energy Efficiency Policy by promoting the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Bioenergy funds research and development projects to improve the efficiency and sustainability of bioenergy production.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Sustainable Biomass Production",
+          "Description": "Bioenergy focuses on sustainable biomass production to ensure the availability of renewable feedstock for bioenergy generation.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Renewable Energy Portfolio",
+          "Description": "Bioenergy plays a role in the renewable energy portfolio by contributing to the overall share of renewable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Communities",
+          "Description": "Bioenergy partners with local communities to promote the sustainable production and use of bioenergy, creating economic opportunities and reducing reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Bioenergy contributes to climate change mitigation by reducing greenhouse gas emissions through the substitution of fossil fuels with renewable bioenergy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Bioenergy Production",
+          "Description": "Bioenergy monitors the production of bioenergy to ensure compliance with sustainability criteria and environmental standards.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Rural Electrification",
+          "Description": "Bioenergy targets rural electrification by providing decentralized energy solutions through the use of bioenergy technologies.",
+          "Importance": 4
         }
+      ]
     }
+  }
 }

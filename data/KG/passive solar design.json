@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "passive solar design",
+    "Description": "A design approach that utilizes the sun's energy to provide heating, cooling, and lighting for buildings.",
+    "Category": "Technology",
+    "Tags": [
+      "Renewable Energy",
+      "Building Design",
+      "Energy Efficiency"
+    ],
+    "Dimension": "Energy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Sustainable Architecture",
+      "Climate Change",
+      "Sustainable Building Design",
+      "Energy Efficiency Policy",
+      "Building Codes",
+      "Natural Ventilation",
+      "Renewable Energy Sources",
+      "Architects"
+    ],
+    "relations": {
+      "passive solar design": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Passive solar design implements energy efficiency policies that promote the use of natural sunlight for heating and lighting purposes.",
+          "Importance": 4
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Sources",
+          "Description": "Passive solar design focuses on utilizing renewable energy sources such as solar power to reduce reliance on traditional energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Climate Change",
+          "Description": "Passive solar design addresses the issue of climate change by reducing greenhouse gas emissions through energy-efficient building designs.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Sustainable Architecture",
+          "Description": "Passive solar design supports the principles of sustainable architecture by promoting energy-efficient and environmentally-friendly building designs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "employs",
+          "Object": "Natural Ventilation",
+          "Description": "Passive solar design employs natural ventilation techniques to enhance indoor air quality and reduce the need for mechanical cooling systems.",
+          "Importance": 2
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Architects",
+          "Description": "Passive solar design collaborates with architects to incorporate energy-efficient design principles into building projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Building Codes",
+          "Description": "Passive solar design administers building codes that require energy-efficient design standards for new construction and renovations.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Sustainable Building Design",
+          "Description": "Passive solar design is an instance of sustainable building design that focuses on maximizing energy efficiency and minimizing environmental impact.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "Entity": "carbon capture and utilization",
+    "Description": "The process of capturing carbon dioxide emissions and converting them into useful products.",
+    "Category": "Technology",
+    "Tags": [
+      "Climate Change Mitigation",
+      "Carbon Sequestration",
+      "Industrial Processes"
+    ],
+    "Dimension": "Technology",
+    "Acronym": "CCU",
+    "Importance": 4.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "research and development",
+      "carbon reduction strategies",
+      "industrial sectors",
+      "carbon offset programs",
+      "climate change mitigation"
+    ],
+    "relations": {
+      "carbon capture and utilization": [
+        {
+          "Relation": "implements",
+          "Object": "carbon reduction strategies",
+          "Description": "Carbon capture and utilization implements carbon reduction strategies to mitigate the impact of greenhouse gas emissions on the environment.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Carbon capture and utilization funds research and development initiatives to explore innovative technologies and processes for capturing and utilizing carbon.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "industrial sectors",
+          "Description": "Carbon capture and utilization partners with industrial sectors to collaborate on implementing carbon capture and utilization technologies and practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "supports",
+          "Object": "climate change mitigation",
+          "Description": "Carbon capture and utilization supports climate change mitigation efforts by reducing greenhouse gas emissions and promoting sustainable practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "carbon offset programs",
+          "Description": "Carbon capture and utilization administers carbon offset programs to incentivize and support projects that reduce or offset carbon emissions.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

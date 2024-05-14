@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "Entity": "energy poverty indices",
+    "Description": "Summary of energy poverty indices",
+    "Category": "Policy",
+    "Tags": [
+      "Energy",
+      "Poverty",
+      "Indices"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy poverty",
+      "energy import policies"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "energy poverty indices": []
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "Entity": "benefit-sharing agreements",
+    "Description": "Agreements for sharing benefits from projects",
+    "Category": "Policy",
+    "Tags": [
+      "Benefit-sharing",
+      "Agreements"
+    ],
+    "Dimension": "Social",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access Programs",
+      "Local Communities",
+      "Energy Poverty",
+      "Community Development",
+      "Renewable Energy Performance",
+      "Climate Change Mitigation",
+      "Building Standards",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "benefit-sharing agreements": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Benefit-sharing agreements implement building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Benefit-sharing agreements provide funding for renewable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Community Development",
+          "Description": "Benefit-sharing agreements focus on community development initiatives related to sustainable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "Energy Access Programs",
+          "Description": "Benefit-sharing agreements are involved in energy access programs to ensure equitable distribution of energy resources.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local Communities",
+          "Description": "Benefit-sharing agreements partner with local communities to implement sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Benefit-sharing agreements contribute to climate change mitigation efforts through the promotion of sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Renewable Energy Performance",
+          "Description": "Benefit-sharing agreements monitor the performance of renewable energy projects to ensure their effectiveness.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Benefit-sharing agreements target the reduction of energy poverty through sustainable energy initiatives.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

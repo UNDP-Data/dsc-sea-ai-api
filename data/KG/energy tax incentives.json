@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "Entity": "energy tax incentives",
+    "Description": "Summary of energy tax incentives",
+    "Category": "Policy",
+    "Tags": [
+      "Energy",
+      "Tax",
+      "Incentives"
+    ],
+    "Dimension": "Economic",
+    "Acronym": null,
+    "Importance": 2.0,
+    "Synonyms": [
+      "energy storage incentive programs",
+      "government incentives"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Energy Efficiency Policy",
+      "Energy Intensive Industries",
+      "Energy Affordability",
+      "Energy Service Companies",
+      "Energy Efficiency Measures",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "National Energy Policy"
+    ],
+    "relations": {
+      "energy tax incentives": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Energy tax incentives are implemented by the Energy Efficiency Policy to promote the adoption of energy-saving practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Energy tax incentives provide funding for renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Efficiency Measures",
+          "Description": "Energy tax incentives focus on promoting energy efficiency measures to reduce energy consumption and greenhouse gas emissions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "National Energy Policy",
+          "Description": "Energy tax incentives are included in the National Energy Policy to incentivize sustainable energy practices.",
+          "Importance": 2
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Energy Service Companies",
+          "Description": "Energy tax incentives partner with Energy Service Companies to provide energy efficiency solutions to consumers.",
+          "Importance": 2
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Energy Access",
+          "Description": "Energy tax incentives contribute to improving energy access by promoting the development of renewable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Energy tax incentives are monitored to assess their impact on energy consumption and the effectiveness of energy-saving measures.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Intensive Industries",
+          "Description": "Energy tax incentives target energy-intensive industries to encourage them to adopt energy-efficient practices.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "Energy Affordability",
+          "Description": "Energy tax incentives address energy affordability by reducing the cost of energy for consumers through tax benefits.",
+          "Importance": 3
+        }
+      ]
+    }
+  }
+}

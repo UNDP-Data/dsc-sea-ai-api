@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "Entity": "energy ministries",
+    "Description": "Government ministries responsible for energy-related policies and regulations.",
+    "Category": "Organization",
+    "Tags": [
+      "Policy",
+      "Economic",
+      "Infrastructure"
+    ],
+    "Dimension": "Policy",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "energy intensive industries"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "International Organizations",
+      "Energy Subsidy Programs",
+      "Energy Experts",
+      "Government Agencies",
+      "Climate Change Mitigation",
+      "Renewable Energy Research",
+      "Energy Consumption"
+    ],
+    "relations": {
+      "energy ministries": [
+        {
+          "Relation": "addresses",
+          "Object": "Energy Access",
+          "Description": "Energy ministries address the issue of energy access by implementing policies and initiatives to ensure reliable and affordable energy for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "Energy Experts",
+          "Description": "Energy ministries employ energy experts to provide technical knowledge and advice on energy-related matters.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "International Organizations",
+          "Description": "Energy ministries collaborate with international organizations to exchange best practices and coordinate efforts in addressing global energy challenges.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Renewable Energy Research",
+          "Description": "Energy ministries support research and development in the field of renewable energy to drive innovation and technological advancements.",
+          "Importance": 3
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Subsidy Programs",
+          "Description": "Energy ministries administer energy subsidy programs to promote the use of clean and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Consumption",
+          "Description": "Energy ministries measure energy consumption to assess the effectiveness of energy conservation and efficiency measures.",
+          "Importance": 3
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Climate Change Mitigation",
+          "Description": "Energy ministries align their policies and strategies with climate change mitigation goals to reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Government Agencies",
+          "Description": "Energy ministries are government agencies responsible for formulating and implementing energy policies and regulations.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

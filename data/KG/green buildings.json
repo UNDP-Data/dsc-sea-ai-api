@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "Entity": "green buildings",
+    "Description": "Buildings that are designed and constructed to have a minimal impact on the environment.",
+    "Category": "Infrastructure",
+    "Tags": [
+      "Sustainable Buildings",
+      "Energy Efficiency"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "resilience building"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Efficiency Policy",
+      "Urban Areas",
+      "Net Zero Energy",
+      "Climate Change Mitigation",
+      "Sustainable Construction Practices",
+      "Architects and Engineers",
+      "Energy Consumption",
+      "Renewable Energy Projects"
+    ],
+    "relations": {
+      "green buildings": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "Green buildings implement energy efficiency policies that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Green buildings provide funding for renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Sustainable Construction Practices",
+          "Description": "Green buildings focus on sustainable construction practices that minimize environmental impact and promote resource efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Urban Areas",
+          "Description": "Green buildings are located in urban areas to promote sustainable urban development and reduce carbon emissions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Architects and Engineers",
+          "Description": "Green buildings partner with architects and engineers to incorporate sustainable design principles and technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Green buildings contribute to climate change mitigation by reducing greenhouse gas emissions and promoting energy efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Green buildings monitor energy consumption to identify areas for improvement and optimize energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Net Zero Energy",
+          "Description": "Green buildings target net zero energy consumption by utilizing renewable energy sources and energy-efficient technologies.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

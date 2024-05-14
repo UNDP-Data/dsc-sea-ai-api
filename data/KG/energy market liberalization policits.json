@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "Entity": "energy market liberalization policits",
+    "Description": null,
+    "Category": null,
+    "Tags": null,
+    "Dimension": null,
+    "Acronym": null,
+    "Importance": null,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [],
+    "relations": {
+      "energy market liberalization policits": []
+    }
+  }
+}

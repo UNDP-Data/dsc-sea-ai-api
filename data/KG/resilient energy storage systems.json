@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "Entity": "resilient energy storage systems",
+    "Description": "Resilient energy storage systems are systems that can store energy and withstand disruptions or failures.",
+    "Category": "Technology",
+    "Tags": [
+      "Energy Storage",
+      "Resilience"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": [
+      "resilient energy systems"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Utility Companies",
+      "Climate Change Mitigation",
+      "Energy Efficiency",
+      "Building Standards",
+      "Smart Grids",
+      "Energy Consumption",
+      "Renewable Energy Integration",
+      "Research and Development"
+    ],
+    "relations": {
+      "resilient energy storage systems": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Resilient energy storage systems implement building standards that ensure the safe and efficient storage of energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Research and Development",
+          "Description": "Resilient energy storage systems provide funding for research and development activities to improve energy storage technologies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Renewable Energy Integration",
+          "Description": "Resilient energy storage systems focus on integrating renewable energy sources into the grid for a more sustainable energy system.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Smart Grids",
+          "Description": "Resilient energy storage systems are integrated into smart grids to optimize energy distribution and consumption.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Utility Companies",
+          "Description": "Resilient energy storage systems partner with utility companies to ensure reliable and efficient energy supply.",
+          "Importance": 4
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "Resilient energy storage systems contribute to climate change mitigation by enabling the integration of renewable energy sources and reducing reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Resilient energy storage systems monitor energy consumption patterns to optimize energy storage and distribution.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Efficiency",
+          "Description": "Resilient energy storage systems target improved energy efficiency by optimizing energy storage and reducing energy losses.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

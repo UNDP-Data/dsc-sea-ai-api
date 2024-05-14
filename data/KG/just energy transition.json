@@ -1,34 +1,84 @@
 {
-    "metadata": {},
-    "knowledge graph": {
-        "entities": [],
-        "relations": {
-            "just energy transition": [
-                {
-                    "Relation": "Promotes",
-                    "Object": "Renewable energy",
-                    "Strength": "8",
-                    "Description": "Renewable energy plays a crucial role in achieving a just energy transition by reducing reliance on fossil fuels and decreasing greenhouse gas emissions."
-                },
-                {
-                    "Relation": "Enhances",
-                    "Object": "Energy efficiency",
-                    "Strength": "7",
-                    "Description": "Improving energy efficiency is an important aspect of a just energy transition as it reduces energy consumption and promotes sustainability."
-                },
-                {
-                    "Relation": "Supports",
-                    "Object": "Clean technology",
-                    "Strength": "9",
-                    "Description": "Clean technology innovations are essential for a just energy transition as they provide sustainable alternatives to traditional energy sources."
-                },
-                {
-                    "Relation": "Addresses",
-                    "Object": "Climate change",
-                    "Strength": "10",
-                    "Description": "A just energy transition is necessary to address climate change and mitigate its impacts on the environment and society."
-                }
-            ]
+  "metadata": {
+    "Entity": "just energy transition",
+    "Description": "A concept that aims to ensure a fair and equitable transition to a sustainable energy system, taking into account social, economic, and environmental aspects.",
+    "Category": "Policy",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Social",
+    "Acronym": "JET",
+    "Importance": 4.0,
+    "Synonyms": [
+      "energy transition",
+      "clean energy transition",
+      "energy transition funds",
+      "democratic energy transition",
+      "energy transition progress",
+      "sustainable energy transition",
+      "energy transition strategy",
+      "energy transition plan",
+      "energy transition theory",
+      "energy transition goals"
+    ]
+  },
+  "knowledge graph": {
+    "entities": [
+      "Social Justice",
+      "Energy Equity",
+      "Sustainable Development Goals",
+      "Local Communities",
+      "Energy Transition Funds",
+      "Renewable Energy Workforce",
+      "Energy Justice"
+    ],
+    "relations": {
+      "just energy transition": [
+        {
+          "Relation": "employs",
+          "Object": "Renewable Energy Workforce",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "collaborates_with",
+          "Object": "Local Communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "supports",
+          "Object": "Energy Equity",
+          "Description": "The just energy transition supports energy equity by promoting equal access to clean and affordable energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "administers",
+          "Object": "Energy Transition Funds",
+          "Description": "The just energy transition administers energy transition funds to support the implementation of sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "measures",
+          "Object": "Energy Justice",
+          "Description": "The just energy transition measures energy justice to ensure fair distribution of energy resources and benefits.",
+          "Importance": 4
+        },
+        {
+          "Relation": "aligns_with",
+          "Object": "Sustainable Development Goals",
+          "Description": "The just energy transition aligns with the Sustainable Development Goals to promote sustainable and inclusive energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "an_instance_of",
+          "Object": "Social Justice",
+          "Description": "The just energy transition is an instance of social justice, aiming to address energy inequalities and promote fairness.",
+          "Importance": 4
         }
+      ]
     }
+  }
 }

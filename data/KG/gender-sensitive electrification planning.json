@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "Entity": "gender-sensitive electrification planning",
+    "Description": "Summary of gender-sensitive electrification planning.",
+    "Category": "Policy",
+    "Tags": [
+      "Social",
+      "Economic",
+      "Intersectionality"
+    ],
+    "Dimension": "Technology",
+    "Acronym": null,
+    "Importance": 3.0,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Sustainable Development Goals",
+      "Energy Poverty",
+      "Local NGOs",
+      "Building Standards",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Rural Areas"
+    ],
+    "relations": {
+      "gender-sensitive electrification planning": [
+        {
+          "Relation": "implements",
+          "Object": "Building Standards",
+          "Description": "Gender-sensitive electrification planning implements building standards that promote gender equality in energy access and usage.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "Gender-sensitive electrification planning funds renewable energy projects that aim to provide clean and sustainable energy to communities.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "Gender-sensitive electrification planning focuses on improving energy access for marginalized and underserved communities, particularly women and girls.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Rural Areas",
+          "Description": "Gender-sensitive electrification planning is implemented in rural areas to address the energy needs of rural communities, with a focus on gender equality.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Local NGOs",
+          "Description": "Gender-sensitive electrification planning partners with local NGOs to ensure community engagement and participation in energy planning and implementation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Sustainable Development Goals",
+          "Description": "Gender-sensitive electrification planning contributes to the achievement of Sustainable Development Goals, particularly Goal 7: Affordable and Clean Energy.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "Gender-sensitive electrification planning monitors energy consumption patterns to identify areas for improvement and optimize energy efficiency.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Energy Poverty",
+          "Description": "Gender-sensitive electrification planning targets the reduction of energy poverty by ensuring equitable access to affordable and reliable energy services.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}

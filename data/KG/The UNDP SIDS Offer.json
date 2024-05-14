@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "Entity": "The UNDP SIDS Offer",
+    "Description": null,
+    "Category": null,
+    "Tags": null,
+    "Dimension": null,
+    "Acronym": null,
+    "Importance": null,
+    "Synonyms": null
+  },
+  "knowledge graph": {
+    "entities": [
+      "Energy Access",
+      "Private Sector Companies",
+      "Energy Efficiency Policy",
+      "Climate Change Mitigation",
+      "Energy Consumption",
+      "Renewable Energy Projects",
+      "Renewable Energy Capacity",
+      "Partnership with Local Governments"
+    ],
+    "relations": {
+      "The UNDP SIDS Offer": [
+        {
+          "Relation": "implements",
+          "Object": "Energy Efficiency Policy",
+          "Description": "The UNDP SIDS Offer implements energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "Renewable Energy Projects",
+          "Description": "The UNDP SIDS Offer provides funding for renewable energy projects to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "Energy Access",
+          "Description": "The UNDP SIDS Offer focuses on improving energy access in developing countries to ensure sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "Partnership with Local Governments",
+          "Description": "The UNDP SIDS Offer works in partnership with local governments to implement sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "Private Sector Companies",
+          "Description": "The UNDP SIDS Offer partners with private sector companies to promote sustainable energy investments.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "Climate Change Mitigation",
+          "Description": "The UNDP SIDS Offer contributes to climate change mitigation through the promotion of sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "Energy Consumption",
+          "Description": "The UNDP SIDS Offer monitors energy consumption patterns to identify areas for improvement and energy-saving opportunities.",
+          "Importance": 2
+        },
+        {
+          "Relation": "targets",
+          "Object": "Renewable Energy Capacity",
+          "Description": "The UNDP SIDS Offer sets targets for increasing renewable energy capacity to promote sustainable energy generation.",
+          "Importance": 4
+        }
+      ]
+    }
+  }
+}
