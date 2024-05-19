@@ -187,7 +187,7 @@ def send_prompt_llm():
 
                 #Send initial response to user while processing final answer on final documents
                 response = {
-                    "answer": "Processing final answer... re-query to retrieve final answer and documents using session id",
+                    "answer": "Processing final answer... ",
                     "user_query": user_query,
                     "entities": entities_array,
                     "query_ideas": query_idea_list if query_idea_list else [],

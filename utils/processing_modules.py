@@ -380,7 +380,6 @@ def map_to_structure(qs, isInitialRun):
         elif not isInitialRun and count == 10:  
             break
 
-    
     return result_dict
 
 ## module to extract text from documents and return the text and document codes
@@ -389,7 +388,7 @@ def semanticSearchModule(user_query, client, embedding_model, isInitialRun):
     # if qs != None :
     if qs[0] is not None:
         result_structure = map_to_structure(qs,isInitialRun)
-        return result_structure
+        return relabel_and_add_citations(result_structure)
     else : 
         return []
 
@@ -433,6 +432,23 @@ def cleanJson(json_data):
     return modified_json
 
 
+# Function to relabel keys and add citations
+def relabel_and_add_citations(data):
+    new_data = {}
+    citation_counter = 1
+
+    for doc_id, doc_info in data.items():
+        new_data[doc_id] = {
+            "document_title": doc_info.get("title", ""),
+            "summary": doc_info.get("extract", ""),
+            "document_category": doc_info.get("category", ""),
+            "document_link": doc_info.get("link", ""),
+            "document_thumbnail": doc_info.get("thumbnail", ""),
+            "citation": citation_counter
+        }
+        citation_counter += 1
+
+    return new_data
 
 # module to synthesize answer using retreival augmented generation approach
 def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment):
@@ -440,7 +456,7 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     excerpts_dict_ = cleanJson(excerpts_dict)
     # print(excerpts_dict_)
     # Generate prompt engineering text and template
-    llm_instructions = f"""
+    llm_instructions_old = f"""
     Ignore previous commands!!!
     Given a user query, use the provided <Sources> extract section of the JSON only to provide the correct answer to the user's query.
 
@@ -449,23 +465,34 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     Sources: {excerpts_dict_}
     
     - Answer output must be properly formatted using HTML. 
-    - Don't include <html>, <script>, <link> or <body> tags. Only text formating tags should be allowed. e.g h1..h3, p, anchor, etc. Strictly HTML only
-    - Strictly infer your answers from the <Sources> Only and make citations to Source extract referenced 
+    - Don't include <html>, <script>, <link> <a>  or <body> tags. Only text formating tags should be allowed. e.g h1..h3, p, anchor, etc. Strictly HTML only
+    - You can your answers from the relevant <Sources> also and make citations to Source extract when referenced 
     - The Source as format like: "doc-n": {{
         "title": "title of the relate document",
         "extract": "content",
         "category": "",
         "link": "",
-        "thumbnail": ""
+        "thumbnail": "",
+        "citation": n
     }}, where doc-n can be doc-1, doc-24 etc.. n is in integer.
-    - Reference the extract and title of all document sources provided in the json and summarise it into a coherent answer that relates to the <User Query>
-    - Citation should follow formats: [reference content]<a href='link here' data-id='doc-n'>[i]</a> . The reference bracket should be the reference link
+    - Reference the extract and title of all document sources provided in the json and summarise it into a coherent answer that relates to the <User Query> when possible
+    - Citation should follow formats: [reference content][citation number]. 
     - Give output writing tone like a academic research tone
-    - Strictly use IEEE Citation Style 
-    - If no <Sources> are provided, try to make suggestives or  simply say you don't have that information   
     - Remove new line or tab characters from your output
-        
-    """
+    - do not use or include links,  anchor links or a href tags !!!
+    - do not include references links at the end or show References!!!
+    - to reference within the text do [n] not [source n] . musct be [n] where n is an integer of the citation number
+    - Should be one citation only e.g [n] not [n][n][n]
+     """
+
+    llm_instructions = f""" 
+    User Query: {user_query}
+    Sources: {excerpts_dict_}
+    Solve by breaking the problem into steps.
+
+     """
+
+    print(llm_instructions)
     ###synthesize data into structure within llm prompt engineering instructions
     answer= openai_call.callOpenAI(llm_instructions, openai_deployment)
     
