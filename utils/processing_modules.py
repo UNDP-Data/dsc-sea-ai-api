@@ -31,7 +31,7 @@ import utils.indicator as indicator_module
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
-df = pd.read_pickle('./models/df_embed_EN_All_V2.pkl')
+df = pd.read_pickle('./models/df_embed_EN_All_V3.pkl')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -324,20 +324,81 @@ def search_embeddings(user_query, client, embedding_model, isInitialRun):
 
 
 # get answer
-def get_answer(user_question, content, openai_deployment):
-    system_prompt = "You are a system that answers user questions based on excerpts from PDF documents provided for context. Only answer if the answer can be found in the provided context. Do not make up the answer; if you cannot find the answer, say so."
+def get_answer(user_question, relevant_docs,openai_deployment): 
+
+    formatting = f""" 
+        Strictly follow the follow steps:
+        Your answer only in HTML syntax with HTML tags.
+        Use HTML tags like < ul>, < ol>, < li>,  < strong>, < p>
+        Only consider the inner part of the < body> tag.
+        ALWAYS use the following tag for new lines: < br />
+        use <a> for cite numbers
+        Do not add CSS attributes.
+        Your answer must be formatted in HTML format
+        
+        
+        1. <<SOUCRCE>> for citing : {relevant_docs}
+
+        2. Must Follow the Structure for your output strictly: 
+
+            
+                Break down the answer into main points.
+                Provide explanations and cite <<SOUCRCE>> directly.
+
+                Summarize the main points.
+
+                For Example: 
+                Question: What are the benefits of regular exercise?
+                
+                Answer
+                Regular exercise offers significant benefits across physical, mental, and emotional dimensions. Physically, it strengthens the heart and enhances circulation, which can reduce the risk of heart disease by up to 40% <a href=“link” data-id=“doc-id”>[1]</a>. It also aids in weight management by burning calories and building muscle mass <a href=“link” data-id=“doc-id”>[2]</a>.
+                Mentally, exercise helps reduce anxiety and depression by increasing the production of endorphins, acting similarly to some medications. Additionally, it enhances cognitive function, improving memory and learning capabilities <a href=“link” data-id=“doc-id”>[3]</a>.
+                Emotionally and socially, regular physical activity reduces stress hormones such as cortisol  and boosts self-esteem by improving body image and self-confidence. Participation in group sports also provides social benefits and fosters a sense of community.
+                In summary, regular exercise is essential for overall health, enhancing physical fitness, mental clarity, and emotional well-being.
+
+
+    3. Return answer without explicit partitions, keeping it concise and integrating citations naturally within the text.
+    4. You must cite at least one relevant <<SOUCRCE>> provided above. This is compulsory. Don't just show a reference at the footnotes but also integrate into the text using the cite number e.g <a href=“link” data-id=“doc-id”>[1]</a>.
+    5. Cited source number must be an anchor tag link !!!!! You don't have to always cite. Only do this when relevant. If you can't find the link just leave the citation out.
+    6. VERY IMPORTANT:  avoid numberic listings in your answer!!!!!
+    """
+   
+ 
+   
+    print(f""" excerpts_dict === {len(relevant_docs)} """)
+
+    # print(formatting)
+    print(openai_deployment)
+
     messages = [
-        {'role': 'system', 'content': system_prompt},
-        {'role': 'user', 'content': user_question},
-        {'role': 'user', 'content': content},
-    ]
+            {"role": "system", "content":"You are a helpful assistant and a professional writer with 50 years experience. Give answer to the user's inquiry."
+            },
+            {'role': 'user', 'content': f"""{formatting} 
+                                            {user_question}"""},
+        ]
+
+        
     response_entities = openai.chat.completions.create(
                     model=openai_deployment,
-                    temperature=0.2,
-                    messages=messages
+                    temperature=0.3,
+                    messages=messages,
+                    top_p=0.8,
+                    frequency_penalty=0.6,
+                    presence_penalty=0.8
+
                 )
     response = response_entities.choices[0].message.content
-    return response
+    # Define the regex pattern to match digits followed by '. do'
+    pattern = r'\d+\. do'
+
+    # Remove matches from the text
+    cleaned_text = re.sub(pattern, '', response)
+
+    # # Optionally, clean up any extra spaces or punctuation left behind
+    # cleaned_text = re.sub(r'\s{2,}', ' ', cleaned_text).strip()
+
+
+    return cleaned_text
   
 # map to structure
 def map_to_structure(qs, isInitialRun):
@@ -423,9 +484,12 @@ def cleanJson(json_data):
 
     # Loop through the items and remove the "thumbnail" key
     for value in jsonData.values():
+        if "document_thumbnail" in value:
+            del value["document_thumbnail"]
+
+    for value in jsonData.values():
         if "thumbnail" in value:
             del value["thumbnail"]
-
     # Convert the modified data back to JSON
     modified_json = json.dumps(jsonData, indent=4)
 
@@ -451,7 +515,7 @@ def relabel_and_add_citations(data):
     return new_data
 
 # module to synthesize answer using retreival augmented generation approach
-def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment):
+def synthesisModuleOLD(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment):
     
     excerpts_dict_ = cleanJson(excerpts_dict)
     # print(excerpts_dict_)
@@ -497,6 +561,15 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
     answer= openai_call.callOpenAI(llm_instructions, openai_deployment)
     
     return answer.replace("</p>\n\n<p>", "<br/>").replace("</p>\n<p>","<br/>").replace("\n","<br/>")
+
+def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict,openai_deployment):
+
+    excerpts_dict_ = cleanJson(excerpts_dict)
+
+    ###synthesize data into structure within llm prompt engineering instructions
+    answer=get_answer(user_query, excerpts_dict_,openai_deployment) #callOpenAI
+    answer_formated_fixed = answer.replace("\n\n","<br>").replace("\n","<br>")
+    return answer_formated_fixed
 
 ##Indicators
 
