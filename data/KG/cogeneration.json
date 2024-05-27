@@ -16,73 +16,205 @@
   },
   "knowledge graph": {
     "entities": [
-      "Industrial Sector",
-      "Research and Development",
-      "Energy Efficiency Policy",
-      "Energy Intensive Industries",
-      "Climate Change Mitigation",
-      "Energy Service Companies",
-      "Energy Consumption",
-      "Energy Security",
-      "Renewable Energy Sources"
+      "energy ministries",
+      "research and development",
+      "energy efficiency",
+      "energy service companies",
+      "energy democracy",
+      "climate change mitigation",
+      "energy consumption",
+      "industrial sector",
+      "renewable energy agencies"
     ],
     "relations": {
-      "cogeneration": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Cogeneration implements the Energy Efficiency Policy by generating electricity and useful heat simultaneously, resulting in higher energy efficiency.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research and Development",
+          "Object": "research and development",
           "Description": "Cogeneration funds research and development activities to improve the efficiency and effectiveness of cogeneration technologies.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Renewable Energy Sources",
+          "Object": "renewable energy agencies",
           "Description": "Cogeneration focuses on utilizing renewable energy sources such as biomass, geothermal, and solar for generating electricity and heat.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Industrial Sector",
+          "Object": "industrial sector",
           "Description": "Cogeneration is commonly used in the industrial sector to meet the energy demands of manufacturing processes and reduce greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Energy Service Companies",
+          "Object": "energy service companies",
           "Description": "Cogeneration partners with Energy Service Companies to implement cogeneration projects and provide energy-efficient solutions to clients.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Cogeneration contributes to climate change mitigation by reducing greenhouse gas emissions and promoting the use of renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Cogeneration monitors energy consumption patterns to optimize the operation and performance of cogeneration systems.",
           "Importance": 2
         },
         {
           "Relation": "targets",
-          "Object": "Energy Intensive Industries",
+          "Object": "energy ministries",
           "Description": "Cogeneration targets energy-intensive industries such as chemical, paper, and food processing sectors to improve energy efficiency and reduce costs.",
           "Importance": 3
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Security",
+          "Object": "energy democracy",
           "Description": "Cogeneration addresses energy security concerns by providing a decentralized and reliable source of electricity and heat.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy ministries",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy ministries address the issue of energy access by implementing policies and initiatives to ensure reliable and affordable energy for all.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy ministries",
+          "Relation": "collaborates_with",
+          "Object": "regional energy organizations",
+          "Description": "Energy ministries collaborate with international organizations to exchange best practices and coordinate efforts in addressing global energy challenges.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "addresses",
+          "Object": "energy and health",
+          "Description": "Energy democracy addresses energy inequality by promoting equitable access to clean and affordable energy for all individuals and communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "employs",
+          "Object": "participatory decision-making",
+          "Description": "Energy democracy employs participatory decision-making processes to ensure that all stakeholders have a voice in shaping energy policies and projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "Combined heat and power",
+      "Waste heat recovery",
+      "Trigeneration",
+      "Biomass cogeneration",
+      "Geothermal cogeneration"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "Combined heat and power",
+        "Relation": "is a sub-element of",
+        "Parent": "cogeneration",
+        "Description": "Combined heat and power (CHP) is a sub-element of cogeneration, where both electricity and useful heat are produced from the same energy source. It increases energy efficiency and reduces greenhouse gas emissions by utilizing waste heat.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "Waste heat recovery",
+        "Relation": "is a sub-element of",
+        "Parent": "cogeneration",
+        "Description": "Waste heat recovery is a sub-element of cogeneration, which involves capturing and utilizing waste heat generated during industrial processes or power generation. It improves energy efficiency and reduces the overall energy consumption.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Trigeneration",
+        "Relation": "is a sub-element of",
+        "Parent": "cogeneration",
+        "Description": "Trigeneration is a sub-element of cogeneration, where three types of energy (electricity, heating, and cooling) are produced from a single energy source. It provides a more comprehensive and efficient energy solution for buildings and industries.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Biomass cogeneration",
+        "Relation": "is a sub-element of",
+        "Parent": "cogeneration",
+        "Description": "Biomass cogeneration is a sub-element of cogeneration, where biomass fuels such as wood, agricultural residues, or dedicated energy crops are used to produce both electricity and heat. It utilizes renewable biomass resources and reduces reliance on fossil fuels.",
+        "Importance": 2
+      },
+      {
+        "Sub-element": "Geothermal cogeneration",
+        "Relation": "is a sub-element of",
+        "Parent": "cogeneration",
+        "Description": "Geothermal cogeneration is a sub-element of cogeneration, where geothermal energy is used to produce both electricity and heat. It harnesses the natural heat from the Earth's core and provides a sustainable energy solution.",
+        "Importance": 2
+      }
+    ]
   }
 }

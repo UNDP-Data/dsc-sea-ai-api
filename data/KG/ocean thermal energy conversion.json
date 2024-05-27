@@ -13,66 +13,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Climate Change Adaptation",
-      "Sustainable Development Goals",
-      "Ocean Temperature",
-      "Government Incentive Programs",
-      "Ocean Energy",
-      "Renewable Energy Research",
-      "Coastal Communities",
-      "Heat Exchangers"
+      "solar energy",
+      "ocean temperature",
+      "climate change adaptation",
+      "government incentive programs",
+      "sustainable development goals",
+      "renewable energy agencies",
+      "heat exchangers",
+      "coastal communities"
     ],
     "relations": {
-      "ocean thermal energy conversion": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Climate Change Adaptation",
+          "Object": "climate change adaptation",
           "Description": "Ocean thermal energy conversion addresses climate change adaptation by providing a sustainable energy solution that reduces reliance on fossil fuels.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Heat Exchangers",
+          "Object": "heat exchangers",
           "Description": "Ocean thermal energy conversion employs heat exchangers to convert temperature differences in ocean water into usable energy.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Coastal Communities",
+          "Object": "coastal communities",
           "Description": "Ocean thermal energy conversion collaborates with coastal communities to implement sustainable energy solutions and support local economies.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Renewable Energy Research",
+          "Object": "renewable energy agencies",
           "Description": "Ocean thermal energy conversion supports research in renewable energy technologies to improve efficiency and expand the use of sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Government Incentive Programs",
+          "Object": "government incentive programs",
           "Description": "Ocean thermal energy conversion administers government incentive programs to promote the adoption of sustainable energy technologies.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Ocean Temperature",
+          "Object": "ocean temperature",
           "Description": "Ocean thermal energy conversion measures ocean temperature to identify suitable locations for harnessing thermal energy.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Ocean thermal energy conversion aligns with the Sustainable Development Goals by providing a clean and renewable energy source for sustainable development.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Ocean Energy",
+          "Object": "solar energy",
           "Description": "Ocean thermal energy conversion is an instance of ocean energy, which utilizes temperature differences in ocean water to generate electricity.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "solar energy",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Solar energy implements Energy Efficiency Policy by promoting the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "solar energy",
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Solar energy funds Research and Development to improve solar panel efficiency and develop new technologies.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "cold water pipe",
+      "warm water pipe",
+      "power plant",
+      "heat exchanger",
+      "turbine"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "cold water pipe",
+        "Relation": "is a sub-element of",
+        "Parent": "ocean thermal energy conversion",
+        "Description": "A cold water pipe is a sub-component of ocean thermal energy conversion systems. It is responsible for transporting cold water from the deep ocean to the power plant.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "warm water pipe",
+        "Relation": "is a sub-element of",
+        "Parent": "ocean thermal energy conversion",
+        "Description": "A warm water pipe is a sub-component of ocean thermal energy conversion systems. It is responsible for transporting warm surface water to the power plant.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "power plant",
+        "Relation": "is a sub-element of",
+        "Parent": "ocean thermal energy conversion",
+        "Description": "A power plant is a sub-component of ocean thermal energy conversion systems. It converts the temperature difference between warm surface water and cold deep water into electricity.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "heat exchanger",
+        "Relation": "is a sub-element of",
+        "Parent": "ocean thermal energy conversion",
+        "Description": "A heat exchanger is a sub-component of ocean thermal energy conversion systems. It transfers heat between the warm and cold water streams, allowing for efficient energy conversion.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "turbine",
+        "Relation": "is a sub-element of",
+        "Parent": "ocean thermal energy conversion",
+        "Description": "A turbine is a sub-component of ocean thermal energy conversion systems. It uses the pressure of the flowing water to generate mechanical power, which is then converted into electricity.",
+        "Importance": 4
+      }
+    ]
   }
 }

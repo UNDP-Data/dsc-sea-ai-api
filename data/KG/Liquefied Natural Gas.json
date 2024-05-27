@@ -15,66 +15,184 @@
   },
   "knowledge graph": {
     "entities": [
-      "Shipping Companies",
-      "LNG Import Terminals",
-      "Energy Access",
-      "Natural Gas",
-      "Greenhouse Gas Emissions",
-      "Clean Energy Transition",
-      "Energy Security",
-      "Cryogenic Technology"
+      "greenhouse gas emissions",
+      "just energy transition",
+      "energy democracy",
+      "energy markets",
+      "natural gas",
+      "shipping companies",
+      "cryogenic technology",
+      "lng import terminals"
     ],
     "relations": {
-      "liquefied natural gas": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Liquefied natural gas addresses energy access challenges by providing a reliable and cleaner energy source.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Cryogenic Technology",
+          "Object": "cryogenic technology",
           "Description": "Liquefied natural gas employs cryogenic technology for the storage and transportation of natural gas.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Shipping Companies",
+          "Object": "shipping companies",
           "Description": "Liquefied natural gas collaborates with shipping companies for the transportation of LNG.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Clean Energy Transition",
+          "Object": "just energy transition",
           "Description": "Liquefied natural gas supports the clean energy transition by providing a lower-carbon alternative to other fossil fuels.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "LNG Import Terminals",
+          "Object": "lng import terminals",
           "Description": "Liquefied natural gas administers LNG import terminals for the storage and regasification of LNG.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Greenhouse Gas Emissions",
+          "Object": "greenhouse gas emissions",
           "Description": "Liquefied natural gas measures greenhouse gas emissions to ensure compliance with environmental regulations.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Energy Security",
+          "Object": "energy democracy",
           "Description": "Liquefied natural gas aligns with energy security objectives by diversifying energy sources.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Natural Gas",
+          "Object": "natural gas",
           "Description": "Liquefied natural gas is an instance of natural gas in its liquid form.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "addresses",
+          "Object": "energy and health",
+          "Description": "Energy democracy addresses energy inequality by promoting equitable access to clean and affordable energy for all individuals and communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "employs",
+          "Object": "participatory decision-making",
+          "Description": "Energy democracy employs participatory decision-making processes to ensure that all stakeholders have a voice in shaping energy policies and projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "liquefaction process",
+      "storage and transportation",
+      "regasification process",
+      "LNG terminals",
+      "LNG carriers"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "liquefaction process",
+        "Relation": "is a sub-element of",
+        "Parent": "liquefied natural gas",
+        "Description": "The liquefaction process is a crucial step in the production of liquefied natural gas. It involves cooling natural gas to a very low temperature, transforming it into a liquid state for easier storage and transportation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "storage and transportation",
+        "Relation": "is a sub-element of",
+        "Parent": "liquefied natural gas",
+        "Description": "Storage and transportation are essential aspects of the liquefied natural gas industry. LNG is stored in specialized tanks and transported using LNG carriers to various destinations, enabling the global trade of natural gas.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "regasification process",
+        "Relation": "is a sub-element of",
+        "Parent": "liquefied natural gas",
+        "Description": "The regasification process is the reverse of the liquefaction process. It involves heating liquefied natural gas back to its gaseous state, making it suitable for distribution and use in various applications.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "LNG terminals",
+        "Relation": "is a sub-element of",
+        "Parent": "liquefied natural gas",
+        "Description": "LNG terminals are specialized facilities where liquefied natural gas is received, stored, and regasified. They play a crucial role in the import and export of LNG, ensuring its efficient distribution.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "LNG carriers",
+        "Relation": "is a sub-element of",
+        "Parent": "liquefied natural gas",
+        "Description": "LNG carriers are specially designed ships used for the transportation of liquefied natural gas. They are equipped with advanced insulation and safety systems to ensure the safe and efficient delivery of LNG to different ports.",
+        "Importance": 3
+      }
+    ]
   }
 }

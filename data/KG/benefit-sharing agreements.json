@@ -14,66 +14,120 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Access Programs",
-      "Local Communities",
-      "Energy Poverty",
-      "Community Development",
-      "Renewable Energy Performance",
-      "Climate Change Mitigation",
-      "Building Standards",
-      "Renewable Energy Projects"
+      "community development",
+      "energy access programs",
+      "local communities",
+      "climate change mitigation",
+      "energy poverty indices",
+      "building standards",
+      "renewable energy agencies"
     ],
     "relations": {
-      "benefit-sharing agreements": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Benefit-sharing agreements implement building standards that promote the use of energy-saving designs and materials.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Benefit-sharing agreements provide funding for renewable energy projects.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Community Development",
+          "Object": "community development",
           "Description": "Benefit-sharing agreements focus on community development initiatives related to sustainable energy.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Energy Access Programs",
+          "Object": "energy access programs",
           "Description": "Benefit-sharing agreements are involved in energy access programs to ensure equitable distribution of energy resources.",
           "Importance": 2
         },
         {
           "Relation": "partners_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "Benefit-sharing agreements partner with local communities to implement sustainable energy projects.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Benefit-sharing agreements contribute to climate change mitigation efforts through the promotion of sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Renewable Energy Performance",
+          "Object": "renewable energy agencies",
           "Description": "Benefit-sharing agreements monitor the performance of renewable energy projects to ensure their effectiveness.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Benefit-sharing agreements target the reduction of energy poverty through sustainable energy initiatives.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

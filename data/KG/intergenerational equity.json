@@ -17,18 +17,18 @@
   },
   "knowledge graph": {
     "entities": [
-      "intergenerational justice",
-      "sustainable development",
-      "international agreements",
       "long-term sustainability",
-      "environmental impact",
-      "youth organizations",
       "environmental conservation projects",
+      "international agreements",
+      "youth organizations",
       "sustainable development goals",
-      "climate change mitigation"
+      "environmental impact assessments",
+      "climate change mitigation",
+      "intergenerational equity",
+      "sustainable development"
     ],
     "relations": {
-      "intergenerational equity": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "sustainable development goals",
@@ -67,7 +67,7 @@
         },
         {
           "Relation": "monitors",
-          "Object": "environmental impact",
+          "Object": "environmental impact assessments",
           "Description": "Intergenerational equity monitors the environmental impact of policies and actions to protect future generations.",
           "Importance": 3
         },
@@ -79,11 +79,52 @@
         },
         {
           "Relation": "addresses",
-          "Object": "intergenerational justice",
+          "Object": "intergenerational equity",
           "Description": "Intergenerational equity addresses intergenerational justice to ensure fairness between generations.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "aligns_with",
+          "Object": "environmental regulations",
+          "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
+          "Importance": 4
+        },
+        {
+          "Subject": "intergenerational equity",
+          "Relation": "implements",
+          "Object": "sustainable development goals",
+          "Description": "Intergenerational equity implements the sustainable development goals to ensure a better future for future generations.",
+          "Importance": 4
+        },
+        {
+          "Subject": "intergenerational equity",
+          "Relation": "funds",
+          "Object": "environmental conservation projects",
+          "Description": "Intergenerational equity funds environmental conservation projects to protect natural resources for future generations.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "employs",
+          "Object": "environmental experts",
+          "Description": "Environmental impact assessments employ the expertise of environmental experts to evaluate the potential environmental effects of energy projects.",
+          "Importance": 3
+        },
+        {
+          "Subject": "intergenerational equity",
+          "Relation": "implements",
+          "Object": "sustainable development goals",
+          "Description": "Intergenerational equity implements the sustainable development goals to ensure a better future for future generations.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

@@ -15,66 +15,148 @@
   },
   "knowledge graph": {
     "entities": [
-      "Sustainable Finance",
-      "Environmental Impact",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Clean Energy Transition",
-      "International Climate Finance Institutions",
-      "Renewable Energy Projects",
-      "Renewable Energy Investments"
+      "international climate finance institutions",
+      "sustainable finance",
+      "energy efficiency",
+      "just energy transition",
+      "climate change mitigation",
+      "environmental impact assessments",
+      "renewable energy agencies"
     ],
     "relations": {
-      "green bonds": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Green bonds are used to implement the Energy Efficiency Policy, which promotes the use of energy-saving designs and materials.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Green bonds provide funding for various renewable energy projects, such as solar and wind farms.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Green bonds primarily focus on financing projects that contribute to climate change mitigation efforts.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Sustainable Finance",
+          "Object": "sustainable finance",
           "Description": "Green bonds are a key instrument in the field of sustainable finance, promoting investments in environmentally friendly projects.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "International Climate Finance Institutions",
+          "Object": "international climate finance institutions",
           "Description": "Green bonds collaborate with international climate finance institutions to mobilize funds for sustainable energy projects.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Clean Energy Transition",
+          "Object": "just energy transition",
           "Description": "Green bonds contribute to the global clean energy transition by supporting the development and deployment of clean energy technologies.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Environmental Impact",
+          "Object": "environmental impact assessments",
           "Description": "Green bonds monitor the environmental impact of funded projects to ensure compliance with sustainability standards.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Investments",
+          "Object": "renewable energy agencies",
           "Description": "Green bonds set targets for increasing investments in renewable energy projects to accelerate the transition to a low-carbon economy.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "aligns_with",
+          "Object": "environmental regulations",
+          "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

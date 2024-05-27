@@ -16,73 +16,135 @@
   },
   "knowledge graph": {
     "entities": [
-      "Universal Access to Energy",
-      "Ministry of Health",
-      "Research on Renewable Energy",
-      "Sustainable Energy for All Initiative",
-      "Energy Consumption Patterns",
-      "Energy Poverty",
-      "Climate Change Mitigation",
-      "Building Standards",
-      "Access to Clean Cooking Solutions"
+      "sustainable energy for all initiative",
+      "offshore renewable energy",
+      "ministry of health",
+      "access to clean cooking solutions",
+      "climate change mitigation",
+      "energy poverty indices",
+      "building standards",
+      "universal access to energy",
+      "energy consumption patterns"
     ],
     "relations": {
-      "energy and health": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research on Renewable Energy",
+          "Object": "offshore renewable energy",
           "Description": "Energy and health funds research on renewable energy to promote sustainable and clean energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Access to Clean Cooking Solutions",
+          "Object": "access to clean cooking solutions",
           "Description": "Energy and health focuses on improving access to clean cooking solutions to reduce indoor air pollution and promote better health.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Sustainable Energy for All Initiative",
+          "Object": "sustainable energy for all initiative",
           "Description": "Energy and health is involved in the Sustainable Energy for All Initiative to ensure universal access to sustainable energy and promote health benefits.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Ministry of Health",
+          "Object": "ministry of health",
           "Description": "Energy and health partners with the Ministry of Health to integrate energy considerations into healthcare facilities and promote energy-efficient practices.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Energy and health contributes to climate change mitigation by promoting renewable energy sources and reducing greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption Patterns",
+          "Object": "energy consumption patterns",
           "Description": "Energy and health monitors energy consumption patterns to identify areas for improvement and promote energy efficiency.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Universal Access to Energy",
+          "Object": "universal access to energy",
           "Description": "Energy and health targets universal access to energy to ensure equitable distribution and improve health outcomes.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Energy and health addresses energy poverty by implementing programs and policies to provide affordable and reliable energy services.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Offshore renewable energy implements building standards that promote the use of sustainable energy sources and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "focuses_on",
+          "Object": "wind energy",
+          "Description": "Offshore renewable energy focuses on harnessing wave energy as a sustainable energy source.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "wind energy",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Wind energy implements Energy Efficiency Policy by promoting the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

@@ -17,73 +17,205 @@
   },
   "knowledge graph": {
     "entities": [
-      "Clean Cooking Solutions",
-      "Environmental Sustainability",
-      "Energy Access Program",
-      "Local Communities",
-      "Energy Poverty",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Renewable Energy Research",
-      "Energy Consumption"
+      "clean cooking",
+      "local communities",
+      "environmental sustainability",
+      "energy access program",
+      "energy efficiency",
+      "climate change mitigation",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "traditional energy technologies": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Traditional energy technologies implement the Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Research",
+          "Object": "renewable energy agencies",
           "Description": "Traditional energy technologies provide funding for research in renewable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Clean Cooking Solutions",
+          "Object": "clean cooking",
           "Description": "Traditional energy technologies focus on developing clean cooking solutions to reduce indoor air pollution and improve health.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Energy Access Program",
+          "Object": "energy access program",
           "Description": "Traditional energy technologies are included in the Energy Access Program to provide affordable and reliable energy to underserved communities.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "Traditional energy technologies collaborate and partner with local communities to ensure their energy needs are met sustainably.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Traditional energy technologies contribute to climate change mitigation efforts by promoting the use of renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Traditional energy technologies monitor energy consumption patterns to identify areas for improvement and energy-saving measures.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Traditional energy technologies target energy poverty by providing affordable and accessible energy solutions to marginalized communities.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Environmental Sustainability",
+          "Object": "environmental sustainability",
           "Description": "Traditional energy technologies address environmental sustainability by promoting the use of clean and renewable energy sources.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "clean cooking",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Clean cooking implements energy efficiency policies that promote the use of clean and efficient cooking technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "clean cooking",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Clean cooking funds renewable energy projects that aim to provide clean cooking solutions to communities.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "fossil fuels",
+      "biomass energy",
+      "hydropower",
+      "solar energy",
+      "wind energy"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "fossil fuels",
+        "Relation": "is a sub-element of",
+        "Parent": "traditional energy technologies",
+        "Description": "Fossil fuels are a sub-component of traditional energy technologies. They include coal, oil, and natural gas, which are formed from the remains of ancient plants and animals. Fossil fuels are widely used for electricity generation, heating, and transportation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "biomass energy",
+        "Relation": "is a sub-element of",
+        "Parent": "traditional energy technologies",
+        "Description": "Biomass energy is a type of traditional energy technology that involves using organic materials, such as wood, agricultural residues, and dedicated energy crops, to generate heat and electricity. Biomass energy is considered renewable as the organic materials can be replenished.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "hydropower",
+        "Relation": "is a sub-element of",
+        "Parent": "traditional energy technologies",
+        "Description": "Hydropower is a sub-component of traditional energy technologies. It involves harnessing the energy of flowing or falling water to generate electricity. Hydropower plants can range from small-scale run-of-river systems to large-scale dams.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "solar energy",
+        "Relation": "is a sub-element of",
+        "Parent": "traditional energy technologies",
+        "Description": "Solar energy is a sub-component of traditional energy technologies. It involves capturing the energy from sunlight and converting it into electricity or heat. Solar energy technologies include photovoltaic panels and solar thermal systems.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "wind energy",
+        "Relation": "is a sub-element of",
+        "Parent": "traditional energy technologies",
+        "Description": "Wind energy is a sub-component of traditional energy technologies. It involves harnessing the power of wind to generate electricity. Wind turbines are used to convert the kinetic energy of the wind into electrical energy.",
+        "Importance": 4
+      }
+    ]
   }
 }

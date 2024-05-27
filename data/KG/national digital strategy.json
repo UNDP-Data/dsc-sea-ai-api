@@ -19,7 +19,7 @@
       "data governance frameworks"
     ],
     "relations": {
-      "national digital strategy": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "data governance frameworks",
@@ -74,7 +74,83 @@
           "Description": "The national digital strategy addresses the challenges and issues related to data governance frameworks to ensure their successful implementation and operation.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "data governance frameworks",
+          "Relation": "implements",
+          "Object": "sustainable energy policies",
+          "Description": "Data governance frameworks implement sustainable energy policies to ensure effective management and utilization of energy data.",
+          "Importance": 4
+        },
+        {
+          "Subject": "data governance frameworks",
+          "Relation": "funds",
+          "Object": "research and development projects",
+          "Description": "Data governance frameworks provide funding for research and development projects related to sustainable energy.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "data privacy and security",
+          "Relation": "implements",
+          "Object": "privacy regulations",
+          "Description": "Data privacy and security implements privacy regulations to protect personal information from unauthorized access and use.",
+          "Importance": 4
+        },
+        {
+          "Subject": "data equity",
+          "Relation": "implements",
+          "Object": "ai for smart grid optimization",
+          "Description": "Data equity implements AI for smart grid optimization to ensure fair and unbiased decision-making in energy management.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "policy framework",
+      "digital infrastructure",
+      "digital skills development",
+      "data governance",
+      "cybersecurity"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "policy framework",
+        "Relation": "is a sub-element of",
+        "Parent": "national digital strategy",
+        "Description": "A policy framework is an essential component of a national digital strategy. It provides a set of guidelines, principles, and objectives to guide the development and implementation of digital initiatives at the national level. It helps to align various stakeholders and ensure coherence in the digital transformation process.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "digital infrastructure",
+        "Relation": "is a sub-element of",
+        "Parent": "national digital strategy",
+        "Description": "Digital infrastructure refers to the underlying technological components and networks required to support digital services and connectivity. It includes broadband networks, data centers, cloud computing infrastructure, and other digital communication systems. A national digital strategy should address the development, maintenance, and expansion of digital infrastructure to enable widespread access and usage of digital technologies.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "digital skills development",
+        "Relation": "is a sub-element of",
+        "Parent": "national digital strategy",
+        "Description": "Digital skills development is a crucial aspect of a national digital strategy. It involves initiatives to enhance the digital literacy and capabilities of individuals, businesses, and institutions. This includes training programs, capacity building efforts, and awareness campaigns to ensure that people have the necessary skills to effectively use digital technologies and participate in the digital economy.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "data governance",
+        "Relation": "is a sub-element of",
+        "Parent": "national digital strategy",
+        "Description": "Data governance refers to the policies, processes, and frameworks for managing and protecting data assets. In the context of a national digital strategy, data governance is essential to ensure the responsible and secure use of data. It includes aspects such as data privacy, data protection, data sharing, and data ethics. Effective data governance is crucial for building trust and enabling data-driven decision-making.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "cybersecurity",
+        "Relation": "is a sub-element of",
+        "Parent": "national digital strategy",
+        "Description": "Cybersecurity is a critical sub-element of a national digital strategy. It involves measures and practices to protect digital systems, networks, and data from unauthorized access, use, disclosure, disruption, modification, or destruction. A comprehensive cybersecurity strategy is necessary to safeguard critical infrastructure, sensitive information, and ensure the resilience of digital services.",
+        "Importance": 4
+      }
+    ]
   }
 }

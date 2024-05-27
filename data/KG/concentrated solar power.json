@@ -15,66 +15,198 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Electricity Grid Operators",
-      "Solar Power Plants",
-      "Clean Energy Transition",
-      "Renewable Energy Portfolio",
-      "Research and Development",
-      "Renewable Energy Capacity"
+      "research and development",
+      "solar power plants",
+      "renewable energy certificates",
+      "energy efficiency",
+      "just energy transition",
+      "electricity grid operators",
+      "climate change mitigation",
+      "renewable energy agencies"
     ],
     "relations": {
-      "concentrated solar power": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Concentrated solar power implements the Energy Efficiency Policy to promote the use of renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research and Development",
+          "Object": "research and development",
           "Description": "Concentrated solar power funds research and development activities to improve the efficiency and effectiveness of solar power technology.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Clean Energy Transition",
+          "Object": "just energy transition",
           "Description": "Concentrated solar power focuses on supporting the clean energy transition by providing a sustainable and renewable energy source.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Renewable Energy Portfolio",
+          "Object": "renewable energy certificates",
           "Description": "Concentrated solar power is included in the renewable energy portfolio to diversify the energy mix and reduce reliance on fossil fuels.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Electricity Grid Operators",
+          "Object": "electricity grid operators",
           "Description": "Concentrated solar power partners with electricity grid operators to ensure the integration and efficient distribution of solar power into the grid.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Concentrated solar power contributes to climate change mitigation by reducing greenhouse gas emissions and promoting sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Solar Power Plants",
+          "Object": "solar power plants",
           "Description": "Concentrated solar power monitors the performance and operation of solar power plants to ensure optimal efficiency and maintenance.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Capacity",
+          "Object": "renewable energy agencies",
           "Description": "Concentrated solar power targets the increase of renewable energy capacity by expanding the deployment of solar power plants.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "Renewable energy certificates contribute to climate change mitigation efforts by promoting the use of clean and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "parabolic trough",
+      "power tower",
+      "dish/engine system",
+      "concentrated solar photovoltaics",
+      "concentrated solar thermal"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "parabolic trough",
+        "Relation": "is a sub-element of",
+        "Parent": "concentrated solar power",
+        "Description": "A parabolic trough is a type of concentrated solar power technology that uses curved mirrors to focus sunlight onto a receiver tube. The receiver tube contains a heat transfer fluid, which is heated by the concentrated sunlight and used to generate steam for electricity generation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "power tower",
+        "Relation": "is a sub-element of",
+        "Parent": "concentrated solar power",
+        "Description": "A power tower, also known as a central receiver system, is a type of concentrated solar power technology that uses an array of mirrors to focus sunlight onto a receiver located at the top of a tower. The receiver absorbs the concentrated sunlight and transfers the heat to a heat transfer fluid, which is used to generate steam for electricity generation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "dish/engine system",
+        "Relation": "is a sub-element of",
+        "Parent": "concentrated solar power",
+        "Description": "A dish/engine system is a type of concentrated solar power technology that uses a parabolic dish to concentrate sunlight onto a receiver located at the focal point of the dish. The receiver absorbs the concentrated sunlight and transfers the heat to a heat transfer fluid, which is used to generate steam for electricity generation.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "concentrated solar photovoltaics",
+        "Relation": "is a sub-element of",
+        "Parent": "concentrated solar power",
+        "Description": "Concentrated solar photovoltaics is a type of concentrated solar power technology that uses lenses or mirrors to concentrate sunlight onto a small area of high-efficiency photovoltaic cells. The concentrated sunlight increases the intensity of the sunlight reaching the cells, resulting in higher electricity generation.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "concentrated solar thermal",
+        "Relation": "is a sub-element of",
+        "Parent": "concentrated solar power",
+        "Description": "Concentrated solar thermal is a type of concentrated solar power technology that uses mirrors to concentrate sunlight onto a receiver, which contains a heat transfer fluid. The concentrated sunlight heats the fluid, which is then used to generate steam for electricity generation or other thermal applications.",
+        "Importance": 3
+      }
+    ]
   }
 }

@@ -15,13 +15,13 @@
   },
   "knowledge graph": {
     "entities": [
-      "inequality",
-      "sustainable development",
       "work-life balance",
-      "productivity"
+      "sustainable development",
+      "productivity",
+      "inequality"
     ],
     "relations": {
-      "time poverty": [
+      "level 1": [
         {
           "Relation": "addresses",
           "Object": "sustainable development",
@@ -46,7 +46,11 @@
           "Description": "Time poverty measures the impact on productivity by assessing the efficiency and effectiveness of individuals' use of time.",
           "Importance": 2
         }
-      ]
-    }
+      ],
+      "level 2": [],
+      "level 3": []
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

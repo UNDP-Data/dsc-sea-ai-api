@@ -15,17 +15,17 @@
   },
   "knowledge graph": {
     "entities": [
-      "financial institutions",
-      "inclusive business models",
       "economic impact",
+      "inclusive business models",
       "local communities",
-      "women entrepreneurs",
-      "microfinance programs",
+      "energy entrepreneurship",
+      "financial institutions",
+      "sustainable development goals",
       "youth unemployment",
-      "sustainable development goals"
+      "micro-finance"
     ],
     "relations": {
-      "medium small micro enterprises": [
+      "level 1": [
         {
           "Relation": "addresses",
           "Object": "youth unemployment",
@@ -46,13 +46,13 @@
         },
         {
           "Relation": "supports",
-          "Object": "women entrepreneurs",
+          "Object": "energy entrepreneurship",
           "Description": "Medium small micro enterprises support women entrepreneurs by providing training, mentorship, and access to markets.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "microfinance programs",
+          "Object": "micro-finance",
           "Description": "Medium small micro enterprises administer microfinance programs to enable access to credit and financial resources for small businesses.",
           "Importance": 3
         },
@@ -74,7 +74,111 @@
           "Description": "Medium small micro enterprises are an instance of inclusive business models that prioritize social and environmental impact alongside financial returns.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy entrepreneurship implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy entrepreneurship funds renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "micro-finance",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Micro-finance implements energy access programs that provide financial support for clean energy projects in underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "micro-finance",
+          "Relation": "focuses_on",
+          "Object": "energy poverty indices",
+          "Description": "Micro-finance focuses on addressing energy poverty by providing financial services for clean energy solutions to marginalized communities.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "start-ups",
+      "family-owned businesses",
+      "cooperatives",
+      "social enterprises",
+      "informal businesses"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "start-ups",
+        "Relation": "is a sub-element of",
+        "Parent": "medium small micro enterprises",
+        "Description": "Start-ups are a type of medium small micro enterprise that are newly established and typically have innovative business models or products. They play a crucial role in driving economic growth and job creation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "family-owned businesses",
+        "Relation": "is a sub-element of",
+        "Parent": "medium small micro enterprises",
+        "Description": "Family-owned businesses are a category of medium small micro enterprises that are owned and operated by members of the same family. They often have a long-term perspective and contribute to local economies.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "cooperatives",
+        "Relation": "is a sub-element of",
+        "Parent": "medium small micro enterprises",
+        "Description": "Cooperatives are a type of medium small micro enterprise that are owned and democratically controlled by their members. They promote collective decision-making and equitable distribution of benefits.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "social enterprises",
+        "Relation": "is a sub-element of",
+        "Parent": "medium small micro enterprises",
+        "Description": "Social enterprises are a type of medium small micro enterprise that prioritize social or environmental objectives alongside financial sustainability. They address social issues through innovative business models.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "informal businesses",
+        "Relation": "is a sub-element of",
+        "Parent": "medium small micro enterprises",
+        "Description": "Informal businesses are a category of medium small micro enterprises that operate outside the formal legal and regulatory frameworks. They often face challenges in accessing finance and social protection.",
+        "Importance": 2
+      }
+    ]
   }
 }

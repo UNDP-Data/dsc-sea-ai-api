@@ -17,66 +17,184 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Access",
-      "Climate Change Mitigation",
-      "Building Standards",
-      "Local Governments",
-      "Energy Consumption",
-      "Renewable Energy Projects",
-      "Community-based Energy Solutions",
-      "Rural Areas"
+      "local governments",
+      "energy markets",
+      "community-led solutions",
+      "climate change mitigation",
+      "energy consumption",
+      "building standards",
+      "renewable energy agencies",
+      "rural areas"
     ],
     "relations": {
-      "decentralized energy systems": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Decentralized energy systems implement building standards that promote the use of energy-saving designs and materials.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Decentralized energy systems provide funding for renewable energy projects.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Community-based Energy Solutions",
+          "Object": "community-led solutions",
           "Description": "Decentralized energy systems focus on community-based energy solutions to promote local energy production and consumption.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Rural Areas",
+          "Object": "rural areas",
           "Description": "Decentralized energy systems are implemented in rural areas to provide access to clean and affordable energy.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Local Governments",
+          "Object": "local governments",
           "Description": "Decentralized energy systems partner with local governments to implement sustainable energy solutions at the community level.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Decentralized energy systems contribute to climate change mitigation by reducing greenhouse gas emissions through the use of renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Decentralized energy systems monitor energy consumption to identify opportunities for energy efficiency improvements.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Decentralized energy systems target improved energy access for underserved communities.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "community-led solutions",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Community-led solutions implement sustainable energy projects that aim to provide clean and affordable energy to local communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "community-led solutions",
+          "Relation": "funds",
+          "Object": "renewable energy initiatives",
+          "Description": "Community-led solutions provide funding for renewable energy initiatives to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "microgrids",
+      "off-grid systems",
+      "distributed generation",
+      "energy storage",
+      "smart grids"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "microgrids",
+        "Relation": "is a sub-element of",
+        "Parent": "decentralized energy systems",
+        "Description": "Microgrids are a sub-component of decentralized energy systems. They are small-scale power grids that can operate independently or in conjunction with the main power grid. They provide localized energy generation and distribution, increasing energy resilience and reducing transmission losses.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "off-grid systems",
+        "Relation": "is a sub-element of",
+        "Parent": "decentralized energy systems",
+        "Description": "Off-grid systems are a type of decentralized energy system that operate independently from the main power grid. They typically rely on renewable energy sources and are commonly used in remote areas where grid connection is not feasible. Off-grid systems provide access to electricity in underserved communities.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "distributed generation",
+        "Relation": "is a sub-element of",
+        "Parent": "decentralized energy systems",
+        "Description": "Distributed generation is a key component of decentralized energy systems. It refers to the generation of electricity from multiple small-scale sources located near the point of consumption. Distributed generation reduces transmission losses, enhances energy security, and promotes renewable energy integration.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy storage",
+        "Relation": "is a sub-element of",
+        "Parent": "decentralized energy systems",
+        "Description": "Energy storage is an essential part of decentralized energy systems. It involves the capture and storage of excess energy for later use. Energy storage technologies enable the integration of intermittent renewable energy sources, enhance grid stability, and support load management.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "smart grids",
+        "Relation": "is a sub-element of",
+        "Parent": "decentralized energy systems",
+        "Description": "Smart grids are a category of decentralized energy systems. They utilize advanced communication and control technologies to optimize the generation, distribution, and consumption of electricity. Smart grids enable efficient energy management, demand response, and integration of renewable energy sources.",
+        "Importance": 4
+      }
+    ]
   }
 }

@@ -17,59 +17,121 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Access Challenges",
-      "Energy Access Programs",
-      "Sustainable Development Goals",
-      "Energy Poverty",
-      "Renewable Energy Technologies",
-      "Local Governments",
-      "Energy Efficiency Initiatives"
+      "energy access programs",
+      "energy access challenges",
+      "local governments",
+      "energy efficiency",
+      "sustainable development goals",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "marginalized communities": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Marginalized communities employ renewable energy technologies to meet their energy needs and reduce reliance on fossil fuels.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Governments",
+          "Object": "local governments",
           "Description": "Marginalized communities collaborate with local governments to implement sustainable energy projects and policies.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Energy Access Programs",
+          "Object": "energy access programs",
           "Description": "Marginalized communities support energy access programs that provide clean energy solutions and resources.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Efficiency Initiatives",
+          "Object": "energy efficiency",
           "Description": "Marginalized communities administer energy efficiency initiatives to reduce energy consumption and promote sustainable practices.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Marginalized communities measure energy poverty to identify areas in need of clean energy solutions and support.",
           "Importance": 2
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Marginalized communities align their energy initiatives with the Sustainable Development Goals to promote sustainable and inclusive development.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Energy Access Challenges",
+          "Object": "energy access challenges",
           "Description": "Marginalized communities are an instance of energy access challenges that require targeted interventions and support.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "collaborates_with",
+          "Object": "industries",
+          "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy cooperatives",
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "Energy cooperatives address energy poverty by providing affordable and sustainable energy solutions to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

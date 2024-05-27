@@ -16,66 +16,184 @@
   },
   "knowledge graph": {
     "entities": [
-      "Utility Companies",
-      "Climate Change Mitigation",
-      "Energy Efficiency",
-      "Building Standards",
-      "Smart Grids",
-      "Energy Consumption",
-      "Renewable Energy Integration",
-      "Research and Development"
+      "research and development",
+      "micro grids",
+      "utility companies",
+      "renewable energy certificates",
+      "energy efficiency",
+      "climate change mitigation",
+      "energy consumption",
+      "building standards"
     ],
     "relations": {
-      "resilient energy storage systems": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Resilient energy storage systems implement building standards that ensure the safe and efficient storage of energy.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research and Development",
+          "Object": "research and development",
           "Description": "Resilient energy storage systems provide funding for research and development activities to improve energy storage technologies.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Renewable Energy Integration",
+          "Object": "renewable energy certificates",
           "Description": "Resilient energy storage systems focus on integrating renewable energy sources into the grid for a more sustainable energy system.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Smart Grids",
+          "Object": "micro grids",
           "Description": "Resilient energy storage systems are integrated into smart grids to optimize energy distribution and consumption.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Utility Companies",
+          "Object": "utility companies",
           "Description": "Resilient energy storage systems partner with utility companies to ensure reliable and efficient energy supply.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Resilient energy storage systems contribute to climate change mitigation by enabling the integration of renewable energy sources and reducing reliance on fossil fuels.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Resilient energy storage systems monitor energy consumption patterns to optimize energy storage and distribution.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Energy Efficiency",
+          "Object": "energy efficiency",
           "Description": "Resilient energy storage systems target improved energy efficiency by optimizing energy storage and reducing energy losses.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "funds",
+          "Object": "clean energy research",
+          "Description": "Renewable energy certificates provide funding for Clean Energy Research to support the development of innovative renewable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "micro grids",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Micro grids address energy access challenges by providing electricity to remote and underserved areas.",
+          "Importance": 4
+        },
+        {
+          "Subject": "micro grids",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "Micro grids collaborate with local communities to ensure their energy needs are met sustainably and efficiently.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "hybrid energy storage systems",
+          "Relation": "implements",
+          "Object": "energy storage technologies",
+          "Description": "Hybrid energy storage systems implement various energy storage technologies to optimize energy usage and improve efficiency.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "battery energy storage systems",
+      "flywheel energy storage systems",
+      "compressed air energy storage systems",
+      "thermal energy storage systems",
+      "hydrogen energy storage systems"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "battery energy storage systems",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient energy storage systems",
+        "Description": "Battery energy storage systems are a type of resilient energy storage systems that store electrical energy in rechargeable batteries. They are commonly used to store energy from renewable sources and provide backup power during outages.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "flywheel energy storage systems",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient energy storage systems",
+        "Description": "Flywheel energy storage systems are a type of resilient energy storage systems that store kinetic energy in a rotating flywheel. They are used to provide short-term backup power and stabilize electrical grids.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "compressed air energy storage systems",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient energy storage systems",
+        "Description": "Compressed air energy storage systems are a type of resilient energy storage systems that store energy by compressing air and releasing it to generate electricity. They are suitable for large-scale energy storage and can help balance the supply and demand of electricity.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "thermal energy storage systems",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient energy storage systems",
+        "Description": "Thermal energy storage systems are a type of resilient energy storage systems that store heat or cold for later use. They can be used to store excess heat from renewable energy sources or provide cooling during peak demand periods.",
+        "Importance": 2
+      },
+      {
+        "Sub-element": "hydrogen energy storage systems",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient energy storage systems",
+        "Description": "Hydrogen energy storage systems are a type of resilient energy storage systems that store hydrogen gas for later use in fuel cells or combustion engines. They can be used to store excess renewable energy and provide clean power when needed.",
+        "Importance": 4
+      }
+    ]
   }
 }

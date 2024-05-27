@@ -11,66 +11,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Programs",
-      "Capacity Building",
-      "Sustainable Development Goals",
-      "Local Communities",
-      "Energy Poverty",
-      "Renewable Energy Technologies",
-      "Energy Consumption",
-      "Renewable Energy Organization"
+      "regional energy organizations",
+      "local communities",
+      "capacity building",
+      "energy efficiency",
+      "sustainable development goals",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "Energy For Development": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Energy For Development addresses energy poverty by promoting access to affordable and sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Energy For Development employs renewable energy technologies to provide clean and sustainable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "Energy For Development collaborates with local communities to implement sustainable energy projects and initiatives.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Capacity Building",
+          "Object": "capacity building",
           "Description": "Energy For Development supports capacity building efforts to enhance knowledge and skills in sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Efficiency Programs",
+          "Object": "energy efficiency",
           "Description": "Energy For Development administers energy efficiency programs to promote energy conservation and reduce carbon emissions.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Energy For Development measures energy consumption to assess the impact of sustainable energy initiatives and identify areas for improvement.",
           "Importance": 2
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Energy For Development aligns with the Sustainable Development Goals to contribute to the global agenda for sustainable development.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Renewable Energy Organization",
+          "Object": "regional energy organizations",
           "Description": "Energy For Development is an instance of a renewable energy organization that promotes sustainable energy practices.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "collaborates_with",
+          "Object": "industries",
+          "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Regional energy organizations implement energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Regional energy organizations focus on improving energy access in underserved areas to ensure equitable distribution of sustainable energy resources.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

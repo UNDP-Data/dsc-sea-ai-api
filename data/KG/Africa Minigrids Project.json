@@ -15,66 +15,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Rural Electrification",
-      "Energy Access",
-      "Smart Metering Technology",
-      "Sustainable Development Goals",
-      "Public-Private Partnership",
-      "Entrepreneurship",
-      "Local Governments",
-      "Financial Incentives"
+      "public-private partnerships",
+      "financial incentives",
+      "smart metering technologies",
+      "local governments",
+      "energy entrepreneurship",
+      "energy markets",
+      "sustainable development goals",
+      "rural electrification"
     ],
     "relations": {
-      "Africa Minigrids Project": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Rural Electrification",
+          "Object": "rural electrification",
           "Description": "The Africa Minigrids Project addresses the challenge of rural electrification by deploying minigrids to provide clean and affordable energy to remote communities.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Smart Metering Technology",
+          "Object": "smart metering technologies",
           "Description": "The Africa Minigrids Project employs smart metering technology to enable efficient monitoring and management of energy usage in minigrids.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Governments",
+          "Object": "local governments",
           "Description": "The Africa Minigrids Project collaborates with local governments to ensure the successful implementation and operation of minigrids in their respective regions.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Entrepreneurship",
+          "Object": "energy entrepreneurship",
           "Description": "The Africa Minigrids Project supports entrepreneurship by creating opportunities for local businesses to participate in the development and operation of minigrids.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Financial Incentives",
+          "Object": "financial incentives",
           "Description": "The Africa Minigrids Project administers financial incentives to attract private sector investments in minigrid projects and accelerate their deployment.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "The Africa Minigrids Project measures progress in improving energy access by tracking the number of households and businesses connected to minigrids.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "The Africa Minigrids Project aligns with the Sustainable Development Goals, particularly Goal 7 on ensuring access to affordable, reliable, sustainable, and modern energy for all.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Public-Private Partnership",
+          "Object": "public-private partnerships",
           "Description": "The Africa Minigrids Project is an instance of a public-private partnership that brings together government, private sector, and development partners to drive the deployment of minigrids.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
+          "Importance": 4
+        },
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "in",
+          "Object": "smart grid",
+          "Description": "Smart metering technologies are an integral part of the smart grid infrastructure for efficient energy management.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy entrepreneurship implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Energy entrepreneurship focuses on improving energy access in underserved communities through innovative solutions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "collaborates_with",
+          "Object": "government agencies",
+          "Description": "Energy markets collaborate with government agencies to develop and implement policies and regulations that promote a sustainable and efficient energy sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "public-private partnerships",
+          "Relation": "implements",
+          "Object": "sdg7 targets",
+          "Description": "Public-private partnerships implement SDG7 targets by leveraging the resources and expertise of both the public and private sectors.",
+          "Importance": 4
+        },
+        {
+          "Subject": "public-private partnerships",
+          "Relation": "funds",
+          "Object": "sdg7 targets",
+          "Description": "Public-private partnerships provide funding for the implementation of SDG7 targets, ensuring financial support for sustainable energy projects.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

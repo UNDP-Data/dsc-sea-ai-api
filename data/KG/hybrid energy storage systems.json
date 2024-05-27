@@ -15,9 +15,178 @@
     ]
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "smart grid infrastructure",
+      "research and development",
+      "utility companies",
+      "renewable energy certificates",
+      "reducing carbon emissions",
+      "energy consumption",
+      "intermittency of renewable energy",
+      "energy resilience",
+      "energy storage technologies"
+    ],
     "relations": {
-      "hybrid energy storage systems": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "energy storage technologies",
+          "Description": "Hybrid energy storage systems implement various energy storage technologies to optimize energy usage and improve efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Hybrid energy storage systems provide funding for research and development of new energy storage technologies and solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "renewable energy certificates",
+          "Description": "Hybrid energy storage systems focus on integrating renewable energy sources into the grid to enhance sustainability and reliability.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "smart grid infrastructure",
+          "Description": "Hybrid energy storage systems play a crucial role in the implementation of smart grid infrastructure for efficient energy management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "utility companies",
+          "Description": "Hybrid energy storage systems collaborate and partner with utility companies to enhance grid stability and support renewable energy integration.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "energy resilience",
+          "Description": "Hybrid energy storage systems contribute to grid resilience by providing backup power and stabilizing the grid during peak demand periods.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy consumption",
+          "Description": "Hybrid energy storage systems monitor energy consumption patterns to optimize energy usage and identify areas for improvement.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "reducing carbon emissions",
+          "Description": "Hybrid energy storage systems target the reduction of carbon emissions by enabling the integration of renewable energy sources and reducing reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Hybrid energy storage systems address the intermittency of renewable energy sources by storing excess energy and providing a stable power supply.",
+          "Importance": 4
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "funds",
+          "Object": "clean energy research",
+          "Description": "Renewable energy certificates provide funding for Clean Energy Research to support the development of innovative renewable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy resilience",
+          "Relation": "addresses",
+          "Object": "climate change impacts",
+          "Description": "Energy resilience addresses the challenges posed by climate change impacts to ensure a reliable and sustainable energy supply.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy resilience",
+          "Relation": "employs",
+          "Object": "micro grids",
+          "Description": "Energy resilience employs microgrid systems to enhance the resilience and reliability of energy infrastructure.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "micro grids",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Micro grids address energy access challenges by providing electricity to remote and underserved areas.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [
+      "batteries",
+      "supercapacitors",
+      "flywheels",
+      "compressed air energy storage",
+      "thermal energy storage"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "batteries",
+        "Relation": "is a sub-element of",
+        "Parent": "hybrid energy storage systems",
+        "Description": "Batteries are a key component of hybrid energy storage systems. They store electrical energy and can be charged and discharged multiple times. Batteries provide a reliable and efficient way to store and release energy in hybrid systems.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "supercapacitors",
+        "Relation": "is a sub-element of",
+        "Parent": "hybrid energy storage systems",
+        "Description": "Supercapacitors are another important sub-element of hybrid energy storage systems. They store electrical energy in an electric field and can deliver high power outputs. Supercapacitors complement batteries by providing quick bursts of energy during peak demand.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "flywheels",
+        "Relation": "is a sub-element of",
+        "Parent": "hybrid energy storage systems",
+        "Description": "Flywheels are mechanical devices used in hybrid energy storage systems. They store energy in the form of rotational kinetic energy and can deliver high power outputs. Flywheels provide fast response times and are suitable for short-duration energy storage.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "compressed air energy storage",
+        "Relation": "is a sub-element of",
+        "Parent": "hybrid energy storage systems",
+        "Description": "Compressed air energy storage (CAES) is a sub-element of hybrid energy storage systems. It involves compressing air and storing it in underground caverns or tanks. When energy is needed, the compressed air is released and used to generate electricity.",
+        "Importance": 2
+      },
+      {
+        "Sub-element": "thermal energy storage",
+        "Relation": "is a sub-element of",
+        "Parent": "hybrid energy storage systems",
+        "Description": "Thermal energy storage is an important sub-element of hybrid energy storage systems. It involves storing heat or cold for later use. Thermal energy storage systems can store excess heat or cold generated from renewable energy sources and release it when needed.",
+        "Importance": 2
+      }
+    ]
   }
 }
