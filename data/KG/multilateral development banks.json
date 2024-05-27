@@ -18,73 +18,147 @@
   },
   "knowledge graph": {
     "entities": [
-      "Access to Clean Energy",
-      "Renewable Energy Generation",
-      "Energy Efficiency Targets",
-      "Private Sector Companies",
-      "Energy Poverty",
-      "Energy Efficiency Policy",
-      "Partnership for Sustainable Energy",
-      "Climate Change Mitigation",
-      "Renewable Energy Projects"
+      "access to clean energy",
+      "partnership for sustainable energy",
+      "energy efficiency",
+      "private sector companies",
+      "climate change mitigation",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "multilateral development banks": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Multilateral development banks implement energy efficiency policies to promote sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Multilateral development banks provide funding for renewable energy projects to support the transition to clean energy sources.",
           "Importance": 4
         },
         {
           "Relation": "focuses_on",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Multilateral development banks focus on climate change mitigation efforts by supporting sustainable energy initiatives.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Partnership for Sustainable Energy",
+          "Object": "partnership for sustainable energy",
           "Description": "Multilateral development banks are involved in the Partnership for Sustainable Energy to promote collaboration in the sustainable energy sector.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Private Sector Companies",
+          "Object": "private sector companies",
           "Description": "Multilateral development banks partner with private sector companies to leverage their expertise and resources for sustainable energy projects.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Access to Clean Energy",
+          "Object": "access to clean energy",
           "Description": "Multilateral development banks contribute to improving access to clean energy by supporting projects in underserved areas.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Efficiency Targets",
+          "Object": "energy efficiency",
           "Description": "Multilateral development banks monitor the progress of energy efficiency targets to ensure effective implementation of sustainable energy policies.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Generation",
+          "Object": "renewable energy agencies",
           "Description": "Multilateral development banks set targets for increasing renewable energy generation to promote a shift towards clean and sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Multilateral development banks address energy poverty by supporting initiatives that provide access to affordable and reliable energy services.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "focuses_on",
+          "Object": "energy affordability",
+          "Description": "Energy poverty indices focus on improving energy affordability to ensure that all individuals can access and afford essential energy services.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

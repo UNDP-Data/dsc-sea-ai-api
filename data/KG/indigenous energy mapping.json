@@ -15,59 +15,121 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Data Collection",
-      "Geospatial Analysis",
-      "Community-based Energy Planning",
-      "Energy Resource Potential",
-      "Indigenous Communities",
-      "Indigenous Rights",
-      "Community-led Energy Projects"
+      "community-based energy resilience programs",
+      "energy data collection",
+      "geospatial analysis",
+      "indigenous land rights",
+      "community-led energy projects",
+      "energy resource potential",
+      "indigenous communities"
     ],
     "relations": {
-      "indigenous energy mapping": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Geospatial Analysis",
+          "Object": "geospatial analysis",
           "Description": "Indigenous energy mapping employs geospatial analysis techniques to identify and map potential energy resources in indigenous territories.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Indigenous Communities",
+          "Object": "indigenous communities",
           "Description": "Indigenous energy mapping collaborates with indigenous communities to ensure their knowledge and perspectives are incorporated in energy planning and decision-making processes.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Community-led Energy Projects",
+          "Object": "community-led energy projects",
           "Description": "Indigenous energy mapping supports community-led energy projects that aim to provide sustainable and locally-owned energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Energy Data Collection",
+          "Object": "energy data collection",
           "Description": "Indigenous energy mapping administers the collection and analysis of energy data to inform decision-making and policy development.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Resource Potential",
+          "Object": "energy resource potential",
           "Description": "Indigenous energy mapping measures the potential of energy resources in indigenous territories to identify opportunities for sustainable energy development.",
           "Importance": 4
         },
         {
           "Relation": "aligns_with",
-          "Object": "Indigenous Rights",
+          "Object": "indigenous land rights",
           "Description": "Indigenous energy mapping aligns with the principles of indigenous rights, ensuring the protection and respect of indigenous communities' rights in energy planning and development.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Community-based Energy Planning",
+          "Object": "community-based energy resilience programs",
           "Description": "Indigenous energy mapping is an instance of community-based energy planning, which involves the active participation and engagement of indigenous communities in energy decision-making processes.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "indigenous land rights",
+          "Relation": "employs",
+          "Object": "traditional ecological knowledge",
+          "Description": "Indigenous land rights employ traditional ecological knowledge to manage and protect natural resources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "indigenous land rights",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "Indigenous land rights collaborate with local communities to ensure sustainable land management practices.",
+          "Importance": 3
+        },
+        {
+          "Subject": "community-based energy resilience programs",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Community-based energy resilience programs implement energy efficiency measures to reduce energy consumption and promote sustainability.",
+          "Importance": 4
+        },
+        {
+          "Subject": "community-based energy resilience programs",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Community-based energy resilience programs provide funding for renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "traditional ecological knowledge",
+          "Relation": "addresses",
+          "Object": "climate change adaptation",
+          "Description": "Traditional ecological knowledge addresses climate change adaptation by providing valuable insights and practices for sustainable resource management.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

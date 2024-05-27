@@ -15,59 +15,148 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Programs",
-      "Climate Resilience",
-      "Vulnerable Communities",
-      "International Organizations",
-      "Sustainable Development Goals",
-      "Renewable Energy Technologies",
-      "Renewable Energy Capacity"
+      "regional energy organizations",
+      "vulnerable communities",
+      "climate resilience funds",
+      "energy efficiency",
+      "sustainable development goals",
+      "renewable energy agencies"
     ],
     "relations": {
-      "small island developing states": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Small island developing states employ renewable energy technologies to reduce dependence on imported fossil fuels and enhance energy self-sufficiency.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "International Organizations",
+          "Object": "regional energy organizations",
           "Description": "Small island developing states collaborate with international organizations to access funding and technical expertise for sustainable energy projects.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Climate Resilience",
+          "Object": "climate resilience funds",
           "Description": "Small island developing states support climate resilience initiatives by integrating renewable energy and sustainable practices into their infrastructure and policies.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Efficiency Programs",
+          "Object": "energy efficiency",
           "Description": "Small island developing states administer energy efficiency programs to promote energy conservation and reduce energy costs.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Renewable Energy Capacity",
+          "Object": "renewable energy agencies",
           "Description": "Small island developing states measure their renewable energy capacity to track progress towards their clean energy targets and identify areas for improvement.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Small island developing states align their sustainable energy efforts with the Sustainable Development Goals to ensure a holistic and integrated approach to development.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Vulnerable Communities",
+          "Object": "vulnerable communities",
           "Description": "Small island developing states are an instance of vulnerable communities that are disproportionately affected by climate change and rely on sustainable energy solutions for resilience.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Regional energy organizations implement energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Regional energy organizations focus on improving energy access in underserved areas to ensure equitable distribution of sustainable energy resources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate resilience funds",
+          "Relation": "addresses",
+          "Object": "climate change impacts",
+          "Description": "climate resilience funds address climate change impacts by supporting projects that enhance resilience to climate-related risks.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate resilience funds",
+          "Relation": "employs",
+          "Object": "climate adaptation strategies",
+          "Description": "climate resilience funds employ climate adaptation strategies to build resilience and mitigate the impacts of climate change.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "collaborates_with",
+          "Object": "industries",
+          "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

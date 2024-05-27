@@ -14,9 +14,191 @@
     "Synonyms": null
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "research and development",
+      "collaboration with universities",
+      "energy cooperatives",
+      "energy efficiency",
+      "energy consumption",
+      "climate change mitigation",
+      "policy-making",
+      "renewable energy agencies"
+    ],
     "relations": {
-      "open source energy modeling tools": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Open source energy modeling tools implement energy efficiency measures to optimize energy consumption and reduce waste.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Open source energy modeling tools provide funding for research and development in the field of sustainable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "renewable energy agencies",
+          "Description": "Open source energy modeling tools focus on analyzing and optimizing the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "collaboration with universities",
+          "Description": "Open source energy modeling tools are developed in collaboration with universities to ensure scientific rigor and accuracy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "energy cooperatives",
+          "Description": "Open source energy modeling tools partner with energy companies to exchange data and insights for better energy management.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "policy-making",
+          "Description": "Open source energy modeling tools contribute to policy-making by providing data-driven insights and analysis.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy consumption",
+          "Description": "Open source energy modeling tools monitor energy consumption patterns to identify areas for improvement and optimization.",
+          "Importance": 4
+        },
+        {
+          "Relation": "targets",
+          "Object": "energy efficiency",
+          "Description": "Open source energy modeling tools target energy efficiency improvements by identifying and implementing energy-saving measures.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "climate change mitigation",
+          "Description": "Open source energy modeling tools address climate change mitigation by optimizing energy systems and reducing greenhouse gas emissions.",
+          "Importance": 4
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy cooperatives",
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "Energy cooperatives address energy poverty by providing affordable and sustainable energy solutions to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy cooperatives",
+          "Relation": "collaborates_with",
+          "Object": "local governments",
+          "Description": "Energy cooperatives collaborate with local governments to implement renewable energy projects and promote sustainable energy practices.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [
+      "OSeMOSYS",
+      "MESSAGEix",
+      "LEAP",
+      "TIMES",
+      "PLEXOS"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "OSeMOSYS",
+        "Relation": "is a sub-element of",
+        "Parent": "open source energy modeling tools",
+        "Description": "OSeMOSYS is an open-source energy system optimization model that helps in analyzing and planning energy systems. It allows for the assessment of different energy scenarios and the evaluation of policy options.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "MESSAGEix",
+        "Relation": "is a sub-element of",
+        "Parent": "open source energy modeling tools",
+        "Description": "MESSAGEix is an open-source integrated assessment model that combines energy, economy, and climate systems. It enables the analysis of energy and climate policies, as well as the assessment of technology pathways and their impacts.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "LEAP",
+        "Relation": "is a sub-element of",
+        "Parent": "open source energy modeling tools",
+        "Description": "LEAP (Long-range Energy Alternatives Planning System) is an integrated software tool for energy policy analysis and climate change mitigation assessment. It helps in evaluating energy systems, analyzing energy demand and supply, and assessing the impacts of different policy measures.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "TIMES",
+        "Relation": "is a sub-element of",
+        "Parent": "open source energy modeling tools",
+        "Description": "TIMES (The Integrated MARKAL-EFOM System) is a technology-rich, bottom-up energy system optimization model. It allows for the analysis of energy systems, the assessment of technology options, and the evaluation of energy and climate policies.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "PLEXOS",
+        "Relation": "is a sub-element of",
+        "Parent": "open source energy modeling tools",
+        "Description": "PLEXOS is a software platform for energy market modeling and analysis. It enables the simulation and optimization of power systems, including the integration of renewable energy sources, demand response, and energy storage.",
+        "Importance": 3
+      }
+    ]
   }
 }

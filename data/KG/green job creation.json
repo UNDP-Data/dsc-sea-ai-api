@@ -15,59 +15,177 @@
   },
   "knowledge graph": {
     "entities": [
-      "Green Economy",
-      "Sustainable Development Goals",
-      "Job Creation Impact",
-      "Renewable Energy Workforce",
-      "Entrepreneurship",
-      "Green Job Programs",
-      "Educational Institutions"
+      "blue economy",
+      "renewable energy certificates",
+      "job creation impact",
+      "energy entrepreneurship",
+      "green job programs",
+      "sustainable development goals",
+      "educational institutions"
     ],
     "relations": {
-      "green job creation": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Workforce",
+          "Object": "renewable energy certificates",
           "Description": "Green job creation employs a renewable energy workforce to support the growth of the renewable energy sector.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Educational Institutions",
+          "Object": "educational institutions",
           "Description": "Green job creation collaborates with educational institutions to provide training and education for the renewable energy workforce.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Entrepreneurship",
+          "Object": "energy entrepreneurship",
           "Description": "Green job creation supports entrepreneurship in the renewable energy sector by providing funding and resources for innovative startups.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Green Job Programs",
+          "Object": "green job programs",
           "Description": "Green job creation administers green job programs to facilitate the creation of employment opportunities in the renewable energy industry.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Job Creation Impact",
+          "Object": "job creation impact",
           "Description": "Green job creation measures the impact of job creation in the renewable energy sector on economic growth and sustainability.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Green job creation aligns with the Sustainable Development Goals by promoting inclusive and sustainable economic growth.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Green Economy",
+          "Object": "blue economy",
           "Description": "Green job creation is an instance of the transition to a green economy that prioritizes sustainable and low-carbon industries.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "funds",
+          "Object": "clean energy research",
+          "Description": "Renewable energy certificates provide funding for Clean Energy Research to support the development of innovative renewable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy entrepreneurship implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Energy entrepreneurship focuses on improving energy access in underserved communities through innovative solutions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "blue economy",
+          "Relation": "implements",
+          "Object": "sustainable fisheries",
+          "Description": "The blue economy implements sustainable fisheries practices to ensure the long-term health and productivity of marine ecosystems.",
+          "Importance": 4
+        },
+        {
+          "Subject": "blue economy",
+          "Relation": "funds",
+          "Object": "ocean conservation projects",
+          "Description": "The blue economy funds various ocean conservation projects to protect marine biodiversity and ecosystems.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "renewable energy sector",
+      "energy efficiency sector",
+      "sustainable transportation sector",
+      "green building sector",
+      "circular economy sector"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "renewable energy sector",
+        "Relation": "is a sub-element of",
+        "Parent": "green job creation",
+        "Description": "The renewable energy sector is a sub-element of green job creation. It involves the development, installation, and maintenance of renewable energy technologies such as solar, wind, and hydro power. This sector creates job opportunities in the design, manufacturing, installation, and operation of renewable energy systems.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy efficiency sector",
+        "Relation": "is a sub-element of",
+        "Parent": "green job creation",
+        "Description": "The energy efficiency sector is a sub-element of green job creation. It focuses on improving energy efficiency in various sectors such as buildings, industries, and transportation. This sector creates job opportunities in energy auditing, retrofitting, and the development and implementation of energy-efficient technologies.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "sustainable transportation sector",
+        "Relation": "is a sub-element of",
+        "Parent": "green job creation",
+        "Description": "The sustainable transportation sector is a sub-element of green job creation. It involves the development and operation of transportation systems that minimize environmental impact, such as electric vehicles, public transit, and cycling infrastructure. This sector creates job opportunities in the manufacturing, maintenance, and operation of sustainable transportation modes.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "green building sector",
+        "Relation": "is a sub-element of",
+        "Parent": "green job creation",
+        "Description": "The green building sector is a sub-element of green job creation. It focuses on the design, construction, and operation of buildings that are energy-efficient, resource-efficient, and environmentally friendly. This sector creates job opportunities in green architecture, construction, and building management.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "circular economy sector",
+        "Relation": "is a sub-element of",
+        "Parent": "green job creation",
+        "Description": "The circular economy sector is a sub-element of green job creation. It involves the transition from a linear economy (take-make-dispose) to a circular economy (reduce-reuse-recycle). This sector creates job opportunities in waste management, recycling, remanufacturing, and the development of sustainable business models.",
+        "Importance": 4
+      }
+    ]
   }
 }

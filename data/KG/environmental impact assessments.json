@@ -18,59 +18,119 @@
   },
   "knowledge graph": {
     "entities": [
-      "Environmental Indicators",
-      "Environmental Regulations",
-      "Sustainable Development Goals",
-      "Government Agencies",
-      "Environmental Impact Assessment Process",
-      "Environmental Assessment",
-      "Environmental Experts"
+      "environmental regulations",
+      "environmental experts",
+      "sustainable development goals",
+      "environmental impact assessments",
+      "government agencies",
+      "environmental indicators"
     ],
     "relations": {
-      "environmental impact assessments": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Environmental Experts",
+          "Object": "environmental experts",
           "Description": "Environmental impact assessments employ the expertise of environmental experts to evaluate the potential environmental effects of energy projects.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Government Agencies",
+          "Object": "government agencies",
           "Description": "Environmental impact assessments collaborate with government agencies to ensure compliance with environmental regulations and standards.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Environmental impact assessments support the achievement of sustainable development goals by evaluating the environmental implications of energy projects.",
           "Importance": 2
         },
         {
           "Relation": "administers",
-          "Object": "Environmental Impact Assessment Process",
+          "Object": "environmental impact assessments",
           "Description": "Environmental impact assessments administer the process of evaluating and assessing the potential environmental impacts of energy projects.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Environmental Indicators",
+          "Object": "environmental indicators",
           "Description": "Environmental impact assessments measure various environmental indicators to assess the potential impacts of energy projects on the environment.",
           "Importance": 2
         },
         {
           "Relation": "aligns_with",
-          "Object": "Environmental Regulations",
+          "Object": "environmental regulations",
           "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Environmental Assessment",
+          "Object": "environmental impact assessments",
           "Description": "Environmental impact assessments are an instance of the broader practice of environmental assessment, specifically focused on energy projects.",
           "Importance": 3
         }
-      ]
-    }
+      ],
+      "level 2": [
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "aligns_with",
+          "Object": "environmental regulations",
+          "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
+          "Importance": 4
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "aligns_with",
+          "Object": "environmental regulations",
+          "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": []
+    },
+    "sub-elements": [
+      "baseline studies",
+      "impact prediction",
+      "mitigation measures",
+      "monitoring and reporting",
+      "public participation"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "baseline studies",
+        "Relation": "is a sub-element of",
+        "Parent": "environmental impact assessments",
+        "Description": "Baseline studies are an essential part of environmental impact assessments. They involve the collection and analysis of data on the current environmental conditions in the project area. This information serves as a reference point for assessing the potential impacts of the project.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "impact prediction",
+        "Relation": "is a sub-element of",
+        "Parent": "environmental impact assessments",
+        "Description": "Impact prediction is a key component of environmental impact assessments. It involves the use of models, simulations, and expert judgment to estimate the potential environmental effects of a proposed project. This helps in identifying and evaluating the significance of these impacts.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "mitigation measures",
+        "Relation": "is a sub-element of",
+        "Parent": "environmental impact assessments",
+        "Description": "Mitigation measures are an integral part of environmental impact assessments. They refer to the actions and strategies implemented to minimize, avoid, or compensate for the adverse environmental impacts of a project. These measures aim to protect the environment and promote sustainable development.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "monitoring and reporting",
+        "Relation": "is a sub-element of",
+        "Parent": "environmental impact assessments",
+        "Description": "Monitoring and reporting are crucial aspects of environmental impact assessments. They involve the systematic collection of data on the actual environmental impacts of a project during its implementation and operation. This information is used to assess the effectiveness of mitigation measures and ensure compliance with environmental regulations.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "public participation",
+        "Relation": "is a sub-element of",
+        "Parent": "environmental impact assessments",
+        "Description": "Public participation is an important component of environmental impact assessments. It involves engaging and involving the public, including affected communities and stakeholders, in the decision-making process. This ensures that their concerns and perspectives are considered and helps in achieving more sustainable and socially acceptable outcomes.",
+        "Importance": 4
+      }
+    ]
   }
 }

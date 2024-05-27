@@ -14,66 +14,114 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Transition",
-      "International Energy Agency (IEA)",
-      "Energy Subsidy Programs",
-      "Energy Affordability Index",
-      "Sustainable Development Goal 7 (SDG 7)",
-      "Market-Based Pricing Mechanisms",
-      "Energy Affordability",
-      "Energy Policy Reform"
+      "energy affordability",
+      "energy affordability index",
+      "energy policy reform",
+      "market-based pricing mechanisms",
+      "energy subsisides reform",
+      "international energy agency (iea)",
+      "sustainable development goal 7 (sdg 7)",
+      "renewable energy agencies"
     ],
     "relations": {
-      "energy subsisides reform": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Affordability",
+          "Object": "energy affordability",
           "Description": "Energy subsidies reform addresses Energy Affordability by ensuring fair and efficient distribution of energy subsidies.",
           "Importance": 3
         },
         {
           "Relation": "employs",
-          "Object": "Market-Based Pricing Mechanisms",
+          "Object": "market-based pricing mechanisms",
           "Description": "Energy subsidies reform employs Market-Based Pricing Mechanisms to promote efficient energy pricing and reduce market distortions.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "International Energy Agency (IEA)",
+          "Object": "international energy agency (iea)",
           "Description": "Energy subsidies reform collaborates with International Energy Agency (IEA) to share best practices and policy recommendations for energy subsidy reform.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Renewable Energy Transition",
+          "Object": "renewable energy agencies",
           "Description": "Energy subsidies reform supports the Renewable Energy Transition by redirecting subsidies towards clean and sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Subsidy Programs",
+          "Object": "energy subsisides reform",
           "Description": "Energy subsidies reform administers Energy Subsidy Programs to ensure effective implementation and monitoring of subsidy reforms.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Energy Affordability Index",
+          "Object": "energy affordability index",
           "Description": "Energy subsidies reform measures Energy Affordability Index to assess the impact of subsidy reforms on energy affordability for different population groups.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goal 7 (SDG 7)",
+          "Object": "sustainable development goal 7 (sdg 7)",
           "Description": "Energy subsidies reform aligns with Sustainable Development Goal 7 (SDG 7) to ensure access to affordable, reliable, sustainable, and modern energy for all.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Energy Policy Reform",
+          "Object": "energy policy reform",
           "Description": "Energy subsidies reform is an instance of Energy Policy Reform aimed at improving energy market efficiency and promoting sustainable energy practices.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy subsisides reform",
+          "Relation": "addresses",
+          "Object": "energy affordability",
+          "Description": "Energy subsidies reform addresses Energy Affordability by ensuring fair and efficient distribution of energy subsidies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy subsisides reform",
+          "Relation": "employs",
+          "Object": "market-based pricing mechanisms",
+          "Description": "Energy subsidies reform employs Market-Based Pricing Mechanisms to promote efficient energy pricing and reduce market distortions.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy subsisides reform",
+          "Relation": "addresses",
+          "Object": "energy affordability",
+          "Description": "Energy subsidies reform addresses Energy Affordability by ensuring fair and efficient distribution of energy subsidies.",
+          "Importance": 3
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

@@ -16,66 +16,141 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Transition",
-      "Sustainable Development Goals",
-      "Government Agencies",
-      "Climate Change Mitigation",
-      "Renewable Energy Deployment",
-      "Energy Efficiency Measures",
-      "Energy Consumption",
-      "Renewable Energy Projects"
+      "energy efficiency",
+      "just energy transition",
+      "sustainable development goals",
+      "climate change mitigation",
+      "energy consumption",
+      "renewable energy agencies",
+      "government agencies"
     ],
     "relations": {
-      "Action Opportunities": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Measures",
+          "Object": "energy efficiency",
           "Description": "Action Opportunities implements energy efficiency measures to reduce energy consumption and promote sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Action Opportunities funds renewable energy projects to support the transition to clean and sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Action Opportunities focuses on climate change mitigation by promoting sustainable energy solutions and reducing greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Energy Transition",
+          "Object": "just energy transition",
           "Description": "Action Opportunities is involved in the energy transition towards sustainable and clean energy sources.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Government Agencies",
+          "Object": "government agencies",
           "Description": "Action Opportunities partners with government agencies to implement sustainable energy policies and initiatives.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Action Opportunities contributes to the achievement of sustainable development goals through the promotion of sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Action Opportunities monitors energy consumption to identify areas for improvement and promote energy efficiency.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Deployment",
+          "Object": "renewable energy agencies",
           "Description": "Action Opportunities targets increased deployment of renewable energy technologies to accelerate the transition to clean energy.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "supports",
+          "Object": "energy equity",
+          "Description": "The just energy transition supports energy equity by promoting equal access to clean and affordable energy.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

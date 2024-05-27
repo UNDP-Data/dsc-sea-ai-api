@@ -15,66 +15,142 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Programs",
-      "Sustainable Development Goals",
-      "Energy Access Data",
-      "Government Agencies",
-      "Energy Surveys",
-      "Renewable Energy Capacity",
-      "Energy Analysts",
-      "Research Institutions"
+      "energy access data",
+      "energy efficiency",
+      "sustainable development goals",
+      "research institutions",
+      "energy storage",
+      "renewable energy agencies",
+      "government agencies",
+      "energy data analytics"
     ],
     "relations": {
-      "national statistical offices": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Access Data",
+          "Object": "energy access data",
           "Description": "National statistical offices collect and address energy access data to inform policy decisions and improve energy access.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Energy Analysts",
+          "Object": "energy data analytics",
           "Description": "National statistical offices employ energy analysts to analyze energy data and provide insights for sustainable energy planning.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Research Institutions",
+          "Object": "research institutions",
           "Description": "National statistical offices collaborate with research institutions to conduct studies on energy consumption and trends.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Energy Efficiency Programs",
+          "Object": "energy efficiency",
           "Description": "National statistical offices support energy efficiency programs by providing data and insights for program development and evaluation.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Energy Surveys",
+          "Object": "energy storage",
           "Description": "National statistical offices administer energy surveys to gather data on energy consumption and usage patterns.",
           "Importance": 2
         },
         {
           "Relation": "measures",
-          "Object": "Renewable Energy Capacity",
+          "Object": "renewable energy agencies",
           "Description": "National statistical offices measure renewable energy capacity to track progress towards sustainable energy goals.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "National statistical offices align their energy data collection and reporting with the Sustainable Development Goals.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Government Agencies",
+          "Object": "government agencies",
           "Description": "National statistical offices are government agencies responsible for collecting and analyzing energy data.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy data analytics",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy data analytics implements the Energy Efficiency Policy to optimize energy consumption and reduce waste.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy data analytics",
+          "Relation": "focuses_on",
+          "Object": "renewable energy agencies",
+          "Description": "Energy data analytics focuses on analyzing data related to renewable energy sources to identify trends and opportunities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "collaborates_with",
+          "Object": "industries",
+          "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

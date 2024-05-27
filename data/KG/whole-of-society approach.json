@@ -15,66 +15,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Sustainable Development Goals",
-      "Energy Poverty",
-      "Energy Transition Strategy",
-      "Community Engagement",
-      "Energy Consumption",
-      "Non-Governmental Organizations",
-      "Renewable Energy Projects",
-      "Energy Policy"
+      "non-governmental organizations",
+      "community engagement",
+      "just energy transition",
+      "energy diplomacy",
+      "sustainable development goals",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "whole-of-society approach": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Transition Strategy",
+          "Object": "just energy transition",
           "Description": "The whole-of-society approach implements the Energy Transition Strategy to ensure the active participation of all stakeholders in achieving sustainable energy goals.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "The whole-of-society approach provides funding for various renewable energy projects to accelerate the transition to clean energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Community Engagement",
+          "Object": "community engagement",
           "Description": "The whole-of-society approach focuses on community engagement to ensure the active involvement and empowerment of local communities in sustainable energy initiatives.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Energy Policy",
+          "Object": "energy diplomacy",
           "Description": "The whole-of-society approach is embedded in the Energy Policy to ensure the integration of diverse perspectives and expertise in decision-making processes.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Non-Governmental Organizations",
+          "Object": "non-governmental organizations",
           "Description": "The whole-of-society approach partners with non-governmental organizations to leverage their expertise and resources in implementing sustainable energy projects.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "The whole-of-society approach contributes to the achievement of Sustainable Development Goals by promoting inclusive and equitable access to sustainable energy for all.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "The whole-of-society approach monitors energy consumption patterns to identify areas for improvement and optimize energy efficiency measures.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "The whole-of-society approach targets the reduction of energy poverty by implementing targeted interventions and programs to improve access to affordable and reliable energy services.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy diplomacy",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy diplomacy implements Energy Efficiency Policy to promote sustainable energy practices globally.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy diplomacy",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "energy diplomacy focuses on improving energy access in underserved communities to promote sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy justice",
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "Energy justice initiatives aim to address energy poverty by ensuring access to affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

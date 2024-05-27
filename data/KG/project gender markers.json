@@ -18,7 +18,7 @@
       "women's economic empowerment"
     ],
     "relations": {
-      "project gender markers": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "women's economic empowerment",
@@ -73,7 +73,76 @@
           "Description": "project gender markers addresses the challenges and barriers faced by women in economic empowerment to promote gender equality.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "women's economic empowerment",
+          "Relation": "implements",
+          "Object": "gender equality policy",
+          "Description": "Women's economic empowerment implements a gender equality policy that aims to promote equal opportunities and rights for women in the economic sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "women's economic empowerment",
+          "Relation": "funds",
+          "Object": "micro-finance",
+          "Description": "Women's economic empowerment funds microfinance programs that provide financial services to women entrepreneurs, enabling them to start and grow their businesses.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "micro-finance",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Micro-finance implements energy access programs that provide financial support for clean energy projects in underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "gender analysis",
+      "gender mainstreaming",
+      "gender-responsive budgeting",
+      "gender-sensitive indicators",
+      "gender-disaggregated data"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "gender analysis",
+        "Relation": "is a sub-element of",
+        "Parent": "project gender markers",
+        "Description": "Gender analysis is a crucial component of project gender markers. It involves assessing the different impacts of a project on individuals of different genders. This analysis helps in identifying gender-specific needs, vulnerabilities, and opportunities.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "gender mainstreaming",
+        "Relation": "is a sub-element of",
+        "Parent": "project gender markers",
+        "Description": "Gender mainstreaming is an integral part of project gender markers. It refers to the process of integrating a gender perspective into all stages of project planning, implementation, monitoring, and evaluation. It aims to promote gender equality and address gender disparities.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "gender-responsive budgeting",
+        "Relation": "is a sub-element of",
+        "Parent": "project gender markers",
+        "Description": "Gender-responsive budgeting is a key aspect of project gender markers. It involves analyzing and allocating financial resources in a way that addresses gender inequalities and promotes gender equality. It ensures that budgetary decisions consider the different needs and priorities of individuals of different genders.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "gender-sensitive indicators",
+        "Relation": "is a sub-element of",
+        "Parent": "project gender markers",
+        "Description": "Gender-sensitive indicators are an important component of project gender markers. These indicators are used to measure and track the progress of a project in achieving gender equality and women's empowerment. They help in assessing the impact of interventions on individuals of different genders.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "gender-disaggregated data",
+        "Relation": "is a sub-element of",
+        "Parent": "project gender markers",
+        "Description": "Gender-disaggregated data is a critical element of project gender markers. It involves collecting and analyzing data that is broken down by gender. This data helps in understanding the different experiences, needs, and outcomes of individuals of different genders, and informs evidence-based decision-making.",
+        "Importance": 4
+      }
+    ]
   }
 }

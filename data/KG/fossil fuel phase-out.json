@@ -14,66 +14,197 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Transition",
-      "Carbon Pricing Mechanisms",
-      "Paris Agreement",
-      "Environmental Organizations",
-      "Renewable Energy Technologies",
-      "Greenhouse Gas Emissions",
-      "Air Pollution",
-      "Sustainable Energy Transition"
+      "greenhouse gas emissions",
+      "carbon pricing",
+      "regional energy organizations",
+      "air pollution",
+      "just energy transition",
+      "renewable energy agencies",
+      "Paris Agreement Goals"
     ],
     "relations": {
-      "fossil fuel phase-out": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Air Pollution",
+          "Object": "air pollution",
           "Description": "Fossil fuel phase-out addresses air pollution by reducing the combustion of fossil fuels and transitioning to cleaner energy sources.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Fossil fuel phase-out employs renewable energy technologies as alternatives to fossil fuel-based energy generation.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Environmental Organizations",
+          "Object": "regional energy organizations",
           "Description": "Fossil fuel phase-out collaborates with environmental organizations to promote sustainable energy policies and advocate for the reduction of fossil fuel use.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Renewable Energy Transition",
+          "Object": "renewable energy agencies",
           "Description": "Fossil fuel phase-out supports the transition to renewable energy sources by providing incentives and policies that promote their adoption.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Carbon Pricing Mechanisms",
+          "Object": "carbon pricing",
           "Description": "Fossil fuel phase-out administers carbon pricing mechanisms to internalize the environmental costs of fossil fuel use and incentivize cleaner alternatives.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Greenhouse Gas Emissions",
+          "Object": "greenhouse gas emissions",
           "Description": "Fossil fuel phase-out measures greenhouse gas emissions to track progress in reducing carbon emissions and achieving climate goals.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Paris Agreement",
+          "Object": "Paris Agreement Goals",
           "Description": "Fossil fuel phase-out aligns with the goals and targets of the Paris Agreement to limit global warming and mitigate climate change.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Sustainable Energy Transition",
+          "Object": "just energy transition",
           "Description": "Fossil fuel phase-out is an instance of a sustainable energy transition strategy that aims to reduce reliance on fossil fuels and promote renewable energy.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Regional energy organizations implement energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Regional energy organizations provide funding for renewable energy projects to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "carbon pricing",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Carbon pricing implements energy efficiency policies that incentivize the reduction of greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "carbon pricing",
+          "Relation": "in",
+          "Object": "climate change mitigation",
+          "Description": "Carbon pricing plays a role in climate change mitigation efforts by incentivizing the reduction of greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Paris Agreement Goals",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Paris Agreement Goals implements Energy Efficiency Policy to promote energy-saving practices and reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Paris Agreement Goals",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Paris Agreement Goals funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "renewable energy transition",
+      "energy efficiency measures",
+      "carbon pricing",
+      "clean energy investments",
+      "policy and regulatory frameworks"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "renewable energy transition",
+        "Relation": "is a sub-element of",
+        "Parent": "fossil fuel phase-out",
+        "Description": "The transition to renewable energy sources is a key sub-element of fossil fuel phase-out. It involves shifting from fossil fuel-based energy generation to renewable sources such as solar, wind, and hydro power. This sub-element is important in achieving sustainable energy goals and reducing greenhouse gas emissions.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy efficiency measures",
+        "Relation": "is a sub-element of",
+        "Parent": "fossil fuel phase-out",
+        "Description": "Energy efficiency measures are essential sub-elements of fossil fuel phase-out. These measures focus on reducing energy consumption and improving energy efficiency in various sectors such as buildings, transportation, and industry. By implementing energy efficiency measures, the reliance on fossil fuels can be minimized.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "carbon pricing",
+        "Relation": "is a sub-element of",
+        "Parent": "fossil fuel phase-out",
+        "Description": "Carbon pricing is a sub-element of fossil fuel phase-out that involves putting a price on carbon emissions. By implementing carbon pricing mechanisms such as carbon taxes or cap-and-trade systems, the cost of emitting greenhouse gases is increased, incentivizing the transition away from fossil fuels towards cleaner alternatives.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "clean energy investments",
+        "Relation": "is a sub-element of",
+        "Parent": "fossil fuel phase-out",
+        "Description": "Clean energy investments are crucial sub-elements of fossil fuel phase-out. These investments involve allocating financial resources towards the development and deployment of clean energy technologies and infrastructure. By investing in clean energy, the dependence on fossil fuels can be reduced and sustainable energy systems can be established.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "policy and regulatory frameworks",
+        "Relation": "is a sub-element of",
+        "Parent": "fossil fuel phase-out",
+        "Description": "Policy and regulatory frameworks play a significant role as sub-elements of fossil fuel phase-out. These frameworks include laws, regulations, and incentives that support the transition away from fossil fuels and promote the adoption of sustainable energy practices. Effective policies and regulations are essential for driving the necessary changes in the energy sector.",
+        "Importance": 4
+      }
+    ]
   }
 }

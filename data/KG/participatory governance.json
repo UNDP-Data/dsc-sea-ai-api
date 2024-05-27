@@ -15,66 +15,121 @@
   },
   "knowledge graph": {
     "entities": [
-      "Capacity Building",
-      "Democratic Governance",
-      "Multi-Stakeholder Approach",
-      "Public Consultations",
-      "Local Communities",
-      "Good Governance Principles",
-      "Social Inclusion",
-      "Citizen Engagement"
+      "good governance principles",
+      "citizen engagement",
+      "local communities",
+      "democratic governance",
+      "social inclusion",
+      "capacity building",
+      "public consultations",
+      "multi-stakeholder partnerships"
     ],
     "relations": {
-      "participatory governance": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Citizen Engagement",
+          "Object": "citizen engagement",
           "Description": "Participatory governance addresses the need for citizen engagement in decision-making processes to ensure inclusivity and transparency.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Multi-Stakeholder Approach",
+          "Object": "multi-stakeholder partnerships",
           "Description": "Participatory governance employs a multi-stakeholder approach, involving various actors such as government, civil society, and private sector, in decision-making and policy implementation.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "Participatory governance collaborates with local communities to ensure their active participation in decision-making processes and the implementation of sustainable energy initiatives.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Capacity Building",
+          "Object": "capacity building",
           "Description": "Participatory governance supports capacity building initiatives to empower individuals and organizations to actively engage in sustainable energy decision-making processes.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Public Consultations",
+          "Object": "public consultations",
           "Description": "Participatory governance administers public consultations to gather input and feedback from stakeholders on sustainable energy policies and projects.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Social Inclusion",
+          "Object": "social inclusion",
           "Description": "Participatory governance measures the level of social inclusion in decision-making processes to ensure marginalized groups are represented and their needs are addressed.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Good Governance Principles",
+          "Object": "good governance principles",
           "Description": "Participatory governance aligns with good governance principles, such as transparency, accountability, and responsiveness, to ensure effective and inclusive decision-making.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Democratic Governance",
+          "Object": "democratic governance",
           "Description": "Participatory governance is an instance of democratic governance, where citizens have the right to participate in decision-making processes that affect their lives.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "multi-stakeholder partnerships",
+          "Relation": "employs",
+          "Object": "collaborative decision-making",
+          "Description": "Multi-stakeholder partnerships employ collaborative decision-making processes to ensure diverse perspectives and expertise in sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Subject": "multi-stakeholder partnerships",
+          "Relation": "collaborates_with",
+          "Object": "private sector",
+          "Description": "Multi-stakeholder partnerships collaborate with the private sector to leverage resources and expertise for the implementation of sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Subject": "multi-stakeholder partnerships",
+          "Relation": "supports",
+          "Object": "capacity building",
+          "Description": "Multi-stakeholder partnerships support capacity building initiatives to enhance knowledge and skills in sustainable energy practices.",
+          "Importance": 3
+        },
+        {
+          "Subject": "multi-stakeholder partnerships",
+          "Relation": "administers",
+          "Object": "energy efficiency",
+          "Description": "Multi-stakeholder partnerships administer energy efficiency programs to promote the adoption of energy-saving practices and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "multi-stakeholder partnerships",
+          "Relation": "aligns_with",
+          "Object": "sustainable development goals",
+          "Description": "Multi-stakeholder partnerships align with the Sustainable Development Goals to contribute to the achievement of targets related to sustainable energy and climate action.",
+          "Importance": 4
+        },
+        {
+          "Subject": "multi-stakeholder partnerships",
+          "Relation": "an_instance_of",
+          "Object": "collaborative governance",
+          "Description": "Multi-stakeholder partnerships are an instance of collaborative governance, where diverse stakeholders come together to address sustainable energy challenges.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

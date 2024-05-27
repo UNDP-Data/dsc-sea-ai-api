@@ -17,59 +17,163 @@
   },
   "knowledge graph": {
     "entities": [
-      "Sustainable Development Goals",
-      "Mobile Banking",
-      "Financial Inclusion",
-      "Entrepreneurship",
-      "Inclusive Finance",
-      "Social Impact Bonds",
-      "Microfinance Institutions"
+      "digital inclusive finance",
+      "energy entrepreneurship",
+      "financial inclusion",
+      "sustainable development goals",
+      "mobile banking",
+      "microfinance institutions",
+      "social impact bonds"
     ],
     "relations": {
-      "digital inclusive finance": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Mobile Banking",
+          "Object": "mobile banking",
           "Description": "Digital inclusive finance employs mobile banking to provide financial services to underserved populations.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Microfinance Institutions",
+          "Object": "microfinance institutions",
           "Description": "Digital inclusive finance collaborates with microfinance institutions to expand access to financial resources for marginalized communities.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Entrepreneurship",
+          "Object": "energy entrepreneurship",
           "Description": "Digital inclusive finance supports entrepreneurship by providing financial resources and business development services.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Social Impact Bonds",
+          "Object": "social impact bonds",
           "Description": "Digital inclusive finance administers social impact bonds to fund social projects and measure their outcomes.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Financial Inclusion",
+          "Object": "financial inclusion",
           "Description": "Digital inclusive finance measures financial inclusion by tracking the number of individuals with access to formal financial services.",
           "Importance": 4
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Digital inclusive finance aligns with the Sustainable Development Goals to promote economic growth and reduce inequality.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Inclusive Finance",
+          "Object": "digital inclusive finance",
           "Description": "Digital inclusive finance is an instance of inclusive finance that aims to provide financial services to all segments of society.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy entrepreneurship implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Energy entrepreneurship focuses on improving energy access in underserved communities through innovative solutions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "digital inclusive finance",
+          "Relation": "employs",
+          "Object": "mobile banking",
+          "Description": "Digital inclusive finance employs mobile banking to provide financial services to underserved populations.",
+          "Importance": 4
+        },
+        {
+          "Subject": "digital inclusive finance",
+          "Relation": "collaborates_with",
+          "Object": "microfinance institutions",
+          "Description": "Digital inclusive finance collaborates with microfinance institutions to expand access to financial resources for marginalized communities.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy entrepreneurship",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy entrepreneurship implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "mobile banking",
+      "digital wallets",
+      "microfinance",
+      "crowdfunding",
+      "peer-to-peer lending"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "mobile banking",
+        "Relation": "is a sub-element of",
+        "Parent": "digital inclusive finance",
+        "Description": "Mobile banking is a sub-component of digital inclusive finance that allows individuals to access financial services through their mobile devices. It enables convenient and secure transactions, including deposits, withdrawals, and transfers, without the need for physical bank branches.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "digital wallets",
+        "Relation": "is a sub-element of",
+        "Parent": "digital inclusive finance",
+        "Description": "Digital wallets are a type of digital inclusive finance tool that allows users to store, manage, and transact digital currencies. They provide a secure and convenient way to make payments, transfer funds, and store loyalty cards and coupons digitally.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "microfinance",
+        "Relation": "is a sub-element of",
+        "Parent": "digital inclusive finance",
+        "Description": "Microfinance is a category of financial services that falls under digital inclusive finance. It involves providing small loans, savings accounts, insurance, and other financial products to individuals and small businesses who lack access to traditional banking services.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "crowdfunding",
+        "Relation": "is a sub-element of",
+        "Parent": "digital inclusive finance",
+        "Description": "Crowdfunding is a sub-component of digital inclusive finance that enables individuals and organizations to raise funds for projects or ventures through online platforms. It allows for the pooling of small contributions from a large number of people, making it an inclusive financing option.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "peer-to-peer lending",
+        "Relation": "is a sub-element of",
+        "Parent": "digital inclusive finance",
+        "Description": "Peer-to-peer lending is a sub-component of digital inclusive finance that connects borrowers directly with lenders through online platforms. It eliminates the need for traditional financial intermediaries, enabling individuals and small businesses to access loans at competitive rates.",
+        "Importance": 4
+      }
+    ]
   }
 }

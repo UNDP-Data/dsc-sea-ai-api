@@ -24,66 +24,198 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Programs",
-      "Energy Waste",
-      "Sustainable Development Goals",
-      "Industries",
-      "Energy Performance",
-      "Energy Audits",
-      "Energy Conservation",
-      "Renewable Energy Integration"
+      "renewable energy certificates",
+      "energy cooperatives",
+      "energy efficiency",
+      "energy markets",
+      "sustainable development goals",
+      "energy governance",
+      "energy storage",
+      "industries"
     ],
     "relations": {
-      "energy efficiency": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Waste",
+          "Object": "energy storage",
           "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Energy Audits",
+          "Object": "energy markets",
           "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Industries",
+          "Object": "industries",
           "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Renewable Energy Integration",
+          "Object": "renewable energy certificates",
           "Description": "Energy efficiency supports the integration of renewable energy sources into the energy system to improve overall energy efficiency.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Efficiency Programs",
+          "Object": "energy efficiency",
           "Description": "Energy efficiency administers energy efficiency programs to promote energy-saving behaviors and technologies.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Performance",
+          "Object": "energy governance",
           "Description": "Energy efficiency measures energy performance to assess the effectiveness of energy-saving initiatives.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Energy efficiency aligns with the Sustainable Development Goals by contributing to the goal of affordable and clean energy for all.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Energy Conservation",
+          "Object": "energy cooperatives",
           "Description": "Energy efficiency is an instance of energy conservation, which aims to reduce energy consumption and waste.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "employs",
+          "Object": "smart metering technologies",
+          "Description": "Energy storage employs battery technologies to store and release energy efficiently, enabling the integration of renewable energy sources into the grid.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "collaborates_with",
+          "Object": "government agencies",
+          "Description": "Energy markets collaborate with government agencies to develop and implement policies and regulations that promote a sustainable and efficient energy sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "funds",
+          "Object": "clean energy research",
+          "Description": "Renewable energy certificates provide funding for Clean Energy Research to support the development of innovative renewable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "collaborates_with",
+          "Object": "industries",
+          "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy tax incentives",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy tax incentives are implemented by the Energy Efficiency Policy to promote the adoption of energy-saving practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "building insulation",
+      "energy-efficient appliances",
+      "smart thermostats",
+      "LED lighting",
+      "energy audits"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "building insulation",
+        "Relation": "is a sub-element of",
+        "Parent": "energy efficiency",
+        "Description": "Building insulation is a key component of energy efficiency. It involves the use of materials and techniques to reduce heat transfer between the interior and exterior of a building, thereby reducing the need for heating and cooling.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy-efficient appliances",
+        "Relation": "is a sub-element of",
+        "Parent": "energy efficiency",
+        "Description": "Energy-efficient appliances are an important aspect of energy efficiency. These appliances are designed to consume less energy while providing the same level of performance as their conventional counterparts.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "smart thermostats",
+        "Relation": "is a sub-element of",
+        "Parent": "energy efficiency",
+        "Description": "Smart thermostats are a sub-component of energy efficiency. They enable users to control and optimize the heating and cooling of their homes or buildings, leading to energy savings.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "LED lighting",
+        "Relation": "is a sub-element of",
+        "Parent": "energy efficiency",
+        "Description": "LED lighting is a type of energy-efficient lighting. It uses light-emitting diodes (LEDs) to produce light with significantly less energy consumption compared to traditional incandescent or fluorescent bulbs.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy audits",
+        "Relation": "is a sub-element of",
+        "Parent": "energy efficiency",
+        "Description": "Energy audits are an important tool for assessing and improving energy efficiency. They involve a systematic analysis of energy use in a building or facility to identify opportunities for energy savings and efficiency improvements.",
+        "Importance": 3
+      }
+    ]
   }
 }

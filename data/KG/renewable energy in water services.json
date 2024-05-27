@@ -16,66 +16,125 @@
   },
   "knowledge graph": {
     "entities": [
-      "Solar Power",
-      "Water Scarcity",
-      "Sustainable Development Goals",
-      "Energy Output",
-      "Local Communities",
-      "Renewable Energy Incentives",
-      "Water Conservation",
-      "Green Infrastructure"
+      "water conservation",
+      "energy output",
+      "local communities",
+      "solar power",
+      "sustainable development goals",
+      "water scarcity",
+      "resilient infrastructure",
+      "renewable energy agencies"
     ],
     "relations": {
-      "renewable energy in water services": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Water Scarcity",
+          "Object": "water scarcity",
           "Description": "Renewable energy in water services addresses water scarcity issues by utilizing sustainable energy sources for water treatment and distribution.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Solar Power",
+          "Object": "solar power",
           "Description": "Renewable energy in water services employs solar power technologies to generate clean energy for water treatment and pumping systems.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "Renewable energy in water services collaborates with local communities to implement sustainable energy solutions for water services.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Water Conservation",
+          "Object": "water conservation",
           "Description": "Renewable energy in water services supports water conservation efforts by promoting energy-efficient water treatment and distribution systems.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Renewable Energy Incentives",
+          "Object": "renewable energy agencies",
           "Description": "Renewable energy in water services administers incentives to encourage the adoption of renewable energy technologies in water services.",
           "Importance": 2
         },
         {
           "Relation": "measures",
-          "Object": "Energy Output",
+          "Object": "energy output",
           "Description": "Renewable energy in water services measures the energy output of renewable energy systems to assess their efficiency and performance.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Renewable energy in water services aligns with the Sustainable Development Goals by promoting clean energy and sustainable water management.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Green Infrastructure",
+          "Object": "resilient infrastructure",
           "Description": "Renewable energy in water services is an instance of green infrastructure that integrates renewable energy technologies into water systems.",
           "Importance": 3
         }
-      ]
-    }
+      ],
+      "level 2": [
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Resilient infrastructure implements building standards that ensure the infrastructure can withstand and recover from natural disasters and other shocks.",
+          "Importance": 4
+        },
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "focuses_on",
+          "Object": "climate change adaptation",
+          "Description": "Resilient infrastructure focuses on climate change adaptation strategies to ensure infrastructure systems can cope with the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "partners_with",
+          "Object": "private sector",
+          "Description": "Resilient infrastructure partners with the private sector to leverage their expertise and resources in developing and implementing resilient infrastructure projects.",
+          "Importance": 4
+        },
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "contributes_to",
+          "Object": "sustainable development goals",
+          "Description": "Resilient infrastructure contributes to the achievement of various Sustainable Development Goals, such as Goal 9: Industry, Innovation, and Infrastructure.",
+          "Importance": 4
+        }
+      ],
+      "level 3": []
+    },
+    "sub-elements": [
+      "solar-powered water pumps",
+      "hydroelectric power in water treatment plants",
+      "wind-powered desalination systems"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "solar-powered water pumps",
+        "Relation": "is a sub-element of",
+        "Parent": "renewable energy in water services",
+        "Description": "Solar-powered water pumps are a sub-component of renewable energy in water services. They use solar energy to pump water, reducing the reliance on fossil fuels and minimizing greenhouse gas emissions.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "hydroelectric power in water treatment plants",
+        "Relation": "is a sub-element of",
+        "Parent": "renewable energy in water services",
+        "Description": "Hydroelectric power in water treatment plants is a type of renewable energy used in water services. It involves generating electricity from flowing water, such as rivers or streams, to power the water treatment process.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "wind-powered desalination systems",
+        "Relation": "is a sub-element of",
+        "Parent": "renewable energy in water services",
+        "Description": "Wind-powered desalination systems are a category of renewable energy solutions for water services. They utilize wind energy to power the desalination process, converting seawater into freshwater.",
+        "Importance": 2
+      }
+    ]
   }
 }

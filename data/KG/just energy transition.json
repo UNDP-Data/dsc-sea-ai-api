@@ -26,59 +26,177 @@
   },
   "knowledge graph": {
     "entities": [
-      "Social Justice",
-      "Energy Equity",
-      "Sustainable Development Goals",
-      "Local Communities",
-      "Energy Transition Funds",
-      "Renewable Energy Workforce",
-      "Energy Justice"
+      "energy equity",
+      "local communities",
+      "renewable energy certificates",
+      "just energy transition",
+      "social justice",
+      "sustainable development goals",
+      "energy justice"
     ],
     "relations": {
-      "just energy transition": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Workforce",
+          "Object": "renewable energy certificates",
           "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Energy Equity",
+          "Object": "energy equity",
           "Description": "The just energy transition supports energy equity by promoting equal access to clean and affordable energy.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Transition Funds",
+          "Object": "just energy transition",
           "Description": "The just energy transition administers energy transition funds to support the implementation of sustainable energy projects.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Justice",
+          "Object": "energy justice",
           "Description": "The just energy transition measures energy justice to ensure fair distribution of energy resources and benefits.",
           "Importance": 4
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "The just energy transition aligns with the Sustainable Development Goals to promote sustainable and inclusive energy practices.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Social Justice",
+          "Object": "social justice",
           "Description": "The just energy transition is an instance of social justice, aiming to address energy inequalities and promote fairness.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "Renewable energy certificates contribute to climate change mitigation efforts by promoting the use of clean and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "supports",
+          "Object": "energy equity",
+          "Description": "The just energy transition supports energy equity by promoting equal access to clean and affordable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy justice",
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "Energy justice initiatives aim to address energy poverty by ensuring access to affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy justice",
+          "Relation": "employs",
+          "Object": "equitable energy pricing",
+          "Description": "Energy justice employs equitable energy pricing mechanisms to ensure fair and affordable energy costs for marginalized communities.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy justice",
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "Energy justice initiatives aim to address energy poverty by ensuring access to affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "renewable energy",
+      "energy efficiency",
+      "decarbonization",
+      "electrification",
+      "energy justice"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "renewable energy",
+        "Relation": "is a sub-element of",
+        "Parent": "just energy transition",
+        "Description": "Renewable energy is a key component of a just energy transition. It involves the generation of energy from sources that are naturally replenished, such as solar, wind, and hydro power. By transitioning to renewable energy sources, we can reduce greenhouse gas emissions and mitigate climate change.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy efficiency",
+        "Relation": "is a sub-element of",
+        "Parent": "just energy transition",
+        "Description": "Energy efficiency is an important aspect of a just energy transition. It involves using less energy to achieve the same level of output or service. By improving energy efficiency in buildings, transportation, and industrial processes, we can reduce energy consumption and lower greenhouse gas emissions.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "decarbonization",
+        "Relation": "is a sub-element of",
+        "Parent": "just energy transition",
+        "Description": "Decarbonization is a crucial element of a just energy transition. It refers to the process of reducing or eliminating carbon dioxide emissions from energy sources. By transitioning to low-carbon or carbon-free energy sources, we can mitigate climate change and achieve a more sustainable energy system.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "electrification",
+        "Relation": "is a sub-element of",
+        "Parent": "just energy transition",
+        "Description": "Electrification is a key component of a just energy transition. It involves the adoption of electric power for various energy needs, such as transportation, heating, and cooking. By transitioning to electric vehicles and appliances, we can reduce reliance on fossil fuels and promote a cleaner and more sustainable energy system.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "energy justice",
+        "Relation": "is a sub-element of",
+        "Parent": "just energy transition",
+        "Description": "Energy justice is an important aspect of a just energy transition. It involves ensuring equitable access to affordable, reliable, and clean energy for all. By addressing energy poverty and promoting inclusive energy policies, we can achieve a more just and sustainable energy system.",
+        "Importance": 4
+      }
+    ]
   }
 }

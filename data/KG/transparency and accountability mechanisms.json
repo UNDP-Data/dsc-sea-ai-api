@@ -14,66 +14,197 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Access",
-      "Sustainable Development Goals",
-      "Civil Society Organizations",
-      "Energy Governance",
-      "Energy Efficiency",
-      "Renewable Energy Deployment",
-      "Building Standards",
-      "Renewable Energy Projects"
+      "civil society organizations",
+      "energy efficiency",
+      "energy markets",
+      "sustainable development goals",
+      "energy governance",
+      "building standards",
+      "renewable energy agencies"
     ],
     "relations": {
-      "transparency and accountability mechanisms": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Transparency and accountability mechanisms implement building standards to ensure the use of transparent and accountable practices in the construction sector.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Transparency and accountability mechanisms provide funding for renewable energy projects to support their development and implementation.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Transparency and accountability mechanisms focus on improving energy access for all by promoting transparency and accountability in the energy sector.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Energy Governance",
+          "Object": "energy governance",
           "Description": "Transparency and accountability mechanisms play a crucial role in ensuring transparency and accountability in energy governance.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Civil Society Organizations",
+          "Object": "civil society organizations",
           "Description": "Transparency and accountability mechanisms partner with civil society organizations to promote transparency and accountability in the energy sector.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Transparency and accountability mechanisms contribute to the achievement of sustainable development goals by promoting transparency and accountability in the energy sector.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Efficiency",
+          "Object": "energy efficiency",
           "Description": "Transparency and accountability mechanisms monitor energy efficiency to ensure compliance with energy efficiency standards and targets.",
           "Importance": 4
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Deployment",
+          "Object": "renewable energy agencies",
           "Description": "Transparency and accountability mechanisms set targets for renewable energy deployment to promote the transition to clean and sustainable energy sources.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "collaborates_with",
+          "Object": "government agencies",
+          "Description": "Energy markets collaborate with government agencies to develop and implement policies and regulations that promote a sustainable and efficient energy sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy governance",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy governance implements Energy Efficiency Policy to promote energy-saving practices and policies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy governance",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy governance funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "public disclosure",
+      "audit and evaluation",
+      "whistleblower protection",
+      "anti-corruption measures",
+      "open data initiatives"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "public disclosure",
+        "Relation": "is a sub-element of",
+        "Parent": "transparency and accountability mechanisms",
+        "Description": "Public disclosure is a key component of transparency and accountability mechanisms. It involves the proactive release of information by governments, organizations, or individuals to ensure transparency and enable public scrutiny.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "audit and evaluation",
+        "Relation": "is a sub-element of",
+        "Parent": "transparency and accountability mechanisms",
+        "Description": "Audit and evaluation processes are essential for ensuring transparency and accountability. They involve the systematic examination and assessment of financial records, performance, and compliance with regulations and standards.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "whistleblower protection",
+        "Relation": "is a sub-element of",
+        "Parent": "transparency and accountability mechanisms",
+        "Description": "Whistleblower protection is a crucial aspect of transparency and accountability mechanisms. It involves providing legal safeguards and support to individuals who report wrongdoing or misconduct in organizations or governments.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "anti-corruption measures",
+        "Relation": "is a sub-element of",
+        "Parent": "transparency and accountability mechanisms",
+        "Description": "Anti-corruption measures are integral to transparency and accountability mechanisms. They include policies, laws, and actions aimed at preventing, detecting, and addressing corruption in both public and private sectors.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "open data initiatives",
+        "Relation": "is a sub-element of",
+        "Parent": "transparency and accountability mechanisms",
+        "Description": "Open data initiatives contribute to transparency and accountability by making data accessible and available to the public. They involve the release of data in a machine-readable format, enabling analysis, innovation, and informed decision-making.",
+        "Importance": 3
+      }
+    ]
   }
 }

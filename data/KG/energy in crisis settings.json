@@ -15,66 +15,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Resilience",
-      "Emergency Energy Provision",
-      "Sendai Framework for Disaster Risk Reduction",
-      "Renewable Energy Technologies",
-      "Humanitarian Needs",
-      "Energy Aid Programs",
-      "Disaster Response",
-      "Humanitarian Organizations"
+      "disaster response",
+      "sendai framework for disaster risk reduction",
+      "humanitarian needs",
+      "humanitarian organizations",
+      "renewable energy agencies",
+      "energy aid programs",
+      "energy resilience",
+      "emergency energy provision"
     ],
     "relations": {
-      "energy in crisis settings": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Humanitarian Needs",
+          "Object": "humanitarian needs",
           "Description": "Energy in crisis settings addresses the urgent humanitarian needs of affected populations by providing access to reliable and sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Energy in crisis settings employs renewable energy technologies to ensure energy availability in emergency situations and promote resilience.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Humanitarian Organizations",
+          "Object": "humanitarian organizations",
           "Description": "Energy in crisis settings collaborates with humanitarian organizations to coordinate energy interventions and meet the energy needs of affected populations.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Disaster Response",
+          "Object": "disaster response",
           "Description": "Energy in crisis settings supports disaster response efforts by providing energy solutions for emergency shelters, healthcare facilities, and other critical infrastructure.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Aid Programs",
+          "Object": "energy aid programs",
           "Description": "Energy in crisis settings administers energy aid programs to ensure the efficient and effective delivery of energy assistance in emergency situations.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Resilience",
+          "Object": "energy resilience",
           "Description": "Energy in crisis settings measures the resilience of energy systems in crisis settings to identify vulnerabilities and improve preparedness.",
           "Importance": 2
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sendai Framework for Disaster Risk Reduction",
+          "Object": "sendai framework for disaster risk reduction",
           "Description": "Energy in crisis settings aligns with the principles and goals of the Sendai Framework for Disaster Risk Reduction to enhance resilience and reduce disaster risks.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Emergency Energy Provision",
+          "Object": "emergency energy provision",
           "Description": "Energy in crisis settings is an instance of emergency energy provision, which aims to meet the energy needs of populations affected by crises and disasters.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "administers",
+          "Object": "feed-in tariff programs",
+          "Description": "Renewable energy agencies administer feed-in tariff programs to incentivize the production of renewable energy and promote its integration into the grid.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "aligns_with",
+          "Object": "sustainable development goals",
+          "Description": "Renewable energy agencies align their activities and initiatives with the Sustainable Development Goals to contribute to the global agenda for sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "an_instance_of",
+          "Object": "government agencies",
+          "Description": "Renewable energy agencies are government agencies dedicated to promoting and supporting the development of renewable energy sources.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "Renewable energy solutions",
+      "Energy access",
+      "Energy efficiency",
+      "Energy storage",
+      "Energy management"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "Renewable energy solutions",
+        "Relation": "is a sub-element of",
+        "Parent": "energy in crisis settings",
+        "Description": "Renewable energy solutions play a crucial role in addressing energy needs in crisis settings. They provide a sustainable and reliable source of energy, reducing dependence on fossil fuels and minimizing environmental impact.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "Energy access",
+        "Relation": "is a sub-element of",
+        "Parent": "energy in crisis settings",
+        "Description": "Ensuring energy access is essential in crisis settings to meet basic needs, support healthcare facilities, and enable communication and coordination. It contributes to improving living conditions and enhancing resilience.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "Energy efficiency",
+        "Relation": "is a sub-element of",
+        "Parent": "energy in crisis settings",
+        "Description": "Energy efficiency measures are crucial in crisis settings to optimize energy use and reduce waste. They help maximize the effectiveness of limited energy resources and minimize the environmental impact.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Energy storage",
+        "Relation": "is a sub-element of",
+        "Parent": "energy in crisis settings",
+        "Description": "Energy storage solutions are important in crisis settings to ensure a reliable and continuous energy supply. They enable the integration of intermittent renewable energy sources and provide backup power during emergencies.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Energy management",
+        "Relation": "is a sub-element of",
+        "Parent": "energy in crisis settings",
+        "Description": "Effective energy management is crucial in crisis settings to optimize energy resources, prioritize energy needs, and ensure efficient energy distribution. It helps in minimizing energy wastage and maximizing energy availability.",
+        "Importance": 2
+      }
+    ]
   }
 }

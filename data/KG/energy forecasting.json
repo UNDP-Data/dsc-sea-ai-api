@@ -15,45 +15,135 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Programs",
-      "Energy Planning",
-      "Energy Consumption",
-      "Renewable Energy Integration",
-      "Energy Demand"
+      "renewable energy certificates",
+      "energy modeling",
+      "energy efficiency",
+      "energy democracy",
+      "energy consumption"
     ],
     "relations": {
-      "energy forecasting": [
+      "level 1": [
         {
           "Relation": "contributes_to",
-          "Object": "Energy Planning",
+          "Object": "energy modeling",
           "Description": "Energy forecasting contributes to energy planning by providing insights and data for informed decision-making.",
           "Importance": 3
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Energy forecasting monitors energy consumption patterns to identify trends and potential areas for improvement.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Renewable Energy Integration",
+          "Object": "renewable energy certificates",
           "Description": "Energy forecasting supports the integration of renewable energy sources by providing accurate predictions and forecasts.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Efficiency Programs",
+          "Object": "energy efficiency",
           "Description": "Energy forecasting administers energy efficiency programs to promote energy conservation and sustainable practices.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Demand",
+          "Object": "energy democracy",
           "Description": "Energy forecasting measures energy demand to ensure sufficient supply and efficient distribution.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy modeling",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy modeling implements the Energy Efficiency Policy to optimize energy consumption and reduce waste.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy modeling",
+          "Relation": "focuses_on",
+          "Object": "building energy performance",
+          "Description": "Energy modeling focuses on analyzing and improving building energy performance through simulation and optimization techniques.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "funds",
+          "Object": "clean energy research",
+          "Description": "Renewable energy certificates provide funding for Clean Energy Research to support the development of innovative renewable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "collaborates_with",
+          "Object": "industries",
+          "Description": "Energy efficiency collaborates with industries to develop and implement energy-saving measures and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "addresses",
+          "Object": "energy and health",
+          "Description": "Energy democracy addresses energy inequality by promoting equitable access to clean and affordable energy for all individuals and communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "employs",
+          "Object": "participatory decision-making",
+          "Description": "Energy democracy employs participatory decision-making processes to ensure that all stakeholders have a voice in shaping energy policies and projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

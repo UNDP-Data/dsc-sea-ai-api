@@ -14,66 +14,198 @@
   },
   "knowledge graph": {
     "entities": [
-      "International Organizations",
-      "Adaptation Projects",
-      "Climate Finance",
-      "Climate Change Mitigation",
-      "Paris Agreement",
-      "Climate Action Plans",
-      "Renewable Energy Technologies",
-      "Greenhouse Gas Emissions"
+      "climate action plans",
+      "greenhouse gas emissions",
+      "regional energy organizations",
+      "adaptation projects",
+      "climate change mitigation",
+      "climate finance mechanisms",
+      "renewable energy agencies",
+      "Paris Agreement Goals"
     ],
     "relations": {
-      "nationally determined contributions": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Nationally determined contributions address climate change mitigation by outlining the actions and targets of each country to reduce greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Nationally determined contributions employ renewable energy technologies to achieve the targets set for climate change mitigation.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "International Organizations",
+          "Object": "regional energy organizations",
           "Description": "Nationally determined contributions collaborate with international organizations to enhance the implementation of climate change mitigation measures.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Adaptation Projects",
+          "Object": "adaptation projects",
           "Description": "Nationally determined contributions support adaptation projects to enhance the resilience of communities and ecosystems to the impacts of climate change.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Climate Finance",
+          "Object": "climate finance mechanisms",
           "Description": "Nationally determined contributions administer climate finance to support the implementation of climate change mitigation and adaptation measures.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Greenhouse Gas Emissions",
+          "Object": "greenhouse gas emissions",
           "Description": "Nationally determined contributions measure greenhouse gas emissions to track progress towards the targets set for climate change mitigation.",
           "Importance": 4
         },
         {
           "Relation": "aligns_with",
-          "Object": "Paris Agreement",
+          "Object": "Paris Agreement Goals",
           "Description": "Nationally determined contributions align with the goals and objectives of the Paris Agreement to enhance global climate change mitigation efforts.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Climate Action Plans",
+          "Object": "climate action plans",
           "Description": "Nationally determined contributions are an instance of climate action plans developed by each country to address climate change mitigation and adaptation.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Regional energy organizations implement energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Regional energy organizations focus on improving energy access in underserved areas to ensure equitable distribution of sustainable energy resources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate finance mechanisms",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Climate finance mechanisms implement building standards that promote sustainable and energy-efficient construction practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate finance mechanisms",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Climate finance mechanisms provide funding for renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Paris Agreement Goals",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Paris Agreement Goals implements Energy Efficiency Policy to promote energy-saving practices and reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Paris Agreement Goals",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Paris Agreement Goals funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "mitigation",
+      "adaptation",
+      "finance",
+      "technology transfer",
+      "capacity building"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "mitigation",
+        "Relation": "is a sub-element of",
+        "Parent": "nationally determined contributions",
+        "Description": "Mitigation refers to the efforts made by countries to reduce greenhouse gas emissions and limit the impacts of climate change. Nationally determined contributions include specific targets and actions related to mitigation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "adaptation",
+        "Relation": "is a sub-element of",
+        "Parent": "nationally determined contributions",
+        "Description": "Adaptation refers to the actions taken to adjust to the impacts of climate change and build resilience. Nationally determined contributions may include measures to enhance adaptive capacity and reduce vulnerability.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "finance",
+        "Relation": "is a sub-element of",
+        "Parent": "nationally determined contributions",
+        "Description": "Finance is an important aspect of nationally determined contributions, as it involves the provision of financial resources to support climate change mitigation and adaptation efforts. This can include both domestic and international funding.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "technology transfer",
+        "Relation": "is a sub-element of",
+        "Parent": "nationally determined contributions",
+        "Description": "Technology transfer refers to the sharing of knowledge, skills, and technologies between countries to support sustainable development and address climate change. Nationally determined contributions may include provisions for technology transfer to enhance mitigation and adaptation efforts.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "capacity building",
+        "Relation": "is a sub-element of",
+        "Parent": "nationally determined contributions",
+        "Description": "Capacity building involves strengthening the skills, knowledge, and institutions necessary to effectively implement climate change mitigation and adaptation measures. Nationally determined contributions may include capacity building activities to support their implementation.",
+        "Importance": 2
+      }
+    ]
   }
 }

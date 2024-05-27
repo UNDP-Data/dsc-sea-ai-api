@@ -18,66 +18,121 @@
   },
   "knowledge graph": {
     "entities": [
-      "Community-Owned Renewable Energy Projects",
-      "Sustainable Development Goals",
-      "Energy Poverty",
-      "Community Development",
-      "Feed-in Tariff Programs",
-      "Renewable Energy Technologies",
-      "Local Governments",
-      "Energy Consumption"
+      "community development",
+      "local governments",
+      "feed-in tariff programs",
+      "community-owned renewable energy projects",
+      "sustainable development goals",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "energy cooperatives": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Energy cooperatives address energy poverty by providing affordable and sustainable energy solutions to underserved communities.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Energy cooperatives employ renewable energy technologies to generate clean and sustainable energy for their members.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Governments",
+          "Object": "local governments",
           "Description": "Energy cooperatives collaborate with local governments to implement renewable energy projects and promote sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Community Development",
+          "Object": "community development",
           "Description": "Energy cooperatives support community development by investing in local renewable energy projects and creating job opportunities.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Feed-in Tariff Programs",
+          "Object": "feed-in tariff programs",
           "Description": "Energy cooperatives administer feed-in tariff programs to incentivize the production of renewable energy by their members.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Energy cooperatives measure energy consumption to identify energy-saving opportunities and promote energy efficiency.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Energy cooperatives align with the Sustainable Development Goals by promoting clean energy access and reducing carbon emissions.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Community-Owned Renewable Energy Projects",
+          "Object": "community-owned renewable energy projects",
           "Description": "Energy cooperatives are an instance of community-owned renewable energy projects that empower communities to take control of their energy sources.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

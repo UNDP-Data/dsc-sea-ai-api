@@ -15,66 +15,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Fuel Cell Technology",
-      "Climate Change Goals",
-      "Clean Energy Initiative",
-      "Carbon Emissions",
-      "Hydrogen Infrastructure",
-      "Renewable Energy Integration",
-      "Energy Storage",
-      "Research Institutions"
+      "climate change scenario analysis",
+      "clean energy initiative",
+      "renewable energy certificates",
+      "carbon emissions",
+      "fuel cell technology",
+      "research institutions",
+      "resilient infrastructure",
+      "energy storage"
     ],
     "relations": {
-      "hydrogen for development": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Storage",
+          "Object": "energy storage",
           "Description": "Hydrogen for development addresses the need for efficient energy storage solutions.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Fuel Cell Technology",
+          "Object": "fuel cell technology",
           "Description": "Hydrogen for development employs fuel cell technology for clean and sustainable energy generation.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Research Institutions",
+          "Object": "research institutions",
           "Description": "Hydrogen for development collaborates with research institutions to advance hydrogen energy technologies.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Renewable Energy Integration",
+          "Object": "renewable energy certificates",
           "Description": "Hydrogen for development supports the integration of renewable energy sources into existing energy systems.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Hydrogen Infrastructure",
+          "Object": "resilient infrastructure",
           "Description": "Hydrogen for development administers the development of hydrogen infrastructure for widespread adoption.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Carbon Emissions",
+          "Object": "carbon emissions",
           "Description": "Hydrogen for development measures carbon emissions reduction achieved through hydrogen energy utilization.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Climate Change Goals",
+          "Object": "climate change scenario analysis",
           "Description": "Hydrogen for development aligns with global climate change goals for a sustainable future.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Clean Energy Initiative",
+          "Object": "clean energy initiative",
           "Description": "Hydrogen for development is an instance of a clean energy initiative promoting hydrogen energy solutions.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "employs",
+          "Object": "smart metering technologies",
+          "Description": "Energy storage employs battery technologies to store and release energy efficiently, enabling the integration of renewable energy sources into the grid.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "funds",
+          "Object": "clean energy research",
+          "Description": "Renewable energy certificates provide funding for Clean Energy Research to support the development of innovative renewable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Resilient infrastructure implements building standards that ensure the infrastructure can withstand and recover from natural disasters and other shocks.",
+          "Importance": 4
+        },
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Resilient infrastructure funds research and development projects that aim to improve the resilience of infrastructure systems.",
+          "Importance": 3
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "funds",
+          "Object": "offshore renewable energy",
+          "Description": "Climate change scenario analysis funds research on renewable energy to develop innovative solutions for sustainable energy.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy tax incentives",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy tax incentives are implemented by the Energy Efficiency Policy to promote the adoption of energy-saving practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }
