@@ -19,66 +19,169 @@
   },
   "knowledge graph": {
     "entities": [
-      "Demand Response",
-      "Utility Companies",
-      "Smart Grid",
-      "Energy Efficiency Policy",
-      "Energy Efficiency",
-      "Energy Conservation",
-      "Energy Consumption",
-      "Research and Development"
+      "research and development",
+      "utility companies",
+      "energy cooperatives",
+      "energy efficiency",
+      "energy consumption",
+      "demand response",
+      "smart grid"
     ],
     "relations": {
-      "smart metering technologies": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research and Development",
+          "Object": "research and development",
           "Description": "Smart metering technologies contribute funds to research and development projects for improving energy efficiency.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Demand Response",
+          "Object": "demand response",
           "Description": "Smart metering technologies focus on enabling demand response programs to optimize energy usage.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Smart Grid",
+          "Object": "smart grid",
           "Description": "Smart metering technologies are an integral part of the smart grid infrastructure for efficient energy management.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Utility Companies",
+          "Object": "utility companies",
           "Description": "Smart metering technologies partner with utility companies to enable accurate billing and efficient energy management.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Energy Conservation",
+          "Object": "energy cooperatives",
           "Description": "Smart metering technologies contribute to energy conservation efforts by providing insights into energy usage patterns.",
           "Importance": 3
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Smart metering technologies monitor energy consumption in real-time to identify opportunities for energy savings.",
           "Importance": 4
         },
         {
           "Relation": "targets",
-          "Object": "Energy Efficiency",
+          "Object": "energy efficiency",
           "Description": "Smart metering technologies target improved energy efficiency by providing data-driven insights for energy management.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy cooperatives",
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "Energy cooperatives address energy poverty by providing affordable and sustainable energy solutions to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy cooperatives",
+          "Relation": "collaborates_with",
+          "Object": "local governments",
+          "Description": "Energy cooperatives collaborate with local governments to implement renewable energy projects and promote sustainable energy practices.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "advanced metering infrastructure",
+      "time-of-use pricing",
+      "demand response programs",
+      "energy management systems",
+      "data analytics"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "advanced metering infrastructure",
+        "Relation": "is a sub-element of",
+        "Parent": "smart metering technologies",
+        "Description": "Advanced metering infrastructure (AMI) is a sub-component of smart metering technologies. It consists of smart meters, communication networks, and data management systems that enable two-way communication between utilities and consumers. AMI provides real-time data on energy consumption, allowing for more accurate billing, demand response programs, and energy management.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "time-of-use pricing",
+        "Relation": "is a sub-element of",
+        "Parent": "smart metering technologies",
+        "Description": "Time-of-use pricing is a pricing strategy that is enabled by smart metering technologies. It involves varying the price of electricity based on the time of day, with higher prices during peak demand periods and lower prices during off-peak periods. Time-of-use pricing encourages consumers to shift their energy usage to off-peak hours, reducing strain on the grid and promoting energy efficiency.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "demand response programs",
+        "Relation": "is a sub-element of",
+        "Parent": "smart metering technologies",
+        "Description": "Demand response programs are initiatives that utilize smart metering technologies to incentivize consumers to reduce their electricity usage during periods of high demand. By providing real-time data on energy consumption and implementing time-of-use pricing, smart metering technologies enable utilities to send signals to consumers, encouraging them to reduce their energy consumption during peak periods. Demand response programs help to balance electricity supply and demand, reduce the need for additional power plants, and promote grid stability.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy management systems",
+        "Relation": "is a sub-element of",
+        "Parent": "smart metering technologies",
+        "Description": "Energy management systems (EMS) are software applications that utilize data from smart metering technologies to monitor, control, and optimize energy usage in buildings or industrial facilities. EMS enable real-time monitoring of energy consumption, identification of energy-saving opportunities, and automation of energy-saving measures. By integrating with smart metering technologies, EMS can provide valuable insights and enable more efficient energy management practices.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "data analytics",
+        "Relation": "is a sub-element of",
+        "Parent": "smart metering technologies",
+        "Description": "Data analytics is a crucial aspect of smart metering technologies. It involves the collection, processing, and analysis of large amounts of data generated by smart meters. Data analytics techniques can uncover patterns, trends, and anomalies in energy consumption, enabling utilities and consumers to make informed decisions about energy usage, identify energy-saving opportunities, and optimize energy management strategies.",
+        "Importance": 4
+      }
+    ]
   }
 }

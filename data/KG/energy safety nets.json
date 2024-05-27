@@ -14,9 +14,115 @@
     "Synonyms": null
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "energy affordability",
+      "non-profit organizations",
+      "social equity",
+      "energy access barriers",
+      "energy affordability indicators",
+      "energy vulnerable populations",
+      "social welfare programs",
+      "energy poverty indices",
+      "energy assistance programs"
+    ],
     "relations": {
-      "energy safety nets": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "social welfare programs",
+          "Description": "Energy safety nets implements social welfare programs to provide assistance to vulnerable populations in accessing affordable and reliable energy services.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "energy assistance programs",
+          "Description": "Energy safety nets funds energy assistance programs to support low-income households in meeting their energy needs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "energy affordability",
+          "Description": "Energy safety nets focuses on ensuring energy affordability for disadvantaged communities through targeted programs and policies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "energy poverty indices",
+          "Description": "Energy safety nets operates in the context of addressing energy poverty and reducing energy inequality.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "non-profit organizations",
+          "Description": "Energy safety nets partners with non-profit organizations to enhance the reach and effectiveness of energy assistance programs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "social equity",
+          "Description": "Energy safety nets contributes to social equity by ensuring access to affordable and reliable energy services for all individuals and communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy affordability indicators",
+          "Description": "Energy safety nets monitors energy affordability indicators to assess the effectiveness of its programs and policies.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "energy vulnerable populations",
+          "Description": "Energy safety nets targets energy vulnerable populations to provide them with targeted support and assistance.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "energy access barriers",
+          "Description": "Energy safety nets addresses energy access barriers faced by disadvantaged communities through targeted interventions and programs.",
+          "Importance": 4
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

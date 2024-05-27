@@ -16,66 +16,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Access Challenges",
-      "Sustainable Energy Access",
-      "Climate Change Mitigation",
-      "Renewable Energy Technologies",
-      "Energy Consumption",
-      "Livelihood Opportunities",
-      "Humanitarian Organizations",
-      "Energy Assistance Programs"
+      "energy access challenges",
+      "sustainable energy access",
+      "Action Opportunities",
+      "energy consumption",
+      "humanitarian organizations",
+      "climate change mitigation",
+      "energy assistance programs",
+      "renewable energy agencies"
     ],
     "relations": {
-      "energy services in displacement settings": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Access Challenges",
+          "Object": "energy access challenges",
           "Description": "Energy services in displacement settings address the energy access challenges faced by displaced populations, ensuring their basic energy needs are met.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "Energy services in displacement settings employ renewable energy technologies to provide clean and sustainable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Humanitarian Organizations",
+          "Object": "humanitarian organizations",
           "Description": "Energy services in displacement settings collaborate with humanitarian organizations to ensure the provision of reliable and sustainable energy services.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Livelihood Opportunities",
+          "Object": "Action Opportunities",
           "Description": "Energy services in displacement settings support the creation of livelihood opportunities through the provision of energy for income-generating activities.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Energy Assistance Programs",
+          "Object": "energy assistance programs",
           "Description": "Energy services in displacement settings administer energy assistance programs to ensure access to affordable and reliable energy services.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Energy services in displacement settings measure energy consumption to identify energy-saving opportunities and promote energy efficiency.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Energy services in displacement settings align with climate change mitigation efforts by promoting the use of clean and renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Sustainable Energy Access",
+          "Object": "sustainable energy access",
           "Description": "Energy services in displacement settings are an instance of sustainable energy access, ensuring the provision of reliable and affordable energy services in challenging settings.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Action Opportunities",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Action Opportunities implements energy efficiency measures to reduce energy consumption and promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Action Opportunities",
+          "Relation": "focuses_on",
+          "Object": "climate change mitigation",
+          "Description": "Action Opportunities focuses on climate change mitigation by promoting sustainable energy solutions and reducing greenhouse gas emissions.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "lighting",
+      "cooking",
+      "heating",
+      "cooling",
+      "communication"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "lighting",
+        "Relation": "is a sub-element of",
+        "Parent": "energy services in displacement settings",
+        "Description": "Lighting is a crucial sub-element of energy services in displacement settings. It provides illumination for various activities, enhances safety and security, and enables social interactions during the evening and night.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "cooking",
+        "Relation": "is a sub-element of",
+        "Parent": "energy services in displacement settings",
+        "Description": "Cooking is an essential sub-element of energy services in displacement settings. It involves the preparation of meals and the provision of heat for food processing, contributing to nutrition, health, and well-being of displaced populations.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "heating",
+        "Relation": "is a sub-element of",
+        "Parent": "energy services in displacement settings",
+        "Description": "Heating is a significant sub-element of energy services in displacement settings. It helps maintain thermal comfort, prevents hypothermia, and supports the well-being and health of displaced individuals in cold environments.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "cooling",
+        "Relation": "is a sub-element of",
+        "Parent": "energy services in displacement settings",
+        "Description": "Cooling is an important sub-element of energy services in displacement settings. It provides relief from high temperatures, reduces heat-related health risks, and improves the comfort and livability of temporary shelters.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "communication",
+        "Relation": "is a sub-element of",
+        "Parent": "energy services in displacement settings",
+        "Description": "Communication is a vital sub-element of energy services in displacement settings. It enables displaced individuals to connect with their families, access information, seek assistance, and maintain social networks, contributing to their well-being and resilience.",
+        "Importance": 4
+      }
+    ]
   }
 }

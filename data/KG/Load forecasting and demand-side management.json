@@ -15,73 +15,152 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Programs",
-      "Utility Companies",
-      "Energy Consumption Patterns",
-      "Grid Stability",
-      "Energy Efficiency",
-      "Building Standards",
-      "Energy Consumption",
-      "Renewable Energy Projects",
-      "Peak Demand"
+      "peak demand",
+      "utility companies",
+      "energy efficiency",
+      "energy consumption",
+      "grid stability",
+      "building standards",
+      "renewable energy agencies",
+      "energy consumption patterns"
     ],
     "relations": {
-      "Load forecasting and demand-side management": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Load forecasting and demand-side management implements building standards that promote energy efficiency and conservation.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Load forecasting and demand-side management funds renewable energy projects to support the transition to clean energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Energy Consumption Patterns",
+          "Object": "energy consumption patterns",
           "Description": "Load forecasting and demand-side management focuses on analyzing energy consumption patterns to optimize energy usage.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Energy Efficiency Programs",
+          "Object": "energy efficiency",
           "Description": "Load forecasting and demand-side management is implemented in energy efficiency programs to reduce energy waste.",
           "Importance": 2
         },
         {
           "Relation": "partners_with",
-          "Object": "Utility Companies",
+          "Object": "utility companies",
           "Description": "Load forecasting and demand-side management partners with utility companies to coordinate energy demand and supply.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Grid Stability",
+          "Object": "grid stability",
           "Description": "Load forecasting and demand-side management contributes to grid stability by managing and balancing energy demand.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Load forecasting and demand-side management monitors energy consumption to identify trends and patterns.",
           "Importance": 2
         },
         {
           "Relation": "targets",
-          "Object": "Energy Efficiency",
+          "Object": "energy efficiency",
           "Description": "Load forecasting and demand-side management targets energy efficiency by optimizing energy usage and reducing waste.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Peak Demand",
+          "Object": "peak demand",
           "Description": "Load forecasting and demand-side management addresses peak demand by managing and reducing energy usage during high-demand periods.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "Load forecasting",
+      "Demand-side management"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "Load forecasting",
+        "Relation": "is a sub-element of",
+        "Parent": "Load forecasting and demand-side management",
+        "Description": "Load forecasting is a technique used to predict the future electricity demand based on historical data and other relevant factors. It helps in optimizing the generation, transmission, and distribution of electricity, leading to more efficient and sustainable energy systems.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Demand-side management",
+        "Relation": "is a sub-element of",
+        "Parent": "Load forecasting and demand-side management",
+        "Description": "Demand-side management refers to the strategies and measures implemented to modify consumer electricity usage patterns. It aims to reduce peak demand, shift load to off-peak periods, and encourage energy efficiency and conservation. By actively managing the demand, it helps in balancing the electricity grid and promoting sustainable energy consumption.",
+        "Importance": 4
+      }
+    ]
   }
 }

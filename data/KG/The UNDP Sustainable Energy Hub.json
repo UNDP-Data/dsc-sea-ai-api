@@ -14,7 +14,7 @@
       "carbon offset programs"
     ],
     "relations": {
-      "The UNDP Sustainable Energy Hub": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "carbon offset programs",
@@ -69,7 +69,34 @@
           "Description": "The UNDP Sustainable Energy Hub addresses the challenges and opportunities associated with carbon offset programs.",
           "Importance": 2
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "carbon offset programs",
+          "Relation": "implements",
+          "Object": "sustainable development goals",
+          "Description": "Carbon offset programs implement sustainable development goals to reduce greenhouse gas emissions and promote sustainable practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "carbon offset programs",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Carbon offset programs provide funding for renewable energy projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

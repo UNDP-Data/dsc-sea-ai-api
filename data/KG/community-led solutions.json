@@ -16,9 +16,136 @@
     ]
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "environmental sustainability",
+      "local governments",
+      "energy markets",
+      "climate change mitigation",
+      "energy consumption",
+      "energy poverty indices",
+      "local workforce",
+      "renewable energy initiatives",
+      "sustainable energy projects"
+    ],
     "relations": {
-      "community-led solutions": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Community-led solutions implement sustainable energy projects that aim to provide clean and affordable energy to local communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "renewable energy initiatives",
+          "Description": "Community-led solutions provide funding for renewable energy initiatives to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Community-led solutions focus on improving energy access in underserved areas by promoting the use of sustainable energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "local governments",
+          "Description": "Community-led solutions partner with local governments to collaborate on sustainable energy projects and initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "Community-led solutions contribute to climate change mitigation by promoting the adoption of sustainable energy practices and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy consumption",
+          "Description": "Community-led solutions monitor energy consumption to identify opportunities for energy efficiency improvements and sustainable energy use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "energy poverty indices",
+          "Description": "Community-led solutions target energy poverty by implementing sustainable energy solutions that provide reliable and affordable energy access to marginalized communities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "environmental sustainability",
+          "Description": "Community-led solutions address environmental sustainability by promoting the use of renewable energy sources and reducing reliance on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Relation": "employs",
+          "Object": "local workforce",
+          "Description": "Community-led solutions employ local workforce to support the implementation and maintenance of sustainable energy projects, contributing to local economic development.",
+          "Importance": 3
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

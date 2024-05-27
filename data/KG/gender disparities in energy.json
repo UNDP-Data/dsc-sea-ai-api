@@ -16,9 +16,199 @@
     ]
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "gender-based violence in the energy sector",
+      "gender-responsive energy policies",
+      "gender data in the energy sector",
+      "sustainable development goals",
+      "women's empowerment organizations",
+      "gender mainstreaming",
+      "energy sector",
+      "gender equality in energy access",
+      "gender-focused energy projects"
+    ],
     "relations": {
-      "gender disparities in energy": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "gender mainstreaming",
+          "Description": "Gender disparities in energy can be addressed by implementing gender mainstreaming strategies that ensure equal access and benefits for all genders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "gender-focused energy projects",
+          "Description": "To reduce gender disparities in energy, funding can be allocated to support gender-focused energy projects that empower women and marginalized groups.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "gender-responsive energy policies",
+          "Description": "Addressing gender disparities in energy requires a focus on developing gender-responsive energy policies that consider the specific needs and challenges faced by different genders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "energy sector",
+          "Description": "Gender disparities exist in the energy sector, where women are underrepresented in decision-making roles and face barriers to accessing energy services and opportunities.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "women's empowerment organizations",
+          "Description": "To address gender disparities in energy, partnerships can be formed with women's empowerment organizations to promote gender equality and women's participation in the energy sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "sustainable development goals",
+          "Description": "Reducing gender disparities in energy is crucial for achieving the sustainable development goals, as gender equality is a key component of sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "gender data in the energy sector",
+          "Description": "Monitoring gender data in the energy sector is important to identify and address gender disparities, and to track progress towards gender equality in the energy sector.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "gender equality in energy access",
+          "Description": "Setting targets for achieving gender equality in energy access can help drive efforts to reduce gender disparities and ensure equal access to energy services for all genders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "gender-based violence in the energy sector",
+          "Description": "Addressing gender disparities in energy also involves addressing gender-based violence in the energy sector, which disproportionately affects women and girls.",
+          "Importance": 3
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "addresses",
+          "Object": "gender inequality",
+          "Description": "Gender mainstreaming addresses gender inequality in the energy sector, promoting equal opportunities and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "employs",
+          "Object": "gender experts",
+          "Description": "Gender mainstreaming employs gender experts who provide guidance and expertise in integrating gender perspectives into sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "collaborates_with",
+          "Object": "women's rights organizations",
+          "Description": "Gender mainstreaming collaborates with women's rights organizations to ensure the inclusion and empowerment of women in the energy sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "supports",
+          "Object": "gender equality",
+          "Description": "Gender mainstreaming supports gender equality in the energy sector, advocating for equal rights, opportunities, and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "administers",
+          "Object": "gender mainstreaming",
+          "Description": "Gender mainstreaming administers a program that promotes the integration of gender perspectives into sustainable energy policies and practices.",
+          "Importance": 3
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "measures",
+          "Object": "gender disparities in energy",
+          "Description": "Gender mainstreaming measures gender disparities in the energy sector, identifying areas for improvement and targeted interventions.",
+          "Importance": 3
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "aligns_with",
+          "Object": "un sustainable development goals",
+          "Description": "Gender mainstreaming aligns with the UN Sustainable Development Goals, particularly Goal 5 on gender equality and Goal 7 on sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "an_instance_of",
+          "Object": "inclusive energy planning",
+          "Description": "Gender mainstreaming is an instance of inclusive energy planning, which aims to ensure the equitable and inclusive distribution of energy resources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "addresses",
+          "Object": "gender inequality",
+          "Description": "Gender mainstreaming addresses gender inequality in the energy sector, promoting equal opportunities and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Gender Disparities in Energy",
+          "Relation": "addresses",
+          "Object": "gender inequality",
+          "Description": "Gender Disparities in Energy addresses gender inequality by promoting equal access to and participation in the energy sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender disparities in energy",
+          "Relation": "implements",
+          "Object": "gender mainstreaming",
+          "Description": "Gender disparities in energy can be addressed by implementing gender mainstreaming strategies that ensure equal access and benefits for all genders.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [
+      "access to energy",
+      "energy poverty",
+      "energy consumption patterns",
+      "energy efficiency",
+      "energy affordability"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "access to energy",
+        "Relation": "is a sub-element of",
+        "Parent": "gender disparities in energy",
+        "Description": "Access to energy is a key sub-element of gender disparities in energy. It refers to the availability and affordability of energy services for different genders. Gender disparities in access to energy can result in unequal opportunities and hinder socio-economic development.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy poverty",
+        "Relation": "is a sub-element of",
+        "Parent": "gender disparities in energy",
+        "Description": "Energy poverty is another sub-element of gender disparities in energy. It refers to the lack of access to modern energy services, particularly among marginalized and vulnerable groups. Gender disparities in energy poverty can exacerbate existing inequalities and limit opportunities for women and girls.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "energy consumption patterns",
+        "Relation": "is a sub-element of",
+        "Parent": "gender disparities in energy",
+        "Description": "Energy consumption patterns are also a sub-element of gender disparities in energy. It refers to the different ways in which men and women use and consume energy. Gender disparities in energy consumption patterns can reflect unequal power dynamics and social norms, leading to inefficient and unsustainable energy practices.",
+        "Importance": 2
+      },
+      {
+        "Sub-element": "energy efficiency",
+        "Relation": "is a sub-element of",
+        "Parent": "gender disparities in energy",
+        "Description": "Energy efficiency is a sub-element of gender disparities in energy. It refers to the ability to achieve the same or better energy services with less energy input. Gender disparities in energy efficiency can result from unequal access to energy-efficient technologies and practices, leading to higher energy costs and environmental impacts.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "energy affordability",
+        "Relation": "is a sub-element of",
+        "Parent": "gender disparities in energy",
+        "Description": "Energy affordability is another sub-element of gender disparities in energy. It refers to the ability to afford energy services and meet basic energy needs. Gender disparities in energy affordability can result in energy poverty and limit opportunities for women and girls, particularly in low-income households.",
+        "Importance": 4
+      }
+    ]
   }
 }

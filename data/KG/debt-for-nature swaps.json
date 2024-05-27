@@ -16,16 +16,16 @@
   "knowledge graph": {
     "entities": [
       "non-governmental organizations",
-      "debt sustainability",
-      "sustainable development",
-      "environmental impact",
       "environmental initiatives",
-      "debt restructuring",
+      "debt sustainability",
+      "conservation projects",
+      "environmental impact assessments",
       "biodiversity conservation",
-      "conservation projects"
+      "sustainable development",
+      "debt restructuring"
     ],
     "relations": {
-      "debt-for-nature swaps": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "conservation projects",
@@ -52,7 +52,7 @@
         },
         {
           "Relation": "monitors",
-          "Object": "environmental impact",
+          "Object": "environmental impact assessments",
           "Description": "Debt-for-nature swaps monitor the environmental impact of conservation projects and ensure that they are effectively contributing to sustainable development goals.",
           "Importance": 3
         },
@@ -74,7 +74,19 @@
           "Description": "Debt-for-nature swaps administer the process of debt restructuring to facilitate the conversion of debt into funding for conservation projects.",
           "Importance": 3
         }
-      ]
-    }
+      ],
+      "level 2": [
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "aligns_with",
+          "Object": "environmental regulations",
+          "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": []
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

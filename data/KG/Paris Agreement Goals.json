@@ -17,66 +17,128 @@
   },
   "knowledge graph": {
     "entities": [
-      "Net Zero Emissions",
-      "Energy Efficiency Policy",
-      "International Renewable Energy Agency (IRENA)",
-      "Climate Change Mitigation",
-      "Sustainable Development Goals (SDGs)",
-      "Greenhouse Gas Emissions",
-      "Renewable Energy Projects",
-      "United Nations Framework Convention on Climate Change (UNFCCC)"
+      "greenhouse gas emissions",
+      "sustainable development goals (sdgs)",
+      "united nations framework convention on climate change (unfccc)",
+      "energy efficiency",
+      "net zero emissions",
+      "climate change mitigation",
+      "renewable energy agencies",
+      "international renewable energy agency (irena)"
     ],
     "relations": {
-      "Paris Agreement Goals": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Paris Agreement Goals implements Energy Efficiency Policy to promote energy-saving practices and reduce greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Paris Agreement Goals funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Paris Agreement Goals focuses on Climate Change Mitigation to reduce the impact of global warming and limit temperature rise.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "United Nations Framework Convention on Climate Change (UNFCCC)",
+          "Object": "united nations framework convention on climate change (unfccc)",
           "Description": "Paris Agreement Goals is in the framework of the United Nations Framework Convention on Climate Change (UNFCCC) to address climate change issues globally.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "International Renewable Energy Agency (IRENA)",
+          "Object": "international renewable energy agency (irena)",
           "Description": "Paris Agreement Goals partners with International Renewable Energy Agency (IRENA) to promote renewable energy adoption and collaboration.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Sustainable Development Goals (SDGs)",
+          "Object": "sustainable development goals (sdgs)",
           "Description": "Paris Agreement Goals contributes to the achievement of Sustainable Development Goals (SDGs) by addressing climate change and promoting sustainable practices.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Greenhouse Gas Emissions",
+          "Object": "greenhouse gas emissions",
           "Description": "Paris Agreement Goals monitors Greenhouse Gas Emissions to track progress towards emission reduction targets.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Net Zero Emissions",
+          "Object": "net zero emissions",
           "Description": "Paris Agreement Goals targets Net Zero Emissions to achieve a balance between greenhouse gas emissions and removals.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

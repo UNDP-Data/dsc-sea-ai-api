@@ -15,17 +15,17 @@
   },
   "knowledge graph": {
     "entities": [
-      "gender-responsive planning",
-      "gender equality policy",
-      "gender analysis",
-      "gender-based violence",
-      "gender pay gap",
       "gender research projects",
       "women's rights organizations",
-      "gender mainstreaming strategy"
+      "gender equality policy",
+      "gender-based violence",
+      "gender analysis",
+      "gender-responsive planning",
+      "gender pay gap",
+      "gender mainstreaming"
     ],
     "relations": {
-      "sex-disaggregated data": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "gender equality policy",
@@ -46,7 +46,7 @@
         },
         {
           "Relation": "in",
-          "Object": "gender mainstreaming strategy",
+          "Object": "gender mainstreaming",
           "Description": "Sex-disaggregated data is used in the gender mainstreaming strategy to ensure gender perspectives are integrated into all policies and programs.",
           "Importance": 4
         },
@@ -74,7 +74,132 @@
           "Description": "Sex-disaggregated data targets gender-based violence by providing evidence for effective prevention and response strategies.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "addresses",
+          "Object": "gender inequality",
+          "Description": "Gender mainstreaming addresses gender inequality in the energy sector, promoting equal opportunities and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "employs",
+          "Object": "gender experts",
+          "Description": "Gender mainstreaming employs gender experts who provide guidance and expertise in integrating gender perspectives into sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "collaborates_with",
+          "Object": "women's rights organizations",
+          "Description": "Gender mainstreaming collaborates with women's rights organizations to ensure the inclusion and empowerment of women in the energy sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "supports",
+          "Object": "gender equality",
+          "Description": "Gender mainstreaming supports gender equality in the energy sector, advocating for equal rights, opportunities, and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "administers",
+          "Object": "gender mainstreaming",
+          "Description": "Gender mainstreaming administers a program that promotes the integration of gender perspectives into sustainable energy policies and practices.",
+          "Importance": 3
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "measures",
+          "Object": "gender disparities in energy",
+          "Description": "Gender mainstreaming measures gender disparities in the energy sector, identifying areas for improvement and targeted interventions.",
+          "Importance": 3
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "aligns_with",
+          "Object": "un sustainable development goals",
+          "Description": "Gender mainstreaming aligns with the UN Sustainable Development Goals, particularly Goal 5 on gender equality and Goal 7 on sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "an_instance_of",
+          "Object": "inclusive energy planning",
+          "Description": "Gender mainstreaming is an instance of inclusive energy planning, which aims to ensure the equitable and inclusive distribution of energy resources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "gender mainstreaming",
+          "Relation": "addresses",
+          "Object": "gender inequality",
+          "Description": "Gender mainstreaming addresses gender inequality in the energy sector, promoting equal opportunities and representation for all genders.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Gender Disparities in Energy",
+          "Relation": "addresses",
+          "Object": "gender inequality",
+          "Description": "Gender Disparities in Energy addresses gender inequality by promoting equal access to and participation in the energy sector.",
+          "Importance": 4
+        },
+        {
+          "Subject": "gender disparities in energy",
+          "Relation": "implements",
+          "Object": "gender mainstreaming",
+          "Description": "Gender disparities in energy can be addressed by implementing gender mainstreaming strategies that ensure equal access and benefits for all genders.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "gender-specific data",
+      "sex-segregated data",
+      "gender-disaggregated data",
+      "sex-specific data",
+      "gender-segregated data"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "gender-specific data",
+        "Relation": "is a sub-element of",
+        "Parent": "sex-disaggregated data",
+        "Description": "Gender-specific data refers to data that is collected and analyzed specifically for males and females, taking into account their different needs, roles, and experiences. It helps to identify and address gender inequalities and disparities in various sectors.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "sex-segregated data",
+        "Relation": "is a sub-element of",
+        "Parent": "sex-disaggregated data",
+        "Description": "Sex-segregated data refers to data that is separated or categorized based on biological sex, typically male and female. It is useful for understanding differences and patterns between the two sexes in various contexts, including sustainable energy.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "gender-disaggregated data",
+        "Relation": "is a sub-element of",
+        "Parent": "sex-disaggregated data",
+        "Description": "Gender-disaggregated data refers to data that is disaggregated by gender, allowing for analysis and comparison of outcomes and impacts between males and females. It helps to identify gender-based disparities and inform targeted interventions.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "sex-specific data",
+        "Relation": "is a sub-element of",
+        "Parent": "sex-disaggregated data",
+        "Description": "Sex-specific data refers to data that is specific to biological sex, providing insights into sex-related issues and differences. It is valuable for understanding and addressing sex-specific challenges and opportunities in sustainable energy.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "gender-segregated data",
+        "Relation": "is a sub-element of",
+        "Parent": "sex-disaggregated data",
+        "Description": "Gender-segregated data refers to data that is segregated or separated based on gender, typically male and female. It helps to analyze and compare outcomes and impacts between genders, contributing to gender-responsive policies and programs in sustainable energy.",
+        "Importance": 3
+      }
+    ]
   }
 }

@@ -18,73 +18,163 @@
   },
   "knowledge graph": {
     "entities": [
-      "Private Sector",
-      "Energy Access",
-      "Energy Poverty",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Energy Consumption",
-      "Energy Security",
-      "Renewable Energy Projects",
-      "National Energy Policy"
+      "energy efficiency",
+      "national energy policy",
+      "energy markets",
+      "energy democracy",
+      "climate change mitigation",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies",
+      "private sector"
     ],
     "relations": {
-      "energy governance": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Energy governance implements Energy Efficiency Policy to promote energy-saving practices and policies.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Energy governance funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Energy governance focuses on improving energy access for all communities, especially in remote and underserved areas.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "National Energy Policy",
+          "Object": "national energy policy",
           "Description": "Energy governance operates within the framework of the National Energy Policy to ensure coordinated and effective energy management.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Private Sector",
+          "Object": "private sector",
           "Description": "Energy governance partners with the Private Sector to leverage their expertise and resources in advancing sustainable energy initiatives.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Energy governance contributes to climate change mitigation efforts by promoting the use of renewable energy and reducing greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Energy governance monitors energy consumption patterns to identify areas for improvement and optimize energy efficiency.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Energy governance targets the reduction of energy poverty by implementing policies and programs to ensure affordable and reliable energy access for all.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Security",
+          "Object": "energy democracy",
           "Description": "Energy governance addresses energy security concerns by diversifying energy sources and promoting resilience in the energy sector.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

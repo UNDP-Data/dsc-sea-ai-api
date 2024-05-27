@@ -15,66 +15,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Social Justice",
-      "Energy Subsidy Programs",
-      "Equitable Energy Pricing",
-      "Energy Poverty",
-      "Community-Based Organizations",
-      "Renewable Energy Access",
-      "Energy Affordability",
-      "Social Equity"
+      "energy affordability",
+      "social equity",
+      "social justice",
+      "equitable energy pricing",
+      "energy subsisides reform",
+      "community-led solutions",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "energy justice": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Energy justice initiatives aim to address energy poverty by ensuring access to affordable and reliable energy services for all.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Equitable Energy Pricing",
+          "Object": "equitable energy pricing",
           "Description": "Energy justice employs equitable energy pricing mechanisms to ensure fair and affordable energy costs for marginalized communities.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Community-Based Organizations",
+          "Object": "community-led solutions",
           "Description": "Energy justice initiatives collaborate with community-based organizations to implement inclusive and participatory energy programs.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Renewable Energy Access",
+          "Object": "renewable energy agencies",
           "Description": "Energy justice supports initiatives that promote equitable access to renewable energy resources, particularly in underserved areas.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Subsidy Programs",
+          "Object": "energy subsisides reform",
           "Description": "Energy justice administers energy subsidy programs to ensure that vulnerable populations have access to affordable energy services.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Affordability",
+          "Object": "energy affordability",
           "Description": "Energy justice measures energy affordability to assess the accessibility of energy services for different socio-economic groups.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Social Equity",
+          "Object": "social equity",
           "Description": "Energy justice aligns with the principle of social equity, aiming to reduce disparities in energy access and affordability.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Social Justice",
+          "Object": "social justice",
           "Description": "Energy justice is an instance of the broader concept of social justice, focusing specifically on equitable energy distribution.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "community-led solutions",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Community-led solutions implement sustainable energy projects that aim to provide clean and affordable energy to local communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "community-led solutions",
+          "Relation": "funds",
+          "Object": "renewable energy initiatives",
+          "Description": "Community-led solutions provide funding for renewable energy initiatives to support the transition to sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy subsisides reform",
+          "Relation": "supports",
+          "Object": "renewable energy agencies",
+          "Description": "Energy subsidies reform supports the Renewable Energy Transition by redirecting subsidies towards clean and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy subsisides reform",
+          "Relation": "administers",
+          "Object": "energy subsisides reform",
+          "Description": "Energy subsidies reform administers Energy Subsidy Programs to ensure effective implementation and monitoring of subsidy reforms.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

@@ -16,66 +16,177 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Transition",
-      "Hydropower Policy",
-      "Sustainable Development",
-      "Local Communities",
-      "Hydropower Generation",
-      "Electrification",
-      "River Basin Management",
-      "Infrastructure Projects"
+      "infrastructure projects",
+      "electrification planning",
+      "local communities",
+      "hydropower policy",
+      "river basin management",
+      "sustainable development",
+      "renewable energy agencies",
+      "hydropower generation"
     ],
     "relations": {
-      "hydroelectricity": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Hydropower Policy",
+          "Object": "hydropower policy",
           "Description": "Hydroelectricity implements the Hydropower Policy by promoting the development and utilization of hydropower resources.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Infrastructure Projects",
+          "Object": "infrastructure projects",
           "Description": "Hydroelectricity funds infrastructure projects to support the construction and maintenance of hydropower plants.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "River Basin Management",
+          "Object": "river basin management",
           "Description": "Hydroelectricity focuses on river basin management to ensure sustainable water resource utilization for hydropower generation.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Renewable Energy Transition",
+          "Object": "renewable energy agencies",
           "Description": "Hydroelectricity plays a role in the renewable energy transition by providing a reliable and renewable source of electricity.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "Hydroelectricity partners with local communities to ensure their participation and benefit sharing in hydropower projects.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Sustainable Development",
+          "Object": "sustainable development",
           "Description": "Hydroelectricity contributes to sustainable development by providing clean and renewable energy for economic growth and poverty reduction.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Hydropower Generation",
+          "Object": "hydropower generation",
           "Description": "Hydroelectricity monitors hydropower generation to ensure efficient and sustainable utilization of hydropower resources.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Electrification",
+          "Object": "electrification planning",
           "Description": "Hydroelectricity targets electrification by providing reliable and affordable electricity to remote and rural areas through hydropower projects.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Electrification Planning",
+          "Relation": "implements",
+          "Object": "energy access initiative",
+          "Description": "Electrification Planning implements the Energy Access Initiative to provide electricity to remote and underserved areas.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Electrification Planning",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Electrification Planning funds renewable energy projects to promote the use of clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "electrification planning",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Electrification planning implements sustainable energy projects to ensure access to clean and reliable electricity.",
+          "Importance": 4
+        },
+        {
+          "Subject": "electrification planning",
+          "Relation": "funds",
+          "Object": "renewable energy initiatives",
+          "Description": "Electrification planning funds renewable energy initiatives to promote the adoption of clean energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "run-of-river hydroelectricity",
+      "reservoir hydroelectricity",
+      "pumped-storage hydroelectricity",
+      "tidal hydroelectricity",
+      "wave hydroelectricity"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "run-of-river hydroelectricity",
+        "Relation": "is a sub-element of",
+        "Parent": "hydroelectricity",
+        "Description": "Run-of-river hydroelectricity is a type of hydroelectric power generation that harnesses the natural flow of a river to generate electricity. It does not require the construction of a dam or reservoir, making it a more environmentally friendly option.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "reservoir hydroelectricity",
+        "Relation": "is a sub-element of",
+        "Parent": "hydroelectricity",
+        "Description": "Reservoir hydroelectricity is a type of hydroelectric power generation that involves the construction of a dam and reservoir. The water stored in the reservoir is released through turbines to generate electricity. It provides a reliable and controllable source of renewable energy.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "pumped-storage hydroelectricity",
+        "Relation": "is a sub-element of",
+        "Parent": "hydroelectricity",
+        "Description": "Pumped-storage hydroelectricity is a type of hydroelectric power generation that uses two reservoirs at different elevations. During periods of low electricity demand, excess electricity is used to pump water from the lower reservoir to the upper reservoir. During periods of high demand, the stored water is released to generate electricity.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "tidal hydroelectricity",
+        "Relation": "is a sub-element of",
+        "Parent": "hydroelectricity",
+        "Description": "Tidal hydroelectricity is a type of hydroelectric power generation that harnesses the energy of tides. It involves the construction of barrages or tidal turbines in coastal areas with significant tidal ranges. Tidal energy is a predictable and renewable source of electricity.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "wave hydroelectricity",
+        "Relation": "is a sub-element of",
+        "Parent": "hydroelectricity",
+        "Description": "Wave hydroelectricity is a type of hydroelectric power generation that captures the energy of ocean waves. It utilizes devices such as wave buoys or oscillating water columns to convert the mechanical energy of waves into electricity. Wave energy has the potential to provide a consistent and renewable source of power.",
+        "Importance": 3
+      }
+    ]
   }
 }

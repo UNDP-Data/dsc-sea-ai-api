@@ -10,9 +10,78 @@
     "Synonyms": null
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "economic growth",
+      "energy market barriers",
+      "energy market performance",
+      "renewable energy targets",
+      "research and development projects",
+      "private sector companies",
+      "energy market competition",
+      "energy poverty reduction",
+      "collaboration with energy regulators"
+    ],
     "relations": {
-      "energy market liberalization policits": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "renewable energy targets",
+          "Description": "Energy market liberalization policies implement renewable energy targets to promote the use of clean and sustainable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "research and development projects",
+          "Description": "Energy market liberalization policies provide funding for research and development projects in the field of sustainable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "energy market competition",
+          "Description": "Energy market liberalization policies focus on promoting competition in the energy market to drive innovation and efficiency.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "collaboration with energy regulators",
+          "Description": "Energy market liberalization policies are developed in collaboration with energy regulators to ensure effective implementation and compliance.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "private sector companies",
+          "Description": "Energy market liberalization policies partner with private sector companies to leverage their expertise and resources in advancing sustainable energy initiatives.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "economic growth",
+          "Description": "Energy market liberalization policies contribute to economic growth by attracting investments and creating job opportunities in the sustainable energy sector.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy market performance",
+          "Description": "Energy market liberalization policies monitor the performance of the energy market to ensure fair competition and consumer protection.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "energy poverty reduction",
+          "Description": "Energy market liberalization policies target energy poverty reduction by promoting affordable and accessible energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "energy market barriers",
+          "Description": "Energy market liberalization policies address barriers in the energy market to foster competition, innovation, and investment in sustainable energy.",
+          "Importance": 4
+        }
+      ],
+      "level 2": [],
+      "level 3": []
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

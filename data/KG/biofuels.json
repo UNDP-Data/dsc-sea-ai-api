@@ -14,66 +14,183 @@
   },
   "knowledge graph": {
     "entities": [
-      "Environmental Impact",
-      "Energy Efficiency Policy",
-      "Reducing Carbon Emissions",
-      "Transportation Sector",
-      "Renewable Energy Companies",
-      "Energy Security",
-      "Research and Development",
-      "Renewable Energy Goals"
+      "research and development",
+      "energy efficiency",
+      "reducing carbon emissions",
+      "energy democracy",
+      "transportation sector",
+      "environmental impact assessments",
+      "renewable energy agencies"
     ],
     "relations": {
-      "biofuels": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Biofuels are implemented as part of the Energy Efficiency Policy to promote the use of renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research and Development",
+          "Object": "research and development",
           "Description": "Investment in biofuels is funded by the Research and Development department to support the development of sustainable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Reducing Carbon Emissions",
+          "Object": "reducing carbon emissions",
           "Description": "The use of biofuels focuses on reducing carbon emissions and mitigating the impact of fossil fuels on climate change.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Transportation Sector",
+          "Object": "transportation sector",
           "Description": "Biofuels are used as an alternative fuel source in the transportation sector to reduce reliance on fossil fuels.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Renewable Energy Companies",
+          "Object": "renewable energy agencies",
           "Description": "Biofuel producers partner with renewable energy companies to enhance the production and distribution of biofuels.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Energy Security",
+          "Object": "energy democracy",
           "Description": "The use of biofuels contributes to energy security by diversifying the energy sources and reducing dependence on imported fossil fuels.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Environmental Impact",
+          "Object": "environmental impact assessments",
           "Description": "The environmental impact of biofuels is monitored to ensure sustainable production and minimize negative effects on ecosystems.",
           "Importance": 2
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Goals",
+          "Object": "renewable energy agencies",
           "Description": "Biofuels are targeted to contribute to the achievement of renewable energy goals and reduce greenhouse gas emissions.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "addresses",
+          "Object": "energy and health",
+          "Description": "Energy democracy addresses energy inequality by promoting equitable access to clean and affordable energy for all individuals and communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy democracy",
+          "Relation": "employs",
+          "Object": "participatory decision-making",
+          "Description": "Energy democracy employs participatory decision-making processes to ensure that all stakeholders have a voice in shaping energy policies and projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "first-generation biofuels",
+      "second-generation biofuels",
+      "third-generation biofuels",
+      "fourth-generation biofuels",
+      "biofuel blends"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "first-generation biofuels",
+        "Relation": "is a sub-element of",
+        "Parent": "biofuels",
+        "Description": "First-generation biofuels are derived from food crops such as corn, sugarcane, and vegetable oils. They are produced through processes like fermentation and transesterification. These biofuels have been widely used but have limitations in terms of land use, competition with food production, and greenhouse gas emissions.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "second-generation biofuels",
+        "Relation": "is a sub-element of",
+        "Parent": "biofuels",
+        "Description": "Second-generation biofuels are produced from non-food feedstocks such as agricultural residues, woody biomass, and dedicated energy crops. They are made through advanced conversion technologies like cellulosic ethanol production and thermochemical processes. These biofuels offer potential environmental benefits and reduce competition with food production.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "third-generation biofuels",
+        "Relation": "is a sub-element of",
+        "Parent": "biofuels",
+        "Description": "Third-generation biofuels are derived from algae and other microorganisms. They can be grown in various environments, including wastewater and non-arable land. These biofuels have the potential to provide high yields and reduce land use compared to traditional biofuels.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "fourth-generation biofuels",
+        "Relation": "is a sub-element of",
+        "Parent": "biofuels",
+        "Description": "Fourth-generation biofuels are being developed using synthetic biology techniques. They aim to overcome the limitations of previous generations by designing microorganisms that can directly produce biofuels from carbon dioxide and sunlight. These biofuels have the potential to be highly efficient and sustainable.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "biofuel blends",
+        "Relation": "is a sub-element of",
+        "Parent": "biofuels",
+        "Description": "Biofuel blends are mixtures of biofuels with conventional fossil fuels. They are used to reduce the carbon intensity of transportation fuels and promote the use of renewable energy sources. Biofuel blends can be used in existing vehicles and infrastructure with minimal modifications.",
+        "Importance": 2
+      }
+    ]
   }
 }

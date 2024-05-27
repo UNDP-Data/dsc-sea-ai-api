@@ -17,73 +17,149 @@
   },
   "knowledge graph": {
     "entities": [
-      "Biomass",
-      "Clean Energy Production",
-      "Waste Management",
-      "Gasification Plants",
-      "Energy Conversion Technology",
-      "Carbon Capture and Storage",
-      "Renewable Energy Companies",
-      "Research and Development",
-      "Sustainable Energy Systems"
+      "sustainable energy systems",
+      "gasification",
+      "research and development",
+      "carbon capture and storage",
+      "biomass",
+      "waste management",
+      "energy conversion technology",
+      "clean energy production",
+      "renewable energy agencies"
     ],
     "relations": {
-      "gasification": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Conversion Technology",
+          "Object": "energy conversion technology",
           "Description": "Gasification implements energy conversion technology that converts carbon-based materials into synthesis gas.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research and Development",
+          "Object": "research and development",
           "Description": "Gasification funds research and development activities to improve the efficiency and effectiveness of gasification processes.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Biomass",
+          "Object": "biomass",
           "Description": "Gasification focuses on biomass as a feedstock for the gasification process.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Sustainable Energy Systems",
+          "Object": "sustainable energy systems",
           "Description": "Gasification is used in sustainable energy systems to convert biomass into useful energy products.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Renewable Energy Companies",
+          "Object": "renewable energy agencies",
           "Description": "Gasification partners with renewable energy companies to develop and deploy gasification technologies for renewable energy production.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Carbon Capture and Storage",
+          "Object": "carbon capture and storage",
           "Description": "Gasification contributes to carbon capture and storage efforts by producing synthesis gas that can be captured and stored.",
           "Importance": 3
         },
         {
           "Relation": "monitors",
-          "Object": "Gasification Plants",
+          "Object": "gasification",
           "Description": "Gasification monitors the performance and operation of gasification plants to ensure optimal efficiency and safety.",
           "Importance": 2
         },
         {
           "Relation": "targets",
-          "Object": "Clean Energy Production",
+          "Object": "clean energy production",
           "Description": "Gasification targets clean energy production by converting biomass into clean and sustainable energy products.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Waste Management",
+          "Object": "waste management",
           "Description": "Gasification addresses waste management challenges by converting waste materials into useful energy products.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "biomass",
+          "Relation": "implements",
+          "Object": "energy and modernization",
+          "Description": "Biomass implements energy generation methods that utilize organic materials to produce heat, electricity, or biofuels.",
+          "Importance": 4
+        },
+        {
+          "Subject": "biomass",
+          "Relation": "focuses_on",
+          "Object": "offshore renewable energy",
+          "Description": "Biomass focuses on renewable energy sources by utilizing organic materials to generate heat, electricity, or biofuels.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "carbon capture and storage",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Carbon capture and storage implements energy efficiency policies to reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "carbon capture and storage",
+          "Relation": "focuses_on",
+          "Object": "carbon sequestration",
+          "Description": "Carbon capture and storage focuses on the process of carbon sequestration to reduce carbon dioxide levels in the atmosphere.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy and modernization",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and modernization implements rigorous building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Offshore renewable energy implements building standards that promote the use of sustainable energy sources and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

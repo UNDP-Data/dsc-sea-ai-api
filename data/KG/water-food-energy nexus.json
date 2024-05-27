@@ -15,66 +15,146 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Transition",
-      "Energy Access",
-      "Sustainable Development Goals",
-      "Government Agencies",
-      "Climate Change Mitigation",
-      "Building Standards",
-      "Energy Consumption",
-      "Renewable Energy Projects"
+      "energy markets",
+      "sustainable development goals",
+      "climate change mitigation",
+      "energy consumption",
+      "building standards",
+      "renewable energy agencies",
+      "government agencies"
     ],
     "relations": {
-      "water-food-energy nexus": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "The water-food-energy nexus implements building standards that promote sustainable use of resources.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "The water-food-energy nexus funds renewable energy projects to support clean and sustainable energy generation.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "The water-food-energy nexus focuses on improving energy access for communities in need.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "The water-food-energy nexus plays a crucial role in achieving the Sustainable Development Goals.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Government Agencies",
+          "Object": "government agencies",
           "Description": "The water-food-energy nexus partners with government agencies to implement sustainable energy policies.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "The water-food-energy nexus contributes to climate change mitigation through sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "The water-food-energy nexus monitors energy consumption patterns to identify areas for improvement.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Transition",
+          "Object": "renewable energy agencies",
           "Description": "The water-food-energy nexus targets a transition to renewable energy sources for a sustainable future.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "Water-energy nexus",
+      "Water-food nexus",
+      "Food-energy nexus"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "Water-energy nexus",
+        "Relation": "is a sub-element of",
+        "Parent": "Water-food-energy nexus",
+        "Description": "The water-energy nexus refers to the interdependencies and interactions between water and energy systems. It involves the understanding of the water requirements for energy production and the energy requirements for water treatment and distribution.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Water-food nexus",
+        "Relation": "is a sub-element of",
+        "Parent": "Water-food-energy nexus",
+        "Description": "The water-food nexus refers to the interconnections between water and food systems. It involves the understanding of the water requirements for agriculture and food production, as well as the impacts of food production on water resources.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "Food-energy nexus",
+        "Relation": "is a sub-element of",
+        "Parent": "Water-food-energy nexus",
+        "Description": "The food-energy nexus refers to the interdependencies and interactions between food and energy systems. It involves the understanding of the energy requirements for food production, processing, and distribution, as well as the impacts of food production on energy consumption.",
+        "Importance": 3
+      }
+    ]
   }
 }

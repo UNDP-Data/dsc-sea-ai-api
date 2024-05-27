@@ -18,65 +18,106 @@
   },
   "knowledge graph": {
     "entities": [
-      "AI for smart grid optimization"
+      "ai for smart grid optimization"
     ],
     "relations": {
-      "data equity": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity implements AI for smart grid optimization to ensure fair and unbiased decision-making in energy management.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity funds AI for smart grid optimization to support research and development in optimizing energy grid operations.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity focuses on AI for smart grid optimization to improve energy efficiency and grid reliability.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity is involved in AI for smart grid optimization to leverage advanced technologies for energy grid management.",
           "Importance": 2
         },
         {
           "Relation": "partners_with",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity partners with AI for smart grid optimization to collaborate on innovative solutions for energy grid optimization.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity contributes to AI for smart grid optimization by providing data and insights for optimizing energy grid operations.",
           "Importance": 3
         },
         {
           "Relation": "monitors",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity monitors the performance of AI for smart grid optimization to ensure its effectiveness in energy grid management.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity targets the implementation of AI for smart grid optimization to achieve energy grid optimization goals.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "AI for smart grid optimization",
+          "Object": "ai for smart grid optimization",
           "Description": "Data equity addresses the challenges and opportunities of AI for smart grid optimization in the context of sustainable energy.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "AI for smart grid optimization",
+          "Relation": "implements",
+          "Object": "smart metering technologies",
+          "Description": "AI for smart grid optimization implements smart grid technology to improve energy efficiency and grid reliability.",
+          "Importance": 4
+        },
+        {
+          "Subject": "AI for smart grid optimization",
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "AI for smart grid optimization funds research and development projects to advance smart grid technologies.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

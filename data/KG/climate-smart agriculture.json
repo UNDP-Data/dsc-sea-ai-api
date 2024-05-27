@@ -15,17 +15,17 @@
   },
   "knowledge graph": {
     "entities": [
-      "research and development",
+      "energy for smallholder farmers",
       "crop yields",
-      "rural communities",
-      "smallholder farmers",
-      "local farmers",
       "sustainable farming practices",
+      "research and development",
       "sustainable development goals",
-      "climate change mitigation"
+      "local farmers",
+      "climate change mitigation",
+      "marginalized communities"
     ],
     "relations": {
-      "climate-smart agriculture": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "sustainable farming practices",
@@ -46,7 +46,7 @@
         },
         {
           "Relation": "in",
-          "Object": "rural communities",
+          "Object": "marginalized communities",
           "Description": "Climate-smart agriculture is implemented in rural communities to improve food security, livelihoods, and resilience to climate impacts.",
           "Importance": 3
         },
@@ -70,11 +70,108 @@
         },
         {
           "Relation": "targets",
-          "Object": "smallholder farmers",
+          "Object": "energy for smallholder farmers",
           "Description": "Climate-smart agriculture targets smallholder farmers to provide them with the knowledge, resources, and support needed to adopt climate-resilient farming practices.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "marginalized communities",
+          "Relation": "supports",
+          "Object": "energy access programs",
+          "Description": "Marginalized communities support energy access programs that provide clean energy solutions and resources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "marginalized communities",
+          "Relation": "aligns_with",
+          "Object": "sustainable development goals",
+          "Description": "Marginalized communities align their energy initiatives with the Sustainable Development Goals to promote sustainable and inclusive development.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy for smallholder farmers",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy for smallholder farmers implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy for smallholder farmers",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy for smallholder farmers funds renewable energy projects to provide sustainable energy solutions.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "solar energy",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Solar energy implements Energy Efficiency Policy by promoting the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "crop diversification",
+      "agroforestry",
+      "conservation agriculture",
+      "precision agriculture",
+      "climate-resilient crops"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "crop diversification",
+        "Relation": "is a sub-element of",
+        "Parent": "climate-smart agriculture",
+        "Description": "Crop diversification is a key component of climate-smart agriculture, which involves growing a variety of crops in a single area. This practice helps to enhance resilience to climate change by reducing the risk of crop failure and increasing overall productivity.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "agroforestry",
+        "Relation": "is a sub-element of",
+        "Parent": "climate-smart agriculture",
+        "Description": "Agroforestry is an important practice within climate-smart agriculture that involves integrating trees and shrubs with crops and livestock. It provides multiple benefits such as improved soil fertility, increased biodiversity, and enhanced climate resilience.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "conservation agriculture",
+        "Relation": "is a sub-element of",
+        "Parent": "climate-smart agriculture",
+        "Description": "Conservation agriculture is a key approach within climate-smart agriculture that promotes sustainable and resource-efficient farming practices. It involves minimizing soil disturbance, maintaining soil cover, and practicing crop rotation to improve soil health, water retention, and overall productivity.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "precision agriculture",
+        "Relation": "is a sub-element of",
+        "Parent": "climate-smart agriculture",
+        "Description": "Precision agriculture is an advanced farming technique that utilizes technology and data to optimize crop production while minimizing resource inputs. It involves the use of sensors, GPS, drones, and other tools to monitor and manage crops with precision, leading to increased efficiency and reduced environmental impact.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "climate-resilient crops",
+        "Relation": "is a sub-element of",
+        "Parent": "climate-smart agriculture",
+        "Description": "Climate-resilient crops are specific varieties or species of crops that are bred or selected to withstand and adapt to the impacts of climate change. These crops possess traits such as drought tolerance, heat resistance, disease resistance, and improved nutrient efficiency, contributing to the overall resilience of agricultural systems.",
+        "Importance": 4
+      }
+    ]
   }
 }

@@ -14,9 +14,115 @@
     "Synonyms": null
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "digital divide",
+      "smart grid technologies",
+      "research and development",
+      "reducing carbon emissions",
+      "energy poverty indices",
+      "collaboration with energy companies",
+      "energy consumption patterns",
+      "sustainable energy projects",
+      "academic institutions"
+    ],
     "relations": {
-      "national digital transformation strategies": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "National digital transformation strategies implement sustainable energy projects to promote the use of clean and renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "National digital transformation strategies allocate funds for research and development in the field of sustainable energy to drive innovation and technological advancements.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "smart grid technologies",
+          "Description": "National digital transformation strategies focus on the implementation of smart grid technologies to optimize energy distribution and consumption.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "collaboration with energy companies",
+          "Description": "National digital transformation strategies work in collaboration with energy companies to develop and implement sustainable energy solutions.",
+          "Importance": 3
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "academic institutions",
+          "Description": "National digital transformation strategies partner with academic institutions to foster research and knowledge exchange in the field of sustainable energy.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "reducing carbon emissions",
+          "Description": "National digital transformation strategies contribute to the reduction of carbon emissions by promoting the adoption of clean energy technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy consumption patterns",
+          "Description": "National digital transformation strategies monitor energy consumption patterns to identify areas for improvement and optimize energy efficiency.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "energy poverty indices",
+          "Description": "National digital transformation strategies target energy poverty by providing access to affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "digital divide",
+          "Description": "National digital transformation strategies address the digital divide by ensuring equitable access to digital technologies and information for sustainable energy initiatives.",
+          "Importance": 3
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

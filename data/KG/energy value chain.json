@@ -15,66 +15,197 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Efficiency Programs",
-      "Climate Resilience",
-      "Energy Access",
-      "Government Agencies",
-      "Sustainable Energy System",
-      "Energy Performance",
-      "Energy Market",
-      "Renewable Energy Technologies"
+      "sustainable energy system",
+      "energy efficiency",
+      "climate resilience funds",
+      "energy markets",
+      "energy governance",
+      "renewable energy agencies",
+      "government agencies"
     ],
     "relations": {
-      "energy value chain": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "The energy value chain addresses energy access challenges by improving the availability and affordability of energy services.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "The energy value chain employs renewable energy technologies to promote the use of clean and sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Government Agencies",
+          "Object": "government agencies",
           "Description": "The energy value chain collaborates with government agencies to develop and implement energy policies and regulations.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Energy Efficiency Programs",
+          "Object": "energy efficiency",
           "Description": "The energy value chain supports energy efficiency programs that aim to reduce energy consumption and improve energy productivity.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Market",
+          "Object": "energy markets",
           "Description": "The energy value chain administers the energy market to ensure fair competition and efficient allocation of energy resources.",
           "Importance": 2
         },
         {
           "Relation": "measures",
-          "Object": "Energy Performance",
+          "Object": "energy governance",
           "Description": "The energy value chain measures energy performance to assess the efficiency and effectiveness of energy systems and processes.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Climate Resilience",
+          "Object": "climate resilience funds",
           "Description": "The energy value chain aligns with climate resilience strategies to ensure the reliability and sustainability of energy infrastructure.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Sustainable Energy System",
+          "Object": "sustainable energy system",
           "Description": "The energy value chain is an instance of a sustainable energy system that integrates various energy sources and technologies.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy governance",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy governance implements Energy Efficiency Policy to promote energy-saving practices and policies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy governance",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "Energy governance focuses on improving energy access for all communities, especially in remote and underserved areas.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "Exploration and production",
+      "Refining",
+      "Transportation",
+      "Distribution",
+      "Consumption"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "Exploration and production",
+        "Relation": "is a sub-element of",
+        "Parent": "energy value chain",
+        "Description": "Exploration and production is a crucial stage in the energy value chain, involving the search for and extraction of energy resources such as oil, gas, and coal. It includes activities such as geological surveys, drilling, and extraction techniques.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "Refining",
+        "Relation": "is a sub-element of",
+        "Parent": "energy value chain",
+        "Description": "Refining is an essential part of the energy value chain, where raw energy resources are processed and transformed into usable forms such as gasoline, diesel, and jet fuel. It involves processes like distillation, cracking, and purification.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "Transportation",
+        "Relation": "is a sub-element of",
+        "Parent": "energy value chain",
+        "Description": "Transportation is a critical component of the energy value chain, involving the movement of energy resources from production sites to refineries, storage facilities, and end-users. It includes modes of transportation such as pipelines, tankers, and trucks.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Distribution",
+        "Relation": "is a sub-element of",
+        "Parent": "energy value chain",
+        "Description": "Distribution is a key stage in the energy value chain, where refined energy products are delivered to end-users such as households, industries, and transportation sectors. It involves infrastructure like pipelines, power grids, and fuel stations.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "Consumption",
+        "Relation": "is a sub-element of",
+        "Parent": "energy value chain",
+        "Description": "Consumption is the final stage of the energy value chain, where energy products are utilized by end-users for various purposes like heating, electricity generation, and transportation. It includes activities such as burning fossil fuels and using renewable energy sources.",
+        "Importance": 4
+      }
+    ]
   }
 }

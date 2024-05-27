@@ -15,66 +15,112 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Potential Mapping",
-      "Sustainable Development Goals",
-      "Vegetation Index",
-      "Geospatial Technology",
-      "Satellite Imagery",
-      "Environmental Research Institutions",
-      "Climate Change Mitigation",
-      "Renewable Energy Monitoring Programs"
+      "satellite imagery",
+      "renewable energy potential mapping",
+      "environmental research institutions",
+      "geospatial technology",
+      "sustainable development goals",
+      "climate change mitigation",
+      "vegetation index",
+      "renewable energy monitoring programs"
     ],
     "relations": {
-      "remote sensing": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Renewable Energy Potential Mapping",
+          "Object": "renewable energy potential mapping",
           "Description": "Remote sensing technology is used to address the challenges of mapping and assessing the potential of renewable energy resources.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Satellite Imagery",
+          "Object": "satellite imagery",
           "Description": "Remote sensing employs satellite imagery to gather data and information about the Earth's surface for renewable energy analysis and planning.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Environmental Research Institutions",
+          "Object": "environmental research institutions",
           "Description": "Remote sensing collaborates with environmental research institutions to develop advanced techniques for renewable energy resource assessment.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Remote sensing supports climate change mitigation efforts by providing accurate and up-to-date information on renewable energy potential and resource availability.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Renewable Energy Monitoring Programs",
+          "Object": "renewable energy monitoring programs",
           "Description": "Remote sensing administers monitoring programs to track the performance and impact of renewable energy projects using remote sensing technologies.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Vegetation Index",
+          "Object": "vegetation index",
           "Description": "Remote sensing measures vegetation index to assess the suitability of land for renewable energy projects and identify potential areas for development.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Remote sensing aligns with the Sustainable Development Goals by providing valuable data and insights for renewable energy planning and implementation.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Geospatial Technology",
+          "Object": "geospatial technology",
           "Description": "Remote sensing is an instance of geospatial technology that enables the collection and analysis of data for renewable energy applications.",
           "Importance": 2
         }
-      ]
-    }
+      ],
+      "level 2": [],
+      "level 3": []
+    },
+    "sub-elements": [
+      "satellite imagery",
+      "radar remote sensing",
+      "LiDAR remote sensing",
+      "hyperspectral remote sensing",
+      "thermal remote sensing"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "satellite imagery",
+        "Relation": "is a sub-element of",
+        "Parent": "remote sensing",
+        "Description": "Satellite imagery is a sub-element of remote sensing, which involves the acquisition of images of the Earth's surface using satellites. It provides valuable information for various applications, including environmental monitoring, land use planning, and disaster management.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "radar remote sensing",
+        "Relation": "is a sub-element of",
+        "Parent": "remote sensing",
+        "Description": "Radar remote sensing is a sub-element of remote sensing that uses radar signals to measure the properties of objects on the Earth's surface. It is particularly useful for applications such as mapping terrain, detecting changes in land cover, and monitoring ocean currents.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "LiDAR remote sensing",
+        "Relation": "is a sub-element of",
+        "Parent": "remote sensing",
+        "Description": "LiDAR remote sensing is a sub-element of remote sensing that uses laser pulses to measure the distance to objects on the Earth's surface. It is commonly used for creating high-resolution elevation models, mapping vegetation structure, and assessing forest biomass.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "hyperspectral remote sensing",
+        "Relation": "is a sub-element of",
+        "Parent": "remote sensing",
+        "Description": "Hyperspectral remote sensing is a sub-element of remote sensing that captures images in many narrow spectral bands, allowing for detailed analysis of the Earth's surface. It is used for applications such as mineral exploration, crop health monitoring, and pollution detection.",
+        "Importance": 2
+      },
+      {
+        "Sub-element": "thermal remote sensing",
+        "Relation": "is a sub-element of",
+        "Parent": "remote sensing",
+        "Description": "Thermal remote sensing is a sub-element of remote sensing that measures the thermal radiation emitted by objects on the Earth's surface. It is used for applications such as monitoring volcanic activity, detecting heat loss in buildings, and assessing water temperature in lakes and rivers.",
+        "Importance": 2
+      }
+    ]
   }
 }

@@ -15,66 +15,156 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Access",
-      "Government Agencies",
-      "Climate Change Mitigation",
-      "Energy Efficiency",
-      "Building Standards",
-      "Energy Consumption",
-      "Renewable Energy Projects",
-      "Energy Policy"
+      "energy diplomacy",
+      "energy efficiency",
+      "energy markets",
+      "climate change mitigation",
+      "energy consumption",
+      "building standards",
+      "renewable energy agencies",
+      "government agencies"
     ],
     "relations": {
-      "energy development practitioners": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Energy development practitioners implement building standards that promote the use of energy-saving designs and materials.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Energy development practitioners provide funding for renewable energy projects.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Energy development practitioners focus on improving energy access for communities.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Energy Policy",
+          "Object": "energy diplomacy",
           "Description": "Energy development practitioners are involved in the development and implementation of energy policies.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Government Agencies",
+          "Object": "government agencies",
           "Description": "Energy development practitioners partner with government agencies to collaborate on sustainable energy projects.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Energy development practitioners contribute to climate change mitigation efforts through the promotion of renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Energy development practitioners monitor energy consumption patterns to identify areas for improvement and efficiency.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Energy Efficiency",
+          "Object": "energy efficiency",
           "Description": "Energy development practitioners set targets for improving energy efficiency in various sectors.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy diplomacy",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Energy diplomacy implements Energy Efficiency Policy to promote sustainable energy practices globally.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy diplomacy",
+          "Relation": "focuses_on",
+          "Object": "energy markets",
+          "Description": "energy diplomacy focuses on improving energy access in underserved communities to promote sustainable development.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

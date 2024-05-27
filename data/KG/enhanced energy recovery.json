@@ -14,66 +14,120 @@
   },
   "knowledge graph": {
     "entities": [
-      "Municipalities",
-      "Waste Management",
-      "Sustainable Development Goals",
-      "Feed-in Tariff Program",
-      "Biogas Production",
-      "Anaerobic Digestion",
-      "Circular Economy Solution",
-      "Circular Economy"
+      "biodigestion",
+      "municipalities",
+      "waste management",
+      "sustainable development goals",
+      "circular economy",
+      "feed-in tariff program",
+      "biogas production"
     ],
     "relations": {
-      "enhanced energy recovery": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Waste Management",
+          "Object": "waste management",
           "Description": "Enhanced energy recovery addresses waste management by utilizing waste as a resource for energy generation.",
           "Importance": 3
         },
         {
           "Relation": "employs",
-          "Object": "Anaerobic Digestion",
+          "Object": "biodigestion",
           "Description": "Enhanced energy recovery employs anaerobic digestion technology to convert organic waste into biogas for energy production.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Municipalities",
+          "Object": "municipalities",
           "Description": "Enhanced energy recovery collaborates with municipalities to establish waste-to-energy facilities and promote sustainable waste management practices.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Circular Economy",
+          "Object": "circular economy",
           "Description": "Enhanced energy recovery supports the transition to a circular economy by reducing waste and maximizing resource utilization through energy recovery.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Feed-in Tariff Program",
+          "Object": "feed-in tariff program",
           "Description": "Enhanced energy recovery administers a feed-in tariff program to incentivize the generation of renewable energy from waste.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Biogas Production",
+          "Object": "biogas production",
           "Description": "Enhanced energy recovery measures biogas production to assess the efficiency and effectiveness of anaerobic digestion processes.",
           "Importance": 2
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Enhanced energy recovery aligns with the Sustainable Development Goals by promoting sustainable waste management and renewable energy generation.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Circular Economy Solution",
+          "Object": "circular economy",
           "Description": "Enhanced energy recovery is an instance of a circular economy solution that maximizes resource utilization and reduces environmental impact.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "biodigestion",
+          "Relation": "addresses",
+          "Object": "waste management",
+          "Description": "Biodigestion addresses waste management challenges by converting organic waste into biogas and organic fertilizers.",
+          "Importance": 4
+        },
+        {
+          "Subject": "biodigestion",
+          "Relation": "employs",
+          "Object": "biodigestion",
+          "Description": "Biodigestion employs anaerobic digestion processes to break down organic waste and produce biogas.",
+          "Importance": 3
+        },
+        {
+          "Subject": "circular economy",
+          "Relation": "implements",
+          "Object": "sustainable production practices",
+          "Description": "The circular economy implements sustainable production practices that minimize waste and maximize resource efficiency.",
+          "Importance": 4
+        },
+        {
+          "Subject": "circular economy",
+          "Relation": "funds",
+          "Object": "innovative recycling technologies",
+          "Description": "The circular economy funds the development and implementation of innovative recycling technologies to promote a closed-loop system.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "biodigestion",
+          "Relation": "addresses",
+          "Object": "waste management",
+          "Description": "Biodigestion addresses waste management challenges by converting organic waste into biogas and organic fertilizers.",
+          "Importance": 4
+        },
+        {
+          "Subject": "circular economy",
+          "Relation": "implements",
+          "Object": "sustainable production practices",
+          "Description": "The circular economy implements sustainable production practices that minimize waste and maximize resource efficiency.",
+          "Importance": 4
+        },
+        {
+          "Subject": "traditional energy technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Traditional energy technologies implement the Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

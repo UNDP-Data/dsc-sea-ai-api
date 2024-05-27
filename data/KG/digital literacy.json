@@ -18,7 +18,7 @@
       "national digital transformation strategies"
     ],
     "relations": {
-      "digital literacy": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "national digital transformation strategies",
@@ -73,7 +73,34 @@
           "Description": "Digital literacy addresses the needs and challenges identified in national digital transformation strategies to provide targeted support and interventions.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "national digital transformation strategies",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "National digital transformation strategies implement sustainable energy projects to promote the use of clean and renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "national digital transformation strategies",
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "National digital transformation strategies allocate funds for research and development in the field of sustainable energy to drive innovation and technological advancements.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

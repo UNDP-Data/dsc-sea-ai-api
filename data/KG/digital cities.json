@@ -15,66 +15,141 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Generation",
-      "Clean Energy Companies",
-      "Smart Grid Technology",
-      "Energy Efficiency Policy",
-      "Carbon Emission Reduction",
-      "Energy Consumption",
-      "Renewable Energy Projects",
-      "Sustainable Energy Transition Initiative"
+      "sustainable energy transition initiative",
+      "energy efficiency",
+      "smart metering technologies",
+      "energy consumption",
+      "carbon emission reduction",
+      "clean energy companies",
+      "renewable energy agencies"
     ],
     "relations": {
-      "digital cities": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Digital cities implement energy efficiency policies to promote sustainable energy usage.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Digital cities provide funding for renewable energy projects to support the transition to sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Smart Grid Technology",
+          "Object": "smart metering technologies",
           "Description": "Digital cities focus on implementing smart grid technology to optimize energy distribution and consumption.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Sustainable Energy Transition Initiative",
+          "Object": "sustainable energy transition initiative",
           "Description": "Digital cities participate in the Sustainable Energy Transition Initiative to accelerate the adoption of sustainable energy practices.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Clean Energy Companies",
+          "Object": "clean energy companies",
           "Description": "Digital cities form partnerships with clean energy companies to promote the development and deployment of clean energy solutions.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Carbon Emission Reduction",
+          "Object": "carbon emission reduction",
           "Description": "Digital cities contribute to carbon emission reduction through the implementation of sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Digital cities monitor energy consumption to identify areas for improvement and optimize energy usage.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Generation",
+          "Object": "renewable energy agencies",
           "Description": "Digital cities set targets for increasing renewable energy generation to reduce reliance on fossil fuels.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
+          "Importance": 4
+        },
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Smart metering technologies contribute funds to research and development projects for improving energy efficiency.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

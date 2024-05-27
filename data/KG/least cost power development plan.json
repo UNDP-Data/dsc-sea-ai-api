@@ -14,9 +14,206 @@
     "Synonyms": null
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "alignment with national energy goals",
+      "energy access for all",
+      "energy efficiency",
+      "traditional energy technologies",
+      "private sector companies",
+      "climate change mitigation",
+      "energy poverty indices",
+      "renewable energy agencies",
+      "energy consumption patterns"
+    ],
     "relations": {
-      "least cost power development plan": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "The least cost power development plan implements energy efficiency measures to optimize energy consumption and reduce costs.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "The least cost power development plan provides funding for renewable energy projects to promote sustainable energy generation.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "traditional energy technologies",
+          "Description": "The least cost power development plan focuses on the adoption and development of clean energy technologies for sustainable energy production.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "alignment with national energy goals",
+          "Description": "The least cost power development plan is developed in alignment with the national energy goals to ensure a coordinated and integrated approach towards sustainable energy development.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "private sector companies",
+          "Description": "The least cost power development plan partners with private sector companies to leverage their expertise and resources for sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "The least cost power development plan contributes to climate change mitigation by promoting the use of renewable energy sources and reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy consumption patterns",
+          "Description": "The least cost power development plan monitors energy consumption patterns to identify areas for improvement and optimize energy usage.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "energy access for all",
+          "Description": "The least cost power development plan targets universal energy access to ensure that everyone has access to reliable and affordable energy services.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "The least cost power development plan addresses energy poverty by implementing initiatives to provide affordable and reliable energy solutions to marginalized communities.",
+          "Importance": 4
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "traditional energy technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Traditional energy technologies implement the Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "traditional energy technologies",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Traditional energy technologies provide funding for research in renewable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [
+      "generation capacity expansion",
+      "transmission and distribution planning",
+      "renewable energy integration",
+      "demand-side management",
+      "cost optimization"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "generation capacity expansion",
+        "Relation": "is a sub-element of",
+        "Parent": "least cost power development plan",
+        "Description": "Generation capacity expansion is a key component of the least cost power development plan. It involves the assessment and planning of new power generation projects to meet the growing energy demand in a cost-effective and sustainable manner.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "transmission and distribution planning",
+        "Relation": "is a sub-element of",
+        "Parent": "least cost power development plan",
+        "Description": "Transmission and distribution planning is an integral part of the least cost power development plan. It focuses on the efficient and reliable delivery of electricity from power generation sources to end-users, considering factors such as load demand, grid stability, and system losses.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "renewable energy integration",
+        "Relation": "is a sub-element of",
+        "Parent": "least cost power development plan",
+        "Description": "Renewable energy integration is a crucial aspect of the least cost power development plan. It involves the integration of renewable energy sources, such as solar and wind, into the existing power grid to reduce reliance on fossil fuels and promote sustainable energy generation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "demand-side management",
+        "Relation": "is a sub-element of",
+        "Parent": "least cost power development plan",
+        "Description": "Demand-side management is an important component of the least cost power development plan. It focuses on optimizing energy consumption patterns and reducing peak demand through measures such as energy efficiency programs, demand response initiatives, and smart grid technologies.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "cost optimization",
+        "Relation": "is a sub-element of",
+        "Parent": "least cost power development plan",
+        "Description": "Cost optimization is a key objective of the least cost power development plan. It involves the identification and implementation of strategies to minimize the overall cost of power generation, transmission, and distribution, while ensuring reliable and sustainable energy supply.",
+        "Importance": 4
+      }
+    ]
   }
 }

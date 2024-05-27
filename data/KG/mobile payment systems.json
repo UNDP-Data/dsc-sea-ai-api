@@ -15,73 +15,204 @@
   },
   "knowledge graph": {
     "entities": [
-      "Energy Access",
-      "Partnership",
-      "Clean Energy Technologies",
-      "Energy Poverty",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Renewable Energy Companies",
-      "Energy Consumption",
-      "Renewable Energy Projects"
+      "energy efficiency",
+      "traditional energy technologies",
+      "partnership",
+      "energy markets",
+      "climate change mitigation",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "mobile payment systems": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Mobile payment systems implement energy efficiency policies that promote sustainable energy usage.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Mobile payment systems provide funding for renewable energy projects to support the transition to sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Clean Energy Technologies",
+          "Object": "traditional energy technologies",
           "Description": "Mobile payment systems focus on promoting and supporting the development of clean energy technologies.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Partnership",
+          "Object": "partnership",
           "Description": "Mobile payment systems are involved in partnerships with various organizations to promote sustainable energy initiatives.",
           "Importance": 2
         },
         {
           "Relation": "partners_with",
-          "Object": "Renewable Energy Companies",
+          "Object": "renewable energy agencies",
           "Description": "Mobile payment systems partner with renewable energy companies to facilitate the adoption of sustainable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Mobile payment systems contribute to climate change mitigation efforts by promoting the use of sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Mobile payment systems monitor energy consumption patterns to identify opportunities for energy efficiency improvements.",
           "Importance": 2
         },
         {
           "Relation": "targets",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Mobile payment systems target improving energy access in underserved areas through the deployment of sustainable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Mobile payment systems address energy poverty by promoting affordable and accessible sustainable energy solutions.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "traditional energy technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Traditional energy technologies implement the Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "traditional energy technologies",
+          "Relation": "focuses_on",
+          "Object": "clean cooking",
+          "Description": "Traditional energy technologies focus on developing clean cooking solutions to reduce indoor air pollution and improve health.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "collaborates_with",
+          "Object": "government agencies",
+          "Description": "Energy markets collaborate with government agencies to develop and implement policies and regulations that promote a sustainable and efficient energy sector.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "mobile wallets",
+      "mobile banking",
+      "mobile money transfer",
+      "mobile payment apps",
+      "contactless payments"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "mobile wallets",
+        "Relation": "is a sub-element of",
+        "Parent": "mobile payment systems",
+        "Description": "Mobile wallets are a type of mobile payment system that allows users to store their payment information digitally on their mobile devices. They enable users to make payments conveniently and securely using their smartphones or other mobile devices.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "mobile banking",
+        "Relation": "is a sub-element of",
+        "Parent": "mobile payment systems",
+        "Description": "Mobile banking is a sub-component of mobile payment systems that enables users to perform banking transactions, such as checking account balances, transferring funds, and paying bills, using their mobile devices. It provides convenient and accessible financial services to individuals, especially those without access to traditional banking services.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "mobile money transfer",
+        "Relation": "is a sub-element of",
+        "Parent": "mobile payment systems",
+        "Description": "Mobile money transfer is a sub-component of mobile payment systems that allows users to send and receive money using their mobile devices. It provides a convenient and secure way to transfer funds, especially in areas with limited access to traditional banking services.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "mobile payment apps",
+        "Relation": "is a sub-element of",
+        "Parent": "mobile payment systems",
+        "Description": "Mobile payment apps are applications that enable users to make payments using their mobile devices. These apps often integrate with mobile wallets or mobile banking services to provide a seamless payment experience. They offer convenience and flexibility in making transactions.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "contactless payments",
+        "Relation": "is a sub-element of",
+        "Parent": "mobile payment systems",
+        "Description": "Contactless payments are a type of mobile payment system that allows users to make transactions by simply tapping their mobile devices or payment cards on a contactless-enabled terminal. It offers a fast and secure payment method, reducing the need for physical contact and enhancing convenience.",
+        "Importance": 4
+      }
+    ]
   }
 }
