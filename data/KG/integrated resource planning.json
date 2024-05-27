@@ -14,9 +14,177 @@
     "Synonyms": null
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "carbon emissions reduction",
+      "energy equity",
+      "demand-side management",
+      "utilities",
+      "energy efficiency",
+      "energy consumption",
+      "renewable energy agencies",
+      "energy sector"
+    ],
     "relations": {
-      "integrated resource planning": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Integrated resource planning implements energy efficiency measures to optimize energy consumption and reduce waste.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Integrated resource planning funds renewable energy projects to promote the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "demand-side management",
+          "Description": "Integrated resource planning focuses on demand-side management strategies to balance energy supply and demand and improve grid reliability.",
+          "Importance": 3
+        },
+        {
+          "Relation": "in",
+          "Object": "energy sector",
+          "Description": "Integrated resource planning plays a crucial role in the energy sector by optimizing resource allocation and planning for future energy needs.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "utilities",
+          "Description": "Integrated resource planning partners with utilities to develop and implement sustainable energy strategies and programs.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "carbon emissions reduction",
+          "Description": "Integrated resource planning contributes to carbon emissions reduction by promoting the use of renewable energy sources and energy efficiency measures.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "energy consumption",
+          "Description": "Integrated resource planning monitors energy consumption patterns to identify areas for improvement and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "renewable energy agencies",
+          "Description": "Integrated resource planning sets targets for increasing renewable energy capacity to drive the transition towards a sustainable energy future.",
+          "Importance": 4
+        },
+        {
+          "Relation": "addresses",
+          "Object": "energy equity",
+          "Description": "Integrated resource planning addresses energy equity by ensuring access to affordable and reliable energy services for all communities.",
+          "Importance": 3
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [
+      "demand forecasting",
+      "supply-side planning",
+      "renewable energy integration",
+      "energy efficiency measures",
+      "grid optimization"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "demand forecasting",
+        "Relation": "is a sub-element of",
+        "Parent": "integrated resource planning",
+        "Description": "Demand forecasting is a crucial component of integrated resource planning. It involves predicting future electricity demand based on historical data, population growth, economic trends, and other factors. This information helps in determining the optimal mix of energy resources and infrastructure needed to meet the projected demand.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "supply-side planning",
+        "Relation": "is a sub-element of",
+        "Parent": "integrated resource planning",
+        "Description": "Supply-side planning is an integral part of integrated resource planning. It involves assessing the available energy supply options, such as fossil fuels, renewable energy sources, and nuclear power, and determining the most cost-effective and sustainable mix of resources to meet the projected demand. This process considers factors like resource availability, environmental impact, and cost-effectiveness.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "renewable energy integration",
+        "Relation": "is a sub-element of",
+        "Parent": "integrated resource planning",
+        "Description": "Renewable energy integration is a key aspect of integrated resource planning. It involves incorporating renewable energy sources, such as solar, wind, and hydro power, into the energy supply mix. This requires assessing the technical and economic feasibility of integrating renewable energy into the existing grid infrastructure, as well as developing policies and incentives to promote renewable energy deployment.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy efficiency measures",
+        "Relation": "is a sub-element of",
+        "Parent": "integrated resource planning",
+        "Description": "Energy efficiency measures are an essential part of integrated resource planning. They involve implementing technologies, policies, and practices that reduce energy consumption and improve energy efficiency across various sectors. This helps in optimizing the use of available energy resources and reducing greenhouse gas emissions.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "grid optimization",
+        "Relation": "is a sub-element of",
+        "Parent": "integrated resource planning",
+        "Description": "Grid optimization is a critical component of integrated resource planning. It focuses on improving the efficiency, reliability, and flexibility of the electricity grid. This includes upgrading grid infrastructure, implementing advanced grid management systems, and integrating smart grid technologies. Grid optimization enables better integration of renewable energy, enhances grid resilience, and supports the effective management of electricity supply and demand.",
+        "Importance": 4
+      }
+    ]
   }
 }

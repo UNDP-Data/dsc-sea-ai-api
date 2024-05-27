@@ -15,58 +15,104 @@
   },
   "knowledge graph": {
     "entities": [
-      "Early Warning Systems",
-      "Disaster Risk Reduction Strategies",
-      "Risk Levels",
-      "Emergency Response Teams",
-      "Sensor Technology",
-      "Meteorological Agencies"
+      "disaster risk reduction strategies",
+      "risk levels",
+      "meteorological agencies",
+      "early warning systems",
+      "emergency response teams",
+      "sensor technology"
     ],
     "relations": {
-      "disaster warning networks": [
+      "level 1": [
         {
           "Relation": "employs",
-          "Object": "Sensor Technology",
+          "Object": "sensor technology",
           "Description": "Disaster warning networks employ sensor technology to detect and alert about potential disasters.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Meteorological Agencies",
+          "Object": "meteorological agencies",
           "Description": "Disaster warning networks collaborate with meteorological agencies to gather and analyze data for accurate disaster predictions.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Emergency Response Teams",
+          "Object": "emergency response teams",
           "Description": "Disaster warning networks support emergency response teams by providing timely and accurate information about potential disasters.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Early Warning Systems",
+          "Object": "early warning systems",
           "Description": "Disaster warning networks administer early warning systems to alert communities about potential disasters.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Risk Levels",
+          "Object": "risk levels",
           "Description": "Disaster warning networks measure risk levels to assess the severity of potential disasters.",
           "Importance": 2
         },
         {
           "Relation": "aligns_with",
-          "Object": "Disaster Risk Reduction Strategies",
+          "Object": "disaster risk reduction strategies",
           "Description": "Disaster warning networks align with disaster risk reduction strategies to enhance preparedness and response to potential disasters.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Early Warning Systems",
+          "Object": "early warning systems",
           "Description": "Disaster warning networks are an instance of early warning systems that aim to protect communities from potential disasters.",
           "Importance": 3
         }
-      ]
-    }
+      ],
+      "level 2": [],
+      "level 3": []
+    },
+    "sub-elements": [
+      "early warning systems",
+      "communication networks",
+      "data collection and analysis",
+      "alert dissemination",
+      "community engagement"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "early warning systems",
+        "Relation": "is a sub-element of",
+        "Parent": "disaster warning networks",
+        "Description": "Early warning systems are a crucial component of disaster warning networks. They involve the detection, monitoring, and prediction of potential disasters, such as hurricanes, earthquakes, or floods. These systems provide timely alerts and enable communities to take necessary actions to mitigate the impact of disasters.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "communication networks",
+        "Relation": "is a sub-element of",
+        "Parent": "disaster warning networks",
+        "Description": "Communication networks play a vital role in disaster warning networks. They facilitate the transmission of warnings, alerts, and critical information to individuals, communities, and relevant stakeholders. These networks ensure the timely dissemination of information and enable effective coordination during emergency situations.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "data collection and analysis",
+        "Relation": "is a sub-element of",
+        "Parent": "disaster warning networks",
+        "Description": "Data collection and analysis are essential components of disaster warning networks. They involve the gathering, processing, and interpretation of relevant data to assess potential risks, monitor ongoing disasters, and improve the accuracy of early warning systems. Data-driven insights enable better decision-making and enhance the effectiveness of disaster preparedness and response efforts.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "alert dissemination",
+        "Relation": "is a sub-element of",
+        "Parent": "disaster warning networks",
+        "Description": "Alert dissemination is a critical aspect of disaster warning networks. It involves the widespread distribution of alerts, warnings, and evacuation instructions to individuals and communities at risk. Effective alert dissemination ensures that people receive timely and accurate information, enabling them to take appropriate actions to protect their lives and assets.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "community engagement",
+        "Relation": "is a sub-element of",
+        "Parent": "disaster warning networks",
+        "Description": "Community engagement is an integral part of disaster warning networks. It involves actively involving and empowering communities in the design, implementation, and evaluation of warning systems. Community engagement fosters local ownership, enhances trust, and promotes effective communication, leading to better disaster preparedness, response, and recovery.",
+        "Importance": 4
+      }
+    ]
   }
 }

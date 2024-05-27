@@ -22,73 +22,146 @@
   },
   "knowledge graph": {
     "entities": [
-      "Solar Power",
-      "Renewable Energy Generation",
-      "Energy Access",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Clean Energy Research",
-      "Renewable Energy Companies",
-      "Renewable Energy Adoption",
-      "Renewable Energy Market"
+      "solar power",
+      "energy efficiency",
+      "energy markets",
+      "climate change mitigation",
+      "clean energy research",
+      "renewable energy agencies"
     ],
     "relations": {
-      "renewable energy certificates": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Clean Energy Research",
+          "Object": "clean energy research",
           "Description": "Renewable energy certificates provide funding for Clean Energy Research to support the development of innovative renewable energy technologies.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Solar Power",
+          "Object": "solar power",
           "Description": "Renewable energy certificates focus on promoting the use of solar power as a sustainable energy source.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Renewable Energy Market",
+          "Object": "renewable energy agencies",
           "Description": "Renewable energy certificates are used in the Renewable Energy Market to facilitate the trading of renewable energy credits.",
           "Importance": 2
         },
         {
           "Relation": "partners_with",
-          "Object": "Renewable Energy Companies",
+          "Object": "renewable energy agencies",
           "Description": "Renewable energy certificates partner with renewable energy companies to promote the adoption of renewable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Renewable energy certificates contribute to climate change mitigation efforts by promoting the use of clean and sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Renewable Energy Generation",
+          "Object": "renewable energy agencies",
           "Description": "Renewable energy certificates monitor the generation of renewable energy to ensure compliance with renewable energy targets.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Adoption",
+          "Object": "renewable energy agencies",
           "Description": "Renewable energy certificates set targets for the adoption of renewable energy to accelerate the transition to a sustainable energy future.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Renewable energy certificates address the issue of energy access by promoting the use of decentralized renewable energy solutions.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "collaborates_with",
+          "Object": "government agencies",
+          "Description": "Energy markets collaborate with government agencies to develop and implement policies and regulations that promote a sustainable and efficient energy sector.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

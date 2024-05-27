@@ -12,7 +12,53 @@
   "knowledge graph": {
     "entities": [],
     "relations": {
-      "carbon-netural fuel": []
-    }
+      "level 1": [],
+      "level 2": [],
+      "level 3": []
+    },
+    "sub-elements": [
+      "biofuel",
+      "hydrogen fuel",
+      "synthetic fuel",
+      "electricity",
+      "methane"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "biofuel",
+        "Relation": "is a sub-element of",
+        "Parent": "carbon-neutral fuel",
+        "Description": "Biofuel is a type of carbon-neutral fuel that is produced from renewable sources such as plants, algae, or organic waste. It can be used as a substitute for conventional fossil fuels in transportation and energy generation.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "hydrogen fuel",
+        "Relation": "is a sub-element of",
+        "Parent": "carbon-neutral fuel",
+        "Description": "Hydrogen fuel is a form of carbon-neutral fuel that is produced by splitting water molecules through electrolysis. It can be used in fuel cells to generate electricity or as a clean energy source for various applications.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "synthetic fuel",
+        "Relation": "is a sub-element of",
+        "Parent": "carbon-neutral fuel",
+        "Description": "Synthetic fuel, also known as carbon-neutral synthetic fuel, is a type of fuel that is produced from renewable energy sources and carbon dioxide captured from the atmosphere. It can be used as a substitute for conventional fossil fuels in transportation and energy production.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "electricity",
+        "Relation": "is a sub-element of",
+        "Parent": "carbon-neutral fuel",
+        "Description": "Electricity is a form of carbon-neutral energy that can be generated from renewable sources such as solar, wind, hydro, or geothermal power. It can be used as a clean energy source for various applications, including transportation and heating.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "methane",
+        "Relation": "is a sub-element of",
+        "Parent": "carbon-neutral fuel",
+        "Description": "Methane, also known as biogas, is a type of carbon-neutral fuel that is produced from organic waste, agricultural residues, or landfill gas. It can be used as a substitute for natural gas in heating, cooking, and electricity generation.",
+        "Importance": 2
+      }
+    ]
   }
 }

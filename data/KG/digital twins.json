@@ -15,73 +15,205 @@
   },
   "knowledge graph": {
     "entities": [
-      "Internet of Things",
-      "Smart Cities Initiative",
-      "Building Information Modeling",
-      "Data Security",
-      "Energy Management Systems",
-      "Infrastructure",
-      "Predictive Maintenance",
-      "Asset Performance Optimization",
-      "Smart Manufacturing"
+      "asset performance optimization",
+      "predictive maintenance",
+      "smart manufacturing",
+      "data equity",
+      "smart cities initiative",
+      "resilient infrastructure",
+      "building information modeling",
+      "energy transport systems",
+      "internet of energy"
     ],
     "relations": {
-      "digital twins": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Information Modeling",
+          "Object": "building information modeling",
           "Description": "Digital twins implements Building Information Modeling to create virtual representations of physical assets for better monitoring and management.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Smart Cities Initiative",
+          "Object": "smart cities initiative",
           "Description": "Digital twins funds the Smart Cities Initiative to develop innovative solutions for urban planning and management.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Predictive Maintenance",
+          "Object": "predictive maintenance",
           "Description": "Digital twins focuses on predictive maintenance to optimize asset performance and reduce downtime.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Internet of Things",
+          "Object": "internet of energy",
           "Description": "Digital twins operates in the Internet of Things ecosystem to collect real-time data for analysis and decision-making.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Energy Management Systems",
+          "Object": "energy transport systems",
           "Description": "Digital twins partners with Energy Management Systems to optimize energy consumption and improve efficiency.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Asset Performance Optimization",
+          "Object": "asset performance optimization",
           "Description": "Digital twins contributes to asset performance optimization by providing real-time insights and predictive analytics.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Infrastructure",
+          "Object": "resilient infrastructure",
           "Description": "Digital twins monitors infrastructure to detect anomalies, predict failures, and enable proactive maintenance.",
           "Importance": 4
         },
         {
           "Relation": "targets",
-          "Object": "Smart Manufacturing",
+          "Object": "smart manufacturing",
           "Description": "Digital twins targets smart manufacturing to improve production efficiency and quality through virtual simulations.",
           "Importance": 3
         },
         {
           "Relation": "addresses",
-          "Object": "Data Security",
+          "Object": "data equity",
           "Description": "Digital twins addresses data security concerns by implementing robust encryption and access control measures.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "internet of energy",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "The internet of energy implements the Energy Efficiency Policy to promote energy-saving practices and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "internet of energy",
+          "Relation": "focuses_on",
+          "Object": "smart metering technologies",
+          "Description": "The internet of energy focuses on the development and implementation of smart grid technology for efficient energy distribution and management.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy transport systems",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy transport systems address the challenge of providing energy access to remote areas by enabling the efficient distribution of energy resources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy transport systems",
+          "Relation": "employs",
+          "Object": "smart metering technologies",
+          "Description": "Energy transport systems employ smart grid technology to optimize the transmission and distribution of energy.",
+          "Importance": 3
+        },
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Resilient infrastructure implements building standards that ensure the infrastructure can withstand and recover from natural disasters and other shocks.",
+          "Importance": 4
+        },
+        {
+          "Subject": "resilient infrastructure",
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Resilient infrastructure funds research and development projects that aim to improve the resilience of infrastructure systems.",
+          "Importance": 3
+        },
+        {
+          "Subject": "data equity",
+          "Relation": "implements",
+          "Object": "ai for smart grid optimization",
+          "Description": "Data equity implements AI for smart grid optimization to ensure fair and unbiased decision-making in energy management.",
+          "Importance": 4
+        },
+        {
+          "Subject": "data equity",
+          "Relation": "partners_with",
+          "Object": "ai for smart grid optimization",
+          "Description": "Data equity partners with AI for smart grid optimization to collaborate on innovative solutions for energy grid optimization.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "smart metering technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Smart metering technologies implement the Energy Efficiency Policy by providing real-time data on energy consumption.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "data integration",
+      "simulation",
+      "analytics",
+      "visualization",
+      "predictive maintenance"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "data integration",
+        "Relation": "is a sub-element of",
+        "Parent": "digital twins",
+        "Description": "Data integration is a crucial aspect of digital twins, as it involves collecting and integrating data from various sources to create a virtual representation of a physical asset or system. This allows for real-time monitoring and analysis of the asset or system's performance.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "simulation",
+        "Relation": "is a sub-element of",
+        "Parent": "digital twins",
+        "Description": "Simulation is an important sub-element of digital twins, as it enables the creation of virtual models that mimic the behavior and performance of physical assets or systems. This allows for testing and optimization of different scenarios without the need for physical prototypes.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "analytics",
+        "Relation": "is a sub-element of",
+        "Parent": "digital twins",
+        "Description": "Analytics is a key sub-element of digital twins, as it involves the use of advanced data analysis techniques to derive insights and make predictions based on the data collected from the virtual representation of a physical asset or system. This helps in optimizing performance and making informed decisions.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "visualization",
+        "Relation": "is a sub-element of",
+        "Parent": "digital twins",
+        "Description": "Visualization is an essential sub-element of digital twins, as it allows for the representation of complex data and information in a visual format. This enables stakeholders to easily understand and interpret the insights derived from the virtual representation of a physical asset or system.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "predictive maintenance",
+        "Relation": "is a sub-element of",
+        "Parent": "digital twins",
+        "Description": "Predictive maintenance is a significant sub-element of digital twins, as it involves using data and analytics to predict when maintenance or repairs are needed for a physical asset or system. This helps in optimizing maintenance schedules, reducing downtime, and improving overall asset performance.",
+        "Importance": 4
+      }
+    ]
   }
 }

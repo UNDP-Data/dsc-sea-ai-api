@@ -14,18 +14,18 @@
   },
   "knowledge graph": {
     "entities": [
-      "sustainable energy projects",
-      "innovative financing",
-      "renewable energy infrastructure",
-      "energy poverty",
-      "energy transition",
-      "long-term investments",
-      "clean energy companies",
+      "foundational energy infrastructure",
       "investment performance",
-      "climate change mitigation"
+      "long-term investments",
+      "just energy transition",
+      "innovative financing",
+      "climate change mitigation",
+      "energy poverty indices",
+      "clean energy companies",
+      "sustainable energy projects"
     ],
     "relations": {
-      "sovereign wealth funds": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "innovative financing",
@@ -46,7 +46,7 @@
         },
         {
           "Relation": "in",
-          "Object": "energy transition",
+          "Object": "just energy transition",
           "Description": "Sovereign wealth funds play a crucial role in investing in the energy transition towards a more sustainable and low-carbon future.",
           "Importance": 4
         },
@@ -70,17 +70,107 @@
         },
         {
           "Relation": "targets",
-          "Object": "renewable energy infrastructure",
+          "Object": "foundational energy infrastructure",
           "Description": "Sovereign wealth funds set targets for investing in renewable energy infrastructure to support the transition to clean and sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "addresses",
-          "Object": "energy poverty",
+          "Object": "energy poverty indices",
           "Description": "Sovereign wealth funds address energy poverty by investing in sustainable energy projects that provide access to affordable and clean energy for underserved communities.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "innovative financing",
+          "Relation": "employs",
+          "Object": "green bonds",
+          "Description": "Innovative financing employs green bonds as a financial instrument to raise funds for sustainable energy projects.",
+          "Importance": 3
+        },
+        {
+          "Subject": "innovative financing",
+          "Relation": "collaborates_with",
+          "Object": "multilateral development banks",
+          "Description": "Innovative financing collaborates with development banks to leverage their expertise and resources for financing sustainable energy projects.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "foundational energy infrastructure",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Foundational energy infrastructure implements energy efficiency policies that promote the use of energy-saving technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "foundational energy infrastructure",
+          "Relation": "focuses_on",
+          "Object": "energy and modernization",
+          "Description": "Foundational energy infrastructure focuses on grid modernization to improve the efficiency and reliability of energy distribution.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "green bonds",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Green bonds are used to implement the Energy Efficiency Policy, which promotes the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "multilateral development banks",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Multilateral development banks implement energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

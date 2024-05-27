@@ -15,73 +15,204 @@
   },
   "knowledge graph": {
     "entities": [
-      "International Climate Agreements",
-      "Energy Access",
-      "Energy Poverty",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Energy Consumption",
-      "Non-Governmental Organizations",
-      "Renewable Energy Projects",
-      "Renewable Energy Capacity"
+      "non-governmental organizations",
+      "energy efficiency",
+      "energy markets",
+      "climate change mitigation",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies",
+      "international climate agreements"
     ],
     "relations": {
-      "multi-level governance": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Multi-level governance implements energy efficiency policies that promote sustainable energy practices at various levels of government.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Multi-level governance provides funding for renewable energy projects to support the transition to sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Multi-level governance focuses on climate change mitigation efforts to reduce greenhouse gas emissions and promote sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "International Climate Agreements",
+          "Object": "international climate agreements",
           "Description": "Multi-level governance participates in international climate agreements to collaborate on global efforts to address climate change and promote sustainable energy.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Non-Governmental Organizations",
+          "Object": "non-governmental organizations",
           "Description": "Multi-level governance partners with non-governmental organizations to enhance collaboration and knowledge sharing for sustainable energy initiatives.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Energy Access",
+          "Object": "energy markets",
           "Description": "Multi-level governance contributes to improving energy access by implementing policies and initiatives that promote affordable and reliable sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Multi-level governance monitors energy consumption patterns to identify areas for improvement and develop strategies for sustainable energy management.",
           "Importance": 2
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Capacity",
+          "Object": "renewable energy agencies",
           "Description": "Multi-level governance sets targets for increasing renewable energy capacity to promote the adoption of sustainable energy sources.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Multi-level governance addresses energy poverty by implementing policies and programs that ensure access to affordable and reliable sustainable energy for all.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "policy coordination",
+      "institutional arrangements",
+      "decision-making processes",
+      "capacity building",
+      "monitoring and evaluation"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "policy coordination",
+        "Relation": "is a sub-element of",
+        "Parent": "multi-level governance",
+        "Description": "Policy coordination is an essential aspect of multi-level governance, involving the harmonization and alignment of policies across different levels of government. It aims to ensure coherence and consistency in decision-making processes and promote collaboration among various stakeholders.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "institutional arrangements",
+        "Relation": "is a sub-element of",
+        "Parent": "multi-level governance",
+        "Description": "Institutional arrangements are a key component of multi-level governance, encompassing the structures, mechanisms, and processes through which power and authority are distributed and exercised. They provide the framework for coordination, cooperation, and collaboration among different levels of government and other relevant actors.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "decision-making processes",
+        "Relation": "is a sub-element of",
+        "Parent": "multi-level governance",
+        "Description": "Decision-making processes are a fundamental aspect of multi-level governance, involving the identification, formulation, and implementation of policies and actions. They provide the means for collective decision-making, consensus-building, and problem-solving in a multi-level governance system.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "capacity building",
+        "Relation": "is a sub-element of",
+        "Parent": "multi-level governance",
+        "Description": "Capacity building is a crucial element of multi-level governance, focusing on enhancing the knowledge, skills, and capabilities of individuals, organizations, and institutions involved in the governance process. It aims to strengthen their capacity to effectively participate, contribute, and adapt to the challenges and opportunities of multi-level governance.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "monitoring and evaluation",
+        "Relation": "is a sub-element of",
+        "Parent": "multi-level governance",
+        "Description": "Monitoring and evaluation are integral components of multi-level governance, providing the means to assess and measure the performance, effectiveness, and impact of policies, programs, and initiatives. They enable evidence-based decision-making, learning, and accountability in a multi-level governance system.",
+        "Importance": 4
+      }
+    ]
   }
 }

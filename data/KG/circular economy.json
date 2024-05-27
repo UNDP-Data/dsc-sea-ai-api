@@ -19,17 +19,17 @@
   },
   "knowledge graph": {
     "entities": [
-      "businesses and industries",
       "innovative recycling technologies",
-      "sustainable supply chains",
+      "businesses and industries",
       "waste reduction",
-      "resource consumption",
+      "sustainable supply chains",
       "circularity metrics",
       "sustainable production practices",
-      "climate change mitigation"
+      "climate change mitigation",
+      "resource consumption"
     ],
     "relations": {
-      "circular economy": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "sustainable production practices",
@@ -78,7 +78,11 @@
           "Description": "The circular economy targets specific circularity metrics to measure progress and drive continuous improvement in resource management.",
           "Importance": 3
         }
-      ]
-    }
+      ],
+      "level 2": [],
+      "level 3": []
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

@@ -15,66 +15,198 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Providers",
-      "Energy Transition",
-      "Energy Certificates",
-      "Distributed Ledger Technology",
-      "Smart Contracts",
-      "Energy Traceability",
-      "Decentralization",
-      "Transparency"
+      "distributed ledger technology",
+      "transparency",
+      "renewable energy certificates",
+      "energy traceability",
+      "just energy transition",
+      "smart energy contracts",
+      "renewable energy agencies",
+      "decarbonization"
     ],
     "relations": {
-      "blockchain for energy trading": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Transparency",
+          "Object": "transparency",
           "Description": "Blockchain for energy trading addresses the need for transparency in energy transactions by providing a decentralized and immutable ledger.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Smart Contracts",
+          "Object": "smart energy contracts",
           "Description": "Blockchain for energy trading employs smart contracts to automate and enforce the terms of energy transactions.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Renewable Energy Providers",
+          "Object": "renewable energy agencies",
           "Description": "Blockchain for energy trading collaborates with renewable energy providers to enable peer-to-peer energy trading.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Decentralization",
+          "Object": "decarbonization",
           "Description": "Blockchain for energy trading supports the decentralization of energy markets by enabling direct transactions between energy producers and consumers.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Energy Certificates",
+          "Object": "renewable energy certificates",
           "Description": "Blockchain for energy trading administers the issuance and tracking of energy certificates for renewable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Energy Traceability",
+          "Object": "energy traceability",
           "Description": "Blockchain for energy trading measures energy traceability by providing a transparent and auditable record of energy transactions.",
           "Importance": 4
         },
         {
           "Relation": "aligns_with",
-          "Object": "Energy Transition",
+          "Object": "just energy transition",
           "Description": "Blockchain for energy trading aligns with the goal of energy transition by enabling the integration of renewable energy sources into the grid.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Distributed Ledger Technology",
+          "Object": "distributed ledger technology",
           "Description": "Blockchain for energy trading is an instance of distributed ledger technology that revolutionizes energy markets.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "smart energy contracts",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Smart energy contracts implement the policies outlined in the Energy Efficiency Policy to promote energy-saving practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "smart energy contracts",
+          "Relation": "contributes_to",
+          "Object": "carbon emission reduction",
+          "Description": "Smart energy contracts contribute to the reduction of carbon emissions by promoting the use of renewable energy sources and energy-efficient practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "decarbonization",
+          "Relation": "addresses",
+          "Object": "carbon emissions",
+          "Description": "Decarbonization addresses carbon emissions by implementing strategies and technologies that reduce the reliance on fossil fuels and promote renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "decarbonization",
+          "Relation": "employs",
+          "Object": "traditional energy technologies",
+          "Description": "Decarbonization employs clean energy technologies such as solar power, wind power, and hydropower to reduce greenhouse gas emissions and transition to a low-carbon economy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "Renewable energy certificates contribute to climate change mitigation efforts by promoting the use of clean and sustainable energy sources.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "traditional energy technologies",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Traditional energy technologies implement the Energy Efficiency Policy to promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "smart contracts",
+      "decentralized platforms",
+      "tokenization",
+      "peer-to-peer trading",
+      "energy marketplaces"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "smart contracts",
+        "Relation": "is a sub-element of",
+        "Parent": "blockchain for energy trading",
+        "Description": "Smart contracts are self-executing contracts with the terms of the agreement directly written into code. In the context of blockchain for energy trading, smart contracts enable automated and secure transactions, ensuring transparency and trust between participants.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "decentralized platforms",
+        "Relation": "is a sub-element of",
+        "Parent": "blockchain for energy trading",
+        "Description": "Decentralized platforms provide a distributed infrastructure for energy trading on the blockchain. They eliminate the need for intermediaries and enable direct peer-to-peer transactions, increasing efficiency and reducing costs.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "tokenization",
+        "Relation": "is a sub-element of",
+        "Parent": "blockchain for energy trading",
+        "Description": "Tokenization involves representing real-world assets, such as energy units or certificates, as digital tokens on the blockchain. It enables fractional ownership, liquidity, and efficient transfer of value in energy trading.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "peer-to-peer trading",
+        "Relation": "is a sub-element of",
+        "Parent": "blockchain for energy trading",
+        "Description": "Peer-to-peer trading allows direct energy exchange between producers and consumers without the need for intermediaries. Blockchain facilitates secure and transparent peer-to-peer transactions, enabling decentralized energy markets.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "energy marketplaces",
+        "Relation": "is a sub-element of",
+        "Parent": "blockchain for energy trading",
+        "Description": "Energy marketplaces are online platforms that connect energy buyers and sellers. By leveraging blockchain technology, energy marketplaces enable efficient and transparent trading, promoting renewable energy integration and grid optimization.",
+        "Importance": 3
+      }
+    ]
   }
 }

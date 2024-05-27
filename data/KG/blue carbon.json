@@ -17,66 +17,121 @@
   },
   "knowledge graph": {
     "entities": [
-      "Natural Climate Solution",
-      "Coastal Ecosystem Conservation",
-      "Paris Agreement",
-      "Sustainable Fisheries",
-      "Carbon Sequestration",
-      "Blue Carbon Funds",
-      "Carbon Storage Capacity",
-      "Marine Conservation Organizations"
+      "marine conservation organizations",
+      "blue carbon",
+      "Paris Agreement Goals",
+      "natural climate solution",
+      "carbon storage capacity",
+      "carbon sequestration",
+      "sustainable fisheries",
+      "coastal ecosystem conservation"
     ],
     "relations": {
-      "blue carbon": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Coastal Ecosystem Conservation",
+          "Object": "coastal ecosystem conservation",
           "Description": "Blue carbon addresses the conservation of coastal ecosystems to protect and restore carbon-rich habitats and mitigate climate change.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Carbon Sequestration",
+          "Object": "carbon sequestration",
           "Description": "Blue carbon employs carbon sequestration techniques to capture and store carbon dioxide from the atmosphere, reducing greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Marine Conservation Organizations",
+          "Object": "marine conservation organizations",
           "Description": "Blue carbon collaborates with marine conservation organizations to protect and restore coastal ecosystems for climate change mitigation.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Sustainable Fisheries",
+          "Object": "sustainable fisheries",
           "Description": "Blue carbon supports sustainable fisheries practices that promote the conservation of coastal ecosystems and reduce carbon emissions.",
           "Importance": 3
         },
         {
           "Relation": "administers",
-          "Object": "Blue Carbon Funds",
+          "Object": "blue carbon",
           "Description": "Blue carbon administers blue carbon funds to finance projects that conserve and restore coastal ecosystems for climate change mitigation.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Carbon Storage Capacity",
+          "Object": "carbon storage capacity",
           "Description": "Blue carbon measures the carbon storage capacity of coastal ecosystems to assess their role in mitigating climate change.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Paris Agreement",
+          "Object": "Paris Agreement Goals",
           "Description": "Blue carbon aligns with the goals and objectives of the Paris Agreement to combat climate change and promote sustainable development.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Natural Climate Solution",
+          "Object": "natural climate solution",
           "Description": "Blue carbon is an instance of a natural climate solution that utilizes coastal ecosystems to sequester carbon and mitigate climate change.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "blue carbon",
+          "Relation": "addresses",
+          "Object": "coastal ecosystem conservation",
+          "Description": "Blue carbon addresses the conservation of coastal ecosystems to protect and restore carbon-rich habitats and mitigate climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "blue carbon",
+          "Relation": "employs",
+          "Object": "carbon sequestration",
+          "Description": "Blue carbon employs carbon sequestration techniques to capture and store carbon dioxide from the atmosphere, reducing greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Paris Agreement Goals",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Paris Agreement Goals implements Energy Efficiency Policy to promote energy-saving practices and reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "Paris Agreement Goals",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Paris Agreement Goals funds Renewable Energy Projects to support the transition to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "Paris Agreement Goals",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Paris Agreement Goals implements Energy Efficiency Policy to promote energy-saving practices and reduce greenhouse gas emissions.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

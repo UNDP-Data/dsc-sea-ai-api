@@ -17,17 +17,17 @@
   },
   "knowledge graph": {
     "entities": [
+      "offshore renewable energy",
+      "ocean conservation projects",
       "sustainable aquaculture",
-      "marine renewable energy",
+      "marine research institutions",
+      "climate change mitigation",
       "ocean pollution",
       "sustainable fisheries",
-      "marine research institutions",
-      "coastal communities",
-      "ocean conservation projects",
-      "climate change mitigation"
+      "coastal communities"
     ],
     "relations": {
-      "blue economy": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "sustainable fisheries",
@@ -42,7 +42,7 @@
         },
         {
           "Relation": "focuses_on",
-          "Object": "marine renewable energy",
+          "Object": "offshore renewable energy",
           "Description": "The blue economy focuses on the development and utilization of marine renewable energy sources to reduce reliance on fossil fuels.",
           "Importance": 4
         },
@@ -76,7 +76,97 @@
           "Description": "The blue economy targets the development of sustainable aquaculture practices to ensure the responsible production of seafood without harming the environment.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Offshore renewable energy implements building standards that promote the use of sustainable energy sources and technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "funds",
+          "Object": "research and development",
+          "Description": "Offshore renewable energy funds research and development projects to advance the use of sustainable energy technologies.",
+          "Importance": 3
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "focuses_on",
+          "Object": "wind energy",
+          "Description": "Offshore renewable energy focuses on harnessing wave energy as a sustainable energy source.",
+          "Importance": 4
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "in",
+          "Object": "marine environment",
+          "Description": "Offshore renewable energy operates in the marine environment to harness sustainable energy from wind, waves, and tides.",
+          "Importance": 4
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "partners_with",
+          "Object": "regional energy organizations",
+          "Description": "Offshore renewable energy partners with environmental organizations to ensure sustainable practices and minimize environmental impact.",
+          "Importance": 3
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "contributes_to",
+          "Object": "climate change mitigation",
+          "Description": "Offshore renewable energy contributes to climate change mitigation by reducing greenhouse gas emissions and dependence on fossil fuels.",
+          "Importance": 4
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "monitors",
+          "Object": "environmental impact assessments",
+          "Description": "Offshore renewable energy monitors its environmental impact to ensure sustainable operations and minimize harm to marine ecosystems.",
+          "Importance": 3
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "targets",
+          "Object": "renewable energy agencies",
+          "Description": "Offshore renewable energy targets increased renewable energy generation to meet sustainable energy goals and reduce reliance on non-renewable sources.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "wind energy",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Wind energy implements Energy Efficiency Policy by promoting the use of energy-saving designs and materials.",
+          "Importance": 4
+        },
+        {
+          "Subject": "regional energy organizations",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Regional energy organizations implement energy efficiency policies to promote sustainable energy practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "employs",
+          "Object": "environmental experts",
+          "Description": "Environmental impact assessments employ the expertise of environmental experts to evaluate the potential environmental effects of energy projects.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

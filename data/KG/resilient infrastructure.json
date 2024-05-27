@@ -20,66 +20,112 @@
   },
   "knowledge graph": {
     "entities": [
-      "Private Sector",
-      "Climate Change Adaptation",
-      "Sustainable Development Goals",
-      "Urban Areas",
-      "Infrastructure Performance",
-      "Building Standards",
-      "Resilience Indicators",
-      "Research and Development"
+      "urban areas",
+      "resilience indicators",
+      "research and development",
+      "infrastructure performance",
+      "climate change adaptation",
+      "sustainable development goals",
+      "building standards",
+      "private sector"
     ],
     "relations": {
-      "resilient infrastructure": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Resilient infrastructure implements building standards that ensure the infrastructure can withstand and recover from natural disasters and other shocks.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Research and Development",
+          "Object": "research and development",
           "Description": "Resilient infrastructure funds research and development projects that aim to improve the resilience of infrastructure systems.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Climate Change Adaptation",
+          "Object": "climate change adaptation",
           "Description": "Resilient infrastructure focuses on climate change adaptation strategies to ensure infrastructure systems can cope with the impacts of climate change.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Urban Areas",
+          "Object": "urban areas",
           "Description": "Resilient infrastructure is implemented in urban areas to enhance the resilience of cities and towns.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Private Sector",
+          "Object": "private sector",
           "Description": "Resilient infrastructure partners with the private sector to leverage their expertise and resources in developing and implementing resilient infrastructure projects.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "Resilient infrastructure contributes to the achievement of various Sustainable Development Goals, such as Goal 9: Industry, Innovation, and Infrastructure.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Infrastructure Performance",
+          "Object": "infrastructure performance",
           "Description": "Resilient infrastructure monitors the performance of infrastructure systems to identify vulnerabilities and areas for improvement.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Resilience Indicators",
+          "Object": "resilience indicators",
           "Description": "Resilient infrastructure sets targets based on resilience indicators to measure the effectiveness of resilience-building efforts.",
           "Importance": 3
         }
-      ]
-    }
+      ],
+      "level 2": [],
+      "level 3": []
+    },
+    "sub-elements": [
+      "renewable energy systems",
+      "smart grid technology",
+      "disaster-resistant construction",
+      "climate-resilient transportation",
+      "resilient water and sanitation systems"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "renewable energy systems",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient infrastructure",
+        "Description": "Renewable energy systems are a crucial component of resilient infrastructure. They provide sustainable and clean energy sources that can withstand disruptions and contribute to the overall resilience of the infrastructure.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "smart grid technology",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient infrastructure",
+        "Description": "Smart grid technology is an important sub-element of resilient infrastructure. It enables efficient and reliable energy distribution, improves grid resilience, and allows for better integration of renewable energy sources.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "disaster-resistant construction",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient infrastructure",
+        "Description": "Disaster-resistant construction is a key aspect of resilient infrastructure. It involves designing and constructing buildings and infrastructure that can withstand natural disasters, such as earthquakes, hurricanes, and floods, reducing the impact of such events on the overall infrastructure.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "climate-resilient transportation",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient infrastructure",
+        "Description": "Climate-resilient transportation is an essential sub-element of resilient infrastructure. It focuses on developing transportation systems that can adapt to the impacts of climate change, such as extreme weather events and rising sea levels, ensuring the continuity of transportation services.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "resilient water and sanitation systems",
+        "Relation": "is a sub-element of",
+        "Parent": "resilient infrastructure",
+        "Description": "Resilient water and sanitation systems are critical components of resilient infrastructure. They involve designing and implementing systems that can withstand disruptions, such as water scarcity, floods, and contamination, ensuring the availability of clean water and proper sanitation facilities even during challenging circumstances.",
+        "Importance": 4
+      }
+    ]
   }
 }

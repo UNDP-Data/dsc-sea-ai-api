@@ -14,66 +14,155 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Generation",
-      "Clean Energy Companies",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Renewable Energy Research",
-      "Energy Consumption",
-      "Circular Economy",
-      "Sustainable Energy Transition"
+      "renewable energy agencies",
+      "energy efficiency",
+      "just energy transition",
+      "climate change mitigation",
+      "energy consumption",
+      "clean energy companies",
+      "circular economy"
     ],
     "relations": {
-      "ecological modernization": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "Ecological modernization implements energy efficiency policies that promote sustainable energy practices.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Research",
+          "Object": "renewable energy agencies",
           "Description": "Ecological modernization funds research on renewable energy technologies to support the transition to sustainable energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Circular Economy",
+          "Object": "circular economy",
           "Description": "Ecological modernization focuses on promoting a circular economy that minimizes waste and maximizes resource efficiency.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Sustainable Energy Transition",
+          "Object": "just energy transition",
           "Description": "Ecological modernization plays a crucial role in the sustainable energy transition by promoting renewable energy and sustainable practices.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Clean Energy Companies",
+          "Object": "clean energy companies",
           "Description": "Ecological modernization partners with clean energy companies to accelerate the adoption of sustainable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Ecological modernization contributes to climate change mitigation efforts by promoting sustainable energy practices and reducing greenhouse gas emissions.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "Ecological modernization monitors energy consumption patterns to identify areas for improvement and promote energy efficiency.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Generation",
+          "Object": "renewable energy agencies",
           "Description": "Ecological modernization targets increased renewable energy generation to reduce reliance on fossil fuels and promote sustainable energy sources.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "circular economy",
+          "Relation": "implements",
+          "Object": "sustainable production practices",
+          "Description": "The circular economy implements sustainable production practices that minimize waste and maximize resource efficiency.",
+          "Importance": 4
+        },
+        {
+          "Subject": "circular economy",
+          "Relation": "funds",
+          "Object": "innovative recycling technologies",
+          "Description": "The circular economy funds the development and implementation of innovative recycling technologies to promote a closed-loop system.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

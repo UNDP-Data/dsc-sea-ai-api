@@ -17,11 +17,11 @@
   },
   "knowledge graph": {
     "entities": [
-      "partners_with",
-      "data privacy and security"
+      "data privacy and security",
+      "partners_with"
     ],
     "relations": {
-      "energy data repositories": [
+      "level 1": [
         {
           "Relation": "implements",
           "Object": "data privacy and security",
@@ -76,7 +76,26 @@
           "Description": "Energy data repositories employ measures to ensure data privacy and security.",
           "Importance": 4
         }
-      ]
-    }
+      ],
+      "level 2": [
+        {
+          "Subject": "data privacy and security",
+          "Relation": "implements",
+          "Object": "privacy regulations",
+          "Description": "Data privacy and security implements privacy regulations to protect personal information from unauthorized access and use.",
+          "Importance": 4
+        },
+        {
+          "Subject": "data privacy and security",
+          "Relation": "funds",
+          "Object": "cybersecurity research",
+          "Description": "Data privacy and security funds cybersecurity research to develop advanced technologies and strategies for protecting data from cyber threats.",
+          "Importance": 3
+        }
+      ],
+      "level 3": []
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

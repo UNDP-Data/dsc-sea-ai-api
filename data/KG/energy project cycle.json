@@ -15,73 +15,190 @@
   },
   "knowledge graph": {
     "entities": [
-      "Renewable Energy Generation",
-      "Energy Access Program",
-      "Energy Poverty",
-      "Energy Efficiency Policy",
-      "Climate Change Mitigation",
-      "Sustainable Energy Solutions",
-      "Local Governments",
-      "Energy Consumption",
-      "Renewable Energy Projects"
+      "energy access program",
+      "energy efficiency",
+      "sustainable energy solutions",
+      "local governments",
+      "climate change mitigation",
+      "energy consumption",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "energy project cycle": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Efficiency Policy",
+          "Object": "energy efficiency",
           "Description": "The energy project cycle implements the Energy Efficiency Policy to ensure energy-saving practices are followed.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "The energy project cycle provides funds for various renewable energy projects.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Sustainable Energy Solutions",
+          "Object": "sustainable energy solutions",
           "Description": "The energy project cycle focuses on implementing sustainable energy solutions.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "Energy Access Program",
+          "Object": "energy access program",
           "Description": "The energy project cycle operates within the Energy Access Program to provide energy access to underserved communities.",
           "Importance": 3
         },
         {
           "Relation": "partners_with",
-          "Object": "Local Governments",
+          "Object": "local governments",
           "Description": "The energy project cycle partners with local governments to implement sustainable energy initiatives.",
           "Importance": 3
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "The energy project cycle contributes to climate change mitigation efforts through the implementation of sustainable energy projects.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Energy Consumption",
+          "Object": "energy consumption",
           "Description": "The energy project cycle monitors energy consumption patterns to identify areas for improvement.",
           "Importance": 2
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Generation",
+          "Object": "renewable energy agencies",
           "Description": "The energy project cycle sets targets for increasing renewable energy generation.",
           "Importance": 3
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "The energy project cycle addresses energy poverty by providing access to affordable and reliable energy sources.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "employs",
+          "Object": "energy markets",
+          "Description": "Energy efficiency employs energy audits to identify energy-saving opportunities and optimize energy use.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy storage",
+          "Relation": "addresses",
+          "Object": "intermittency of renewable energy",
+          "Description": "Energy storage addresses the issue of intermittency in renewable energy sources by storing excess energy for use during periods of low generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "project identification",
+      "project preparation",
+      "project implementation",
+      "project evaluation",
+      "project closure"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "project identification",
+        "Relation": "is a sub-element of",
+        "Parent": "energy project cycle",
+        "Description": "Project identification is the initial phase of the energy project cycle, where potential projects are identified based on the energy needs and priorities of a specific region or community. This phase involves conducting feasibility studies, assessing the technical and economic viability of the project, and identifying potential stakeholders and partners.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "project preparation",
+        "Relation": "is a sub-element of",
+        "Parent": "energy project cycle",
+        "Description": "Project preparation is the phase of the energy project cycle where detailed planning and preparation activities are carried out. This includes developing a project design, conducting environmental and social impact assessments, securing necessary permits and approvals, and preparing a detailed project implementation plan.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "project implementation",
+        "Relation": "is a sub-element of",
+        "Parent": "energy project cycle",
+        "Description": "Project implementation is the phase of the energy project cycle where the actual construction, installation, and operation of the energy project take place. This phase involves procuring equipment and materials, hiring contractors and workers, managing project timelines and budgets, and ensuring compliance with relevant regulations and standards.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "project evaluation",
+        "Relation": "is a sub-element of",
+        "Parent": "energy project cycle",
+        "Description": "Project evaluation is the phase of the energy project cycle where the performance and impact of the completed project are assessed. This includes monitoring the project's energy generation or savings, evaluating its environmental and social outcomes, and analyzing its financial and economic viability. The findings from the evaluation are used to improve future project designs and inform decision-making.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "project closure",
+        "Relation": "is a sub-element of",
+        "Parent": "energy project cycle",
+        "Description": "Project closure is the final phase of the energy project cycle, where the project is formally closed and handed over to the relevant stakeholders or operators. This phase involves conducting final inspections, preparing project completion reports, addressing any outstanding issues or obligations, and transitioning the project to its long-term operation and maintenance phase.",
+        "Importance": 4
+      }
+    ]
   }
 }

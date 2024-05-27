@@ -368,7 +368,7 @@ def get_answer(user_question, relevant_docs,openai_deployment):
     print(f""" excerpts_dict === {len(relevant_docs)} """)
 
     # print(formatting)
-    print(openai_deployment)
+    # print(openai_deployment)
 
     messages = [
             {"role": "system", "content":"You are a helpful assistant and a professional writer with 50 years experience. Give answer to the user's inquiry."

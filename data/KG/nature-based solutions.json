@@ -15,66 +15,134 @@
   },
   "knowledge graph": {
     "entities": [
-      "Climate Change Adaptation",
-      "Sustainable Development Goals",
-      "Local Communities",
-      "Biodiversity Conservation",
-      "Renewable Energy Technologies",
-      "Carbon Sequestration",
-      "Renewable Energy Solutions",
-      "Ecosystem Restoration"
+      "ecosystem restoration",
+      "local communities",
+      "climate change adaptation",
+      "sustainable development goals",
+      "biodiversity conservation",
+      "renewable energy agencies",
+      "carbon sequestration"
     ],
     "relations": {
-      "nature-based solutions": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Biodiversity Conservation",
+          "Object": "biodiversity conservation",
           "Description": "nature-based solutions addresses biodiversity conservation by promoting the use of natural processes and ecosystems to provide sustainable energy solutions.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Renewable Energy Technologies",
+          "Object": "renewable energy agencies",
           "Description": "nature-based solutions employs renewable energy technologies to harness the power of nature and provide sustainable energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Local Communities",
+          "Object": "local communities",
           "Description": "nature-based solutions collaborates with local communities to implement sustainable energy solutions that are in harmony with nature.",
           "Importance": 4
         },
         {
           "Relation": "supports",
-          "Object": "Ecosystem Restoration",
+          "Object": "ecosystem restoration",
           "Description": "nature-based solutions supports ecosystem restoration to enhance the capacity of natural systems to provide sustainable energy solutions.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Climate Change Adaptation",
+          "Object": "climate change adaptation",
           "Description": "nature-based solutions administers climate change adaptation measures by utilizing natural processes and ecosystems to provide resilient energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "measures",
-          "Object": "Carbon Sequestration",
+          "Object": "carbon sequestration",
           "Description": "nature-based solutions measures carbon sequestration to quantify the climate change mitigation potential of natural energy solutions.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Sustainable Development Goals",
+          "Object": "sustainable development goals",
           "Description": "nature-based solutions aligns with the Sustainable Development Goals by providing sustainable energy solutions that contribute to multiple objectives.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Renewable Energy Solutions",
+          "Object": "renewable energy agencies",
           "Description": "nature-based solutions is an instance of renewable energy solutions that utilize natural processes and ecosystems for energy generation.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "ecosystem-based adaptation",
+      "green infrastructure",
+      "agroforestry",
+      "wetland restoration",
+      "urban forestry"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "ecosystem-based adaptation",
+        "Relation": "is a sub-element of",
+        "Parent": "nature-based solutions",
+        "Description": "Ecosystem-based adaptation is a sub-component of nature-based solutions. It involves the use of biodiversity and ecosystem services to help communities adapt to the impacts of climate change. This approach focuses on the conservation and restoration of ecosystems to enhance their resilience and provide multiple benefits.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "green infrastructure",
+        "Relation": "is a sub-element of",
+        "Parent": "nature-based solutions",
+        "Description": "Green infrastructure is a type of nature-based solution that uses natural and semi-natural elements to provide environmental, social, and economic benefits. It includes features such as parks, green roofs, and permeable pavements, which help manage stormwater, improve air quality, and enhance urban biodiversity.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "agroforestry",
+        "Relation": "is a sub-element of",
+        "Parent": "nature-based solutions",
+        "Description": "Agroforestry is a practice that combines agriculture and forestry to create sustainable land-use systems. It involves the integration of trees, crops, and livestock, which provides multiple benefits such as improved soil fertility, increased biodiversity, and climate change mitigation.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "wetland restoration",
+        "Relation": "is a sub-element of",
+        "Parent": "nature-based solutions",
+        "Description": "Wetland restoration is a category of nature-based solutions that focuses on the rehabilitation and enhancement of wetland ecosystems. It involves activities such as re-establishing hydrological regimes, removing invasive species, and promoting the growth of native vegetation. Wetland restoration helps improve water quality, provide habitat for wildlife, and mitigate climate change.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "urban forestry",
+        "Relation": "is a sub-element of",
+        "Parent": "nature-based solutions",
+        "Description": "Urban forestry is a sub-component of nature-based solutions that involves the management and conservation of trees and forests in urban areas. It includes activities such as tree planting, maintenance, and protection, which provide numerous benefits such as urban heat island mitigation, air pollution reduction, and improved quality of life for residents.",
+        "Importance": 3
+      }
+    ]
   }
 }

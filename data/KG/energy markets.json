@@ -21,26 +21,26 @@
   },
   "knowledge graph": {
     "entities": [
-      "economic sector",
-      "energy pricing mechanisms",
-      "renewable energy technologies",
-      "energy access",
-      "energy consumption",
       "government agencies",
-      "climate change goals",
-      "clean energy projects"
+      "climate change scenario analysis",
+      "energy markets",
+      "clean energy projects",
+      "energy consumption",
+      "renewable energy agencies",
+      "energy pricing mechanisms",
+      "economic sector"
     ],
     "relations": {
-      "energy markets": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "energy access",
+          "Object": "energy markets",
           "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "renewable energy technologies",
+          "Object": "renewable energy agencies",
           "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
           "Importance": 3
         },
@@ -70,7 +70,7 @@
         },
         {
           "Relation": "aligns_with",
-          "Object": "climate change goals",
+          "Object": "climate change scenario analysis",
           "Description": "Energy markets align with climate change goals by promoting the transition to low-carbon and renewable energy sources to mitigate greenhouse gas emissions.",
           "Importance": 4
         },
@@ -80,7 +80,125 @@
           "Description": "Energy markets are an instance of the economic sector that deals with the production, distribution, and consumption of energy resources.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy markets",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Energy markets employ renewable energy technologies to diversify the energy mix and reduce dependence on fossil fuels.",
+          "Importance": 3
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "funds",
+          "Object": "offshore renewable energy",
+          "Description": "Climate change scenario analysis funds research on renewable energy to develop innovative solutions for sustainable energy.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "energy markets",
+          "Relation": "addresses",
+          "Object": "energy markets",
+          "Description": "Energy markets address the issue of energy access by ensuring the availability and affordability of energy sources for all segments of society.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "climate change scenario analysis",
+          "Relation": "implements",
+          "Object": "sustainable energy projects",
+          "Description": "Climate change scenario analysis implements sustainable energy projects to mitigate the impacts of climate change.",
+          "Importance": 4
+        },
+        {
+          "Subject": "offshore renewable energy",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Offshore renewable energy implements building standards that promote the use of sustainable energy sources and technologies.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [
+      "electricity markets",
+      "natural gas markets",
+      "renewable energy markets",
+      "carbon markets",
+      "commodity markets"
+    ],
+    "subelement_relations": [
+      {
+        "Sub-element": "electricity markets",
+        "Relation": "is a sub-element of",
+        "Parent": "energy markets",
+        "Description": "Electricity markets are a subset of energy markets that specifically deal with the buying and selling of electricity. They facilitate the generation, transmission, and distribution of electricity to meet the demand of consumers.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "natural gas markets",
+        "Relation": "is a sub-element of",
+        "Parent": "energy markets",
+        "Description": "Natural gas markets are a component of energy markets that focus on the trading of natural gas. They involve the buying, selling, and transportation of natural gas to fulfill the energy needs of various sectors.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "renewable energy markets",
+        "Relation": "is a sub-element of",
+        "Parent": "energy markets",
+        "Description": "Renewable energy markets encompass the buying and selling of renewable energy resources, such as solar, wind, hydro, and geothermal energy. These markets promote the adoption and utilization of sustainable energy sources.",
+        "Importance": 4
+      },
+      {
+        "Sub-element": "carbon markets",
+        "Relation": "is a sub-element of",
+        "Parent": "energy markets",
+        "Description": "Carbon markets are a specialized segment of energy markets that focus on the trading of carbon credits or allowances. They aim to reduce greenhouse gas emissions by creating economic incentives for emission reductions.",
+        "Importance": 3
+      },
+      {
+        "Sub-element": "commodity markets",
+        "Relation": "is a sub-element of",
+        "Parent": "energy markets",
+        "Description": "Commodity markets include the trading of energy commodities, such as crude oil, natural gas, coal, and refined petroleum products. These markets play a crucial role in determining energy prices and supply-demand dynamics.",
+        "Importance": 4
+      }
+    ]
   }
 }

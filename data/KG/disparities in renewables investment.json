@@ -15,73 +15,125 @@
   },
   "knowledge graph": {
     "entities": [
-      "International Renewable Energy Agency",
-      "Developing Countries",
-      "Energy Access Program",
-      "Energy Poverty",
-      "Renewable Energy Access",
-      "Climate Change Mitigation",
-      "Renewable Energy Projects",
-      "Sustainable Energy Transition",
-      "Renewable Energy Investments"
+      "energy access program",
+      "just energy transition",
+      "climate change mitigation",
+      "developing countries",
+      "energy poverty indices",
+      "renewable energy agencies"
     ],
     "relations": {
-      "disparities in renewables investment": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Energy Access Program",
+          "Object": "energy access program",
           "Description": "Disparities in renewables investment implements the Energy Access Program to address the unequal distribution of renewable energy resources.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Renewable Energy Projects",
+          "Object": "renewable energy agencies",
           "Description": "Disparities in renewables investment funds various renewable energy projects to promote equal access to clean energy sources.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Developing Countries",
+          "Object": "developing countries",
           "Description": "Disparities in renewables investment focuses on addressing the unequal distribution of renewable energy resources in developing countries.",
           "Importance": 3
         },
         {
           "Relation": "in",
-          "Object": "Sustainable Energy Transition",
+          "Object": "just energy transition",
           "Description": "Disparities in renewables investment plays a role in the overall sustainable energy transition by addressing the unequal distribution of renewable energy resources.",
           "Importance": 2
         },
         {
           "Relation": "partners_with",
-          "Object": "International Renewable Energy Agency",
+          "Object": "renewable energy agencies",
           "Description": "Disparities in renewables investment partners with the International Renewable Energy Agency to collaborate on initiatives to promote equal access to renewable energy.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Climate Change Mitigation",
+          "Object": "climate change mitigation",
           "Description": "Disparities in renewables investment contributes to climate change mitigation efforts by promoting the equal distribution of renewable energy resources.",
           "Importance": 3
         },
         {
           "Relation": "monitors",
-          "Object": "Renewable Energy Investments",
+          "Object": "renewable energy agencies",
           "Description": "Disparities in renewables investment monitors the allocation and impact of renewable energy investments to ensure equal distribution and effectiveness.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Renewable Energy Access",
+          "Object": "renewable energy agencies",
           "Description": "Disparities in renewables investment targets the achievement of equal access to renewable energy resources for all communities.",
           "Importance": 4
         },
         {
           "Relation": "addresses",
-          "Object": "Energy Poverty",
+          "Object": "energy poverty indices",
           "Description": "Disparities in renewables investment addresses energy poverty by promoting equal access to renewable energy resources for underserved communities.",
           "Importance": 4
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "collaborates_with",
+          "Object": "research institutions",
+          "Description": "Renewable energy agencies collaborate with research institutions to advance scientific knowledge and develop new technologies for renewable energy generation.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "implements",
+          "Object": "energy access programs",
+          "Description": "Energy poverty indices implement energy access programs to provide affordable and reliable energy services to underserved communities.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy poverty indices",
+          "Relation": "funds",
+          "Object": "renewable energy agencies",
+          "Description": "Energy poverty indices fund renewable energy projects to increase access to clean and sustainable energy sources.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy agencies",
+          "Relation": "employs",
+          "Object": "renewable energy agencies",
+          "Description": "Renewable energy agencies employ experts in the field of renewable energy to drive innovation and promote the adoption of clean energy technologies.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy efficiency",
+          "Relation": "addresses",
+          "Object": "energy storage",
+          "Description": "Energy efficiency measures address energy waste by promoting the use of energy-efficient technologies and practices.",
+          "Importance": 4
+        },
+        {
+          "Subject": "energy and health",
+          "Relation": "implements",
+          "Object": "building standards",
+          "Description": "Energy and health implements building standards that promote the use of energy-saving designs and materials.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

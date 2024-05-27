@@ -14,9 +14,108 @@
     "Synonyms": null
   },
   "knowledge graph": {
-    "entities": [],
+    "entities": [
+      "cybersecurity agencies",
+      "data flows",
+      "data privacy concerns",
+      "cross-border data transfers",
+      "data localization initiatives",
+      "national legislation",
+      "digital sovereignty",
+      "data protection regulations",
+      "data governance frameworks"
+    ],
     "relations": {
-      "data sovereignty": []
-    }
+      "level 1": [
+        {
+          "Relation": "implements",
+          "Object": "data protection regulations",
+          "Description": "Data sovereignty implements data protection regulations to ensure the privacy and security of data.",
+          "Importance": 4
+        },
+        {
+          "Relation": "funds",
+          "Object": "data localization initiatives",
+          "Description": "Data sovereignty funds data localization initiatives to promote local storage and processing of data.",
+          "Importance": 3
+        },
+        {
+          "Relation": "focuses_on",
+          "Object": "data governance frameworks",
+          "Description": "Data sovereignty focuses on data governance to establish rules and policies for data management.",
+          "Importance": 4
+        },
+        {
+          "Relation": "in",
+          "Object": "national legislation",
+          "Description": "Data sovereignty is embedded in national legislation to assert control over data within a country's borders.",
+          "Importance": 4
+        },
+        {
+          "Relation": "partners_with",
+          "Object": "cybersecurity agencies",
+          "Description": "Data sovereignty partners with cybersecurity agencies to enhance data protection and prevent cyber threats.",
+          "Importance": 3
+        },
+        {
+          "Relation": "contributes_to",
+          "Object": "digital sovereignty",
+          "Description": "Data sovereignty contributes to digital sovereignty by ensuring control and ownership of data within a country.",
+          "Importance": 4
+        },
+        {
+          "Relation": "monitors",
+          "Object": "data flows",
+          "Description": "Data sovereignty monitors data flows to ensure compliance with data protection regulations and prevent unauthorized transfers.",
+          "Importance": 3
+        },
+        {
+          "Relation": "targets",
+          "Object": "cross-border data transfers",
+          "Description": "Data sovereignty targets cross-border data transfers to regulate the movement of data across national borders.",
+          "Importance": 3
+        },
+        {
+          "Relation": "addresses",
+          "Object": "data privacy concerns",
+          "Description": "Data sovereignty addresses data privacy concerns by establishing regulations and safeguards for personal data.",
+          "Importance": 4
+        }
+      ],
+      "level 2": [
+        {
+          "Subject": "data governance frameworks",
+          "Relation": "implements",
+          "Object": "sustainable energy policies",
+          "Description": "Data governance frameworks implement sustainable energy policies to ensure effective management and utilization of energy data.",
+          "Importance": 4
+        },
+        {
+          "Subject": "data governance frameworks",
+          "Relation": "funds",
+          "Object": "research and development projects",
+          "Description": "Data governance frameworks provide funding for research and development projects related to sustainable energy.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "data privacy and security",
+          "Relation": "implements",
+          "Object": "privacy regulations",
+          "Description": "Data privacy and security implements privacy regulations to protect personal information from unauthorized access and use.",
+          "Importance": 4
+        },
+        {
+          "Subject": "data equity",
+          "Relation": "implements",
+          "Object": "ai for smart grid optimization",
+          "Description": "Data equity implements AI for smart grid optimization to ensure fair and unbiased decision-making in energy management.",
+          "Importance": 4
+        }
+      ]
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

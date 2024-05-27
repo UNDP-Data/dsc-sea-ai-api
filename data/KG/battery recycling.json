@@ -17,66 +17,148 @@
   },
   "knowledge graph": {
     "entities": [
-      "Waste Management",
-      "Environmental Impact",
-      "Battery Recycling Program",
-      "Clean Energy Transition",
-      "Circular Economy Principles",
-      "Electronic Manufacturers",
-      "Sustainable Waste Management",
-      "Circular Economy Goals"
+      "sustainable waste management",
+      "waste management",
+      "just energy transition",
+      "environmental impact assessments",
+      "circular economy",
+      "battery recycling",
+      "electronic manufacturers"
     ],
     "relations": {
-      "battery recycling": [
+      "level 1": [
         {
           "Relation": "addresses",
-          "Object": "Waste Management",
+          "Object": "waste management",
           "Description": "Battery recycling addresses waste management by safely disposing and recycling used batteries.",
           "Importance": 4
         },
         {
           "Relation": "employs",
-          "Object": "Circular Economy Principles",
+          "Object": "circular economy",
           "Description": "Battery recycling employs circular economy principles to minimize resource consumption and maximize recycling.",
           "Importance": 3
         },
         {
           "Relation": "collaborates_with",
-          "Object": "Electronic Manufacturers",
+          "Object": "electronic manufacturers",
           "Description": "Battery recycling collaborates with electronic manufacturers to establish collection and recycling programs.",
           "Importance": 3
         },
         {
           "Relation": "supports",
-          "Object": "Clean Energy Transition",
+          "Object": "just energy transition",
           "Description": "Battery recycling supports the clean energy transition by recycling batteries used in renewable energy systems.",
           "Importance": 4
         },
         {
           "Relation": "administers",
-          "Object": "Battery Recycling Program",
+          "Object": "battery recycling",
           "Description": "Battery recycling administers the Battery Recycling Program to ensure proper collection and recycling of batteries.",
           "Importance": 4
         },
         {
           "Relation": "measures",
-          "Object": "Environmental Impact",
+          "Object": "environmental impact assessments",
           "Description": "Battery recycling measures the environmental impact of recycling processes to improve sustainability.",
           "Importance": 3
         },
         {
           "Relation": "aligns_with",
-          "Object": "Circular Economy Goals",
+          "Object": "circular economy",
           "Description": "Battery recycling aligns with circular economy goals by promoting resource efficiency and waste reduction.",
           "Importance": 4
         },
         {
           "Relation": "an_instance_of",
-          "Object": "Sustainable Waste Management",
+          "Object": "sustainable waste management",
           "Description": "Battery recycling is an instance of sustainable waste management practices.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "circular economy",
+          "Relation": "implements",
+          "Object": "sustainable production practices",
+          "Description": "The circular economy implements sustainable production practices that minimize waste and maximize resource efficiency.",
+          "Importance": 4
+        },
+        {
+          "Subject": "circular economy",
+          "Relation": "focuses_on",
+          "Object": "waste reduction",
+          "Description": "The circular economy focuses on waste reduction strategies to minimize the environmental impact of resource consumption.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "collaborates_with",
+          "Object": "local communities",
+          "Description": "The just energy transition collaborates with local communities to ensure a fair and inclusive transition to sustainable energy.",
+          "Importance": 4
+        },
+        {
+          "Subject": "battery recycling",
+          "Relation": "addresses",
+          "Object": "waste management",
+          "Description": "Battery recycling addresses waste management by safely disposing and recycling used batteries.",
+          "Importance": 4
+        },
+        {
+          "Subject": "battery recycling",
+          "Relation": "employs",
+          "Object": "circular economy",
+          "Description": "Battery recycling employs circular economy principles to minimize resource consumption and maximize recycling.",
+          "Importance": 3
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "aligns_with",
+          "Object": "environmental regulations",
+          "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
+          "Importance": 4
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "renewable energy certificates",
+          "Relation": "implements",
+          "Object": "energy efficiency",
+          "Description": "Renewable energy certificates are implemented by the Energy Efficiency Policy to promote the use of renewable energy sources.",
+          "Importance": 4
+        },
+        {
+          "Subject": "just energy transition",
+          "Relation": "employs",
+          "Object": "renewable energy certificates",
+          "Description": "The just energy transition employs a renewable energy workforce to support the transition to clean energy sources.",
+          "Importance": 3
+        },
+        {
+          "Subject": "energy justice",
+          "Relation": "addresses",
+          "Object": "energy poverty indices",
+          "Description": "Energy justice initiatives aim to address energy poverty by ensuring access to affordable and reliable energy services for all.",
+          "Importance": 4
+        },
+        {
+          "Subject": "circular economy",
+          "Relation": "implements",
+          "Object": "sustainable production practices",
+          "Description": "The circular economy implements sustainable production practices that minimize waste and maximize resource efficiency.",
+          "Importance": 4
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }

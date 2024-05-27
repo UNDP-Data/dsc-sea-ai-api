@@ -15,66 +15,114 @@
   },
   "knowledge graph": {
     "entities": [
-      "Community Development Programs",
-      "Government Policies",
-      "Sustainable Development",
-      "Indigenous Peoples Organizations",
-      "International Human Rights Law",
-      "Building Standards",
-      "Environmental Impact Assessments",
-      "Resource Extraction Projects"
+      "government policies",
+      "international human rights law",
+      "resource extraction projects",
+      "environmental impact assessments",
+      "building standards",
+      "sustainable development",
+      "indigenous peoples organizations",
+      "community development programs"
     ],
     "relations": {
-      "free prior and informed consent": [
+      "level 1": [
         {
           "Relation": "implements",
-          "Object": "Building Standards",
+          "Object": "building standards",
           "Description": "Free prior and informed consent implements building standards that ensure the rights of indigenous communities are respected in development projects.",
           "Importance": 4
         },
         {
           "Relation": "funds",
-          "Object": "Community Development Programs",
+          "Object": "community development programs",
           "Description": "Free prior and informed consent provides funding for community development programs that empower indigenous communities.",
           "Importance": 3
         },
         {
           "Relation": "focuses_on",
-          "Object": "Environmental Impact Assessments",
+          "Object": "environmental impact assessments",
           "Description": "Free prior and informed consent focuses on conducting environmental impact assessments to ensure the protection of indigenous lands and resources.",
           "Importance": 4
         },
         {
           "Relation": "in",
-          "Object": "International Human Rights Law",
+          "Object": "international human rights law",
           "Description": "Free prior and informed consent is recognized as a right under international human rights law.",
           "Importance": 4
         },
         {
           "Relation": "partners_with",
-          "Object": "Indigenous Peoples Organizations",
+          "Object": "indigenous peoples organizations",
           "Description": "Free prior and informed consent partners with indigenous peoples organizations to ensure meaningful participation in decision-making processes.",
           "Importance": 4
         },
         {
           "Relation": "contributes_to",
-          "Object": "Sustainable Development",
+          "Object": "sustainable development",
           "Description": "Free prior and informed consent contributes to sustainable development by promoting the rights and well-being of indigenous communities.",
           "Importance": 4
         },
         {
           "Relation": "monitors",
-          "Object": "Resource Extraction Projects",
+          "Object": "resource extraction projects",
           "Description": "Free prior and informed consent monitors resource extraction projects to ensure compliance with indigenous rights and environmental standards.",
           "Importance": 3
         },
         {
           "Relation": "targets",
-          "Object": "Government Policies",
+          "Object": "government policies",
           "Description": "Free prior and informed consent targets government policies to ensure the recognition and protection of indigenous rights.",
           "Importance": 3
         }
+      ],
+      "level 2": [
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "employs",
+          "Object": "environmental experts",
+          "Description": "Environmental impact assessments employ the expertise of environmental experts to evaluate the potential environmental effects of energy projects.",
+          "Importance": 3
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "collaborates_with",
+          "Object": "government agencies",
+          "Description": "Environmental impact assessments collaborate with government agencies to ensure compliance with environmental regulations and standards.",
+          "Importance": 3
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "administers",
+          "Object": "environmental impact assessments",
+          "Description": "Environmental impact assessments administer the process of evaluating and assessing the potential environmental impacts of energy projects.",
+          "Importance": 3
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "aligns_with",
+          "Object": "environmental regulations",
+          "Description": "Environmental impact assessments align with environmental regulations to ensure compliance and minimize the negative environmental impacts of energy projects.",
+          "Importance": 4
+        },
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "an_instance_of",
+          "Object": "environmental impact assessments",
+          "Description": "Environmental impact assessments are an instance of the broader practice of environmental assessment, specifically focused on energy projects.",
+          "Importance": 3
+        }
+      ],
+      "level 3": [
+        {
+          "Subject": "environmental impact assessments",
+          "Relation": "employs",
+          "Object": "environmental experts",
+          "Description": "Environmental impact assessments employ the expertise of environmental experts to evaluate the potential environmental effects of energy projects.",
+          "Importance": 3
+        }
       ]
-    }
+    },
+    "sub-elements": [],
+    "subelement_relations": []
   }
 }
