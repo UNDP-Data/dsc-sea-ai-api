@@ -12,8 +12,9 @@ import numpy as np
 import json
 import asyncio
 import concurrent.futures
-
+import re
 import uuid  # for generating unique session IDs
+import utils.openai_call as openai_call
 
 import websockets
 # web
@@ -106,7 +107,7 @@ def send_prompt_llm():
         # session_id_query = request.get_json()['session_id'] #optional
         query_type = request.get_json().get('query_type') #optional
         print(user_query)
-        
+        response = {}
         # print(get_session)
         # Define a function to run each processing module
         def run_module(module_func, *args):
@@ -124,7 +125,7 @@ def send_prompt_llm():
                     future_entities = executor.submit(run_module, processing_modules.knowledgeGraphModule, openai_deployment)
                     future_indicators = executor.submit(run_module, processing_modules.indicatorsModule)
                     future_query_ideas = executor.submit(run_module, processing_modules.queryIdeationModule, openai_deployment)
-
+                    prompt_formattings = ""
                     # Get results from completed futures
                     entities_dict = future_entities.result()
 
@@ -136,19 +137,63 @@ def send_prompt_llm():
                     excerpts_dict = future_excerpts.result()
 
                     # Run synthesis module
-                    answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
+                    answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment, prompt_formattings)
+                    # synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
+                    pattern =  re.compile(r'[^.]*\.')  #re.compile(r'<li>(.*?)</li>')
+                    # Find all matches
+                    content_array = pattern.findall(answer)
+                    sources = excerpts_dict
+                    results = []
+                    # print(content_array)
+                    limiter = 0
                     
-                    #Send initial response to user while processing final answer on final documents
+                    for element in content_array:
+                        for doc_id, doc_info in sources.items():
+                            title_similarity = processing_modules.calculate_context_similarity(element, doc_info['title']) or 0 
+                            extract_similarity = processing_modules.calculate_context_similarity(element, doc_info['extract']) or 0
+                            # summary_similarity = calculate_context_similarity(element, doc_info['summary'])
+                            
+                            if title_similarity > 0.8 and extract_similarity > 0.8 and limiter < 10:
+                                result = {
+                                            'element': element,
+                                            'title': doc_info['title'],
+                                            'extract': doc_info['extract'],
+                                            'extract': doc_info['extract'],
+                                            'link': doc_info['link'],
+                                            'doc_id': doc_id,
+                                            'title_similarity': float(title_similarity),
+                                            'extract_similarity': float(extract_similarity)
+                                            # 'summary_similarity': float(summary_similarity)
+                                        }
+                                results.append(result)
+                                limiter += 1
+
+                    for result in results:
+                        citation_fixes = openai_call.callOpenAI(f"Given the below: {result} Create an output that mixes Element, Document extract and Summary into one output while still maintaining the context of the Element. Your final output answer length should not be more than 200 words. Also avoid using links, sources and references. ", openai_deployment)
+                        result['citation_fixes'] = citation_fixes
+                        result
+
+            
+                    content = answer
+                    counter = 0
+                    # Loop through each JSON object and replace the element with citation_fixes in the content
+                    for result in results:
+                        counter += 1
+
+                        content = content.replace(result['element'], f""" {result['citation_fixes']} <a href='{result['link']}' data-id='{result['doc_id']}'>[{counter}]</a> <br/>\n\n""")
+                        
+
+                        #Send initial response to user while processing final answer on final documents
                     response = {
-                        "answer": answer,
-                        "user_query": user_query,
-                        "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
-                        "query_ideas": query_idea_list if query_idea_list else [],
-                        "excerpts_dict" : excerpts_dict,
-                        "indicators_dict": indicators_dict
-                    }
-                    
-                            # Return the response
+                            "answer": content.replace("\n","<br/>"),
+                            "user_query": user_query,
+                            "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
+                            "query_ideas": query_idea_list if query_idea_list else [],
+                            "excerpts_dict" : excerpts_dict,
+                            "indicators_dict": indicators_dict
+                        }
+                        
+                                # Return the response
                 return jsonify(response)
         else : 
             
@@ -163,30 +208,11 @@ def send_prompt_llm():
                 entities_dict = future_entities.result()
                 indicators_dict = {} #future_indicators.result()
                 query_idea_list = future_query_ideas.result()
-
                 isInitialRun = TRUE
-                # future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
-                excerpts_dict = {}#future_excerpts.result()
-
-                print(entities_dict)
-                # Run synthesis module
-                # answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
-                
+                excerpts_dict = {}
                 entities_array = list(entities_dict["entities"].keys()) if entities_dict else []
-
                 data_dir = "data/KG"
-                # Find the most similar file
                 kg_content = processing_modules.find_kg(entities_array, data_dir)
-                # kg_content = ""
-                # # Load the content of the most similar file
-                # if kg_files:
-                #     with open(os.path.join(data_dir, kg_files), "r") as file:
-                #         kg_content = json.load(file)
-                #         # print("Most similar file:", kg_files)
-                #         # print("Content:", kg_content)
-
-
-                #Send initial response to user while processing final answer on final documents
                 response = {
                     "answer": "Processing final answer... ",
                     "user_query": user_query,
@@ -196,7 +222,6 @@ def send_prompt_llm():
                     "indicators_dict": indicators_dict,
                     "kg_data": kg_content
                 }
-
                 # session['session_id'] = session_id #save the session id
 
 
