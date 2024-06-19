@@ -25,13 +25,15 @@ import copy
 from country_named_entity_recognition import find_countries
 
 # import custom utils functions 
+import utils.processing_modules as processing_modules
+# import custom utils functions 
 import utils.indicator as indicator_module
 
 
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
 
-df = pd.read_pickle('./models/df_embed_EN_All_V3.pkl')
+df = pd.read_pickle('./models/df_embed_EN_All_V4.pkl')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -153,7 +155,7 @@ def find_mentioned_country_code(user_query):
 
 def filter_country(user_query):
     mentioned_countries = find_mentioned_country_code(user_query)
-    # print(mentioned_countries)
+    print(mentioned_countries)
     # Check if mentioned_countries is not empty
     if mentioned_countries:
         country = mentioned_countries[0]
@@ -178,7 +180,7 @@ def jaccard_similarity(text1, text2):
 
 # Load the English language model
 # Function to calculate the average word embedding for a sentence
-def average_word_embedding(sentence):
+def average_word_embedding_old(sentence):
     # Parse the sentence using SpaCy
     doc = nlp(sentence)
     # Get word vectors and average them
@@ -186,6 +188,21 @@ def average_word_embedding(sentence):
     if not word_vectors:
         return None
     return np.mean(word_vectors, axis=0)
+
+def average_word_embedding(sentence):
+    if sentence is None:
+        sentence = ""
+    
+    # Parse the sentence using SpaCy
+    doc = nlp(sentence)
+    
+    # Get word vectors and average them
+    vectors = [token.vector for token in doc if token.has_vector]
+    if not vectors:
+        return None
+    
+    avg_vector = sum(vectors) / len(vectors)
+    return avg_vector
 
 # Function to calculate context similarity between two sentences using word embedding averaging
 def calculate_context_similarity(sentence1, sentence2):
@@ -222,7 +239,7 @@ def title_contains_entity(entity, title):
 # - Filter country relevant documents when mentioned 
 # - Filter by Context similarity in user_query and title, journal, content etc.
 
-def filter_semantics(user_query, isInitialRun):
+def filter_semanticsold(user_query, isInitialRun):
     doc = nlp(user_query)
     # # Extract all entities
     entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
@@ -297,9 +314,89 @@ def filter_semantics(user_query, isInitialRun):
     return merged_df
 
 
+def filter_semantics(user_query,isInitialRun):
+    doc = nlp(user_query)
+    entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
+    entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN", "PROPN", "PRON", "NUM", "SYM", "X", "ABBR"] or token.is_alpha)
+
+    # Remove stop words
+    entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
+
+    # Initialize empty DataFrames
+    filtered_df_country = pd.DataFrame()
+    filtered_df_others = pd.DataFrame()
+    filtered_df_others_title = pd.DataFrame()
+
+    filtered_df_backup_reference = pd.DataFrame()
+    allow_low = True
+
+    for entity, label in entities:
+       
+        filtered_df_others = pd.concat([filtered_df_others, df[df['Country Name'].str.lower().str.contains(entity.lower(), na=False)]])
+        filtered_df_others_title = pd.concat([filtered_df_others_title, df[df['Document Title'].str.lower().str.contains(entity.lower(), na=False)]])
+
+        # Calculate similarity scores for each document title and country name
+        similarity_scores_country = []
+        similarity_scores_title = []
+        document_titles = []
+
+        for index, row in filtered_df_others.iterrows():
+            country_name = row['Country Name']
+            document_title = row['Document Title']
+
+            if country_name is not None:
+                
+                similarity_score_country = calculate_context_similarity(user_query, country_name)
+                similarity_scores_country.append(similarity_score_country)
+            else:
+                similarity_scores_country.append(0)
+
+            if document_title is not None:
+                similarity_score_title = calculate_context_similarity(user_query, document_title)
+                similarity_scores_title.append(similarity_score_title)
+            else:
+                similarity_scores_title.append(0)
+
+            document_titles.append(document_title)
+        
+        similarity_df = pd.DataFrame({
+            'Country Name': filtered_df_others['Country Name'],
+            'Document Title': document_titles,
+            'Similarity Score Country': similarity_scores_country,
+            'Similarity Score Title': similarity_scores_title
+        })
+
+        # Define thresholds
+        threshold_country = 0.5
+        threshold_title = 0.5
+
+        # Filter df based on similarity scores greater than threshold
+        filtered_df_others = df[
+            df['Country Name'].isin(similarity_df[similarity_df['Similarity Score Country'] > threshold_country]['Country Name']) &
+            df['Document Title'].isin(similarity_df[similarity_df['Similarity Score Title'] > threshold_title]['Document Title'])
+        ]
+
+        filtered_df_backup_reference = pd.concat([filtered_df_backup_reference, df[
+            df['Country Name'].isin(similarity_df[(similarity_df['Similarity Score Country'] >= 0.1) & (similarity_df['Similarity Score Country'] < threshold_country)]['Country Name']) |
+            df['Document Title'].isin(similarity_df[(similarity_df['Similarity Score Title'] >= 0.1) & (similarity_df['Similarity Score Title'] < threshold_title)]['Document Title'])
+        ]])
+
+        # Check for location related e.g by country, language, locals
+        if label in ['GPE', 'NORP', 'LANGUAGE', 'FAC']:
+            filtered_df_country = pd.concat([filtered_df_country, df[df['Country Name'] == entity]])
+   
+    merged_df = pd.DataFrame()
+    # if filtered_df_others.empty and filtered_df_country.empty:
+    #     print(f'on the reference df {filtered_df_backup_reference.empty}')
+    #     merged_df = pd.concat([filtered_df_backup_reference])
+    # else:
+    merged_df = pd.concat([filtered_df_country, filtered_df_others, filtered_df_backup_reference,filtered_df_others_title])
+    
+    return merged_df
+
  
 #run search on the vector pkl embeddings
-def search_embeddings(user_query, client, embedding_model, isInitialRun):
+def search_embeddingsold(user_query, client, embedding_model, isInitialRun):
     # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
     # Call filter_semantics function once and store the result in a variable
     filtered_result = filter_semantics(user_query, isInitialRun)
@@ -323,60 +420,60 @@ def search_embeddings(user_query, client, embedding_model, isInitialRun):
         return None, None, None
 
 
+def search_embeddings(user_query, client, embedding_model, isInitialRun):
+    # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
+    filtered_result = filter_semantics(user_query, isInitialRun)
+    # Check if the result is not None before assigning it to df_filtered
+    df_filtered = filtered_result if filtered_result is not None else None
+
+    if df_filtered is not None and not df_filtered.empty:  # Check if DataFrame is not None and not empty
+        length = len(df_filtered.head())
+        filtered_embeddings_arrays = np.array(list(df_filtered['Embedding']))
+        index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1]) 
+        index.add(filtered_embeddings_arrays)
+        
+        user_query_embedding = client.embeddings.create( 
+                input=user_query ,model= embedding_model
+            ).data[0].embedding
+
+        k = min(5, length)
+        distances, indices = index.search(np.array([user_query_embedding]), k)
+        return df_filtered, distances, indices
+    else:
+        return None, None, None
+        
+ 
+
 # get answer
 def get_answer(user_question, relevant_docs,openai_deployment): 
 
-    formatting = f""" 
+    formattings_html = f""" 
         Strictly follow the follow steps:
-        Your answer only in HTML syntax with HTML tags.
+        Your output answer shoud be  in HTML syntax with HTML tags.
         Use HTML tags like < ul>, < ol>, < li>,  < strong>, < p>
         Only consider the inner part of the < body> tag.
         ALWAYS use the following tag for new lines: < br />
-        use <a> for cite numbers
         Do not add CSS attributes.
-        Your answer must be formatted in HTML format
-        
-        
-        1. <<SOUCRCE>> for citing : {relevant_docs}
+        Do not include links or citations at all!!!
+        Your final answer must be formatted in HTML format !!!
 
-        2. Must Follow the Structure for your output strictly: 
-
-            
-                Break down the answer into main points.
-                Provide explanations and cite <<SOUCRCE>> directly.
-
-                Summarize the main points.
-
-                For Example: 
-                Question: What are the benefits of regular exercise?
-                
-                Answer
-                Regular exercise offers significant benefits across physical, mental, and emotional dimensions. Physically, it strengthens the heart and enhances circulation, which can reduce the risk of heart disease by up to 40% <a href=“link” data-id=“doc-id”>[1]</a>. It also aids in weight management by burning calories and building muscle mass <a href=“link” data-id=“doc-id”>[2]</a>.
-                Mentally, exercise helps reduce anxiety and depression by increasing the production of endorphins, acting similarly to some medications. Additionally, it enhances cognitive function, improving memory and learning capabilities <a href=“link” data-id=“doc-id”>[3]</a>.
-                Emotionally and socially, regular physical activity reduces stress hormones such as cortisol  and boosts self-esteem by improving body image and self-confidence. Participation in group sports also provides social benefits and fosters a sense of community.
-                In summary, regular exercise is essential for overall health, enhancing physical fitness, mental clarity, and emotional well-being.
-
-
-    3. Return answer without explicit partitions, keeping it concise and integrating citations naturally within the text.
-    4. You must cite at least one relevant <<SOUCRCE>> provided above. This is compulsory. Don't just show a reference at the footnotes but also integrate into the text using the cite number e.g <a href=“link” data-id=“doc-id”>[1]</a>.
-    5. Cited source number must be an anchor tag link !!!!! You don't have to always cite. Only do this when relevant. If you can't find the link just leave the citation out.
-    6. VERY IMPORTANT:  avoid numberic listings in your answer!!!!!
     """
-   
- 
-   
-    print(f""" excerpts_dict === {len(relevant_docs)} """)
+    formattings = f""" 
+        You can use relevant information in the docs to answer also: 
 
-    # print(formatting)
-    # print(openai_deployment)
-
+        DOCS: {relevant_docs}
+        
+       """
     messages = [
-            {"role": "system", "content":"You are a helpful assistant and a professional writer with 50 years experience. Give answer to the user's inquiry."
-            },
-            {'role': 'user', 'content': f"""{formatting} 
-                                            {user_question}"""},
-        ]
-
+        {"role": "system", "content":f"""You are a helpful assistant and a professional researcher with many years of experience in answering questions. Give answer to the user's inquiry. {formattings_html}"""
+        },
+        {'role': 'user', 'content': f"""{formattings} 
+                                        {user_question}
+                                        
+                                         {formattings_html}
+                                         Do not include links or citations, refrences or sources at all!!!
+                                        """},
+    ]
         
     response_entities = openai.chat.completions.create(
                     model=openai_deployment,
@@ -399,57 +496,79 @@ def get_answer(user_question, relevant_docs,openai_deployment):
 
 
     return cleaned_text
-  
-# map to structure
-def map_to_structure(qs, isInitialRun):
+
+def sort_by_relevancy(result_dict):
+    # Convert the dictionary to a list of tuples (doc_id, info)
+    result_list = list(result_dict.items())
+    
+    # Reverse the list
+    result_list.reverse()
+    
+    # Convert the reversed list of tuples back to a dictionary
+    reversed_result_dict = {k: v for k, v in result_list}
+    
+    return reversed_result_dict
+
+ 
+
+def map_to_structure(qs, isInitialRun, user_query):
     result_dict = {}
 
     # Extract the DataFrame from the tuple
     dataframe = qs[0]
 
+    # Create a dictionary for each document
+    document_info = {}
+
     # Counter to limit the loop to 10 iterations
     count = 0
-
     for index, row in dataframe.iterrows():
         # Define a unique identifier for each document, you can customize this based on your data
         document_id = f"doc-{index + 1}"
         # Handle NaN in content by using fillna
-        content = row["Content"]
-        content = ' '.join(row["Content"].split()[:160])
-        doc_url = row["Link"]
-        thumbnail_base64 = '' #generate_thumbnail_from_pdf(doc_url)
+        content = str(row["Content"]) if row["Content"] is not None else ""  # row["Content"]
+        content = ' '.join(content.split()[:160])
 
-        # Create a dictionary for each document
+        title = str(row["Document Title"]) if row["Document Title"] is not None else ""
+        extract = str(content) if content is not None else ""
+
+        title_similarity = processing_modules.jaccard_similarity(user_query, title) or 0
+        extract_similarity = processing_modules.jaccard_similarity(user_query, extract) or 0
+        # print(f""" {title_similarity} {user_query} {title}""")
+        print(f""" {extract_similarity} {user_query} {title}""")
+
         document_info = {
-            "title": row["Document Title"],
-            "extract": content or "",  # You may need to adjust this based on your column names
-            "category": row["Category"],
-            "link": doc_url,
-            "thumbnail": row["Thumbnail"]
+            "title": title,
+            "extract": extract,  # Adjust based on your column names
+            "category": str(row["Category"]) if row["Category"] is not None else "",
+            "link": str(row["Link"]).replace("https-//", "https://") if row["Link"] is not None else "",
+            "summary": str(row["Summary"]) if row["Summary"] is not None else "",
+            "thumbnail": '',
+            "relevancy": extract_similarity
         }
-        # print(document_info)
+
         # Add the document to the result dictionary
         result_dict[document_id] = document_info
 
         # Increment the counter
         count += 1
 
-     
-        if isInitialRun and count == 1:
-            break
-        #top k-5 docs only
-        elif not isInitialRun and count == 10:  
+        # Break out of the loop if the counter reaches top 10
+        if count == 10:
             break
 
-    return result_dict
+        # Sort the dictionary by relevancy
+        sorted_result_dict = sort_by_relevancy(result_dict)
 
-## module to extract text from documents and return the text and document codes
+    return sorted_result_dict
+
+
 def semanticSearchModule(user_query, client, embedding_model, isInitialRun):
     qs = search_embeddings(user_query,client, embedding_model,isInitialRun) #df, distances, indices
     # if qs != None :
     if qs[0] is not None:
-        result_structure = map_to_structure(qs,isInitialRun)
-        return relabel_and_add_citations(result_structure)
+        result_structure = map_to_structure(qs,isInitialRun,user_query)
+        return result_structure
     else : 
         return []
 
@@ -562,7 +681,7 @@ def synthesisModuleOLD(user_query, entities_dict, excerpts_dict, indicators_dict
     
     return answer.replace("</p>\n\n<p>", "<br/>").replace("</p>\n<p>","<br/>").replace("\n","<br/>")
 
-def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict,openai_deployment):
+def synthesisModuleOld(user_query, entities_dict, excerpts_dict, indicators_dict,openai_deployment,prompt_formattings):
 
     excerpts_dict_ = cleanJson(excerpts_dict)
 
@@ -570,6 +689,13 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict,op
     answer=get_answer(user_query, excerpts_dict_,openai_deployment) #callOpenAI
     answer_formated_fixed = answer.replace("\n\n","<br>").replace("\n","<br>")
     return answer_formated_fixed
+
+def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment, prompt_formattings):
+    
+    ###synthesize data into structure within llm prompt engineering instructions
+    answer=get_answer(user_query,excerpts_dict, openai_deployment) #callOpenAI
+    return answer
+
 
 ##Indicators
 
