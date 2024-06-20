@@ -1,3 +1,4 @@
+from concurrent.futures import process
 import imp
 from pickle import TRUE
 from urllib import response
@@ -15,6 +16,7 @@ import concurrent.futures
 import re
 import uuid  # for generating unique session IDs
 import utils.openai_call as openai_call
+from collections import OrderedDict
 
 import websockets
 # web
@@ -143,6 +145,8 @@ def send_prompt_llm():
                     # Find all matches
                     content_array = pattern.findall(answer)
                     sources = excerpts_dict
+
+                  
                     results = []
                     # print(content_array)
                     limiter = 0
@@ -182,19 +186,34 @@ def send_prompt_llm():
 
                         content = content.replace(result['element'], f""" {result['citation_fixes']} <a href='{result['link']}' data-id='{result['doc_id']}'>[{counter}]</a> <br/>\n\n""")
                         
-
+                    sorted_sources = sources
+                    print(sorted_sources)
                         #Send initial response to user while processing final answer on final documents
-                    response = {
-                            "answer": content.replace("\n","<br/>"),
-                            "user_query": user_query,
-                            "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
-                            "query_ideas": query_idea_list if query_idea_list else [],
-                            "excerpts_dict" : excerpts_dict,
-                            "indicators_dict": indicators_dict
-                        }
-                        
-                                # Return the response
-                return jsonify(response)
+                    # response = {
+                    #         "answer": content.replace("\n","<br/>"),
+                    #         "user_query": user_query,
+                    #         "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
+                    #         "query_ideas": query_idea_list if query_idea_list else [],
+                    #         "excerpts_dict" : sorted_sources,
+                    #         "indicators_dict": indicators_dict
+                    #     }
+                    # Construct the final response using OrderedDict to preserve key order
+                    response = OrderedDict([
+                        ("answer", content.replace("\n", "<br/>")),
+                        ("user_query", user_query),
+                        ("entities", list(entities_dict["entities"].keys()) if entities_dict else []),
+                        ("query_ideas", query_idea_list if query_idea_list else []),
+                        ("excerpts_dict", sorted_sources),
+                        ("indicators_dict", indicators_dict)
+                    ])
+
+                    # Convert the response to a JSON string and then back to a dictionary to preserve order
+                    response_json = json.dumps(response, indent=4)
+                    # final_response = json.loads(response_json)
+
+                
+                # Return the response
+                return  response_json
         else : 
             
             # Create a thread pool executor - run all in parallel to reduce ttl
