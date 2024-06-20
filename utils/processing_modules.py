@@ -633,62 +633,6 @@ def relabel_and_add_citations(data):
 
     return new_data
 
-# module to synthesize answer using retreival augmented generation approach
-def synthesisModuleOLD(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment):
-    
-    excerpts_dict_ = cleanJson(excerpts_dict)
-    # print(excerpts_dict_)
-    # Generate prompt engineering text and template
-    llm_instructions_old = f"""
-    Ignore previous commands!!!
-    Given a user query, use the provided <Sources> extract section of the JSON only to provide the correct answer to the user's query.
-
-    User Query: {user_query}
-
-    Sources: {excerpts_dict_}
-    
-    - Answer output must be properly formatted using HTML. 
-    - Don't include <html>, <script>, <link> <a>  or <body> tags. Only text formating tags should be allowed. e.g h1..h3, p, anchor, etc. Strictly HTML only
-    - You can your answers from the relevant <Sources> also and make citations to Source extract when referenced 
-    - The Source as format like: "doc-n": {{
-        "title": "title of the relate document",
-        "extract": "content",
-        "category": "",
-        "link": "",
-        "thumbnail": "",
-        "citation": n
-    }}, where doc-n can be doc-1, doc-24 etc.. n is in integer.
-    - Reference the extract and title of all document sources provided in the json and summarise it into a coherent answer that relates to the <User Query> when possible
-    - Citation should follow formats: [reference content][citation number]. 
-    - Give output writing tone like a academic research tone
-    - Remove new line or tab characters from your output
-    - do not use or include links,  anchor links or a href tags !!!
-    - do not include references links at the end or show References!!!
-    - to reference within the text do [n] not [source n] . musct be [n] where n is an integer of the citation number
-    - Should be one citation only e.g [n] not [n][n][n]
-     """
-
-    llm_instructions = f""" 
-    User Query: {user_query}
-    Sources: {excerpts_dict_}
-    Solve by breaking the problem into steps.
-
-     """
-
-    print(llm_instructions)
-    ###synthesize data into structure within llm prompt engineering instructions
-    answer= openai_call.callOpenAI(llm_instructions, openai_deployment)
-    
-    return answer.replace("</p>\n\n<p>", "<br/>").replace("</p>\n<p>","<br/>").replace("\n","<br/>")
-
-def synthesisModuleOld(user_query, entities_dict, excerpts_dict, indicators_dict,openai_deployment,prompt_formattings):
-
-    excerpts_dict_ = cleanJson(excerpts_dict)
-
-    ###synthesize data into structure within llm prompt engineering instructions
-    answer=get_answer(user_query, excerpts_dict_,openai_deployment) #callOpenAI
-    answer_formated_fixed = answer.replace("\n\n","<br>").replace("\n","<br>")
-    return answer_formated_fixed
 
 def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment, prompt_formattings):
     
