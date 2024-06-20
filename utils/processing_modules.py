@@ -8,6 +8,7 @@ import faiss
 import numpy as np
 import pycountry
 import re
+import copy
 
 import awoc
 import spacy
@@ -510,6 +511,12 @@ def sort_by_relevancy(result_dict):
     return reversed_result_dict
 
  
+def remove_thumbnails(data):
+    data_no_thumbnails = copy.deepcopy(data)  # Make a deep copy of the data
+    for doc_id, doc_info in data_no_thumbnails.items():
+        if 'document_thumbnail' in doc_info:
+            del doc_info['document_thumbnail']
+    return data_no_thumbnails
 
 def map_to_structure(qs, isInitialRun, user_query):
     result_dict = {}
@@ -538,12 +545,12 @@ def map_to_structure(qs, isInitialRun, user_query):
         print(f""" {extract_similarity} {user_query} {title}""")
 
         document_info = {
-            "title": title,
+            "document_title": title,
             "extract": extract,  # Adjust based on your column names
             "category": str(row["Category"]) if row["Category"] is not None else "",
-            "link": str(row["Link"]).replace("https-//", "https://") if row["Link"] is not None else "",
-            "summary": str(row["Summary"]) if row["Summary"] is not None else "",
-            "thumbnail": '',
+            "document_link": str(row["Link"]).replace("https-//", "https://") if row["Link"] is not None else "",
+            "summary": str(row["Summary"]) if row["Summary"] is not None else extract,
+            "document_thumbnail": str(row["Thumbnail"]) if row["Thumbnail"] is not None else "",
             "relevancy": extract_similarity
         }
 

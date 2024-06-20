@@ -138,9 +138,10 @@ def send_prompt_llm():
                     future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
                     excerpts_dict = future_excerpts.result()
 
+                    excerpts_dict_synthesis = processing_modules.remove_thumbnails(future_excerpts.result())
+
                     # Run synthesis module
-                    answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment, prompt_formattings)
-                    # synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment)
+                    answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict_synthesis, indicators_dict, openai_deployment, prompt_formattings)
                     pattern =  re.compile(r'[^.]*\.')  #re.compile(r'<li>(.*?)</li>')
                     # Find all matches
                     content_array = pattern.findall(answer)
@@ -153,14 +154,14 @@ def send_prompt_llm():
                     
                     for element in content_array:
                         for doc_id, doc_info in sources.items():
-                            title_similarity = processing_modules.calculate_context_similarity(element, doc_info['title']) or 0 
+                            title_similarity = processing_modules.calculate_context_similarity(element, doc_info['document_title']) or 0 
                             extract_similarity = processing_modules.calculate_context_similarity(element, doc_info['extract']) or 0
                             # summary_similarity = calculate_context_similarity(element, doc_info['summary'])
                             
                             if title_similarity > 0.8 and extract_similarity > 0.8 and limiter < 10:
                                 result = {
                                             'element': element,
-                                            'title': doc_info['title'],
+                                            'title': doc_info['document_title'],
                                             'extract': doc_info['extract'],
                                             'extract': doc_info['extract'],
                                             'link': doc_info['link'],
