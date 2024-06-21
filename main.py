@@ -157,7 +157,7 @@ def send_prompt_llm():
                             extract_similarity = processing_modules.calculate_context_similarity(element, doc_info['extract']) or 0
                             # summary_similarity = calculate_context_similarity(element, doc_info['summary'])
                             
-                            if title_similarity > 0.8 and extract_similarity > 0.8 and limiter < 10:
+                            if title_similarity > 0.5 and extract_similarity > 0.5 and limiter < 10:
                                 result = {
                                             'element': element,
                                             'title': doc_info['document_title'],
