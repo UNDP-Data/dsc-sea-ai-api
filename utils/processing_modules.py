@@ -460,7 +460,11 @@ def get_answer(user_question, relevant_docs,openai_deployment):
         Include links and citations at all!!!
         Your final answer must be formatted in HTML format !!!
 
-        - Only provide links in citations. Never link outside citations.
+        - Only provide links in citations. Never link outside citations or refer 
+        Example 
+        <a href="LINK">[n]</a> - correct
+        <a href="LINK">text content</a> - wrong
+        Where n is integer and LINK is a url
     """
     formattings = f""" 
         You can use relevant information in the docs to answer also: 
@@ -499,6 +503,20 @@ def get_answer(user_question, relevant_docs,openai_deployment):
 
 
     return cleaned_text
+
+
+def check_links_and_process_html(html, content_dict):
+    soup = BeautifulSoup(html, 'html.parser')
+    
+    for a in soup.find_all('a'):
+        ref_text = a.get_text()
+        if ref_text.startswith('[') and ref_text.endswith(']'):
+            href = a.get('href')
+            if not any(d['document_link'] == href for d in content_dict.values()):
+                a.decompose()
+    
+    result = str(soup)
+    return result
 
 def sort_by_relevancy(result_dict):
     # Convert the dictionary to a list of tuples (doc_id, info)
