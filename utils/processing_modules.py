@@ -29,6 +29,7 @@ from country_named_entity_recognition import find_countries
 import utils.processing_modules as processing_modules
 # import custom utils functions 
 import utils.indicator as indicator_module
+from bs4 import BeautifulSoup
 
 
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
@@ -449,15 +450,17 @@ def search_embeddings(user_query, client, embedding_model, isInitialRun):
 def get_answer(user_question, relevant_docs,openai_deployment): 
 
     formattings_html = f""" 
+        Ignore previous
         Strictly follow the follow steps:
         Your output answer shoud be  in HTML syntax with HTML tags.
         Use HTML tags like < ul>, < ol>, < li>,  < strong>, < p>
         Only consider the inner part of the < body> tag.
         ALWAYS use the following tag for new lines: < br />
         Do not add CSS attributes.
-        Do not include links or citations at all!!!
+        Include links and citations at all!!!
         Your final answer must be formatted in HTML format !!!
 
+        - Only provide links in citations. Never link outside citations.
     """
     formattings = f""" 
         You can use relevant information in the docs to answer also: 
@@ -472,7 +475,6 @@ def get_answer(user_question, relevant_docs,openai_deployment):
                                         {user_question}
                                         
                                          {formattings_html}
-                                         Do not include links or citations, refrences or sources at all!!!
                                         """},
     ]
         
@@ -639,6 +641,38 @@ def relabel_and_add_citations(data):
         citation_counter += 1
 
     return new_data
+
+#Cleanup outputs
+# Parse the HTML content
+
+# Function to remove [n] if not inside an <a> tag
+def remove_unlinked_citations(soup):
+    # Regular expression to match [n] pattern
+    pattern = re.compile(r'\[\d+\]')
+    
+    for text in soup.find_all(text=pattern):
+        # Find all matches in the text
+        matches = pattern.findall(text)
+        for match in matches:
+            # Check if the match is inside an <a> tag
+            if not text.find_parent('a'):
+                # Remove the match from the text
+                text.replace_with(text.replace(match, ''))
+    
+    return soup
+
+
+def cleanCitation(html_content): 
+
+    soup = BeautifulSoup(html_content, 'html.parser')
+    # Remove unlinked citations
+    clean_soup = remove_unlinked_citations(soup)
+
+    # Get the modified HTML content
+    clean_html_content = str(clean_soup)
+
+    return clean_html_content
+
 
 
 def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment, prompt_formattings):
