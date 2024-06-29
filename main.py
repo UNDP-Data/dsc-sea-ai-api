@@ -147,7 +147,7 @@ def send_prompt_llm():
                     content_array = pattern.findall(answer)
                     sources = excerpts_dict
 
-                  
+
                     results = []
                     # print(content_array)
                     limiter = 0
@@ -198,9 +198,26 @@ def send_prompt_llm():
                     #         "excerpts_dict" : sorted_sources,
                     #         "indicators_dict": indicators_dict
                     #     }
+
+                    #final cleanup using openAI
+                    cleanup_content = openai_call.callOpenAI(f""" Ignore previous commands !!!
+                                                    Strictly follow the below:
+                                                    Give the sentence. I want to to fix the citation formatings only. Don't add any answer to it.
+                                                    1. make sure  links are all in a citation format [n] where n represent an integer and must link to the document e.g content<a href='url-here'>[1]</a>  !!!!
+                                                    2.  The citations must be numbered in an ordered manner. Fix and return the output. !!!
+                                                    3. remove all foot notes or references. !!! 
+                                                    4. The citations MUST BE LINK to the docs e.g <a href='url-here'>[1]</a>  never use without LINKS !!!
+                                                    5. Output should retains HTML formattings. Never adjust a ciation without it being an anchor link. !!!
+                                                    6. Remeber only format the answer citations. Don't add or remove any. !!!
+                                                    7. Don't generate any link or so. Just use the answer as it is and adjust the citations as instructed above
+                                                    SENTENCE: {content}  
+                                                """, openai_deployment)
+                    cleanup_content = cleanup_content.replace("\n","")
+                    cleanup_content = processing_modules.cleanCitation(cleanup_content)
+                    
                     # Construct the final response using OrderedDict to preserve key order
                     response = OrderedDict([
-                        ("answer", content.replace("\n", "<br/>")),
+                        ("answer", cleanup_content.replace("\n", "")),
                         ("user_query", user_query),
                         ("entities", list(entities_dict["entities"].keys()) if entities_dict else []),
                         ("query_ideas", query_idea_list if query_idea_list else []),
