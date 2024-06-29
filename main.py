@@ -213,7 +213,7 @@ def send_prompt_llm():
                                                 """, openai_deployment)
                     cleanup_content = cleanup_content.replace("\n","")
                     cleanup_content = processing_modules.cleanCitation(cleanup_content)
-                    
+                    cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
                     # Construct the final response using OrderedDict to preserve key order
                     response = OrderedDict([
                         ("answer", cleanup_content.replace("\n", "")),
