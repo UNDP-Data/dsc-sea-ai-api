@@ -329,7 +329,7 @@ def filter_semantics(user_query, isInitialRun):
     filtered_df_country = filter_dataframe_by_country_names(df, filtered_df_country_code)
 
     
-    filtered_df_title_context = df[df['Document Title'].notnull() & df['Document Title'].apply(lambda title: calculate_context_bool(user_query, title, 0.5))]
+    filtered_df_title_context = df[df['Document Title'].notnull() & df['Document Title'].apply(lambda title: calculate_context_bool(user_query, title, 0.65))]
     filtered_df_summary_context = df[df['Summary'].notnull() & df['Summary'].apply(lambda summary: calculate_context_bool(user_query, summary, 0.7))]
     
     # Ensure both DataFrames have the same columns before concatenating
