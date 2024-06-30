@@ -135,7 +135,7 @@ def send_prompt_llm():
                     query_idea_list = future_query_ideas.result()
 
                     isInitialRun = False
-                    future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun)
+                    future_excerpts = executor.submit(run_module, processing_modules.semanticSearchModule, client, embedding_model,isInitialRun,openai_deployment)
                     excerpts_dict = future_excerpts.result()
 
                     excerpts_dict_synthesis = processing_modules.remove_thumbnails(future_excerpts.result())
@@ -147,6 +147,7 @@ def send_prompt_llm():
                     content_array = pattern.findall(answer)
                     sources = excerpts_dict
 
+                
 
                     results = []
                     # print(content_array)
