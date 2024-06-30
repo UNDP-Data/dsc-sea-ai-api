@@ -309,39 +309,42 @@ def average_word_context_embed(sentence):
     else:
         return None
 
-def calculate_context_bool(uq, doc_):
+def calculate_context_bool(uq, doc_, threshold):
     avg_emb1 = average_word_context_embed(uq)
     avg_emb2 = average_word_context_embed(doc_)
     if avg_emb1 is None or avg_emb2 is None:
         return False
     
     similarity = np.dot(avg_emb1, avg_emb2) / (np.linalg.norm(avg_emb1) * np.linalg.norm(avg_emb2))
-    return similarity > 0.75  # Assuming 0.75 is the threshold for context similarity
+    return similarity > threshold  # Assuming 0.75 is the threshold for context similarity
 
 
-
+ 
 def filter_semantics(user_query, isInitialRun): 
-    try:
-        filtered_df_country_code = find_mentioned_country_code(user_query)
-        filtered_df_country = filter_dataframe_by_country_names(df, filtered_df_country_code)
-        
-        filtered_df_title_context = df[df['Document Title'].notnull() & df['Document Title'].apply(lambda title: isinstance(title, str) and calculate_context_bool(user_query, title))]
-        filtered_df_summary_context = df[df['Summary'].notnull() & df['Summary'].apply(lambda summary: isinstance(summary, str) and calculate_context_bool(user_query, summary))]
-        
-        # Ensure both DataFrames have the same columns before concatenating
-        if 'Country Name' not in filtered_df_title_context.columns:
-            filtered_df_title_context['Country Name'] = np.nan
-        if 'Country Name' not in filtered_df_summary_context.columns:
-            filtered_df_summary_context['Country Name'] = np.nan
-        
-        # Merge the filtered DataFrames
-        merged_df = pd.concat([filtered_df_country, filtered_df_title_context, filtered_df_summary_context]).drop_duplicates().reset_index(drop=True)
-        return merged_df
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return pd.DataFrame()
+    filtered_df_country = pd.DataFrame()
+    filtered_df_title_context = pd.DataFrame()
+    merged_df = pd.DataFrame()
+
+    filtered_df_country_code = find_mentioned_country_code(user_query)
+    filtered_df_country = filter_dataframe_by_country_names(df, filtered_df_country_code)
+
+    
+    filtered_df_title_context = df[df['Document Title'].notnull() & df['Document Title'].apply(lambda title: calculate_context_bool(user_query, title, 0.5))]
+    filtered_df_summary_context = df[df['Summary'].notnull() & df['Summary'].apply(lambda summary: calculate_context_bool(user_query, summary, 0.7))]
+    
+    # Ensure both DataFrames have the same columns before concatenating
+    if 'Country Name' not in filtered_df_title_context.columns:
+        filtered_df_title_context['Country Name'] = np.nan
+    if 'Country Name' not in filtered_df_summary_context.columns:
+        filtered_df_summary_context['Country Name'] = np.nan
+    
+    # Merge the two filtered DataFrames
+    merged_df = pd.concat([filtered_df_country, filtered_df_summary_context, filtered_df_title_context])
+    return merged_df
 
 
+
+ 
  
  
 def search_embeddings(user_query, client, embedding_model, isInitialRun):
@@ -440,6 +443,24 @@ def check_links_and_process_html(html, content_dict):
     result = str(soup)
     return result
 
+
+def check_links_and_process_html____(html, content_dict):
+    soup = BeautifulSoup(html, 'html.parser')
+    link_count = 1
+
+    for a in soup.find_all('a'):
+        href = a.get('href')
+        if any(d['link'] == href for d in content_dict.values()):
+            # Ensure the link adheres to the format <a href="LINK HERE">[n]</a>
+            a.string = f'{a.get_text()} [{link_count}]'
+            link_count += 1
+        else:
+            a.decompose()
+
+    result = str(soup)
+    return result
+
+
 def sort_by_relevancy(result_dict):
     # Convert the dictionary to a list of tuples (doc_id, info)
     result_list = list(result_dict.items())
@@ -518,12 +539,13 @@ def process_queries(queries, user_query, client, embedding_model, isInitialRun):
 
     for query in queries:
         # qs = search_embeddings(query)  # Assuming search_embeddings returns a tuple (df, distances, indices)
-        qs = search_embeddings(user_query,client, embedding_model,isInitialRun) #df, distances, indices
+        qs = search_embeddings(query,client, embedding_model,isInitialRun) #df, distances, indices
+        # print(f""" qs=== {qs} {isInitialRun} {user_query} | query == {query} """)
         if qs[0] is not None:
             result_structure = map_to_structure(qs,isInitialRun,user_query)
             for doc_id, doc_info in result_structure.items():
                 merged_result_structure[doc_id] = doc_info
-    
+        break
     return merged_result_structure
 
 ## module to extract text from documents and return the text and document codes
@@ -543,18 +565,10 @@ def semanticSearchModule(user_query, client, embedding_model, isInitialRun, open
 
 
     merged_results = process_queries(questions_array,user_query, client, embedding_model, isInitialRun)
-    print(merged_results)
+    print(f""" merged_results===  {merged_results} """)
     return merged_results
 
 
-# def semanticSearchModule(user_query, client, embedding_model, isInitialRun):
-#     qs = search_embeddings(user_query,client, embedding_model,isInitialRun) #df, distances, indices
-#     # if qs != None :
-#     if qs[0] is not None:
-#         result_structure = map_to_structure(qs,isInitialRun,user_query)
-#         return result_structure
-#     else : 
-#         return []
 
 def convertQueryIdeaToArray(query_idea_list):
     # Split the query idea list by the "|" character
