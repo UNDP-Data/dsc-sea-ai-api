@@ -31,6 +31,7 @@ import utils.processing_modules as processing_modules
 import utils.indicator as indicator_module
 from bs4 import BeautifulSoup
 
+from awoc import AWOC
 
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
@@ -108,7 +109,6 @@ def knowledgeGraphModule(user_query, openai_deployment):
     
     return entities_dict
 
-
 def find_mentioned_countries(text):
     countries = set()
     
@@ -116,15 +116,35 @@ def find_mentioned_countries(text):
     words = re.findall(r'\w+|[^\w\s]', text)
     text = ' '.join(words)  # Join the tokens back into a string
     
-    for word in text.split():
-        try:
-            country = pycountry.countries.get(name=word) #pycountry.countries.lookup(word)
-            if country != None : 
-               countries.add(country.name)
-        except LookupError:
-            pass
+    # Get a list of all country names
+    all_countries = {country.name: country for country in pycountry.countries}
     
+    # Check for multi-word country names first to avoid partial matches
+    for name in sorted(all_countries.keys(), key=lambda x: len(x), reverse=True):
+        if name in text:
+            countries.add(all_countries[name].name)
+            text = text.replace(name, '')  # Remove the found country name from the text to avoid duplicates
+
     return list(countries)
+
+
+
+# def find_mentioned_countries(text):
+#     countries = set()
+    
+#     # Tokenize the text using regular expressions to preserve punctuation marks
+#     words = re.findall(r'\w+|[^\w\s]', text)
+#     text = ' '.join(words)  # Join the tokens back into a string
+    
+#     for word in text.split():
+#         try:
+#             country = pycountry.countries.get(name=word) #pycountry.countries.lookup(word)
+#             if country != None : 
+#                countries.add(country.name)
+#         except LookupError:
+#             pass
+    
+#     return list(countries)
 
 
 '''
@@ -134,27 +154,32 @@ Previous 'find_mentioned_countries' can detect countries when they are formed co
 # Extract mentioned countries' ISO3 code
 def find_mentioned_country_code(user_query):
     countries = set()
-    extracted_countries = find_countries(user_query, is_ignore_case=True)
-    # check if we have country first
-    if extracted_countries:
-        for c in extracted_countries:
-            countries.add(c[0].alpha_3)
-    # check if we have continent
-    else:
+    extracted_countries = find_mentioned_countries(user_query)
+    
+    for country in extracted_countries:
+        try:
+            country_info = pycountry.countries.get(name=country)
+            if country_info:
+                countries.add(country_info.alpha_3)
+        except LookupError:
+            pass
+    
+    # If no countries are found, check for continent mentions
+    if not countries:
         words = re.findall(r'\w+|[^\w\s]', user_query)
-        text = ' '.join(words)  # Join the tokens back into a string    
-
-        world_info = awoc.AWOC()
+        text = ' '.join(words)  # Join the tokens back into a string
+    
+        world_info = AWOC()
         all_continents = set([continent.lower() for continent in world_info.get_continents_list()])
         for word in text.split():
             word = word.lower()
-            # check if this continent
             if word in all_continents:
                 target_countries = world_info.get_countries_list_of(word)
+                
                 for country in target_countries:
                     countries.add(world_info.get_country_data(country)['ISO3'])
+    
     return countries
-
 def filter_country(user_query):
     mentioned_countries = find_mentioned_country_code(user_query)
     print(mentioned_countries)
@@ -235,193 +260,93 @@ def title_contains_entity(entity, title):
 
 
 
-#This contains all filters for the semantic search
-#Context Similarity takes two queries and find how similar they are "context wise"
-#E.g "My house is empty today" and "Nobody is at my home" are same context but not word similarity
-# - Filter country relevant documents when mentioned 
-# - Filter by Context similarity in user_query and title, journal, content etc.
+# Function to convert country codes to country names
+def convert_codes_to_names(codes):
+    code_to_name = {country.alpha_3: country.name for country in pycountry.countries}
+    return {code_to_name.get(code, code) for code in codes}
 
-def filter_semanticsold(user_query, isInitialRun):
-    doc = nlp(user_query)
-    # # Extract all entities
-    entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
-    entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN","PROPN", "PRON", "PROPN", "NUM", "SYM", "X","ABBR"] or token.is_alpha)
 
-    # # Remove stop words
-    entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
+
+# Function to filter DataFrame based on country names
+def filter_dataframe_by_country_names(df, filtered_country_cde):
+    filtered_dfs = []
+    country_names = convert_codes_to_names(filtered_country_cde)
+    code_to_name = {country.alpha_3: country.name for country in pycountry.countries}
     
-    # entities = [('the Country Program Document', 'ORG'), ('Afghanistan', 'GPE'), ('the year 2014', 'DATE'), ('Afghanistan', 'GPE'), ('UNDP', 'ORG'), ('2015-2019', 'DATE'), ('looking', 'NOUN'), ('insights', 'NOUN'), ('Country', 'NOUN'), ('Program', 'NOUN'), ('Document', 'NOUN'), ('Afghanistan', 'NOUN'), ('year', 'NOUN'), ('2014', 'NOUN'), ('particularly', 'NOUN'), ('interested', 'NOUN'), ('understanding', 'NOUN'), ('Afghanistan', 'NOUN'), ('strategies', 'NOUN'), ('related', 'NOUN'), ('economic', 'NOUN'), ('development', 'NOUN'), ('governance', 'NOUN'), ('social', 'NOUN'), ('inclusion', 'NOUN'), ('Additionally', 'NOUN'), ('like', 'NOUN'), ('know', 'NOUN'), ('partnerships', 'NOUN'), ('international', 'NOUN'), ('organizations', 'NOUN'), ('UNDP', 'NOUN'), ('poverty', 'NOUN'), ('reduction', 'NOUN'), ('initiatives', 'NOUN'), ('gender', 'NOUN'), ('equality', 'NOUN'), ('measures', 'NOUN'), ('included', 'NOUN'), ('program', 'NOUN'), ('provide', 'NOUN'), ('details', 'NOUN'), ('planned', 'NOUN'), ('address', 'NOUN'), ('security', 'NOUN'), ('issues', 'NOUN'), ('sustainable', 'NOUN'), ('development', 'NOUN'), ('goals', 'NOUN'), ('timeframe', 'NOUN'), ('2015', 'NOUN'), ('-', 'NOUN'), ('2019', 'NOUN')]
-    # Print the extracted entities
-    # print("All Entities and POS:", entities)
-    # Generate DFs for main entities
-    filtered_df_country = pd.DataFrame()  # Initialize an empty DataFrame
-    filtered_df_others = pd.DataFrame()  # Initialize an empty DataFrame
-    filtered_df_backup_reference = pd.DataFrame() # Initialize an empty DataFrame
-    allow_low = True
-
-    # START 
-    for entity, label in entities:
-        # print(entity)
-        filtered_df_others = pd.concat([filtered_df_others, df[df['Document Title'].str.lower().str.contains(entity.lower(), na=False)]])
-
-        #Calculate similarity scores for each document title
-        similarity_scores = []
-        document_titles = []
-        similarity_score = 0
-        
-        # Iterate through each document title and calculate similarity score
-        for title in filtered_df_others['Document Title']:
-            if title is not None:
-
-                # if isInitialRun : 
-                #     similarity_score = jaccard_similarity(user_query,title)   
-                # else :
-                #     similarity_score = calculate_context_similarity(user_query,title)   
-                similarity_score = calculate_context_similarity(user_query,title)   
-
-                similarity_scores.append(similarity_score)
-                document_titles.append(title)
-        
-        # Create DataFrame only with valid similarity scores
-        similarity_df = pd.DataFrame({'Document Title': document_titles, 'Similarity Score': similarity_scores})
-        
-        df_temp = pd.concat([df])
-        # threshold = 0
-        # if isInitialRun : 
-        #     threshold = 0.05
-        # else : 
-        #     threshold = 0.5
-        threshold = 0.5
-
-
-        # Filter df based on similarity scores greater than threshold for filtered_df_others
-        filtered_df_others = df[df['Document Title'].isin(similarity_df[similarity_df['Similarity Score'] > threshold]['Document Title'])]
-        filtered_df_backup_reference = pd.concat([filtered_df_backup_reference,  df_temp[df_temp['Document Title'].isin(similarity_df[(similarity_df['Similarity Score'] >= 0.28) & (similarity_df['Similarity Score'] < 0.45)]['Document Title'])] ])
-        
-        #Check for location related e.g by country, language, locals
-        if label in ['GPE', 'NORP', 'LANGUAGE', 'FAC']:
-            filtered_df_country = pd.concat([filtered_df_country, df[df['Country Name'] == entity]])
-   
-    # END
-
-
-
-    merged_df = pd.DataFrame()
-    if filtered_df_others.empty and filtered_df_country.empty:
-    #    print(f'on the reference df {filtered_df_backup_reference.empty}')
-       merged_df = pd.concat([filtered_df_backup_reference])
-    else :
-       merged_df = pd.concat([filtered_df_country,filtered_df_others])
+    for code in filtered_country_cde:
+        country_name = code_to_name.get(code, None)
+        if country_name:
+            filtered_df = df[df['Country Code'] == code]
+            filtered_df['Country Name'] = country_name
+            filtered_dfs.append(filtered_df)
     
-    return merged_df
-
-
-def filter_semantics(user_query,isInitialRun):
-    doc = nlp(user_query)
-    entities = [(ent.text, ent.label_) for ent in doc.ents if ent.label_ != ""]  # Filter out empty entities
-    entities.extend((token.text, "NOUN") for token in doc if token.pos_ in ["NOUN", "PROPN", "PRON", "NUM", "SYM", "X", "ABBR"] or token.is_alpha)
-
-    # Remove stop words
-    entities = [(entity, label) for entity, label in entities if entity.lower() not in STOP_WORDS]
-
-    # Initialize empty DataFrames
-    filtered_df_country = pd.DataFrame()
-    filtered_df_others = pd.DataFrame()
-    filtered_df_others_title = pd.DataFrame()
-
-    filtered_df_backup_reference = pd.DataFrame()
-    allow_low = True
-
-    for entity, label in entities:
-       
-        filtered_df_others = pd.concat([filtered_df_others, df[df['Country Name'].str.lower().str.contains(entity.lower(), na=False)]])
-        filtered_df_others_title = pd.concat([filtered_df_others_title, df[df['Document Title'].str.lower().str.contains(entity.lower(), na=False)]])
-
-        # Calculate similarity scores for each document title and country name
-        similarity_scores_country = []
-        similarity_scores_title = []
-        document_titles = []
-
-        for index, row in filtered_df_others.iterrows():
-            country_name = row['Country Name']
-            document_title = row['Document Title']
-
-            if country_name is not None:
-                
-                similarity_score_country = calculate_context_similarity(user_query, country_name)
-                similarity_scores_country.append(similarity_score_country)
-            else:
-                similarity_scores_country.append(0)
-
-            if document_title is not None:
-                similarity_score_title = calculate_context_similarity(user_query, document_title)
-                similarity_scores_title.append(similarity_score_title)
-            else:
-                similarity_scores_title.append(0)
-
-            document_titles.append(document_title)
-        
-        similarity_df = pd.DataFrame({
-            'Country Name': filtered_df_others['Country Name'],
-            'Document Title': document_titles,
-            'Similarity Score Country': similarity_scores_country,
-            'Similarity Score Title': similarity_scores_title
-        })
-
-        # Define thresholds
-        threshold_country = 0.5
-        threshold_title = 0.5
-
-        # Filter df based on similarity scores greater than threshold
-        filtered_df_others = df[
-            df['Country Name'].isin(similarity_df[similarity_df['Similarity Score Country'] > threshold_country]['Country Name']) &
-            df['Document Title'].isin(similarity_df[similarity_df['Similarity Score Title'] > threshold_title]['Document Title'])
-        ]
-
-        filtered_df_backup_reference = pd.concat([filtered_df_backup_reference, df[
-            df['Country Name'].isin(similarity_df[(similarity_df['Similarity Score Country'] >= 0.1) & (similarity_df['Similarity Score Country'] < threshold_country)]['Country Name']) |
-            df['Document Title'].isin(similarity_df[(similarity_df['Similarity Score Title'] >= 0.1) & (similarity_df['Similarity Score Title'] < threshold_title)]['Document Title'])
-        ]])
-
-        # Check for location related e.g by country, language, locals
-        if label in ['GPE', 'NORP', 'LANGUAGE', 'FAC']:
-            filtered_df_country = pd.concat([filtered_df_country, df[df['Country Name'] == entity]])
-   
-    merged_df = pd.DataFrame()
-    # if filtered_df_others.empty and filtered_df_country.empty:
-    #     print(f'on the reference df {filtered_df_backup_reference.empty}')
-    #     merged_df = pd.concat([filtered_df_backup_reference])
-    # else:
-    merged_df = pd.concat([filtered_df_country, filtered_df_others, filtered_df_backup_reference,filtered_df_others_title])
+    if filtered_dfs:
+        result_df = pd.concat(filtered_dfs, ignore_index=True)
+    else:
+        result_df = pd.DataFrame()  # Return empty DataFrame if no matches
     
-    return merged_df
+    return result_df
+
+
+
+def average_word_context_embed(sentence):
+    # Ensure the input is a string
+    if not isinstance(sentence, str):
+        return None
+    
+    # If the sentence is empty, return None
+    if not sentence:
+        return None
+    
+    # Parse the sentence using SpaCy
+    doc = nlp(sentence)
+    
+    # Get word vectors and average them
+    vectors = [token.vector for token in doc if token.has_vector]
+    if vectors:
+        avg_vector = np.mean(vectors, axis=0)
+        return avg_vector
+    else:
+        return None
+
+def calculate_context_bool(uq, doc_, threshold):
+    avg_emb1 = average_word_context_embed(uq)
+    avg_emb2 = average_word_context_embed(doc_)
+    if avg_emb1 is None or avg_emb2 is None:
+        return False
+    
+    similarity = np.dot(avg_emb1, avg_emb2) / (np.linalg.norm(avg_emb1) * np.linalg.norm(avg_emb2))
+    return similarity > threshold  # Assuming 0.75 is the threshold for context similarity
+
 
  
-#run search on the vector pkl embeddings
-def search_embeddingsold(user_query, client, embedding_model, isInitialRun):
-    # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
-    # Call filter_semantics function once and store the result in a variable
-    filtered_result = filter_semantics(user_query, isInitialRun)
-    # Check if the result is not None before assigning it to df_filtered
-    df_filtered = filtered_result if filtered_result is not None else None
+def filter_semantics(user_query, isInitialRun): 
+    filtered_df_country = pd.DataFrame()
+    filtered_df_title_context = pd.DataFrame()
+    merged_df = pd.DataFrame()
 
-    if df_filtered is not None and not df_filtered.empty:  # Check if DataFrame is not None and not empty
-        length = len(df_filtered.head())
-        filtered_embeddings_arrays = np.array(list(df_filtered['Embedding']))
-        index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1]) 
-        index.add(filtered_embeddings_arrays)
+    filtered_df_country_code = find_mentioned_country_code(user_query)
+    filtered_df_country = filter_dataframe_by_country_names(df, filtered_df_country_code)
 
-        user_query_embedding = client.embeddings.create( 
-                input=user_query ,model= embedding_model
-            ).data[0].embedding
-
-        k = min(5, length)
-        distances, indices = index.search(np.array([user_query_embedding]), k)
-        return df_filtered, distances, indices
-    else:
-        return None, None, None
+    
+    filtered_df_title_context = df[df['Document Title'].notnull() & df['Document Title'].apply(lambda title: calculate_context_bool(user_query, title, 0.5))]
+    filtered_df_summary_context = df[df['Summary'].notnull() & df['Summary'].apply(lambda summary: calculate_context_bool(user_query, summary, 0.7))]
+    
+    # Ensure both DataFrames have the same columns before concatenating
+    if 'Country Name' not in filtered_df_title_context.columns:
+        filtered_df_title_context['Country Name'] = np.nan
+    if 'Country Name' not in filtered_df_summary_context.columns:
+        filtered_df_summary_context['Country Name'] = np.nan
+    
+    # Merge the two filtered DataFrames
+    merged_df = pd.concat([filtered_df_country, filtered_df_summary_context, filtered_df_title_context])
+    return merged_df
 
 
+
+ 
+ 
+ 
 def search_embeddings(user_query, client, embedding_model, isInitialRun):
     # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
     filtered_result = filter_semantics(user_query, isInitialRun)
@@ -518,6 +443,24 @@ def check_links_and_process_html(html, content_dict):
     result = str(soup)
     return result
 
+
+def check_links_and_process_html____(html, content_dict):
+    soup = BeautifulSoup(html, 'html.parser')
+    link_count = 1
+
+    for a in soup.find_all('a'):
+        href = a.get('href')
+        if any(d['link'] == href for d in content_dict.values()):
+            # Ensure the link adheres to the format <a href="LINK HERE">[n]</a>
+            a.string = f'{a.get_text()} [{link_count}]'
+            link_count += 1
+        else:
+            a.decompose()
+
+    result = str(soup)
+    return result
+
+
 def sort_by_relevancy(result_dict):
     # Convert the dictionary to a list of tuples (doc_id, info)
     result_list = list(result_dict.items())
@@ -530,14 +473,15 @@ def sort_by_relevancy(result_dict):
     
     return reversed_result_dict
 
- 
+
 def remove_thumbnails(data):
     data_no_thumbnails = copy.deepcopy(data)  # Make a deep copy of the data
     for doc_id, doc_info in data_no_thumbnails.items():
         if 'document_thumbnail' in doc_info:
             del doc_info['document_thumbnail']
     return data_no_thumbnails
-
+ 
+ 
 def map_to_structure(qs, isInitialRun, user_query):
     result_dict = {}
 
@@ -585,19 +529,46 @@ def map_to_structure(qs, isInitialRun, user_query):
             break
 
         # Sort the dictionary by relevancy
-        sorted_result_dict = sort_by_relevancy(result_dict)
+        # sorted_result_dict = sort_by_relevancy(result_dict)
 
-    return sorted_result_dict
+    return result_dict
 
 
-def semanticSearchModule(user_query, client, embedding_model, isInitialRun):
-    qs = search_embeddings(user_query,client, embedding_model,isInitialRun) #df, distances, indices
-    # if qs != None :
-    if qs[0] is not None:
-        result_structure = map_to_structure(qs,isInitialRun,user_query)
-        return result_structure
-    else : 
-        return []
+def process_queries(queries, user_query, client, embedding_model, isInitialRun):
+    merged_result_structure = {}
+
+    for query in queries:
+        # qs = search_embeddings(query)  # Assuming search_embeddings returns a tuple (df, distances, indices)
+        qs = search_embeddings(query,client, embedding_model,isInitialRun) #df, distances, indices
+        # print(f""" qs=== {qs} {isInitialRun} {user_query} | query == {query} """)
+        if qs[0] is not None:
+            result_structure = map_to_structure(qs,isInitialRun,user_query)
+            for doc_id, doc_info in result_structure.items():
+                merged_result_structure[doc_id] = doc_info
+        break
+    return merged_result_structure
+
+## module to extract text from documents and return the text and document codes
+def semanticSearchModule(user_query, client, embedding_model, isInitialRun, openai_deployment):
+    query_transformation = openai_call.callOpenAI(f"""
+    Given a question, your job is to break them into 3 main sub-question and return as array. 
+    
+    - You Must return output seperated by |
+    - Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
+
+    QUESTION: {user_query}
+    """, openai_deployment)
+    print(f""" query_transformation: {query_transformation} """)
+    
+    # Split the string by the delimiter '|'
+    questions_array = [question.strip() for question in query_transformation.split('|')]
+
+
+    merged_results = process_queries(questions_array,user_query, client, embedding_model, isInitialRun)
+    print(f""" merged_results===  {merged_results} """)
+    return merged_results
+
+
 
 def convertQueryIdeaToArray(query_idea_list):
     # Split the query idea list by the "|" character
@@ -642,23 +613,7 @@ def cleanJson(json_data):
     return modified_json
 
 
-# Function to relabel keys and add citations
-def relabel_and_add_citations(data):
-    new_data = {}
-    citation_counter = 1
 
-    for doc_id, doc_info in data.items():
-        new_data[doc_id] = {
-            "document_title": doc_info.get("title", ""),
-            "summary": doc_info.get("extract", ""),
-            "document_category": doc_info.get("category", ""),
-            "document_link": doc_info.get("link", ""),
-            "document_thumbnail": doc_info.get("thumbnail", ""),
-            "citation": citation_counter
-        }
-        citation_counter += 1
-
-    return new_data
 
 #Cleanup outputs
 # Parse the HTML content

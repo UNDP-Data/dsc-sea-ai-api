@@ -1,50 +1,82 @@
 {
-    "doc-422": {
-        "title": null,
-        "extract": "ENERGY PROFILE Kazakhstan COUNTRY INDICATORS AND SDGS Access to electricity (% population) Access to clean cooking (% population) Renewable energy (% TFEC) Energy intensity GDP per capita Real GDP growth rate % 27 100% 100% 27 % % 94% 26 / 80% % 26 60% % 25 25 ' -% 40% 24 -% 20% 24 -% 23 % % 2018 2019 2020 2021 2015 2016 2017 2015 2016 2017 2018 2019 2020 Per capita renewable capacity Air particulate matter (PM2) Public flows to renewables Urban Average Rural WHO safe 700 400 45 350 600 40 300 500 35 250 / 30 ) 400 / ( 200 25 300 20 150 15 200 100 10 100 50 28 2015 2016 2017 2018 2019 2020 2021 2015 2016 2017 2018 2019 2020 2015 2016 2017 2018 2019 2020 TOTAL ENERGY SUPPLY (TES) Total energy supply in 2020 Total Energy Supply (TES) Non-renewable (TJ) 2015 143 769 2020 713 294 % Renewable (TJ)",
-        "category": "NEPro",
-        "link": "https://www.irena.org/-/media/Files/IRENA/Agency/Statistics/Statistical_Profiles/Asia/Kazakhstan_Asia_RE_SP.pdf?country=Kazakhstan&regionID=&countryID=0b34fea8-c914-413a-92ef-c9393f1b1831",
-        "summary": NaN,
-        "thumbnail": ""
-    },
-    "doc-423": {
-        "title": null,
-        "extract": "Table of Contents: UNDP within the United Nations Sustainable Development Cooperation Framework : Page: II Programme priorities and partnerships………………………………………………… …………: Page: III Programme and risk management: Page: IV Monitoring and evaluation …………………………………………………………………………: Page: DP/DCP/KAZ/ UNDP within the United Nations Sustainable Development Cooperation Framework Kazakhstan is an upper-middle-income country which, after two decades of growth and steady socioeconomic progress, has reached critical juncture To meet its ambitious goal of becoming one of the 30 most developed nations in the world by 2050, Kazakhstan seeks to further modernize its institutions and reformulate policies to rebuild trust with citizens, address social vulnerabilities, diversify the economy and develop low-carbon alternatives for its growth pathway While Kazakhstan has achieved very high Human Development Index value of 8172 and has significantly reduced poverty levels, inequalities persist as result of unbalanced development across regions and social groups, especially pronounced in the country’ cities and remote rural areas The country’ economy is driven by exploitation of natural resources",
+    "doc-1": {
+        "title": "UN Country programme document for Bangladesh (Gasification and Power Generation Characteristics of Rice\nHusk, Sawdust, and Coconut Shell Using a Fixed-Bed\nDowndraft Gasifier)",
+        "extract": "Table of Contents: UNDP within the United Nations Sustainable Development Cooperation Framework : Page: II Programme priorities and partnerships………………………………………………… …………: Page: III Programme and risk management …………………………………………………………………: Page: IV Monitoring and evaluation …………………………………………………………………………: Page: DP/DCP/BGD/ UNDP within the United Nations Sustainable Development Cooperation Framework Bangladesh has made significant progress in human development, poverty reduction and economic growth, which makes it eligible to graduate from least developed country (LDC) status by Food production tripled between 1973 and 2019 and from 2009 to 2019, annual gross domestic product (GDP) growth averaged per cent and per capita income rose from $754 to $,This in turn has resulted in the reduction of poverty from 35 to 20 per cent in the same period Gains in educational attainment, lower fertility rates, agricultural growth, disaster resilience and remittance inflows all contributed to this reduction As the service and industry sectors account for the bulk of GDP, investments in training and upskilling in sectors such as agriculture",
         "category": "CPD",
-        "link": "https://digitallibrary.un.org/record/3874133/files/DP_DCP_KAZ_4-EN.pdf?ln=en",
+        "link": "https://digitallibrary.un.org/record/3933628/files/DP_DCP_BGD_4-EN.pdf?ln=en",
         "summary": NaN,
         "thumbnail": ""
     },
-    "doc-340": {
-        "title": "UN Country programme document for Burundi (2019-2023)",
-        "extract": "Table of Contents: Programme rationale : Page: II Programme priorities and partnerships………………………………………………… …………: Page: IV Monitoring and evaluation …………………………………………………………………………: Page: DP/DCP/BDI/ Programme rationale The 2005 elections enabled Burundi to re-establish democratic system and enhance the business environment for private sector development, which led to an average economic growth rate of per cent1 between 2005 and However, the 2015 political crisis slowed the country’ economic development trajectory, and peacebuilding and social cohesion have remained challenging since then The country has continued to implement its national development agenda with focus on community development and social cohesion, with commendable results in improving access to education (96 per cent) and drinking water (73 per cent) Burundi has achieved universal primary and lower secondary education Burundi ranks 108 of 188 on the Gender Inequality Index with rate of 4744 and is making progress on political representation with women holding 32 per cent of seats in the National Assembly, 42 per cent in the Senate, per",
-        "category": "CPD",
-        "link": "https://digitallibrary.un.org/record/1656941/files/DP_DCP_BDI_4-EN.pdf?ln=en",
+    "doc-2": {
+        "title": "BANGLADESH STRATEGIC PLAN ON AGRICULTURAL AND RURAL STATISTICS",
+        "extract": "BANGLADESH STRATEGIC PLAN ON AGRICULTURAL AND RURAL STATISTICS () June 2017 Bangladesh Bureau of Statistics (BBS) Statistics and Informatics Division (SID) Ministry of Planning Secretary Statistics and Informatics Division (SID) Ministry of Planning Government of the People’ Republic of Bangladesh FOREWORD Its my pleasure to present you the Bangladesh Strategic Plan for Agricultural and Rural Statistics-SPARS that was approved by Ministry of Planning on -The Bangladesh SPARS translates the five core strategic goals with 37 output and 87 actions for improvement of agricultural and rural statistics synergized with the goals of National Strategy for the Development of Statistics-NSDS, National Agricultural Policy-NAP as well as 7th five year plans The SPARS was prepared with the support of FAO in line with the Global Strategy to improve Agricultural and Rural Statistics (GSARS)- global initiative that was developed under the guidelines of United Nations Statistics Division (UNSD) and was endorsed in 2012 by United Nations Statistical Commission (UNSC) It will facilitate to buildup",
+        "category": "NSP",
+        "link": "https://policy.asiapacificenergy.org/sites/default/files/SPARS_Final_BBS_Rev_090817.pdf",
         "summary": NaN,
         "thumbnail": ""
     },
-    "doc-342": {
-        "title": "EUEI Energy Strategy and Action Plan for Burundi",
-        "extract": "Energy Strategy and Action Plan for Burundi Background Region Burundi Only two percent of Burundi’ population have access to electricity Of these, most live in Bujumbura, the capital city Since 1993, the country’ energy infrastructure has been largely destroyed as result of inter-ethnic conflict Additionally, an embargo in 1996 and the scarcity of for- eign currency have contributed to energy projects receiving little investment Burundi’ electrical grid supplies MW, most of which comes from the Rwegura and Mugere hydropower plants (generating 18 and MW respectively) Project Partner Ministry of Energy and Mining Directorate General of Energy and Water Project Manager Steffen Behrle Term November 2009 – April 2011 Biomass The effective measurement of wood-fuel production and consumption is essential to achieving the sustainable use of Burundi’ wood-fuel resources In another step towards balancing demand and supply, important improvements can be made by increasing the energy efficiency of forestry and wood combustion Three main activities thus stand in focus: awareness creation",
-        "category": "NES",
-        "link": "https://cdn.climatepolicyradar.org/navigator/BDI/2011/energy-strategy-and-action-plan-2011_96451afd5519ade22748864dc1bd389f.pdf",
+    "doc-3": {
+        "title": "NATIONAL ENERGY POLICY",
+        "extract": "NATIONAL ENERGY POLICY (Updated in 2005) GOVERNMENT OF THE PEOPLE’ REPUBLIC OF BANGLADESH MINISTRY OF POWER, ENERGY AND MINERAL RESOURCES DHAKA, NOVEMBER 2005 Contents SL NO NAME OF POLICY SELECTION PAGE STRATEGY PLANNING & MANAGEMENT INTEGRATION OF ENERGY OF RURAL DEVELOPMENT II SMALL AND CAPTIVE POLICY III PRIVATE SECTOR POWER GENERATION POLICY IV RENEWABLE ENERGY POLICY VI VII VIII IX XI XII INTRODUCTION Background Improving access to energy in Bangladesh is fundamental contribution to poverty reduction and key to attaining the United Nations Millennium Development Goals As energy is prerequisite for social and economic development it is essential to move towards sustainability in energy systems both in order to protect natural life-support systems on which humanity depends, and to eradicate poverty With rapid change of global as well as domestic situation it has become necessary to update National Energy Policy (NEP) of Bangladesh, which was formulated in 1996 to proper exploration, production, transmission, distribution and rational use of energy sources",
+        "category": "NEP",
+        "link": "https://policy.asiapacificenergy.org/sites/default/files/National%20Energy%20Policy-%20Bangladesh.pdf",
         "summary": NaN,
         "thumbnail": ""
     },
-    "doc-344": {
-        "title": "IRENA Energy Profile Burundi",
-        "extract": "ENERGY PROFILE Burundi COUNTRY INDICATORS AND SDGS Access to electricity (% population) Access to clean cooking (% population) Renewable energy (% TFEC) Energy intensity GDP per capita Real GDP growth rate % 100% % / 80% % 60% % -% ' -% 40% -% 20% 10% -% % %% 2018 2019 2020 2021 2015 2016 2017 2015 2016 2017 2018 2019 2020 Per capita renewable capacity Air particulate matter (PM2) Public flows to renewables Urban Average Rural WHO safe 120 112 35 100 30 80 25 / ) / ( 20 60 15 40 10 20 2015 2016 2017 2018 2019 2020 2021 2015 2016 2017 2018 2019 2020 2015 2016 2017 2018 2019 2020 TOTAL ENERGY SUPPLY (TES) Total energy supply in 2020 Total Energy Supply (TES) Non-renewable (TJ) 2015 679 2020 11 201 Renewable (TJ) 56 299 56 521 16% % Oil Total (TJ) 61 978 67 722 Gas Renewable share (%) 91 83 Nuclear Coal + others",
+    "doc-4": {
+        "title": "RENEWABLE ENERGY POLICY OF\nBANGLADESH ",
+        "extract": "RENEWABLE ENERGY POLICY OF BANGLADESH POWER DIVISION MINISTRY OF POWER, ENERGY AND MINERAL RESOURCES GOVERNMENT OF THE PEOPLE’ REPUBLIC OF BANGLADESH 18 DECEMBER 2008 DHAKA -- Table of Contents: RIGHT TO INTERPRETATION: Page: Introduction Energy is one of the basic ingredients required to alleviate poverty and socio-economic development GOB has issued its Vision and Policy Statement in February 2000, to bring the entire country under electricity service by the year 2020 in phases, in line with the direction of the Article 16 of ‘The Constitution of the People’ Republic of Bangladesh,’ to remove the disparity in the standards of living between the urban and rural areas through rural electrification and development The energy prospect is generally assessed on the basis of available commercial sources of energy , fossil fuel like gas, coal, oil etc Worldwide, there is major transition underway in the energy sector It is happening due to the following three major reasons: () decline in fossil fuel availability,",
+        "category": "NREP",
+        "link": "https://policy.asiapacificenergy.org/sites/default/files/REP_English.pdf",
+        "summary": NaN,
+        "thumbnail": ""
+    },
+    "doc-5": {
+        "title": "RENEWABLE ENERGY POLICY OF\nBANGLADESH",
+        "extract": "RENEWABLE ENERGY POLICY OF BANGLADESH POWER DIVISION MINISTRY OF POWER, ENERGY AND MINERAL RESOURCES GOVERNMENT OF THE PEOPLE’ REPUBLIC OF BANGLADESH 18 DECEMBER 2008 DHAKA -- Table of Contents: RIGHT TO INTERPRETATION: Page: Introduction Energy is one of the basic ingredients required to alleviate poverty and socio-economic development GOB has issued its Vision and Policy Statement in February 2000, to bring the entire country under electricity service by the year 2020 in phases, in line with the direction of the Article 16 of ‘The Constitution of the People’ Republic of Bangladesh,’ to remove the disparity in the standards of living between the urban and rural areas through rural electrification and development The energy prospect is generally assessed on the basis of available commercial sources of energy , fossil fuel like gas, coal, oil etc Worldwide, there is major transition underway in the energy sector It is happening due to the following three major reasons: () decline in fossil fuel availability,",
+        "category": "NREP",
+        "link": "https://cdn.climatepolicyradar.org/navigator/BGD/2008/renewable-energy-policy_e565cee6c10a86a04562acce2c6bf8a3.pdf",
+        "summary": NaN,
+        "thumbnail": ""
+    },
+    "doc-6": {
+        "title": "BANGLADESH SCALNG UP RENEWABLE ENERGY PROJECT",
+        "extract": "PROCUREMENT PLAN (Mandatory Requirements) BANGLADESH SCALNG UP RENEWABLE ENERGY PROJECT (P161869) PROJECT IMPLEMENTATION AGENCIES: Electricity Generation Company of Bangladesh (EGCB) Infrastructure Development Company Limited (IDCOL) Sustainable and Renewable Energy Development Authority (SREDA) Period covered by this Procurement Plan: Entire Project Period Preamble In accordance with paragraph of the World Bank Procurement Regulations for IPF Borrowers, July 2016 revised November 2017 (“Procurement Regulations”), the Bank’ Systematic Tracking and Exchanges in Procurement (STEP) system will be used to record all procurement actions for the Project, including preparing, updating and clearing its Procurement Plan, and seeking and receiving the Bank’ review and No-objection to procurement actions as required This textual part along with the Procurement Plan tables in STEP constitute the Procurement Plan for the Project The following conditions apply to all procurement activities in the Procurement Plan The other elements of the Procurement Plan as required under paragraph of the Procurement Regulations are set forth in STEP The Bank’ Standard Procurement Documents:",
+        "category": "SREP",
+        "link": "https://documents1.worldbank.org/curated/en/099082923121069169/pdf/P1618690588efe06e0ad9004022bffa8f55.pdf",
+        "summary": NaN,
+        "thumbnail": ""
+    },
+    "doc-7": {
+        "title": "The Bangladesh Atomic Energy Regulatory Act, 2012",
+        "extract": "†iwR÷vW© bs wW - evsjv‡` †‡RU AwZwi³ msL¨ KZ…©¶ KZ…© cÖKvwkZ iweevi, †‡¤^ 17, 2017 Government of the People’ Republic of Bangladesh Ministry of Science and Technology NOTIFICATION Dated: 30 August 2017 No 277-Law/In exercise of the powers conferred by section 70 of the Bangladesh Atomic Energy Regulatory Act, 2012, the Government is pleased to publish the following Authentic English Text of the Act, and it takes effect from the date on which the Act comes into force under sub-section () of section of this Act: The Bangladesh Atomic Energy Regulatory Act, 2012 Act No 19 of 2012 [ 19 June, 2012/ Ashar, 1419] An Act to make new law by repealing and consolidating the existing Act related to regulation of the peaceful uses of atomic energy Whereas it is expedient and necessary to make new law by repealing and consolidation the existing Act related to regulation of the peaceful uses of atomic energy; Therefore, it is hereby enacted as",
+        "category": "AREA",
+        "link": "https://policy.asiapacificenergy.org/sites/default/files/Bangladesh%20Atomic%20Energy%20Regulatory%20Act%2C%202012%20%28Act%20No.%2019%20of%202012%29.pdf",
+        "summary": NaN,
+        "thumbnail": ""
+    },
+    "doc-8": {
+        "title": "The Bangladesh Atomic Energy Regulatory Act",
+        "extract": "†iwR÷vW© bs wW - evsjv‡` †‡RU AwZwi³ msL¨ KZ…©¶ KZ…© cÖKvwkZ iweevi, †‡¤^ 17, 2017 Government of the People’ Republic of Bangladesh Ministry of Science and Technology NOTIFICATION Dated: 30 August 2017 No 277-Law/In exercise of the powers conferred by section 70 of the Bangladesh Atomic Energy Regulatory Act, 2012, the Government is pleased to publish the following Authentic English Text of the Act, and it takes effect from the date on which the Act comes into force under sub-section () of section of this Act: The Bangladesh Atomic Energy Regulatory Act, 2012 Act No 19 of 2012 [ 19 June, 2012/ Ashar, 1419] An Act to make new law by repealing and consolidating the existing Act related to regulation of the peaceful uses of atomic energy Whereas it is expedient and necessary to make new law by repealing and consolidation the existing Act related to regulation of the peaceful uses of atomic energy; Therefore, it is hereby enacted as",
+        "category": "AREA",
+        "link": "https://policy.asiapacificenergy.org/sites/default/files/Bangladesh%20Atomic%20Energy%20Regulatory%20Act%2C%202012%20%28Act%20No.%2019%20of%202012%29.pdf",
+        "summary": NaN,
+        "thumbnail": ""
+    },
+    "doc-9": {
+        "title": "Energy Profile Bangladesh IRENA",
+        "extract": "ENERGY PROFILE Bangladesh COUNTRY INDICATORS AND SDGS Access to electricity (% population) Access to clean cooking (% population) Renewable energy (% TFEC) Energy intensity GDP per capita Real GDP growth rate % 99% 100% % % % / 80% % % 60% % ' % 40% % 20% 26% % % % % 2018 2019 2020 2021 2015 2016 2017 2015 2016 2017 2018 2019 2020 Per capita renewable capacity Air particulate matter (PM2) Public flows to renewables Urban Average Rural WHO safe 500 450 60 400 50 350 300 / 40 ) / ( 250 30 200 150 20 100 10 23 50 2015 2016 2017 2018 2019 2020 2021 2015 2016 2017 2018 2019 2020 2015 2016 2017 2018 2019 2020 TOTAL ENERGY SUPPLY (TES) Total energy supply in 2020 Total Energy Supply (TES) Non-renewable (TJ) 2015 207 885 2020 542 935 Renewable (TJ) 596 962 536 582 16% Oil Total (TJ) 804 847 079 517 26% Gas",
         "category": "NEPro",
-        "link": "https://www.irena.org/-/media/Files/IRENA/Agency/Statistics/Statistical_Profiles/Africa/Burundi_Africa_RE_SP.pdf?country=Burundi&regionID=&countryID=1cf53483-c4ea-44b3-b081-e55ae0e4795b",
+        "link": "https://www.irena.org/-/media/Files/IRENA/Agency/Statistics/Statistical_Profiles/Asia/Bangladesh_Asia_RE_SP.pdf?country=Bangladesh&regionID=&countryID=ec4f9ec9-be08-43e1-bcdc-8a0c4a893c3f",
         "summary": NaN,
         "thumbnail": ""
     },
-    "doc-178": {
-        "title": "UNDP report shows women’s rising role in the Kazakhstan renewable energy sector",
-        "extract": "The United Nations Development Programme (UNDP) in Kazakhstan has published an in-depth analysis of the gender balance in the renewable energy sector (RES) in Kazakhstan.The report showed that the proportion of women in Kazakhstan's energy sector remains lower than that of men. Specifically, the average representation of women in the coal industry was 22 percent, while in the oil and gas sector it was 18 percent. In contrast, the percentage of women employed in the renewable energy sector reached 30 percent, which is a positive indicator of the comparatively high attractiveness of the renewable energy sector for women compared to traditional energy sectors.Despite the positive trend, the energy sector continues to struggle with gender inequalities, especially at decision- making levels. The report revealed that in Kazakhstan, women in the energy sector are concentrated in low-skilled roles, with high percentages of unskilled women workers, especially in electricity (53 percent). Fewer women hold managerial (16 percent) or technical (19 percent) positions. In",
-        "category": "Publications",
-        "link": "https://www.undp.org/kazakhstan/news/undp-report-shows-womens-rising-role-kazakhstan-renewable-energy-sector",
-        "summary": "The UNDP in Kazakhstan conducted an analysis of gender balance in the renewable energy sector. The report found that women are underrepresented in the energy sector overall, but the proportion of women in renewable energy is higher compared to traditional energy sectors. However, there are still gender inequalities, particularly in decision-making roles. The report also highlighted the global growth of the renewable energy workforce and the potential for job creation in the sector. The findings were presented at a workshop on women's empowerment in renewable energy, which aimed to address gender inequalities and establish a network of women in the sector.",
+    "doc-10": {
+        "title": "GAS SECTOR MASTER PLAN\nBANGLADESH 2017",
+        "extract": "GAS SECTOR MASTER PLAN BANGLADESH 2017 Ramboll Hannemanns Allé 53 DK-2300 Copenhagen Denmark +45 5161 1000 +45 5161 1001 II Intended for Petrobangla, PowerCell Document type Final Report Date 28 February 2018 Revision Made by Gang Lu, Per Jørgensen, Bent Svensson, Arnfried Lemp, Fraser Wyllie, Carsten Møller Nielsen, Ioannis Abatzis, Asaduzzaman, Mirza Habib Checked by Per Jørgensen, Bent Svensson, Arnfried Lemp, Søren Løvstad Christensen Approved by Per Jørgensen, Søren Løvstad Christensen CONTENTS 10 11 12 16 24 24 25 28 29 Bangladesh energy sector current status – burning challenge 29 44 46 52 59 62 64 66 68 69 71 73 80 80 98 106 122 123 124 124 126 126 135 136 137 139 139 140 143 144 148 157 EXECUTIVE SUMMARY ROAD MAP AND RECOMMENDATIONS INTRODUCTION AND CONTEXT OF THE PROJECT Background Problem statement Overview of this final report GAS DEMAND Scenarios Setting Gas demand forecast methodology Power sector gas demand forecast Captive power sector gas demand forecast",
+        "category": "NGP",
+        "link": "https://policy.asiapacificenergy.org/sites/default/files/Gas%20Sector%20Master%20Plan%20Bangladesh%202017.pdf",
+        "summary": NaN,
         "thumbnail": ""
     }
 }
