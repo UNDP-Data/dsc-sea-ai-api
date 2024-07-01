@@ -248,6 +248,7 @@ def send_prompt_llm():
                 isInitialRun = TRUE
                 excerpts_dict = {}
                 entities_array = list(entities_dict["entities"].keys()) if entities_dict else []
+                
                 data_dir = "data/KG"
                 kg_content = processing_modules.find_kg(entities_array, data_dir)
                 response = {
@@ -260,7 +261,6 @@ def send_prompt_llm():
                     "kg_data": kg_content
                 }
                 # session['session_id'] = session_id #save the session id
-
 
 
             # Return the response
