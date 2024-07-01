@@ -537,32 +537,31 @@ def map_to_structure(qs, isInitialRun, user_query):
 def process_queries(queries, user_query, client, embedding_model, isInitialRun):
     merged_result_structure = {}
 
-    for query in queries:
+    # for query in queries:
         # qs = search_embeddings(query)  # Assuming search_embeddings returns a tuple (df, distances, indices)
-        qs = search_embeddings(query,client, embedding_model,isInitialRun) #df, distances, indices
+    qs = search_embeddings(user_query,client, embedding_model,isInitialRun) #df, distances, indices
         # print(f""" qs=== {qs} {isInitialRun} {user_query} | query == {query} """)
-        if qs[0] is not None:
-            result_structure = map_to_structure(qs,isInitialRun,user_query)
-            for doc_id, doc_info in result_structure.items():
-                merged_result_structure[doc_id] = doc_info
-        break
+    if qs[0] is not None:
+        result_structure = map_to_structure(qs,isInitialRun,user_query)
+        for doc_id, doc_info in result_structure.items():
+            merged_result_structure[doc_id] = doc_info
     return merged_result_structure
 
 ## module to extract text from documents and return the text and document codes
 def semanticSearchModule(user_query, client, embedding_model, isInitialRun, openai_deployment):
-    query_transformation = openai_call.callOpenAI(f"""
-    Given a question, your job is to break them into 3 main sub-question and return as array. 
+    # query_transformation = openai_call.callOpenAI(f"""
+    # Given a question, your job is to break them into 3 main sub-question and return as array. 
     
-    - You Must return output seperated by |
-    - Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
+    # - You Must return output seperated by |
+    # - Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
 
-    QUESTION: {user_query}
-    """, openai_deployment)
-    print(f""" query_transformation: {query_transformation} """)
+    # QUESTION: {user_query}
+    # """, openai_deployment)
+    # print(f""" query_transformation: {query_transformation} """)
     
-    # Split the string by the delimiter '|'
-    questions_array = [question.strip() for question in query_transformation.split('|')]
-
+    # # Split the string by the delimiter '|'
+    # questions_array = [question.strip() for question in query_transformation.split('|')]
+    questions_array =[]
 
     merged_results = process_queries(questions_array,user_query, client, embedding_model, isInitialRun)
     print(f""" merged_results===  {merged_results} """)
