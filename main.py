@@ -188,7 +188,7 @@ def send_prompt_llm():
                         content = content.replace(result['element'], f""" {result['citation_fixes']} <a href='{result['link']}' data-id='{result['doc_id']}'>[{counter}]</a> <br/>\n\n""")
                         
                     sorted_sources = sources
-                    print(sorted_sources)
+                    # print(sorted_sources)
                         #Send initial response to user while processing final answer on final documents
                     # response = {
                     #         "answer": content.replace("\n","<br/>"),
