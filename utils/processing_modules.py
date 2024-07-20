@@ -479,6 +479,12 @@ def remove_thumbnails(data):
     for doc_id, doc_info in data_no_thumbnails.items():
         if 'document_thumbnail' in doc_info:
             del doc_info['document_thumbnail']
+
+    for doc_id, doc_info in data_no_thumbnails.items():
+        if 'content' in doc_info:
+            del doc_info['content']
+
+    
     return data_no_thumbnails
  
  
@@ -517,6 +523,9 @@ def map_to_structure(qs, isInitialRun, user_query):
             "document_thumbnail": str(row["Thumbnail"]) if row["Thumbnail"] is not None else "",
             "relevancy": extract_similarity
         }
+
+        # "content": str(row["Content"]).replace("\n","") if row["Content"] is not None else "",
+
 
         # Add the document to the result dictionary
         result_dict[document_id] = document_info
