@@ -27,4 +27,3 @@ a-world-of-countries
 tiktoken
 beautifulsoup4
 nltk
-sentence_transformers
