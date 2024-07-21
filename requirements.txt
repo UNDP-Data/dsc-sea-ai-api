@@ -26,3 +26,4 @@ country-named-entity-recognition
 a-world-of-countries
 tiktoken
 beautifulsoup4
+nltk
