@@ -24,6 +24,7 @@ import base64
 import json
 import copy
 from country_named_entity_recognition import find_countries
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # import custom utils functions 
 import utils.processing_modules as processing_modules
@@ -32,6 +33,15 @@ import utils.indicator as indicator_module
 from bs4 import BeautifulSoup
 
 from awoc import AWOC
+
+
+import pandas as pd
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+
+import string
+
 
 # model = transformers.BertModel.from_pretrained('bert-base-uncased')
 # tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
@@ -319,8 +329,64 @@ def calculate_context_bool(uq, doc_, threshold):
     return similarity > threshold  # Assuming 0.75 is the threshold for context similarity
 
 
- 
+def preprocess_text(text):
+    """Preprocess the text by converting to lowercase and removing punctuation."""
+    if pd.isna(text):
+        return ""
+    return text.lower().translate(str.maketrans('', '', string.punctuation))
+
+def filter_semanticsolddd(query, isInitialRun):
+    """Filter the DataFrame based on the similarity of keywords in the query."""
+    # Preprocess the query
+    processed_query = preprocess_text(query)
+    query_keywords = processed_query.split()
+
+    # Combine the keywords with '|' to use with str.contains for any match
+    pattern = '|'.join(query_keywords)
+    print(f""" pattern==== {pattern} \n\n\n """)
+    # Filter the DataFrame based on the presence of any query keyword in the document titles
+    filtered_df = df[df['Document Title'].str.contains(query, case=False, na=False)]
+
+    return filtered_df
+
+
 def filter_semantics(user_query, isInitialRun): 
+    # Initialize the text embedding model
+    # model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
+    model_name = 'paraphrase-MiniLM-L6-v2'
+    model = SentenceTransformer(model_name, device='cpu')
+
+    # If no documents match the keyword, return an empty DataFrame
+    if df.empty:
+        return pd.DataFrame()
+
+    # Concatenate 'Document Title' and 'Country Name' to form the text for each document
+    df['combined_text'] = df['Document Title'].astype(str) + " " + df['Country Name'].astype(str)
+
+    # Encode the query and document texts
+    query_embedding = model.encode([user_query])
+    document_embeddings = model.encode(df['combined_text'].tolist())
+
+    # Calculate cosine similarity between the query and document embeddings
+    similarity_scores = cosine_similarity(query_embedding, document_embeddings).flatten()
+
+    # Add the similarity scores to the DataFrame
+    df['similarity_score'] = similarity_scores
+
+    # Filter the DataFrame to include only documents with a similarity score above 0.8
+    filtered_df = df[df['similarity_score'] > 0.6]
+
+    if filtered_df.empty:
+        filtered_df = df[df['similarity_score'] > 0.3]
+
+    # Print the filtered DataFrame
+    filtered_df = filtered_df.sort_values(by='similarity_score', ascending=False)
+    return filtered_df
+        
+
+ 
+def filter_semantics_old(user_query, isInitialRun): 
     filtered_df_country = pd.DataFrame()
     filtered_df_title_context = pd.DataFrame()
     merged_df = pd.DataFrame()
