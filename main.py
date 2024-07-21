@@ -189,17 +189,7 @@ def send_prompt_llm():
                         content = content.replace(result['element'], f""" {result['citation_fixes']} <a href='{result['link']}' data-id='{result['doc_id']}'>[{counter}]</a> <br/>\n\n""")
                         
                     sorted_sources = sources
-                    # print(sorted_sources)
-                        #Send initial response to user while processing final answer on final documents
-                    # response = {
-                    #         "answer": content.replace("\n","<br/>"),
-                    #         "user_query": user_query,
-                    #         "entities": list(entities_dict["entities"].keys()) if entities_dict else [],
-                    #         "query_ideas": query_idea_list if query_idea_list else [],
-                    #         "excerpts_dict" : sorted_sources,
-                    #         "indicators_dict": indicators_dict
-                    #     }
-
+                
                     #final cleanup using openAI
                     cleanup_content = openai_call.callOpenAI(f""" Ignore previous commands !!!
                                                     Strictly follow the below:
@@ -214,7 +204,7 @@ def send_prompt_llm():
                                                     SENTENCE: {content}  
                                                 """, openai_deployment)
                     cleanup_content = cleanup_content.replace("\n","")
-                    #cleanup_content = processing_modules.cleanCitation(cleanup_content)
+                    # cleanup_content = processing_modules.cleanCitation(cleanup_content)
                     #cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
                     # Construct the final response using OrderedDict to preserve key order
                     response = OrderedDict([

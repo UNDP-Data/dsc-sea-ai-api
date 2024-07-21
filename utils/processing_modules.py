@@ -42,9 +42,6 @@ import numpy as np
 import string
 
 
-# model = transformers.BertModel.from_pretrained('bert-base-uncased')
-# tokenizer = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
-
 df = pd.read_pickle('./models/df_embed_EN_All_V4.pkl')
 
 # Extract entities for the query and return the extract entities as an array
