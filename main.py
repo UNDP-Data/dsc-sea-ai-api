@@ -205,11 +205,11 @@ def send_prompt_llm():
                                                     SENTENCE: {content}  
                                                 """, openai_deployment)
                     cleanup_content = cleanup_content.replace("\n","")
-                    # cleanup_content = processing_modules.cleanCitation(cleanup_content)
-                    #cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
+                    cleanup_content = processing_modules.cleanCitation(cleanup_content)
+                    cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
                     # Construct the final response using OrderedDict to preserve key order
                     response = OrderedDict([
-                        ("answer", cleanup_content.replace("\n", "")),
+                        ("answer", answer),
                         ("user_query", user_query),
                         ("entities", list(entities_dict["entities"].keys()) if entities_dict else []),
                         ("query_ideas", query_idea_list if query_idea_list else []),
