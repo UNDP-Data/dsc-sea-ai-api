@@ -37,7 +37,6 @@ from awoc import AWOC
 
 import pandas as pd
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
 
 import string
@@ -350,13 +349,9 @@ def filter_semanticsolddd(query, isInitialRun):
     return filtered_df
 
 
-def filter_semantics(user_query, isInitialRun): 
-    # Initialize the text embedding model
-    # model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+   
 
-    model_name = 'paraphrase-MiniLM-L6-v2'
-    model = SentenceTransformer(model_name, device='cpu')
-
+def filter_semantics(user_query, isInitialRun):
     # If no documents match the keyword, return an empty DataFrame
     if df.empty:
         return pd.DataFrame()
@@ -364,9 +359,10 @@ def filter_semantics(user_query, isInitialRun):
     # Concatenate 'Document Title' and 'Country Name' to form the text for each document
     df['combined_text'] = df['Document Title'].astype(str) + " " + df['Country Name'].astype(str)
 
-    # Encode the query and document texts
-    query_embedding = model.encode([user_query])
-    document_embeddings = model.encode(df['combined_text'].tolist())
+    # Use TF-IDF Vectorizer to encode the text
+    vectorizer = TfidfVectorizer(stop_words='english')
+    document_embeddings = vectorizer.fit_transform(df['combined_text'])
+    query_embedding = vectorizer.transform([user_query])
 
     # Calculate cosine similarity between the query and document embeddings
     similarity_scores = cosine_similarity(query_embedding, document_embeddings).flatten()
@@ -374,41 +370,17 @@ def filter_semantics(user_query, isInitialRun):
     # Add the similarity scores to the DataFrame
     df['similarity_score'] = similarity_scores
 
-    # Filter the DataFrame to include only documents with a similarity score above 0.8
+    # Filter the DataFrame to include only documents with a similarity score above 0.6
     filtered_df = df[df['similarity_score'] > 0.6]
 
+    # If the filtered DataFrame is empty, relax the threshold
     if filtered_df.empty:
         filtered_df = df[df['similarity_score'] > 0.3]
 
-    # Print the filtered DataFrame
+    # Sort the filtered DataFrame by similarity score
     filtered_df = filtered_df.sort_values(by='similarity_score', ascending=False)
+    
     return filtered_df
-        
-
- 
-def filter_semantics_old(user_query, isInitialRun): 
-    filtered_df_country = pd.DataFrame()
-    filtered_df_title_context = pd.DataFrame()
-    merged_df = pd.DataFrame()
-
-    filtered_df_country_code = find_mentioned_country_code(user_query)
-    filtered_df_country = filter_dataframe_by_country_names(df, filtered_df_country_code)
-
-    
-    filtered_df_title_context = df[df['Document Title'].notnull() & df['Document Title'].apply(lambda title: calculate_context_bool(user_query, title, 0.65))]
-    filtered_df_summary_context = df[df['Summary'].notnull() & df['Summary'].apply(lambda summary: calculate_context_bool(user_query, summary, 0.7))]
-    
-    # Ensure both DataFrames have the same columns before concatenating
-    if 'Country Name' not in filtered_df_title_context.columns:
-        filtered_df_title_context['Country Name'] = np.nan
-    if 'Country Name' not in filtered_df_summary_context.columns:
-        filtered_df_summary_context['Country Name'] = np.nan
-    
-    # Merge the two filtered DataFrames
-    merged_df = pd.concat([filtered_df_country, filtered_df_summary_context, filtered_df_title_context])
-    return merged_df
-
-
 
  
  
