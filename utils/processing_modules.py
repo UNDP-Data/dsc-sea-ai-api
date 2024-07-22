@@ -331,21 +331,6 @@ def preprocess_text(text):
         return ""
     return text.lower().translate(str.maketrans('', '', string.punctuation))
 
-def filter_semanticsolddd(query, isInitialRun):
-    """Filter the DataFrame based on the similarity of keywords in the query."""
-    # Preprocess the query
-    processed_query = preprocess_text(query)
-    query_keywords = processed_query.split()
-
-    # Combine the keywords with '|' to use with str.contains for any match
-    pattern = '|'.join(query_keywords)
-    print(f""" pattern==== {pattern} \n\n\n """)
-    # Filter the DataFrame based on the presence of any query keyword in the document titles
-    filtered_df = df[df['Document Title'].str.contains(query, case=False, na=False)]
-
-    return filtered_df
-
-
    
 
 def filter_semantics(user_query, isInitialRun):
@@ -368,11 +353,11 @@ def filter_semantics(user_query, isInitialRun):
     df['similarity_score'] = similarity_scores
 
     # Filter the DataFrame to include only documents with a similarity score above 0.6
-    filtered_df = df[df['similarity_score'] > 0.6]
+    filtered_df = df[df['similarity_score'] > 0.5]
 
     # If the filtered DataFrame is empty, relax the threshold
     if filtered_df.empty:
-        filtered_df = df[df['similarity_score'] > 0.3]
+        filtered_df = df[df['similarity_score'] > 0.2]
 
     # Sort the filtered DataFrame by similarity score
     filtered_df = filtered_df.sort_values(by='similarity_score', ascending=False)
@@ -420,11 +405,24 @@ def get_answer(user_question, relevant_docs,openai_deployment):
         Include links and citations at all!!!
         Your final answer must be formatted in HTML format !!!
 
-        - Only provide links in citations. Never link outside citations or refer 
-        Example 
-        <a href="LINK">[n]</a> - correct
-        <a href="LINK">text content</a> - wrong
-        Where n is integer and LINK is a url
+        The DOCS have items in format : 
+        "doc-nth": {{
+            "title": "",
+            "extract": "",
+            "category": "",
+            "link": "",
+            "summary": "",
+            "thumbnail": ""
+        }},
+
+    Use the extract and summary values to answer the question and reference the link when used. 
+    
+    For example (this is just an example to guide you): 
+        
+    Question : what is the policy? 
+    Answer The policy is a nice one <a href="link">[1]</a> . It is also used in creation <a href="link">[2]</a> ... ... 
+
+    NB: n will increament from 1 to 10 in ascending order and should be max of 10.
     """
     formattings = f""" 
         You can use relevant information in the docs to answer also: 
@@ -452,6 +450,8 @@ def get_answer(user_question, relevant_docs,openai_deployment):
 
                 )
     response = response_entities.choices[0].message.content
+    print(f"""cleaned_text {response}""")
+    
     # Define the regex pattern to match digits followed by '. do'
     pattern = r'\d+\. do'
 
@@ -461,7 +461,7 @@ def get_answer(user_question, relevant_docs,openai_deployment):
     # # Optionally, clean up any extra spaces or punctuation left behind
     # cleaned_text = re.sub(r'\s{2,}', ' ', cleaned_text).strip()
 
-
+ 
     return cleaned_text
 
 
