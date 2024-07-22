@@ -158,7 +158,7 @@ def send_prompt_llm():
                             extract_similarity = processing_modules.calculate_context_similarity(element, doc_info['extract']) or 0
                             # summary_similarity = calculate_context_similarity(element, doc_info['summary'])
                             
-                            print(f""" title_similarity== {title_similarity} extract_similarity{extract_similarity}  """)
+                            # print(f""" title_similarity== {title_similarity} extract_similarity{extract_similarity}  """)
                             if title_similarity > 0.6 and extract_similarity > 0.6 :
                                 result = {
                                             'element': element,
@@ -204,9 +204,9 @@ def send_prompt_llm():
                                                     SENTENCE: {content}  
                                                 """, openai_deployment)
                     cleanup_content = cleanup_content.replace("\n","")
-                    cleanup_content = processing_modules.cleanCitation(cleanup_content)
-                    cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
-                    # Construct the final response using OrderedDict to preserve key order
+                    # cleanup_content = processing_modules.cleanCitation(cleanup_content)
+                    # cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
+                    # # Construct the final response using OrderedDict to preserve key order
                     response = OrderedDict([
                         ("answer", answer),
                         ("user_query", user_query),
