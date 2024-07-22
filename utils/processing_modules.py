@@ -402,27 +402,12 @@ def get_answer(user_question, relevant_docs,openai_deployment):
         Only consider the inner part of the < body> tag.
         ALWAYS use the following tag for new lines: < br />
         Do not add CSS attributes.
-        Include links and citations at all!!!
+        Include links in the references at the bottom of your answer !!!
         Your final answer must be formatted in HTML format !!!
 
-        The DOCS have items in format : 
-        "doc-nth": {{
-            "title": "",
-            "extract": "",
-            "category": "",
-            "link": "",
-            "summary": "",
-            "thumbnail": ""
-        }},
+        Use the extract and summary values to answer the question and reference the document used in links at the bottom. 
+        use IEEE (Institute of Electrical and Electronics Engineers) style for referencing.
 
-    Use the extract and summary values to answer the question and reference the link when used. 
-    
-    For example (this is just an example to guide you): 
-        
-    Question : what is the policy? 
-    Answer The policy is a nice one <a href="link">[1]</a> . It is also used in creation <a href="link">[2]</a> ... ... 
-
-    NB: n will increament from 1 to 10 in ascending order and should be max of 10.
     """
     formattings = f""" 
         You can use relevant information in the docs to answer also: 
