@@ -142,69 +142,69 @@ def send_prompt_llm():
 
                     # Run synthesis module
                     answer = processing_modules.synthesisModule(user_query, entities_dict, excerpts_dict_synthesis, indicators_dict, openai_deployment, prompt_formattings)
-                    pattern =  re.compile(r'[^.]*\.')  #re.compile(r'<li>(.*?)</li>')
-                    # Find all matches
-                    content_array = pattern.findall(answer)
+                    # pattern =  re.compile(r'[^.]*\.')  #re.compile(r'<li>(.*?)</li>')
+                    # # Find all matches
+                    # content_array = pattern.findall(answer)
                     sources = excerpts_dict
 
                 
 
-                    results = []
-                    # print(content_array)
-                    limiter = 0
+                    # results = []
+                    # # print(content_array)
+                    # limiter = 0
                     
-                    for element in content_array:
-                        for doc_id, doc_info in sources.items():
-                            title_similarity = processing_modules.calculate_context_similarity(element, doc_info['document_title']) or 0 
-                            extract_similarity = processing_modules.calculate_context_similarity(element, doc_info['extract']) or 0
-                            # summary_similarity = calculate_context_similarity(element, doc_info['summary'])
+                    # for element in content_array:
+                    #     for doc_id, doc_info in sources.items():
+                    #         title_similarity = processing_modules.calculate_context_similarity(element, doc_info['document_title']) or 0 
+                    #         extract_similarity = processing_modules.calculate_context_similarity(element, doc_info['extract']) or 0
+                    #         # summary_similarity = calculate_context_similarity(element, doc_info['summary'])
                             
-                            # print(f""" title_similarity== {title_similarity} extract_similarity{extract_similarity}  """)
-                            if title_similarity > 0.6 and extract_similarity > 0.6 :
-                                result = {
-                                            'element': element,
-                                            'title': doc_info['document_title'],
-                                            'extract': doc_info['extract'],
-                                            'extract': doc_info['extract'],
-                                            'link': doc_info['document_title'],
-                                            'doc_id': doc_id,
-                                            'title_similarity': float(title_similarity),
-                                            'extract_similarity': float(extract_similarity)
-                                            # 'summary_similarity': float(summary_similarity)
-                                        }
-                                results.append(result)
-                                limiter += 1
+                    #         # print(f""" title_similarity== {title_similarity} extract_similarity{extract_similarity}  """)
+                    #         if title_similarity > 0.6 and extract_similarity > 0.6 :
+                    #             result = {
+                    #                         'element': element,
+                    #                         'title': doc_info['document_title'],
+                    #                         'extract': doc_info['extract'],
+                    #                         'extract': doc_info['extract'],
+                    #                         'link': doc_info['document_title'],
+                    #                         'doc_id': doc_id,
+                    #                         'title_similarity': float(title_similarity),
+                    #                         'extract_similarity': float(extract_similarity)
+                    #                         # 'summary_similarity': float(summary_similarity)
+                    #                     }
+                    #             results.append(result)
+                    #             limiter += 1
 
-                    for result in results:
-                        citation_fixes = openai_call.callOpenAI(f"Given the below: {result} Create an output that mixes Element, Document extract and Summary into one output while still maintaining the context of the Element. Your final output answer length should not be more than 200 words. Also avoid using links, sources and references. ", openai_deployment)
-                        result['citation_fixes'] = citation_fixes
-                        result
+                    # for result in results:
+                    #     citation_fixes = openai_call.callOpenAI(f"Given the below: {result} Create an output that mixes Element, Document extract and Summary into one output while still maintaining the context of the Element. Your final output answer length should not be more than 200 words. Also avoid using links, sources and references. ", openai_deployment)
+                    #     result['citation_fixes'] = citation_fixes
+                    #     result
 
             
-                    content = answer
-                    counter = 0
-                    # Loop through each JSON object and replace the element with citation_fixes in the content
-                    for result in results:
-                        counter += 1
+                    # content = answer
+                    # counter = 0
+                    # # Loop through each JSON object and replace the element with citation_fixes in the content
+                    # for result in results:
+                    #     counter += 1
 
-                        content = content.replace(result['element'], f""" {result['citation_fixes']} <a href='{result['link']}' data-id='{result['doc_id']}'>[{counter}]</a> <br/>\n\n""")
+                    #     content = content.replace(result['element'], f""" {result['citation_fixes']} <a href='{result['link']}' data-id='{result['doc_id']}'>[{counter}]</a> <br/>\n\n""")
                         
                     sorted_sources = sources
                 
-                    #final cleanup using openAI
-                    cleanup_content = openai_call.callOpenAI(f""" Ignore previous commands !!!
-                                                    Strictly follow the below:
-                                                    Give the sentence. I want to to fix the citation formatings only. Don't add any answer to it.
-                                                    1. make sure  links are all in a citation format [n] where n represent an integer and must link to the document e.g content<a href='url-here'>[1]</a>  !!!!
-                                                    2.  The citations must be numbered in an ordered manner. Fix and return the output. !!!
-                                                    3. remove all foot notes or references. !!! 
-                                                    4. The citations MUST BE LINK to the docs e.g <a href='url-here'>[1]</a>  never use without LINKS !!!
-                                                    5. Output should retains HTML formattings. Never adjust a ciation without it being an anchor link. !!!
-                                                    6. Remeber only format the answer citations. Don't add or remove any. !!!
-                                                    7. Don't generate any link or so. Just use the answer as it is and adjust the citations as instructed above
-                                                    SENTENCE: {content}  
-                                                """, openai_deployment)
-                    cleanup_content = cleanup_content.replace("\n","")
+                    # #final cleanup using openAI
+                    # cleanup_content = openai_call.callOpenAI(f""" Ignore previous commands !!!
+                    #                                 Strictly follow the below:
+                    #                                 Give the sentence. I want to to fix the citation formatings only. Don't add any answer to it.
+                    #                                 1. make sure  links are all in a citation format [n] where n represent an integer and must link to the document e.g content<a href='url-here'>[1]</a>  !!!!
+                    #                                 2.  The citations must be numbered in an ordered manner. Fix and return the output. !!!
+                    #                                 3. remove all foot notes or references. !!! 
+                    #                                 4. The citations MUST BE LINK to the docs e.g <a href='url-here'>[1]</a>  never use without LINKS !!!
+                    #                                 5. Output should retains HTML formattings. Never adjust a ciation without it being an anchor link. !!!
+                    #                                 6. Remeber only format the answer citations. Don't add or remove any. !!!
+                    #                                 7. Don't generate any link or so. Just use the answer as it is and adjust the citations as instructed above
+                    #                                 SENTENCE: {content}  
+                    #                             """, openai_deployment)
+                    # cleanup_content = cleanup_content.replace("\n","")
                     # cleanup_content = processing_modules.cleanCitation(cleanup_content)
                     # cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
                     # # Construct the final response using OrderedDict to preserve key order
