@@ -1,48 +1,46 @@
-
-from html import entities
-import utils.openai_call as openai_call
-import openai
 import ast
-import pandas as pd
-import faiss
-import numpy as np
-import pycountry
-import re
 import copy
+import re
+from html import entities
 
 import awoc
+import faiss
+import numpy as np
+import openai
+import pandas as pd
+import pycountry
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 from spacy.lang.en.stop_words import STOP_WORDS
+
+import utils.openai_call as openai_call
+
 nlp = spacy.load("en_core_web_sm")
-import os
-import concurrent.futures
-import fitz  # PyMuPDF
-from PIL import Image
-from io import BytesIO
 import base64
-import json
+import concurrent.futures
 import copy
+import json
+import os
+import string
+from io import BytesIO
+
+import fitz  # PyMuPDF
+import numpy as np
+import pandas as pd
+from awoc import AWOC
+from bs4 import BeautifulSoup
 from country_named_entity_recognition import find_countries
+from PIL import Image
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# import custom utils functions 
-import utils.processing_modules as processing_modules
-# import custom utils functions 
+# import custom utils functions
 import utils.indicator as indicator_module
-from bs4 import BeautifulSoup
 
-from awoc import AWOC
+# import custom utils functions
+import utils.processing_modules as processing_modules
 
+df = pd.read_pickle("./models/df_embed_EN_All_V4.pkl")
 
-import pandas as pd
-import numpy as np
-
-
-import string
-
-
-df = pd.read_pickle('./models/df_embed_EN_All_V4.pkl')
 
 # Extract entities for the query and return the extract entities as an array
 def extractEntitiesFromQuery(user_query, openai_deployment):
@@ -55,29 +53,27 @@ def extractEntitiesFromQuery(user_query, openai_deployment):
     -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
  
     """
-    entity_list = openai_call.callOpenAI(prompt, openai_deployment)   
+    entity_list = openai_call.callOpenAI(prompt, openai_deployment)
     return entity_list
-
-
 
 
 def generate_thumbnail_from_pdf(pdf_url, page_number=0, thumbnail_size=(100, 100)):
     try:
         # Open the PDF
         pdf_document = fitz.open(pdf_url)
-        
+
         # Get the specified page
         page = pdf_document.load_page(page_number)
-        
+
         # Get the image bytes of the page thumbnail
         image_bytes = page.get_pixmap(matrix=fitz.Matrix(1, 1)).tobytes()
 
         # Create PIL image from bytes
         image = Image.open(BytesIO(image_bytes))
-        
+
         # Resize the image to thumbnail size
         image.thumbnail(thumbnail_size)
-        
+
         # Convert image to base64
         buffered = BytesIO()
         image.save(buffered, format="JPEG")
@@ -92,76 +88,79 @@ def generate_thumbnail_from_pdf(pdf_url, page_number=0, thumbnail_size=(100, 100
 
 ## module to get information on the entities from user query using the KG
 def knowledgeGraphModule(user_query, openai_deployment):
-    
+
     # generate list of entities based on user query
     entity_list = extractEntitiesFromQuery(user_query, openai_deployment)
     my_list = ast.literal_eval(entity_list)
     prompt_summarise_entites = f"""
     Summarize all relations between all the entities : {my_list}
     """
-    summarise_entities = openai_call.callOpenAI(prompt_summarise_entites, openai_deployment)
+    summarise_entities = openai_call.callOpenAI(
+        prompt_summarise_entites, openai_deployment
+    )
     # Initialize an empty dictionary to store information
-    entities_dict = {
-        "relations": summarise_entities,
-        "entities": {}
-    }
+    entities_dict = {"relations": summarise_entities, "entities": {}}
     # Loop through each entity in the list
     for entity in my_list:
         # Fetch information about the entity from your knowledge graph
         prompt = f"Give me a short description 50 words of {entity}"
-        entity_info = '' #openai_call.callOpenAI(prompt, openai_deployment)
+        entity_info = ""  # openai_call.callOpenAI(prompt, openai_deployment)
         # Add the entity information to the dictionary
         entities_dict["entities"][entity] = entity_info
-    
+
     return entities_dict
+
 
 def find_mentioned_countries(text):
     countries = set()
-    
+
     # Tokenize the text using regular expressions to preserve punctuation marks
-    words = re.findall(r'\w+|[^\w\s]', text)
-    text = ' '.join(words)  # Join the tokens back into a string
-    
+    words = re.findall(r"\w+|[^\w\s]", text)
+    text = " ".join(words)  # Join the tokens back into a string
+
     # Get a list of all country names
     all_countries = {country.name: country for country in pycountry.countries}
-    
+
     # Check for multi-word country names first to avoid partial matches
     for name in sorted(all_countries.keys(), key=lambda x: len(x), reverse=True):
         if name in text:
             countries.add(all_countries[name].name)
-            text = text.replace(name, '')  # Remove the found country name from the text to avoid duplicates
+            text = text.replace(
+                name, ""
+            )  # Remove the found country name from the text to avoid duplicates
 
     return list(countries)
 
 
-
 # def find_mentioned_countries(text):
 #     countries = set()
-    
+
 #     # Tokenize the text using regular expressions to preserve punctuation marks
 #     words = re.findall(r'\w+|[^\w\s]', text)
 #     text = ' '.join(words)  # Join the tokens back into a string
-    
+
 #     for word in text.split():
 #         try:
 #             country = pycountry.countries.get(name=word) #pycountry.countries.lookup(word)
-#             if country != None : 
+#             if country != None :
 #                countries.add(country.name)
 #         except LookupError:
 #             pass
-    
+
 #     return list(countries)
 
 
-'''
+"""
 Previous 'find_mentioned_countries' can detect countries when they are formed correctly.
 
-'''
+"""
+
+
 # Extract mentioned countries' ISO3 code
 def find_mentioned_country_code(user_query):
     countries = set()
     extracted_countries = find_mentioned_countries(user_query)
-    
+
     for country in extracted_countries:
         try:
             country_info = pycountry.countries.get(name=country)
@@ -169,47 +168,51 @@ def find_mentioned_country_code(user_query):
                 countries.add(country_info.alpha_3)
         except LookupError:
             pass
-    
+
     # If no countries are found, check for continent mentions
     if not countries:
-        words = re.findall(r'\w+|[^\w\s]', user_query)
-        text = ' '.join(words)  # Join the tokens back into a string
-    
+        words = re.findall(r"\w+|[^\w\s]", user_query)
+        text = " ".join(words)  # Join the tokens back into a string
+
         world_info = AWOC()
-        all_continents = set([continent.lower() for continent in world_info.get_continents_list()])
+        all_continents = set(
+            [continent.lower() for continent in world_info.get_continents_list()]
+        )
         for word in text.split():
             word = word.lower()
             if word in all_continents:
                 target_countries = world_info.get_countries_list_of(word)
-                
+
                 for country in target_countries:
-                    countries.add(world_info.get_country_data(country)['ISO3'])
-    
+                    countries.add(world_info.get_country_data(country)["ISO3"])
+
     return countries
+
+
 def filter_country(user_query):
     mentioned_countries = find_mentioned_country_code(user_query)
     print(mentioned_countries)
     # Check if mentioned_countries is not empty
     if mentioned_countries:
         country = mentioned_countries[0]
-        return df[df['Country Name'] == country]
+        return df[df["Country Name"] == country]
     else:
         # Handle the case where no countries were mentioned
         return None  # Or return an empty DataFrame or any other suitable value
 
- 
 
 # Function to calculate Jaccard similarity between two texts
 def jaccard_similarity(text1, text2):
     # Tokenize texts
     tokens1 = set(text1.lower().split())
     tokens2 = set(text2.lower().split())
-    
+
     # Calculate Jaccard similarity
     intersection = len(tokens1.intersection(tokens2))
     union = len(tokens1.union(tokens2))
-    
+
     return intersection / union if union > 0 else 0
+
 
 # Load the English language model
 # Function to calculate the average word embedding for a sentence
@@ -222,20 +225,22 @@ def average_word_embedding_old(sentence):
         return None
     return np.mean(word_vectors, axis=0)
 
+
 def average_word_embedding(sentence):
     if sentence is None:
         sentence = ""
-    
+
     # Parse the sentence using SpaCy
     doc = nlp(sentence)
-    
+
     # Get word vectors and average them
     vectors = [token.vector for token in doc if token.has_vector]
     if not vectors:
         return None
-    
+
     avg_vector = sum(vectors) / len(vectors)
     return avg_vector
+
 
 # Function to calculate context similarity between two sentences using word embedding averaging
 def calculate_context_similarity(sentence1, sentence2):
@@ -252,7 +257,7 @@ def calculate_context_similarity(sentence1, sentence2):
     return similarity
 
 
-#Simple helps
+# Simple helps
 def title_contains_entity(entity, title):
     # Convert both entity and title to lowercase for case-insensitive comparison
     entity_lower = entity.lower()
@@ -265,12 +270,10 @@ def title_contains_entity(entity, title):
         return 0
 
 
-
 # Function to convert country codes to country names
 def convert_codes_to_names(codes):
     code_to_name = {country.alpha_3: country.name for country in pycountry.countries}
     return {code_to_name.get(code, code) for code in codes}
-
 
 
 # Function to filter DataFrame based on country names
@@ -278,35 +281,34 @@ def filter_dataframe_by_country_names(df, filtered_country_cde):
     filtered_dfs = []
     country_names = convert_codes_to_names(filtered_country_cde)
     code_to_name = {country.alpha_3: country.name for country in pycountry.countries}
-    
+
     for code in filtered_country_cde:
         country_name = code_to_name.get(code, None)
         if country_name:
-            filtered_df = df[df['Country Code'] == code]
-            filtered_df['Country Name'] = country_name
+            filtered_df = df[df["Country Code"] == code]
+            filtered_df["Country Name"] = country_name
             filtered_dfs.append(filtered_df)
-    
+
     if filtered_dfs:
         result_df = pd.concat(filtered_dfs, ignore_index=True)
     else:
         result_df = pd.DataFrame()  # Return empty DataFrame if no matches
-    
-    return result_df
 
+    return result_df
 
 
 def average_word_context_embed(sentence):
     # Ensure the input is a string
     if not isinstance(sentence, str):
         return None
-    
+
     # If the sentence is empty, return None
     if not sentence:
         return None
-    
+
     # Parse the sentence using SpaCy
     doc = nlp(sentence)
-    
+
     # Get word vectors and average them
     vectors = [token.vector for token in doc if token.has_vector]
     if vectors:
@@ -315,23 +317,27 @@ def average_word_context_embed(sentence):
     else:
         return None
 
+
 def calculate_context_bool(uq, doc_, threshold):
     avg_emb1 = average_word_context_embed(uq)
     avg_emb2 = average_word_context_embed(doc_)
     if avg_emb1 is None or avg_emb2 is None:
         return False
-    
-    similarity = np.dot(avg_emb1, avg_emb2) / (np.linalg.norm(avg_emb1) * np.linalg.norm(avg_emb2))
-    return similarity > threshold  # Assuming 0.75 is the threshold for context similarity
+
+    similarity = np.dot(avg_emb1, avg_emb2) / (
+        np.linalg.norm(avg_emb1) * np.linalg.norm(avg_emb2)
+    )
+    return (
+        similarity > threshold
+    )  # Assuming 0.75 is the threshold for context similarity
 
 
 def preprocess_text(text):
     """Preprocess the text by converting to lowercase and removing punctuation."""
     if pd.isna(text):
         return ""
-    return text.lower().translate(str.maketrans('', '', string.punctuation))
+    return text.lower().translate(str.maketrans("", "", string.punctuation))
 
-   
 
 def filter_semantics(user_query, isInitialRun):
     # If no documents match the keyword, return an empty DataFrame
@@ -339,60 +345,65 @@ def filter_semantics(user_query, isInitialRun):
         return pd.DataFrame()
 
     # Concatenate 'Document Title' and 'Country Name' to form the text for each document
-    df['combined_text'] = df['Document Title'].astype(str) + " " + df['Country Name'].astype(str)
+    df["combined_text"] = (
+        df["Document Title"].astype(str) + " " + df["Country Name"].astype(str)
+    )
 
     # Use TF-IDF Vectorizer to encode the text
-    vectorizer = TfidfVectorizer(stop_words='english')
-    document_embeddings = vectorizer.fit_transform(df['combined_text'])
+    vectorizer = TfidfVectorizer(stop_words="english")
+    document_embeddings = vectorizer.fit_transform(df["combined_text"])
     query_embedding = vectorizer.transform([user_query])
 
     # Calculate cosine similarity between the query and document embeddings
-    similarity_scores = cosine_similarity(query_embedding, document_embeddings).flatten()
+    similarity_scores = cosine_similarity(
+        query_embedding, document_embeddings
+    ).flatten()
 
     # Add the similarity scores to the DataFrame
-    df['similarity_score'] = similarity_scores
+    df["similarity_score"] = similarity_scores
 
     # Filter the DataFrame to include only documents with a similarity score above 0.6
-    filtered_df = df[df['similarity_score'] > 0.5]
+    filtered_df = df[df["similarity_score"] > 0.5]
 
     # If the filtered DataFrame is empty, relax the threshold
     if filtered_df.empty:
-        filtered_df = df[df['similarity_score'] > 0.2]
+        filtered_df = df[df["similarity_score"] > 0.2]
 
     # Sort the filtered DataFrame by similarity score
-    filtered_df = filtered_df.sort_values(by='similarity_score', ascending=False)
-    
+    filtered_df = filtered_df.sort_values(by="similarity_score", ascending=False)
+
     return filtered_df
 
- 
- 
- 
+
 def search_embeddings(user_query, client, embedding_model, isInitialRun):
     # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
     filtered_result = filter_semantics(user_query, isInitialRun)
     # Check if the result is not None before assigning it to df_filtered
     df_filtered = filtered_result if filtered_result is not None else None
 
-    if df_filtered is not None and not df_filtered.empty:  # Check if DataFrame is not None and not empty
+    if (
+        df_filtered is not None and not df_filtered.empty
+    ):  # Check if DataFrame is not None and not empty
         length = len(df_filtered.head())
-        filtered_embeddings_arrays = np.array(list(df_filtered['Embedding']))
-        index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1]) 
+        filtered_embeddings_arrays = np.array(list(df_filtered["Embedding"]))
+        index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1])
         index.add(filtered_embeddings_arrays)
-        
-        user_query_embedding = client.embeddings.create( 
-                input=user_query ,model= embedding_model
-            ).data[0].embedding
+
+        user_query_embedding = (
+            client.embeddings.create(input=user_query, model=embedding_model)
+            .data[0]
+            .embedding
+        )
 
         k = min(5, length)
         distances, indices = index.search(np.array([user_query_embedding]), k)
         return df_filtered, distances, indices
     else:
         return None, None, None
-        
- 
+
 
 # get answer
-def get_answer(user_question, relevant_docs,openai_deployment): 
+def get_answer(user_question, relevant_docs, openai_deployment):
 
     formattings_html = f""" 
         Ignore previous
@@ -416,63 +427,66 @@ def get_answer(user_question, relevant_docs,openai_deployment):
         
        """
     messages = [
-        {"role": "system", "content":f"""You are a helpful assistant and a professional researcher with many years of experience in answering questions. Give answer to the user's inquiry. {formattings_html}"""
+        {
+            "role": "system",
+            "content": f"""You are a helpful assistant and a professional researcher with many years of experience in answering questions. Give answer to the user's inquiry. {formattings_html}""",
         },
-        {'role': 'user', 'content': f"""{formattings} 
+        {
+            "role": "user",
+            "content": f"""{formattings} 
                                         {user_question}
                                         
                                          {formattings_html}
-                                        """},
+                                        """,
+        },
     ]
-        
-    response_entities = openai.chat.completions.create(
-                    model=openai_deployment,
-                    temperature=0.3,
-                    messages=messages,
-                    top_p=0.8,
-                    frequency_penalty=0.6,
-                    presence_penalty=0.8
 
-                )
+    response_entities = openai.chat.completions.create(
+        model=openai_deployment,
+        temperature=0.3,
+        messages=messages,
+        top_p=0.8,
+        frequency_penalty=0.6,
+        presence_penalty=0.8,
+    )
     response = response_entities.choices[0].message.content
     print(f"""cleaned_text {response}""")
-    
+
     # Define the regex pattern to match digits followed by '. do'
-    pattern = r'\d+\. do'
+    pattern = r"\d+\. do"
 
     # Remove matches from the text
-    cleaned_text = re.sub(pattern, '', response)
+    cleaned_text = re.sub(pattern, "", response)
 
     # # Optionally, clean up any extra spaces or punctuation left behind
     # cleaned_text = re.sub(r'\s{2,}', ' ', cleaned_text).strip()
 
- 
     return cleaned_text
 
 
 def check_links_and_process_html(html, content_dict):
-    soup = BeautifulSoup(html, 'html.parser')
-    
-    for a in soup.find_all('a'):
+    soup = BeautifulSoup(html, "html.parser")
+
+    for a in soup.find_all("a"):
         ref_text = a.get_text()
-        if ref_text.startswith('[') and ref_text.endswith(']'):
-            href = a.get('href')
-            if not any(d['document_link'] == href for d in content_dict.values()):
+        if ref_text.startswith("[") and ref_text.endswith("]"):
+            href = a.get("href")
+            if not any(d["document_link"] == href for d in content_dict.values()):
                 a.decompose()
-    
+
     result = str(soup)
     return result
 
 
 def check_links_and_process_html____(html, content_dict):
-    soup = BeautifulSoup(html, 'html.parser')
+    soup = BeautifulSoup(html, "html.parser")
     link_count = 1
 
-    for a in soup.find_all('a'):
-        href = a.get('href')
-        if any(d['link'] == href for d in content_dict.values()):
+    for a in soup.find_all("a"):
+        href = a.get("href")
+        if any(d["link"] == href for d in content_dict.values()):
             # Ensure the link adheres to the format <a href="LINK HERE">[n]</a>
-            a.string = f'{a.get_text()} [{link_count}]'
+            a.string = f"{a.get_text()} [{link_count}]"
             link_count += 1
         else:
             a.decompose()
@@ -484,30 +498,29 @@ def check_links_and_process_html____(html, content_dict):
 def sort_by_relevancy(result_dict):
     # Convert the dictionary to a list of tuples (doc_id, info)
     result_list = list(result_dict.items())
-    
+
     # Reverse the list
     result_list.reverse()
-    
+
     # Convert the reversed list of tuples back to a dictionary
     reversed_result_dict = {k: v for k, v in result_list}
-    
+
     return reversed_result_dict
 
 
 def remove_thumbnails(data):
     data_no_thumbnails = copy.deepcopy(data)  # Make a deep copy of the data
     for doc_id, doc_info in data_no_thumbnails.items():
-        if 'document_thumbnail' in doc_info:
-            del doc_info['document_thumbnail']
+        if "document_thumbnail" in doc_info:
+            del doc_info["document_thumbnail"]
 
     for doc_id, doc_info in data_no_thumbnails.items():
-        if 'content' in doc_info:
-            del doc_info['content']
+        if "content" in doc_info:
+            del doc_info["content"]
 
-    
     return data_no_thumbnails
- 
- 
+
+
 def map_to_structure(qs, isInitialRun, user_query):
     result_dict = {}
 
@@ -523,14 +536,18 @@ def map_to_structure(qs, isInitialRun, user_query):
         # Define a unique identifier for each document, you can customize this based on your data
         document_id = f"doc-{index + 1}"
         # Handle NaN in content by using fillna
-        content = str(row["Content"]) if row["Content"] is not None else ""  # row["Content"]
-        content = ' '.join(content.split()[:160])
+        content = (
+            str(row["Content"]) if row["Content"] is not None else ""
+        )  # row["Content"]
+        content = " ".join(content.split()[:160])
 
         title = str(row["Document Title"]) if row["Document Title"] is not None else ""
         extract = str(content) if content is not None else ""
 
         title_similarity = processing_modules.jaccard_similarity(user_query, title) or 0
-        extract_similarity = processing_modules.jaccard_similarity(user_query, extract) or 0
+        extract_similarity = (
+            processing_modules.jaccard_similarity(user_query, extract) or 0
+        )
         # print(f""" {title_similarity} {user_query} {title}""")
         print(f""" {extract_similarity} {user_query} {title}""")
 
@@ -538,14 +555,19 @@ def map_to_structure(qs, isInitialRun, user_query):
             "document_title": title,
             "extract": extract,  # Adjust based on your column names
             "category": str(row["Category"]) if row["Category"] is not None else "",
-            "document_link": str(row["Link"]).replace("https-//", "https://") if row["Link"] is not None else "",
+            "document_link": (
+                str(row["Link"]).replace("https-//", "https://")
+                if row["Link"] is not None
+                else ""
+            ),
             "summary": str(row["Summary"]) if row["Summary"] is not None else extract,
-            "document_thumbnail": str(row["Thumbnail"]) if row["Thumbnail"] is not None else "",
-            "relevancy": extract_similarity
+            "document_thumbnail": (
+                str(row["Thumbnail"]) if row["Thumbnail"] is not None else ""
+            ),
+            "relevancy": extract_similarity,
         }
 
         # "content": str(row["Content"]).replace("\n","") if row["Content"] is not None else "",
-
 
         # Add the document to the result dictionary
         result_dict[document_id] = document_info
@@ -567,35 +589,41 @@ def process_queries(queries, user_query, client, embedding_model, isInitialRun):
     merged_result_structure = {}
 
     # for query in queries:
-        # qs = search_embeddings(query)  # Assuming search_embeddings returns a tuple (df, distances, indices)
-    qs = search_embeddings(user_query,client, embedding_model,isInitialRun) #df, distances, indices
-        # print(f""" qs=== {qs} {isInitialRun} {user_query} | query == {query} """)
+    # qs = search_embeddings(query)  # Assuming search_embeddings returns a tuple (df, distances, indices)
+    qs = search_embeddings(
+        user_query, client, embedding_model, isInitialRun
+    )  # df, distances, indices
+    # print(f""" qs=== {qs} {isInitialRun} {user_query} | query == {query} """)
     if qs[0] is not None:
-        result_structure = map_to_structure(qs,isInitialRun,user_query)
+        result_structure = map_to_structure(qs, isInitialRun, user_query)
         for doc_id, doc_info in result_structure.items():
             merged_result_structure[doc_id] = doc_info
     return merged_result_structure
 
+
 ## module to extract text from documents and return the text and document codes
-def semanticSearchModule(user_query, client, embedding_model, isInitialRun, openai_deployment):
+def semanticSearchModule(
+    user_query, client, embedding_model, isInitialRun, openai_deployment
+):
     # query_transformation = openai_call.callOpenAI(f"""
-    # Given a question, your job is to break them into 3 main sub-question and return as array. 
-    
+    # Given a question, your job is to break them into 3 main sub-question and return as array.
+
     # - You Must return output seperated by |
     # - Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
 
     # QUESTION: {user_query}
     # """, openai_deployment)
     # print(f""" query_transformation: {query_transformation} """)
-    
+
     # # Split the string by the delimiter '|'
     # questions_array = [question.strip() for question in query_transformation.split('|')]
-    questions_array =[]
+    questions_array = []
 
-    merged_results = process_queries(questions_array,user_query, client, embedding_model, isInitialRun)
+    merged_results = process_queries(
+        questions_array, user_query, client, embedding_model, isInitialRun
+    )
     print(f""" merged_results===  {merged_results} """)
     return merged_results
-
 
 
 def convertQueryIdeaToArray(query_idea_list):
@@ -604,9 +632,10 @@ def convertQueryIdeaToArray(query_idea_list):
     # Print the resulting array
     return query_ideas
 
+
 ## module to generate query ideas
-def queryIdeationModule(user_query, openai_deployment): # lower priority
-    
+def queryIdeationModule(user_query, openai_deployment):  # lower priority
+
     # Generate query ideas using OpenAI GPT-3
     prompt = f"""
     Ignore previous commands!!!
@@ -622,6 +651,7 @@ def queryIdeationModule(user_query, openai_deployment): # lower priority
     response = openai_call.callOpenAI(prompt, openai_deployment)
     qIdeasResponse = convertQueryIdeaToArray(response)
     return qIdeasResponse
+
 
 def cleanJson(json_data):
     # Make a deepcopy of the JSON data to avoid modifying the original object
@@ -641,31 +671,30 @@ def cleanJson(json_data):
     return modified_json
 
 
-
-
-#Cleanup outputs
+# Cleanup outputs
 # Parse the HTML content
+
 
 # Function to remove [n] if not inside an <a> tag
 def remove_unlinked_citations(soup):
     # Regular expression to match [n] pattern
-    pattern = re.compile(r'\[\d+\]')
-    
+    pattern = re.compile(r"\[\d+\]")
+
     for text in soup.find_all(text=pattern):
         # Find all matches in the text
         matches = pattern.findall(text)
         for match in matches:
             # Check if the match is inside an <a> tag
-            if not text.find_parent('a'):
+            if not text.find_parent("a"):
                 # Remove the match from the text
-                text.replace_with(text.replace(match, ''))
-    
+                text.replace_with(text.replace(match, ""))
+
     return soup
 
 
-def cleanCitation(html_content): 
+def cleanCitation(html_content):
 
-    soup = BeautifulSoup(html_content, 'html.parser')
+    soup = BeautifulSoup(html_content, "html.parser")
     # Remove unlinked citations
     clean_soup = remove_unlinked_citations(soup)
 
@@ -675,11 +704,17 @@ def cleanCitation(html_content):
     return clean_html_content
 
 
+def synthesisModule(
+    user_query,
+    entities_dict,
+    excerpts_dict,
+    indicators_dict,
+    openai_deployment,
+    prompt_formattings,
+):
 
-def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, openai_deployment, prompt_formattings):
-    
     ###synthesize data into structure within llm prompt engineering instructions
-    answer=get_answer(user_query,excerpts_dict, openai_deployment) #callOpenAI
+    answer = get_answer(user_query, excerpts_dict, openai_deployment)  # callOpenAI
     return answer
 
 
@@ -687,7 +722,7 @@ def synthesisModule(user_query, entities_dict, excerpts_dict, indicators_dict, o
 
 
 ## module to get data for specific indicators which are identified is relevant to the user query
-def indicatorsModule(user_query): #lower priority
+def indicatorsModule(user_query):  # lower priority
     return indicator_module.indicatorsModule(user_query)
 
 
@@ -697,17 +732,16 @@ def similarity_score_kg(word1, word2):
     word1_lower = word1.lower()
     word2_lower = word2[:-5].lower()
 
-
     # Split strings into individual words
     words1 = word1_lower.split()
     words2 = word2_lower.split()
-    
+
     # Calculate the number of overlapping words
     common_words = set(words1) & set(words2)
-    
+
     # Calculate similarity score as percentage of overlapping words
     similarity = len(common_words) / max(len(words1), len(words2)) * 100
-    
+
     return similarity
 
 
@@ -734,17 +768,16 @@ def find_kgold(keywords, data_dir):
     # print(initial_root)
     initial_kg = {}
     with open(os.path.join(data_dir, f"""{initial_root}.json"""), "r") as file:
-         initial_kg = json.load(file)  
-    #get the initial root file 
+        initial_kg = json.load(file)
+    # get the initial root file
 
     # Load the content of the most similar file
     if most_similar_file:
         with open(os.path.join(data_dir, most_similar_file), "r") as file:
-            content = json.load(file)            
+            content = json.load(file)
             # Iterate over each relation in the content
             for relation, objects in content["knowledge graph"]["relations"].items():
                 # print(f""" most_similar_file === {objects} """)
- 
 
                 # Dictionary to store found JSON files
                 # found_files = {}
@@ -753,28 +786,36 @@ def find_kgold(keywords, data_dir):
                 # Iterate through each dictionary in 'data'
                 for item in objects:
                     # Extract the 'Object' name
-                    object_name = item.get('Object')
+                    object_name = item.get("Object")
 
                     # Construct the paths for both original and lowercase filenames
                     json_file_original = os.path.join(data_dir, f"{object_name}.json")
-                    json_file_lowercase = os.path.join(data_dir, f"{object_name.lower()}.json")
-                    
+                    json_file_lowercase = os.path.join(
+                        data_dir, f"{object_name.lower()}.json"
+                    )
+
                     # Check if a corresponding JSON file exists
                     # json_file = os.path.join(data_dir, f"{object_name}.json")
 
-                    if os.path.exists(json_file_original) or os.path.exists(json_file_lowercase):
+                    if os.path.exists(json_file_original) or os.path.exists(
+                        json_file_lowercase
+                    ):
                         # Choose the correct filename based on existence
-                        json_file = json_file_original if os.path.exists(json_file_original) else json_file_lowercase
-                        
-                    # if os.path.exists(json_file):
+                        json_file = (
+                            json_file_original
+                            if os.path.exists(json_file_original)
+                            else json_file_lowercase
+                        )
+
+                        # if os.path.exists(json_file):
                         # Load the content of the JSON file
                         # print(f"""*****json_file=== {json_file} """)
 
                         with open(json_file, "r") as file:
-                            try: 
+                            try:
                                 file_content = json.load(file)
                                 # print(f"""*****object_name=== {file_content} """)
-                                
+
                                 # Add the content to the 'found_files' dictionary
                                 # found_files[object_name] = file_content
                                 found_files.append(file_content)
@@ -786,8 +827,6 @@ def find_kgold(keywords, data_dir):
                 # 'found_files' now contains the content of JSON files with object names as keys
                 print(f""" found_files === {found_files}""")
 
-
-    
     return found_files
 
 
@@ -831,23 +870,32 @@ def find_kg(keywords, data_dir):
         return None
 
     # Ensure content structure is correct
-    if "knowledge graph" not in content or "relations" not in content["knowledge graph"]:
+    if (
+        "knowledge graph" not in content
+        or "relations" not in content["knowledge graph"]
+    ):
         print("Invalid JSON structure.")
         return None
 
     found_files = [initial_kg]
-    
+
     # Iterate over each relation in the content
     for relation, objects in content["knowledge graph"]["relations"].items():
         for item in objects:
-            object_name = item.get('Object')
+            object_name = item.get("Object")
 
             # Construct the paths for both original and lowercase filenames
             json_file_original = os.path.join(data_dir, f"{object_name}.json")
             json_file_lowercase = os.path.join(data_dir, f"{object_name.lower()}.json")
 
-            if os.path.exists(json_file_original) or os.path.exists(json_file_lowercase):
-                json_file = json_file_original if os.path.exists(json_file_original) else json_file_lowercase
+            if os.path.exists(json_file_original) or os.path.exists(
+                json_file_lowercase
+            ):
+                json_file = (
+                    json_file_original
+                    if os.path.exists(json_file_original)
+                    else json_file_lowercase
+                )
 
                 try:
                     with open(json_file, "r") as file:
