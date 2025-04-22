@@ -27,8 +27,6 @@ Session(app)
 CORS(app)
 
 
-print(openai.VERSION)
-
 # OpenAI API configuration
 openai.api_type = "azure"
 openai.api_key = os.getenv("AZURE_OPENAI_API_KEY")
@@ -41,21 +39,6 @@ client = AzureOpenAI(
     azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
 )
 embedding_model = os.getenv("USER_QUERY_EMBEDDING_ENGINE")
-
-
-# Function to check API key
-def require_api_key(api_key):
-    valid_keys = [os.getenv("API_ACCESS_KEY")]  # Replace with your valid API keys
-    return api_key in valid_keys
-
-
-# Apply the before_request decorator to all routes
-# @app.before_request
-# def check_api_key():
-#     # if request.endpoint != 'static_access':
-#     api_key = request.headers.get('API-Key')
-#     if api_key != os.getenv('API_ACCESS_KEY'):
-#         return jsonify({'error': 'Unauthorized access'}), 401
 
 
 @app.route("/kg_query", methods=["GET"])
@@ -90,23 +73,14 @@ def get_kg_data():
 def send_prompt_llm():
     try:
         user_query = request.get_json()["query"]
-        # session_id = str(uuid.uuid4())
-        # session_id_query = request.get_json()['session_id'] #optional
         query_type = request.get_json().get("query_type")  # optional
-        print(user_query)
         response = {}
 
-        # print(get_session)
         # Define a function to run each processing module
         def run_module(module_func, *args):
-            print("running")
             return module_func(user_query, *args)
 
         if query_type == "full":
-            print("in session")
-            print(query_type)
-            # Delete the session
-            # session.clear()
 
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 # user is requering ... get all relevant answers
@@ -152,69 +126,9 @@ def send_prompt_llm():
                     openai_deployment,
                     prompt_formattings,
                 )
-                # pattern =  re.compile(r'[^.]*\.')  #re.compile(r'<li>(.*?)</li>')
-                # # Find all matches
-                # content_array = pattern.findall(answer)
+
                 sources = excerpts_dict
-
-                # results = []
-                # # print(content_array)
-                # limiter = 0
-
-                # for element in content_array:
-                #     for doc_id, doc_info in sources.items():
-                #         title_similarity = processing_modules.calculate_context_similarity(element, doc_info['document_title']) or 0
-                #         extract_similarity = processing_modules.calculate_context_similarity(element, doc_info['extract']) or 0
-                #         # summary_similarity = calculate_context_similarity(element, doc_info['summary'])
-
-                #         # print(f""" title_similarity== {title_similarity} extract_similarity{extract_similarity}  """)
-                #         if title_similarity > 0.6 and extract_similarity > 0.6 :
-                #             result = {
-                #                         'element': element,
-                #                         'title': doc_info['document_title'],
-                #                         'extract': doc_info['extract'],
-                #                         'extract': doc_info['extract'],
-                #                         'link': doc_info['document_title'],
-                #                         'doc_id': doc_id,
-                #                         'title_similarity': float(title_similarity),
-                #                         'extract_similarity': float(extract_similarity)
-                #                         # 'summary_similarity': float(summary_similarity)
-                #                     }
-                #             results.append(result)
-                #             limiter += 1
-
-                # for result in results:
-                #     citation_fixes = openai_call.callOpenAI(f"Given the below: {result} Create an output that mixes Element, Document extract and Summary into one output while still maintaining the context of the Element. Your final output answer length should not be more than 200 words. Also avoid using links, sources and references. ", openai_deployment)
-                #     result['citation_fixes'] = citation_fixes
-                #     result
-
-                # content = answer
-                # counter = 0
-                # # Loop through each JSON object and replace the element with citation_fixes in the content
-                # for result in results:
-                #     counter += 1
-
-                #     content = content.replace(result['element'], f""" {result['citation_fixes']} <a href='{result['link']}' data-id='{result['doc_id']}'>[{counter}]</a> <br/>\n\n""")
-
                 sorted_sources = sources
-
-                # #final cleanup using openAI
-                # cleanup_content = openai_call.callOpenAI(f""" Ignore previous commands !!!
-                #                                 Strictly follow the below:
-                #                                 Give the sentence. I want to to fix the citation formatings only. Don't add any answer to it.
-                #                                 1. make sure  links are all in a citation format [n] where n represent an integer and must link to the document e.g content<a href='url-here'>[1]</a>  !!!!
-                #                                 2.  The citations must be numbered in an ordered manner. Fix and return the output. !!!
-                #                                 3. remove all foot notes or references. !!!
-                #                                 4. The citations MUST BE LINK to the docs e.g <a href='url-here'>[1]</a>  never use without LINKS !!!
-                #                                 5. Output should retains HTML formattings. Never adjust a ciation without it being an anchor link. !!!
-                #                                 6. Remeber only format the answer citations. Don't add or remove any. !!!
-                #                                 7. Don't generate any link or so. Just use the answer as it is and adjust the citations as instructed above
-                #                                 SENTENCE: {content}
-                #                             """, openai_deployment)
-                # cleanup_content = cleanup_content.replace("\n","")
-                # cleanup_content = processing_modules.cleanCitation(cleanup_content)
-                # cleanup_content = processing_modules.check_links_and_process_html(cleanup_content, sorted_sources)
-                # # Construct the final response using OrderedDict to preserve key order
                 response = OrderedDict(
                     [
                         ("answer", answer),
@@ -235,7 +149,6 @@ def send_prompt_llm():
 
                 # Convert the response to a JSON string and then back to a dictionary to preserve order
                 response_json = json.dumps(response, indent=4)
-                # final_response = json.loads(response_json)
 
             # Return the response
             return response_json
@@ -249,9 +162,6 @@ def send_prompt_llm():
                     processing_modules.knowledgeGraphModule,
                     openai_deployment,
                 )
-                future_indicators = (
-                    {}
-                )  # executor.submit(run_module, processing_modules.indicatorsModule)
                 future_query_ideas = executor.submit(
                     run_module,
                     processing_modules.queryIdeationModule,
@@ -279,7 +189,6 @@ def send_prompt_llm():
                     "indicators_dict": indicators_dict,
                     "kg_data": kg_content,
                 }
-                # session['session_id'] = session_id #save the session id
 
             # Return the response
             return jsonify(response)
@@ -298,53 +207,6 @@ def send_prompt_llm():
             }
         )
 
-
-# create handler for each connection
-async def handler(websocket, path):
-    async for message in websocket:
-        try:
-            data = json.loads(message)
-            user_query = data.get("query")
-
-            # Process the user query step by step and send responses
-            entities_dict = processing_modules.knowledgeGraphModule(
-                user_query, openai_deployment
-            )
-            await websocket.send(json.dumps({"entities_dict": entities_dict}))
-
-            indicators_dict = processing_modules.indicatorsModule(user_query)
-            # await websocket.send(json.dumps({"indicators_dict": indicators_dict}))
-
-            query_idea_list = processing_modules.queryIdeationModule(
-                user_query, openai_deployment
-            )
-            await websocket.send(json.dumps({"query_idea_list": query_idea_list}))
-
-            excerpts_dict = processing_modules.semanticSearchModule(
-                user_query, client, embedding_model, isInitialRun=TRUE
-            )
-            await websocket.send(json.dumps({"excerpts_dict": excerpts_dict}))
-
-            answer = processing_modules.synthesisModule(
-                user_query,
-                entities_dict,
-                excerpts_dict,
-                indicators_dict,
-                openai_deployment,
-            )
-            await websocket.send(json.dumps({"answer": answer}))
-
-        except Exception as e:
-            error_response = {"error": str(e)}
-            await websocket.send(json.dumps(error_response))
-
-
-# start_server = websockets.serve(handler, "", 5000)
-# start_server = websockets.serve(handler, None, 0)
-
-# start_server = websockets.serve(handler, "0.0.0.0", port=5000)
-# asyncio.get_event_loop().run_until_complete(start_server)
-# asyncio.get_event_loop().run_forever()
 
 if __name__ == "__main__":
     app.run()
