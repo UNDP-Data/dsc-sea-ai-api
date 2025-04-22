@@ -1,43 +1,30 @@
 import ast
+import base64
 import copy
+import json
+import os
 import re
-from html import entities
+import string
+from io import BytesIO
 
-import awoc
 import faiss
+import fitz  # PyMuPDF
 import numpy as np
 import openai
 import pandas as pd
 import pycountry
 import spacy
-from sklearn.metrics.pairwise import cosine_similarity
-from spacy.lang.en.stop_words import STOP_WORDS
-
-import utils.openai_call as openai_call
-
-nlp = spacy.load("en_core_web_sm")
-import base64
-import concurrent.futures
-import copy
-import json
-import os
-import string
-from io import BytesIO
-
-import fitz  # PyMuPDF
-import numpy as np
-import pandas as pd
 from awoc import AWOC
 from bs4 import BeautifulSoup
-from country_named_entity_recognition import find_countries
 from PIL import Image
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-# import custom utils functions
 import utils.indicator as indicator_module
-
-# import custom utils functions
+import utils.openai_call as openai_call
 import utils.processing_modules as processing_modules
+
+nlp = spacy.load("en_core_web_sm")
 
 df = pd.read_pickle("./models/df_embed_EN_All_V4.pkl")
 

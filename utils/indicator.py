@@ -1,25 +1,17 @@
-import csv
+import ast
+import datetime
 import os
 import re
+import sys
 import time
 
 import faiss
 import numpy as np
 import openai
 import pandas as pd
-import spacy
 import tiktoken
 from dotenv import load_dotenv
 from openai import AzureOpenAI
-
-nlp = spacy.load("en_core_web_sm")
-import ast
-import datetime
-import json
-import sys
-
-from country_named_entity_recognition import find_countries
-from sklearn.metrics.pairwise import cosine_similarity
 
 import utils.openai_call as openai_call
 import utils.processing_modules as processing_modules

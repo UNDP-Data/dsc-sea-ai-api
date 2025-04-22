@@ -1,34 +1,16 @@
-import ast
-import asyncio
 import concurrent.futures
-import imp
 import json
 import os
-import re
-import uuid  # for generating unique session IDs
 from collections import OrderedDict
-from concurrent.futures import process
 from pickle import TRUE
-from urllib import response
 
-import faiss
-import numpy as np
 import openai
-import pandas as pd
-import websockets
-
-# load enviroment variables
 from dotenv import load_dotenv
-
-# web
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from flask_session import Session
 from openai import AzureOpenAI
 
-import utils.openai_call as openai_call
-
-# import custom utils functions
 import utils.processing_modules as processing_modules
 
 load_dotenv()
