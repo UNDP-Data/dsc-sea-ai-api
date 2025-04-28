@@ -4,7 +4,7 @@ Flask==3.0.0
 Flask_Cors==4.0.0
 matplotlib==3.8.1
 numpy==1.25.2
-openai==1.1.2
+openai==1.56.0
 pandas==1.5.3
 # pandasai==1.4.8
 Pillow==9.0.1
