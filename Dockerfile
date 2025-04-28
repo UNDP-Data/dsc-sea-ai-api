@@ -10,8 +10,6 @@ RUN pip install -r requirements.txt
 RUN pip install -U flask-cors
 
 RUN pip install --upgrade sqlalchemy  # required to resolve ImportError: cannot import name 'URL' from 'sqlalchemy'
-RUN pip install setuptools_scm jpype1 # install pre-reqs
-RUN pip install ast
 COPY . /python-docker
 ENV FLASK_APP=/python-docker/main.py
 EXPOSE 5000
