@@ -23,7 +23,6 @@ flask_cors
 flask_session
 PyMuPDF
 country-named-entity-recognition
-a-world-of-countries
 tiktoken
 beautifulsoup4
 nltk

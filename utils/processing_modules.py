@@ -14,7 +14,6 @@ import openai
 import pandas as pd
 import pycountry
 import spacy
-from awoc import AWOC
 from bs4 import BeautifulSoup
 from PIL import Image
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -155,23 +154,6 @@ def find_mentioned_country_code(user_query):
                 countries.add(country_info.alpha_3)
         except LookupError:
             pass
-
-    # If no countries are found, check for continent mentions
-    if not countries:
-        words = re.findall(r"\w+|[^\w\s]", user_query)
-        text = " ".join(words)  # Join the tokens back into a string
-
-        world_info = AWOC()
-        all_continents = set(
-            [continent.lower() for continent in world_info.get_continents_list()]
-        )
-        for word in text.split():
-            word = word.lower()
-            if word in all_continents:
-                target_countries = world_info.get_countries_list_of(word)
-
-                for country in target_countries:
-                    countries.add(world_info.get_country_data(country)["ISO3"])
 
     return countries
 
