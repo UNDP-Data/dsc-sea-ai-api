@@ -5,7 +5,6 @@ Flask_Cors==4.0.0
 matplotlib==3.8.1
 numpy==1.25.2
 openai==1.56.0
-pandas==1.5.3
 # pandasai==1.4.8
 Pillow==9.0.1
 python-dotenv==1.0.0
@@ -26,3 +25,5 @@ country-named-entity-recognition
 tiktoken
 beautifulsoup4
 nltk
+pandas[fss] ~= 2.2.3
+adlfs ~= 2024.12.0
