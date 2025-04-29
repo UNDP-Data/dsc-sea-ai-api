@@ -1,14 +1,11 @@
 import json
 import os
 from collections import OrderedDict
-from pickle import TRUE
 
-import openai
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from flask_session import Session
-from openai import AzureOpenAI
 
 from src import processing
 
@@ -24,20 +21,6 @@ app.config["SESSION_FILE_DIR"] = (
 Session(app)
 
 CORS(app)
-
-
-# OpenAI API configuration
-openai.api_type = "azure"
-openai.api_key = os.getenv("AZURE_OPENAI_API_KEY")
-openai.api_base = os.getenv("AZURE_OPENAI_ENDPOINT")
-openai.api_version = os.getenv("api_version")
-openai_deployment = "sdgi-gpt-35-turbo-16k"
-client = AzureOpenAI(
-    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    api_version=os.getenv("api_version"),
-    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-)
-embedding_model = os.getenv("USER_QUERY_EMBEDDING_ENGINE")
 
 
 @app.route("/kg_query", methods=["GET"])
@@ -74,40 +57,22 @@ def send_prompt_llm():
         query_type = request.get_json().get("query_type")  # optional
         response = {}
 
-        # Define a function to run each processing module
-        def run_module(module_func, *args):
-            return module_func(user_query, *args)
-
         if query_type == "full":
 
             # user is requering ... get all relevant answers
-            entities_dict = processing.get_knowledge_graph(
-                user_query, openai_deployment
-            )
+            entities_dict = processing.get_knowledge_graph(user_query)
             # future_indicators = executor.submit(run_module, processing_modules.indicatorsModule) - for now
-            query_idea_list = processing.generate_query_ideas(
-                user_query, openai_deployment
-            )
+            query_idea_list = processing.generate_query_ideas(user_query)
             prompt_formattings = ""
 
             indicators_dict = {}
 
-            isInitialRun = False
-            excerpts_dict = processing.run_semantic_search(
-                user_query, client, embedding_model, isInitialRun, openai_deployment
-            )
+            excerpts_dict = processing.run_semantic_search(user_query)
 
             excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
 
             # Run synthesis module
-            answer = processing.get_synthesis(
-                user_query,
-                entities_dict,
-                excerpts_dict_synthesis,
-                indicators_dict,
-                openai_deployment,
-                prompt_formattings,
-            )
+            answer = processing.get_synthesis(user_query, excerpts_dict_synthesis)
 
             sources = excerpts_dict
             sorted_sources = sources
@@ -136,16 +101,11 @@ def send_prompt_llm():
             return response_json
         else:
 
-            entities_dict = processing.get_knowledge_graph(
-                user_query, openai_deployment
-            )
-            query_idea_list = processing.generate_query_ideas(
-                user_query, openai_deployment
-            )
+            entities_dict = processing.get_knowledge_graph(user_query)
+            query_idea_list = processing.generate_query_ideas(user_query)
 
             # Get results from completed futures
             indicators_dict = {}  # future_indicators.result()
-            isInitialRun = TRUE
             excerpts_dict = {}
             entities_array = (
                 list(entities_dict["entities"].keys()) if entities_dict else []

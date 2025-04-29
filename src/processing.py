@@ -1,10 +1,10 @@
 import ast
 import copy
+import os
 import re
 
 import faiss
 import numpy as np
-import openai
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -15,7 +15,7 @@ df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
 
 
 # Extract entities for the query and return the extract entities as an array
-def extract_entities(user_query, openai_deployment):
+def extract_entities(user_query):
     prompt = f"""
     Extract entities from the following user query: \"{user_query}\" and return output in array format.
     
@@ -25,29 +25,27 @@ def extract_entities(user_query, openai_deployment):
     -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
  
     """
-    entity_list = genai.generate_response(prompt, openai_deployment)
+    entity_list = genai.generate_response(prompt)
     return entity_list
 
 
 ## module to get information on the entities from user query using the KG
-def get_knowledge_graph(user_query, openai_deployment):
+def get_knowledge_graph(user_query):
 
     # generate list of entities based on user query
-    entity_list = extract_entities(user_query, openai_deployment)
+    entity_list = extract_entities(user_query)
     my_list = ast.literal_eval(entity_list)
     prompt_summarise_entites = f"""
     Summarize all relations between all the entities : {my_list}
     """
-    summarise_entities = genai.generate_response(
-        prompt_summarise_entites, openai_deployment
-    )
+    summarise_entities = genai.generate_response(prompt_summarise_entites)
     # Initialize an empty dictionary to store information
     entities_dict = {"relations": summarise_entities, "entities": {}}
     # Loop through each entity in the list
     for entity in my_list:
         # Fetch information about the entity from your knowledge graph
         prompt = f"Give me a short description 50 words of {entity}"
-        entity_info = ""  # openai_call.generate_response(prompt, openai_deployment)
+        entity_info = ""  # openai_call.generate_response(prompt)
         # Add the entity information to the dictionary
         entities_dict["entities"][entity] = entity_info
 
@@ -67,7 +65,7 @@ def jaccard_similarity(text1, text2):
     return intersection / union if union > 0 else 0
 
 
-def filter_semantics(user_query, isInitialRun):
+def filter_semantics(user_query):
     # If no documents match the keyword, return an empty DataFrame
     if df.empty:
         return pd.DataFrame()
@@ -103,8 +101,8 @@ def filter_semantics(user_query, isInitialRun):
     return filtered_df
 
 
-def search_embeddings(user_query, client, embedding_model, isInitialRun):
-    filtered_result = filter_semantics(user_query, isInitialRun)
+def search_embeddings(user_query):
+    filtered_result = filter_semantics(user_query)
     # Check if the result is not None before assigning it to df_filtered
     df_filtered = filtered_result if filtered_result is not None else None
 
@@ -116,11 +114,7 @@ def search_embeddings(user_query, client, embedding_model, isInitialRun):
         index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1])
         index.add(filtered_embeddings_arrays)
 
-        user_query_embedding = (
-            client.embeddings.create(input=user_query, model=embedding_model)
-            .data[0]
-            .embedding
-        )
+        user_query_embedding = genai.embed_text(user_query)
 
         k = min(5, length)
         distances, indices = index.search(np.array([user_query_embedding]), k)
@@ -130,7 +124,7 @@ def search_embeddings(user_query, client, embedding_model, isInitialRun):
 
 
 # get answer
-def get_answer(user_question, relevant_docs, openai_deployment):
+def get_answer(user_question, relevant_docs):
 
     formattings_html = f""" 
         Ignore previous
@@ -167,9 +161,9 @@ def get_answer(user_question, relevant_docs, openai_deployment):
                                         """,
         },
     ]
-
-    response_entities = openai.chat.completions.create(
-        model=openai_deployment,
+    client = genai.get_client()
+    response_entities = client.chat.completions.create(
+        model=os.environ["CHAT_MODEL"],
         temperature=0.3,
         messages=messages,
         top_p=0.8,
@@ -204,7 +198,7 @@ def remove_thumbnails(data):
     return data_no_thumbnails
 
 
-def map_to_structure(qs, isInitialRun, user_query):
+def map_to_structure(qs, user_query):
     result_dict = {}
 
     # Extract the DataFrame from the tuple
@@ -261,22 +255,20 @@ def map_to_structure(qs, isInitialRun, user_query):
     return result_dict
 
 
-def process_queries(queries, user_query, client, embedding_model, isInitialRun):
+def process_queries(user_query):
     merged_result_structure = {}
 
     # for query in queries:
-    qs = search_embeddings(user_query, client, embedding_model, isInitialRun)
+    qs = search_embeddings(user_query)
     if qs[0] is not None:
-        result_structure = map_to_structure(qs, isInitialRun, user_query)
+        result_structure = map_to_structure(qs, user_query)
         for doc_id, doc_info in result_structure.items():
             merged_result_structure[doc_id] = doc_info
     return merged_result_structure
 
 
 ## module to extract text from documents and return the text and document codes
-def run_semantic_search(
-    user_query, client, embedding_model, isInitialRun, openai_deployment
-):
+def run_semantic_search(user_query):
     # query_transformation = openai_call.generate_response(f"""
     # Given a question, your job is to break them into 3 main sub-question and return as array.
 
@@ -289,11 +281,8 @@ def run_semantic_search(
 
     # # Split the string by the delimiter '|'
     # questions_array = [question.strip() for question in query_transformation.split('|')]
-    questions_array = []
 
-    merged_results = process_queries(
-        questions_array, user_query, client, embedding_model, isInitialRun
-    )
+    merged_results = process_queries(user_query)
     print(f""" merged_results===  {merged_results} """)
     return merged_results
 
@@ -306,7 +295,7 @@ def convert_query_idea_to_array(query_idea_list):
 
 
 ## module to generate query ideas
-def generate_query_ideas(user_query, openai_deployment):  # lower priority
+def generate_query_ideas(user_query):  # lower priority
 
     # Generate query ideas using OpenAI GPT-3
     prompt = f"""
@@ -320,22 +309,15 @@ def generate_query_ideas(user_query, openai_deployment):  # lower priority
     - The query idea should be in a question form and not an answer form.
     -Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
     """
-    response = genai.generate_response(prompt, openai_deployment)
+    response = genai.generate_response(prompt)
     qIdeasResponse = convert_query_idea_to_array(response)
     return qIdeasResponse
 
 
-def get_synthesis(
-    user_query,
-    entities_dict,
-    excerpts_dict,
-    indicators_dict,
-    openai_deployment,
-    prompt_formattings,
-):
+def get_synthesis(user_query, excerpts_dict):
 
     ###synthesize data into structure within llm prompt engineering instructions
-    answer = get_answer(user_query, excerpts_dict, openai_deployment)
+    answer = get_answer(user_query, excerpts_dict)
     return answer
 
 
