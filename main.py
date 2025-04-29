@@ -11,7 +11,7 @@ from flask_cors import CORS, cross_origin
 from flask_session import Session
 from openai import AzureOpenAI
 
-from src import processing_modules
+from src import processing
 
 load_dotenv()
 
@@ -57,7 +57,7 @@ def get_kg_data():
             root_q_array.append(value)
 
         # Find the most similar file
-        kg_content = processing_modules.find_kg(root_q_array)
+        kg_content = processing.find_kg(root_q_array)
         # Create a response dictionary with the value of "q"
         response = {"kg_data": kg_content}
 
@@ -85,13 +85,13 @@ def send_prompt_llm():
                 # user is requering ... get all relevant answers
                 future_entities = executor.submit(
                     run_module,
-                    processing_modules.knowledgeGraphModule,
+                    processing.knowledgeGraphModule,
                     openai_deployment,
                 )
                 # future_indicators = executor.submit(run_module, processing_modules.indicatorsModule) - for now
                 future_query_ideas = executor.submit(
                     run_module,
-                    processing_modules.queryIdeationModule,
+                    processing.queryIdeationModule,
                     openai_deployment,
                 )
                 prompt_formattings = ""
@@ -104,7 +104,7 @@ def send_prompt_llm():
                 isInitialRun = False
                 future_excerpts = executor.submit(
                     run_module,
-                    processing_modules.semanticSearchModule,
+                    processing.semanticSearchModule,
                     client,
                     embedding_model,
                     isInitialRun,
@@ -112,12 +112,12 @@ def send_prompt_llm():
                 )
                 excerpts_dict = future_excerpts.result()
 
-                excerpts_dict_synthesis = processing_modules.remove_thumbnails(
+                excerpts_dict_synthesis = processing.remove_thumbnails(
                     future_excerpts.result()
                 )
 
                 # Run synthesis module
-                answer = processing_modules.synthesisModule(
+                answer = processing.synthesisModule(
                     user_query,
                     entities_dict,
                     excerpts_dict_synthesis,
@@ -158,12 +158,12 @@ def send_prompt_llm():
                 # Submit processing modules to the executor
                 future_entities = executor.submit(
                     run_module,
-                    processing_modules.knowledgeGraphModule,
+                    processing.knowledgeGraphModule,
                     openai_deployment,
                 )
                 future_query_ideas = executor.submit(
                     run_module,
-                    processing_modules.queryIdeationModule,
+                    processing.queryIdeationModule,
                     openai_deployment,
                 )
 
@@ -177,7 +177,7 @@ def send_prompt_llm():
                     list(entities_dict["entities"].keys()) if entities_dict else []
                 )
 
-                kg_content = processing_modules.find_kg(entities_array)
+                kg_content = processing.find_kg(entities_array)
                 response = {
                     "answer": "Processing final answer... ",
                     "user_query": user_query,

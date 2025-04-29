@@ -9,8 +9,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from . import openai_call, storage
-
+from . import genai, storage
 
 df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
 
@@ -26,7 +25,7 @@ def extractEntitiesFromQuery(user_query, openai_deployment):
     -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
  
     """
-    entity_list = openai_call.callOpenAI(prompt, openai_deployment)
+    entity_list = genai.callOpenAI(prompt, openai_deployment)
     return entity_list
 
 
@@ -39,9 +38,7 @@ def knowledgeGraphModule(user_query, openai_deployment):
     prompt_summarise_entites = f"""
     Summarize all relations between all the entities : {my_list}
     """
-    summarise_entities = openai_call.callOpenAI(
-        prompt_summarise_entites, openai_deployment
-    )
+    summarise_entities = genai.callOpenAI(prompt_summarise_entites, openai_deployment)
     # Initialize an empty dictionary to store information
     entities_dict = {"relations": summarise_entities, "entities": {}}
     # Loop through each entity in the list
@@ -321,7 +318,7 @@ def queryIdeationModule(user_query, openai_deployment):  # lower priority
     - The query idea should be in a question form and not an answer form.
     -Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
     """
-    response = openai_call.callOpenAI(prompt, openai_deployment)
+    response = genai.callOpenAI(prompt, openai_deployment)
     qIdeasResponse = convertQueryIdeaToArray(response)
     return qIdeasResponse
 
