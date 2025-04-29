@@ -1,31 +1,15 @@
 import ast
-import base64
 import copy
-import json
-import os
 import re
-import string
-from io import BytesIO
 
 import faiss
-import fitz  # PyMuPDF
 import numpy as np
 import openai
 import pandas as pd
-import pycountry
-import spacy
-from bs4 import BeautifulSoup
-from PIL import Image
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-import utils.indicator as indicator_module
-import utils.openai_call as openai_call
-import utils.processing_modules as processing_modules
-
-from . import storage
-
-nlp = spacy.load("en_core_web_sm")
+from . import openai_call, storage
 
 
 df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
@@ -44,35 +28,6 @@ def extractEntitiesFromQuery(user_query, openai_deployment):
     """
     entity_list = openai_call.callOpenAI(prompt, openai_deployment)
     return entity_list
-
-
-def generate_thumbnail_from_pdf(pdf_url, page_number=0, thumbnail_size=(100, 100)):
-    try:
-        # Open the PDF
-        pdf_document = fitz.open(pdf_url)
-
-        # Get the specified page
-        page = pdf_document.load_page(page_number)
-
-        # Get the image bytes of the page thumbnail
-        image_bytes = page.get_pixmap(matrix=fitz.Matrix(1, 1)).tobytes()
-
-        # Create PIL image from bytes
-        image = Image.open(BytesIO(image_bytes))
-
-        # Resize the image to thumbnail size
-        image.thumbnail(thumbnail_size)
-
-        # Convert image to base64
-        buffered = BytesIO()
-        image.save(buffered, format="JPEG")
-        thumbnail_base64 = base64.b64encode(buffered.getvalue()).decode()
-
-        return thumbnail_base64
-
-    except Exception as e:
-        print("Error:", e)
-        return None
 
 
 ## module to get information on the entities from user query using the KG
@@ -100,79 +55,6 @@ def knowledgeGraphModule(user_query, openai_deployment):
     return entities_dict
 
 
-def find_mentioned_countries(text):
-    countries = set()
-
-    # Tokenize the text using regular expressions to preserve punctuation marks
-    words = re.findall(r"\w+|[^\w\s]", text)
-    text = " ".join(words)  # Join the tokens back into a string
-
-    # Get a list of all country names
-    all_countries = {country.name: country for country in pycountry.countries}
-
-    # Check for multi-word country names first to avoid partial matches
-    for name in sorted(all_countries.keys(), key=lambda x: len(x), reverse=True):
-        if name in text:
-            countries.add(all_countries[name].name)
-            text = text.replace(
-                name, ""
-            )  # Remove the found country name from the text to avoid duplicates
-
-    return list(countries)
-
-
-# def find_mentioned_countries(text):
-#     countries = set()
-
-#     # Tokenize the text using regular expressions to preserve punctuation marks
-#     words = re.findall(r'\w+|[^\w\s]', text)
-#     text = ' '.join(words)  # Join the tokens back into a string
-
-#     for word in text.split():
-#         try:
-#             country = pycountry.countries.get(name=word) #pycountry.countries.lookup(word)
-#             if country != None :
-#                countries.add(country.name)
-#         except LookupError:
-#             pass
-
-#     return list(countries)
-
-
-"""
-Previous 'find_mentioned_countries' can detect countries when they are formed correctly.
-
-"""
-
-
-# Extract mentioned countries' ISO3 code
-def find_mentioned_country_code(user_query):
-    countries = set()
-    extracted_countries = find_mentioned_countries(user_query)
-
-    for country in extracted_countries:
-        try:
-            country_info = pycountry.countries.get(name=country)
-            if country_info:
-                countries.add(country_info.alpha_3)
-        except LookupError:
-            pass
-
-    return countries
-
-
-def filter_country(user_query):
-    mentioned_countries = find_mentioned_country_code(user_query)
-    print(mentioned_countries)
-    # Check if mentioned_countries is not empty
-    if mentioned_countries:
-        country = mentioned_countries[0]
-        return df[df["Country Name"] == country]
-    else:
-        # Handle the case where no countries were mentioned
-        return None  # Or return an empty DataFrame or any other suitable value
-
-
 # Function to calculate Jaccard similarity between two texts
 def jaccard_similarity(text1, text2):
     # Tokenize texts
@@ -184,131 +66,6 @@ def jaccard_similarity(text1, text2):
     union = len(tokens1.union(tokens2))
 
     return intersection / union if union > 0 else 0
-
-
-# Load the English language model
-# Function to calculate the average word embedding for a sentence
-def average_word_embedding_old(sentence):
-    # Parse the sentence using SpaCy
-    doc = nlp(sentence)
-    # Get word vectors and average them
-    word_vectors = [token.vector for token in doc if token.has_vector]
-    if not word_vectors:
-        return None
-    return np.mean(word_vectors, axis=0)
-
-
-def average_word_embedding(sentence):
-    if sentence is None:
-        sentence = ""
-
-    # Parse the sentence using SpaCy
-    doc = nlp(sentence)
-
-    # Get word vectors and average them
-    vectors = [token.vector for token in doc if token.has_vector]
-    if not vectors:
-        return None
-
-    avg_vector = sum(vectors) / len(vectors)
-    return avg_vector
-
-
-# Function to calculate context similarity between two sentences using word embedding averaging
-def calculate_context_similarity(sentence1, sentence2):
-    # Get average word embeddings for each sentence
-
-    avg_embedding1 = average_word_embedding(sentence1)
-    avg_embedding2 = average_word_embedding(sentence2)
-    # print(avg_embedding1)
-    # print(avg_embedding2)
-    if avg_embedding1 is None or avg_embedding2 is None:
-        return None
-    # Calculate cosine similarity between the embeddings
-    similarity = cosine_similarity([avg_embedding1], [avg_embedding2])[0][0]
-    return similarity
-
-
-# Simple helps
-def title_contains_entity(entity, title):
-    # Convert both entity and title to lowercase for case-insensitive comparison
-    entity_lower = entity.lower()
-    title_lower = title.lower()
-
-    # Check if the lowercase entity is contained within the lowercase title
-    if entity_lower in title_lower:
-        return 1
-    else:
-        return 0
-
-
-# Function to convert country codes to country names
-def convert_codes_to_names(codes):
-    code_to_name = {country.alpha_3: country.name for country in pycountry.countries}
-    return {code_to_name.get(code, code) for code in codes}
-
-
-# Function to filter DataFrame based on country names
-def filter_dataframe_by_country_names(df, filtered_country_cde):
-    filtered_dfs = []
-    country_names = convert_codes_to_names(filtered_country_cde)
-    code_to_name = {country.alpha_3: country.name for country in pycountry.countries}
-
-    for code in filtered_country_cde:
-        country_name = code_to_name.get(code, None)
-        if country_name:
-            filtered_df = df[df["Country Code"] == code]
-            filtered_df["Country Name"] = country_name
-            filtered_dfs.append(filtered_df)
-
-    if filtered_dfs:
-        result_df = pd.concat(filtered_dfs, ignore_index=True)
-    else:
-        result_df = pd.DataFrame()  # Return empty DataFrame if no matches
-
-    return result_df
-
-
-def average_word_context_embed(sentence):
-    # Ensure the input is a string
-    if not isinstance(sentence, str):
-        return None
-
-    # If the sentence is empty, return None
-    if not sentence:
-        return None
-
-    # Parse the sentence using SpaCy
-    doc = nlp(sentence)
-
-    # Get word vectors and average them
-    vectors = [token.vector for token in doc if token.has_vector]
-    if vectors:
-        avg_vector = np.mean(vectors, axis=0)
-        return avg_vector
-    else:
-        return None
-
-
-def calculate_context_bool(uq, doc_, threshold):
-    avg_emb1 = average_word_context_embed(uq)
-    avg_emb2 = average_word_context_embed(doc_)
-    if avg_emb1 is None or avg_emb2 is None:
-        return False
-
-    similarity = np.dot(avg_emb1, avg_emb2) / (
-        np.linalg.norm(avg_emb1) * np.linalg.norm(avg_emb2)
-    )
-    return (
-        similarity > threshold
-    )  # Assuming 0.75 is the threshold for context similarity
-
-
-def preprocess_text(text):
-    """Preprocess the text by converting to lowercase and removing punctuation."""
-    if pd.isna(text):
-        return ""
-    return text.lower().translate(str.maketrans("", "", string.punctuation))
 
 
 def filter_semantics(user_query, isInitialRun):
@@ -348,7 +105,6 @@ def filter_semantics(user_query, isInitialRun):
 
 
 def search_embeddings(user_query, client, embedding_model, isInitialRun):
-    # df_filtered = filter_semantics(user_query) if filter_semantics(user_query) is not None else None
     filtered_result = filter_semantics(user_query, isInitialRun)
     # Check if the result is not None before assigning it to df_filtered
     df_filtered = filtered_result if filtered_result is not None else None
@@ -436,50 +192,6 @@ def get_answer(user_question, relevant_docs, openai_deployment):
     return cleaned_text
 
 
-def check_links_and_process_html(html, content_dict):
-    soup = BeautifulSoup(html, "html.parser")
-
-    for a in soup.find_all("a"):
-        ref_text = a.get_text()
-        if ref_text.startswith("[") and ref_text.endswith("]"):
-            href = a.get("href")
-            if not any(d["document_link"] == href for d in content_dict.values()):
-                a.decompose()
-
-    result = str(soup)
-    return result
-
-
-def check_links_and_process_html____(html, content_dict):
-    soup = BeautifulSoup(html, "html.parser")
-    link_count = 1
-
-    for a in soup.find_all("a"):
-        href = a.get("href")
-        if any(d["link"] == href for d in content_dict.values()):
-            # Ensure the link adheres to the format <a href="LINK HERE">[n]</a>
-            a.string = f"{a.get_text()} [{link_count}]"
-            link_count += 1
-        else:
-            a.decompose()
-
-    result = str(soup)
-    return result
-
-
-def sort_by_relevancy(result_dict):
-    # Convert the dictionary to a list of tuples (doc_id, info)
-    result_list = list(result_dict.items())
-
-    # Reverse the list
-    result_list.reverse()
-
-    # Convert the reversed list of tuples back to a dictionary
-    reversed_result_dict = {k: v for k, v in result_list}
-
-    return reversed_result_dict
-
-
 def remove_thumbnails(data):
     data_no_thumbnails = copy.deepcopy(data)  # Make a deep copy of the data
     for doc_id, doc_info in data_no_thumbnails.items():
@@ -516,11 +228,7 @@ def map_to_structure(qs, isInitialRun, user_query):
         title = str(row["Document Title"]) if row["Document Title"] is not None else ""
         extract = str(content) if content is not None else ""
 
-        title_similarity = processing_modules.jaccard_similarity(user_query, title) or 0
-        extract_similarity = (
-            processing_modules.jaccard_similarity(user_query, extract) or 0
-        )
-        # print(f""" {title_similarity} {user_query} {title}""")
+        extract_similarity = jaccard_similarity(user_query, extract) or 0
         print(f""" {extract_similarity} {user_query} {title}""")
 
         document_info = {
@@ -551,9 +259,6 @@ def map_to_structure(qs, isInitialRun, user_query):
         if count == 10:
             break
 
-        # Sort the dictionary by relevancy
-        # sorted_result_dict = sort_by_relevancy(result_dict)
-
     return result_dict
 
 
@@ -561,11 +266,7 @@ def process_queries(queries, user_query, client, embedding_model, isInitialRun):
     merged_result_structure = {}
 
     # for query in queries:
-    # qs = search_embeddings(query)  # Assuming search_embeddings returns a tuple (df, distances, indices)
-    qs = search_embeddings(
-        user_query, client, embedding_model, isInitialRun
-    )  # df, distances, indices
-    # print(f""" qs=== {qs} {isInitialRun} {user_query} | query == {query} """)
+    qs = search_embeddings(user_query, client, embedding_model, isInitialRun)
     if qs[0] is not None:
         result_structure = map_to_structure(qs, isInitialRun, user_query)
         for doc_id, doc_info in result_structure.items():
@@ -625,57 +326,6 @@ def queryIdeationModule(user_query, openai_deployment):  # lower priority
     return qIdeasResponse
 
 
-def cleanJson(json_data):
-    # Make a deepcopy of the JSON data to avoid modifying the original object
-    jsonData = copy.deepcopy(json_data)
-
-    # Loop through the items and remove the "thumbnail" key
-    for value in jsonData.values():
-        if "document_thumbnail" in value:
-            del value["document_thumbnail"]
-
-    for value in jsonData.values():
-        if "thumbnail" in value:
-            del value["thumbnail"]
-    # Convert the modified data back to JSON
-    modified_json = json.dumps(jsonData, indent=4)
-
-    return modified_json
-
-
-# Cleanup outputs
-# Parse the HTML content
-
-
-# Function to remove [n] if not inside an <a> tag
-def remove_unlinked_citations(soup):
-    # Regular expression to match [n] pattern
-    pattern = re.compile(r"\[\d+\]")
-
-    for text in soup.find_all(text=pattern):
-        # Find all matches in the text
-        matches = pattern.findall(text)
-        for match in matches:
-            # Check if the match is inside an <a> tag
-            if not text.find_parent("a"):
-                # Remove the match from the text
-                text.replace_with(text.replace(match, ""))
-
-    return soup
-
-
-def cleanCitation(html_content):
-
-    soup = BeautifulSoup(html_content, "html.parser")
-    # Remove unlinked citations
-    clean_soup = remove_unlinked_citations(soup)
-
-    # Get the modified HTML content
-    clean_html_content = str(clean_soup)
-
-    return clean_html_content
-
-
 def synthesisModule(
     user_query,
     entities_dict,
@@ -688,14 +338,6 @@ def synthesisModule(
     ###synthesize data into structure within llm prompt engineering instructions
     answer = get_answer(user_query, excerpts_dict, openai_deployment)  # callOpenAI
     return answer
-
-
-##Indicators
-
-
-## module to get data for specific indicators which are identified is relevant to the user query
-def indicatorsModule(user_query):  # lower priority
-    return indicator_module.indicatorsModule(user_query)
 
 
 # Function to calculate the similarity score between two strings
@@ -715,91 +357,6 @@ def similarity_score_kg(word1, word2):
     similarity = len(common_words) / max(len(words1), len(words2)) * 100
 
     return similarity
-
-
-def find_kgold(keywords, data_dir):
-    max_score = 0
-    most_similar_file = None
-    final_output = {"knowledge_graph": {"entities": [], "relations": {}}}
-
-    # Extract the first keyword from the list
-    first_keyword = keywords[0] if keywords else None
-
-    # Calculate the similarity score with the first keyword
-    for filename in os.listdir(data_dir):
-        if filename.endswith(".json"):
-            score = similarity_score_kg(first_keyword, filename)
-            # print(f""" first_keyword === {first_keyword} filename {filename} score {score}  """)
-
-            if score > max_score:
-                max_score = score
-                most_similar_file = filename
-                # Break the loop after finding the first matching file
-                break
-    initial_root = most_similar_file[:-5]
-    # print(initial_root)
-    initial_kg = {}
-    with open(os.path.join(data_dir, f"""{initial_root}.json"""), "r") as file:
-        initial_kg = json.load(file)
-    # get the initial root file
-
-    # Load the content of the most similar file
-    if most_similar_file:
-        with open(os.path.join(data_dir, most_similar_file), "r") as file:
-            content = json.load(file)
-            # Iterate over each relation in the content
-            for relation, objects in content["knowledge graph"]["relations"].items():
-                # print(f""" most_similar_file === {objects} """)
-
-                # Dictionary to store found JSON files
-                # found_files = {}
-                found_files = []
-                found_files.append(initial_kg)
-                # Iterate through each dictionary in 'data'
-                for item in objects:
-                    # Extract the 'Object' name
-                    object_name = item.get("Object")
-
-                    # Construct the paths for both original and lowercase filenames
-                    json_file_original = os.path.join(data_dir, f"{object_name}.json")
-                    json_file_lowercase = os.path.join(
-                        data_dir, f"{object_name.lower()}.json"
-                    )
-
-                    # Check if a corresponding JSON file exists
-                    # json_file = os.path.join(data_dir, f"{object_name}.json")
-
-                    if os.path.exists(json_file_original) or os.path.exists(
-                        json_file_lowercase
-                    ):
-                        # Choose the correct filename based on existence
-                        json_file = (
-                            json_file_original
-                            if os.path.exists(json_file_original)
-                            else json_file_lowercase
-                        )
-
-                        # if os.path.exists(json_file):
-                        # Load the content of the JSON file
-                        # print(f"""*****json_file=== {json_file} """)
-
-                        with open(json_file, "r") as file:
-                            try:
-                                file_content = json.load(file)
-                                # print(f"""*****object_name=== {file_content} """)
-
-                                # Add the content to the 'found_files' dictionary
-                                # found_files[object_name] = file_content
-                                found_files.append(file_content)
-                                # found_files = file_content
-
-                            except Exception as e:
-                                print("Error:", e)
-                                return None
-                # 'found_files' now contains the content of JSON files with object names as keys
-                print(f""" found_files === {found_files}""")
-
-    return found_files
 
 
 def find_kg(keywords):
