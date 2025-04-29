@@ -1,4 +1,3 @@
-import concurrent.futures
 import json
 import os
 from collections import OrderedDict
@@ -81,112 +80,87 @@ def send_prompt_llm():
 
         if query_type == "full":
 
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                # user is requering ... get all relevant answers
-                future_entities = executor.submit(
-                    run_module,
-                    processing.get_knowledge_graph,
-                    openai_deployment,
-                )
-                # future_indicators = executor.submit(run_module, processing_modules.indicatorsModule) - for now
-                future_query_ideas = executor.submit(
-                    run_module,
-                    processing.generate_query_ideas,
-                    openai_deployment,
-                )
-                prompt_formattings = ""
-                # Get results from completed futures
-                entities_dict = future_entities.result()
+            # user is requering ... get all relevant answers
+            entities_dict = processing.get_knowledge_graph(
+                user_query, openai_deployment
+            )
+            # future_indicators = executor.submit(run_module, processing_modules.indicatorsModule) - for now
+            query_idea_list = processing.generate_query_ideas(
+                user_query, openai_deployment
+            )
+            prompt_formattings = ""
 
-                indicators_dict = {}  # future_indicators.result()
-                query_idea_list = future_query_ideas.result()
+            indicators_dict = {}
 
-                isInitialRun = False
-                future_excerpts = executor.submit(
-                    run_module,
-                    processing.run_semantic_search,
-                    client,
-                    embedding_model,
-                    isInitialRun,
-                    openai_deployment,
-                )
-                excerpts_dict = future_excerpts.result()
+            isInitialRun = False
+            excerpts_dict = processing.run_semantic_search(
+                user_query, client, embedding_model, isInitialRun, openai_deployment
+            )
 
-                excerpts_dict_synthesis = processing.remove_thumbnails(
-                    future_excerpts.result()
-                )
+            excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
 
-                # Run synthesis module
-                answer = processing.get_synthesis(
-                    user_query,
-                    entities_dict,
-                    excerpts_dict_synthesis,
-                    indicators_dict,
-                    openai_deployment,
-                    prompt_formattings,
-                )
+            # Run synthesis module
+            answer = processing.get_synthesis(
+                user_query,
+                entities_dict,
+                excerpts_dict_synthesis,
+                indicators_dict,
+                openai_deployment,
+                prompt_formattings,
+            )
 
-                sources = excerpts_dict
-                sorted_sources = sources
-                response = OrderedDict(
-                    [
-                        ("answer", answer),
-                        ("user_query", user_query),
+            sources = excerpts_dict
+            sorted_sources = sources
+            response = OrderedDict(
+                [
+                    ("answer", answer),
+                    ("user_query", user_query),
+                    (
+                        "entities",
                         (
-                            "entities",
-                            (
-                                list(entities_dict["entities"].keys())
-                                if entities_dict
-                                else []
-                            ),
+                            list(entities_dict["entities"].keys())
+                            if entities_dict
+                            else []
                         ),
-                        ("query_ideas", query_idea_list if query_idea_list else []),
-                        ("excerpts_dict", sorted_sources),
-                        ("indicators_dict", indicators_dict),
-                    ]
-                )
+                    ),
+                    ("query_ideas", query_idea_list if query_idea_list else []),
+                    ("excerpts_dict", sorted_sources),
+                    ("indicators_dict", indicators_dict),
+                ]
+            )
 
-                # Convert the response to a JSON string and then back to a dictionary to preserve order
-                response_json = json.dumps(response, indent=4)
+            # Convert the response to a JSON string and then back to a dictionary to preserve order
+            response_json = json.dumps(response, indent=4)
 
             # Return the response
             return response_json
         else:
 
-            # Create a thread pool executor - run all in parallel to reduce ttl
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                # Submit processing modules to the executor
-                future_entities = executor.submit(
-                    run_module,
-                    processing.get_knowledge_graph,
-                    openai_deployment,
-                )
-                future_query_ideas = executor.submit(
-                    run_module,
-                    processing.generate_query_ideas,
-                    openai_deployment,
-                )
+            entities_dict = processing.get_knowledge_graph(
+                user_query, openai_deployment
+            )
+            query_idea_list = processing.generate_query_ideas(
+                user_query, openai_deployment
+            )
 
-                # Get results from completed futures
-                entities_dict = future_entities.result()
-                indicators_dict = {}  # future_indicators.result()
-                query_idea_list = future_query_ideas.result()
-                isInitialRun = TRUE
-                excerpts_dict = {}
-                entities_array = (
-                    list(entities_dict["entities"].keys()) if entities_dict else []
-                )
+            # Get results from completed futures
+            indicators_dict = {}  # future_indicators.result()
+            isInitialRun = TRUE
+            excerpts_dict = {}
+            entities_array = (
+                list(entities_dict["entities"].keys()) if entities_dict else []
+            )
 
-                kg_content = processing.find_kg(entities_array)
-                response = {
-                    "answer": "Processing final answer... ",
-                    "user_query": user_query,
-                    "entities": entities_array,
-                    "query_ideas": query_idea_list if query_idea_list else [],
-                    "excerpts_dict": excerpts_dict,
-                    "indicators_dict": indicators_dict,
-                    "kg_data": kg_content,
-                }
+            kg_content = processing.find_kg(entities_array)
+            response = {
+                "answer": "Processing final answer... ",
+                "user_query": user_query,
+                "entities": entities_array,
+                "query_ideas": query_idea_list if query_idea_list else [],
+                "excerpts_dict": excerpts_dict,
+                "indicators_dict": indicators_dict,
+                "kg_data": kg_content,
+            }
 
             # Return the response
             return jsonify(response)
