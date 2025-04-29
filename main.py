@@ -11,7 +11,7 @@ from flask_cors import CORS, cross_origin
 from flask_session import Session
 from openai import AzureOpenAI
 
-import utils.processing_modules as processing_modules
+from src import processing_modules
 
 load_dotenv()
 
