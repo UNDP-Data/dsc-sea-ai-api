@@ -2,7 +2,7 @@ import openai
 
 
 # use this function to make simple openAI Calls
-def callOpenAI(prompt, openai_deployment):
+def generate_response(prompt, openai_deployment):
     response_entities = openai.chat.completions.create(
         model=openai_deployment,
         temperature=0,

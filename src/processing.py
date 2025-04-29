@@ -15,7 +15,7 @@ df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
 
 
 # Extract entities for the query and return the extract entities as an array
-def extractEntitiesFromQuery(user_query, openai_deployment):
+def extract_entities(user_query, openai_deployment):
     prompt = f"""
     Extract entities from the following user query: \"{user_query}\" and return output in array format.
     
@@ -25,27 +25,29 @@ def extractEntitiesFromQuery(user_query, openai_deployment):
     -Avoid adding new lines or breaking spaces to your output. Array should be single dimension and single line !!!
  
     """
-    entity_list = genai.callOpenAI(prompt, openai_deployment)
+    entity_list = genai.generate_response(prompt, openai_deployment)
     return entity_list
 
 
 ## module to get information on the entities from user query using the KG
-def knowledgeGraphModule(user_query, openai_deployment):
+def get_knowledge_graph(user_query, openai_deployment):
 
     # generate list of entities based on user query
-    entity_list = extractEntitiesFromQuery(user_query, openai_deployment)
+    entity_list = extract_entities(user_query, openai_deployment)
     my_list = ast.literal_eval(entity_list)
     prompt_summarise_entites = f"""
     Summarize all relations between all the entities : {my_list}
     """
-    summarise_entities = genai.callOpenAI(prompt_summarise_entites, openai_deployment)
+    summarise_entities = genai.generate_response(
+        prompt_summarise_entites, openai_deployment
+    )
     # Initialize an empty dictionary to store information
     entities_dict = {"relations": summarise_entities, "entities": {}}
     # Loop through each entity in the list
     for entity in my_list:
         # Fetch information about the entity from your knowledge graph
         prompt = f"Give me a short description 50 words of {entity}"
-        entity_info = ""  # openai_call.callOpenAI(prompt, openai_deployment)
+        entity_info = ""  # openai_call.generate_response(prompt, openai_deployment)
         # Add the entity information to the dictionary
         entities_dict["entities"][entity] = entity_info
 
@@ -272,10 +274,10 @@ def process_queries(queries, user_query, client, embedding_model, isInitialRun):
 
 
 ## module to extract text from documents and return the text and document codes
-def semanticSearchModule(
+def run_semantic_search(
     user_query, client, embedding_model, isInitialRun, openai_deployment
 ):
-    # query_transformation = openai_call.callOpenAI(f"""
+    # query_transformation = openai_call.generate_response(f"""
     # Given a question, your job is to break them into 3 main sub-question and return as array.
 
     # - You Must return output seperated by |
@@ -296,7 +298,7 @@ def semanticSearchModule(
     return merged_results
 
 
-def convertQueryIdeaToArray(query_idea_list):
+def convert_query_idea_to_array(query_idea_list):
     # Split the query idea list by the "|" character
     query_ideas = query_idea_list.split(" | ")
     # Print the resulting array
@@ -304,7 +306,7 @@ def convertQueryIdeaToArray(query_idea_list):
 
 
 ## module to generate query ideas
-def queryIdeationModule(user_query, openai_deployment):  # lower priority
+def generate_query_ideas(user_query, openai_deployment):  # lower priority
 
     # Generate query ideas using OpenAI GPT-3
     prompt = f"""
@@ -318,12 +320,12 @@ def queryIdeationModule(user_query, openai_deployment):  # lower priority
     - The query idea should be in a question form and not an answer form.
     -Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
     """
-    response = genai.callOpenAI(prompt, openai_deployment)
-    qIdeasResponse = convertQueryIdeaToArray(response)
+    response = genai.generate_response(prompt, openai_deployment)
+    qIdeasResponse = convert_query_idea_to_array(response)
     return qIdeasResponse
 
 
-def synthesisModule(
+def get_synthesis(
     user_query,
     entities_dict,
     excerpts_dict,
@@ -333,7 +335,7 @@ def synthesisModule(
 ):
 
     ###synthesize data into structure within llm prompt engineering instructions
-    answer = get_answer(user_query, excerpts_dict, openai_deployment)  # callOpenAI
+    answer = get_answer(user_query, excerpts_dict, openai_deployment)
     return answer
 
 

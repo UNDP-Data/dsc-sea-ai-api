@@ -85,13 +85,13 @@ def send_prompt_llm():
                 # user is requering ... get all relevant answers
                 future_entities = executor.submit(
                     run_module,
-                    processing.knowledgeGraphModule,
+                    processing.get_knowledge_graph,
                     openai_deployment,
                 )
                 # future_indicators = executor.submit(run_module, processing_modules.indicatorsModule) - for now
                 future_query_ideas = executor.submit(
                     run_module,
-                    processing.queryIdeationModule,
+                    processing.generate_query_ideas,
                     openai_deployment,
                 )
                 prompt_formattings = ""
@@ -104,7 +104,7 @@ def send_prompt_llm():
                 isInitialRun = False
                 future_excerpts = executor.submit(
                     run_module,
-                    processing.semanticSearchModule,
+                    processing.run_semantic_search,
                     client,
                     embedding_model,
                     isInitialRun,
@@ -117,7 +117,7 @@ def send_prompt_llm():
                 )
 
                 # Run synthesis module
-                answer = processing.synthesisModule(
+                answer = processing.get_synthesis(
                     user_query,
                     entities_dict,
                     excerpts_dict_synthesis,
@@ -158,12 +158,12 @@ def send_prompt_llm():
                 # Submit processing modules to the executor
                 future_entities = executor.submit(
                     run_module,
-                    processing.knowledgeGraphModule,
+                    processing.get_knowledge_graph,
                     openai_deployment,
                 )
                 future_query_ideas = executor.submit(
                     run_module,
-                    processing.queryIdeationModule,
+                    processing.generate_query_ideas,
                     openai_deployment,
                 )
 
