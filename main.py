@@ -61,36 +61,22 @@ def send_prompt_llm():
 
             # user is requering ... get all relevant answers
             entities_dict = processing.get_knowledge_graph(user_query)
-            # future_indicators = executor.submit(run_module, processing_modules.indicatorsModule) - for now
             query_idea_list = processing.generate_query_ideas(user_query)
-            prompt_formattings = ""
-
-            indicators_dict = {}
-
             excerpts_dict = processing.run_semantic_search(user_query)
-
             excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
-
-            # Run synthesis module
             answer = processing.get_synthesis(user_query, excerpts_dict_synthesis)
 
-            sources = excerpts_dict
-            sorted_sources = sources
             response = OrderedDict(
                 [
                     ("answer", answer),
                     ("user_query", user_query),
                     (
                         "entities",
-                        (
-                            list(entities_dict["entities"].keys())
-                            if entities_dict
-                            else []
-                        ),
+                        (list(entities_dict["entities"]) if entities_dict else []),
                     ),
                     ("query_ideas", query_idea_list if query_idea_list else []),
-                    ("excerpts_dict", sorted_sources),
-                    ("indicators_dict", indicators_dict),
+                    ("excerpts_dict", excerpts_dict),
+                    ("indicators_dict", {}),
                 ]
             )
 
@@ -105,11 +91,7 @@ def send_prompt_llm():
             query_idea_list = processing.generate_query_ideas(user_query)
 
             # Get results from completed futures
-            indicators_dict = {}  # future_indicators.result()
-            excerpts_dict = {}
-            entities_array = (
-                list(entities_dict["entities"].keys()) if entities_dict else []
-            )
+            entities_array = list(entities_dict["entities"]) if entities_dict else []
 
             kg_content = processing.find_kg(entities_array)
             response = {
@@ -117,8 +99,8 @@ def send_prompt_llm():
                 "user_query": user_query,
                 "entities": entities_array,
                 "query_ideas": query_idea_list if query_idea_list else [],
-                "excerpts_dict": excerpts_dict,
-                "indicators_dict": indicators_dict,
+                "excerpts_dict": {},
+                "indicators_dict": {},
                 "kg_data": kg_content,
             }
 
