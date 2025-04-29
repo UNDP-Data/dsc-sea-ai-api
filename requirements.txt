@@ -1,8 +1,8 @@
-faiss_cpu == 1.7.4
+faiss_cpu == 1.11.0
 flask == 3.0.0
 flask-cors == 4.0.0
 flask-session
-numpy == 1.25.2
+numpy ~= 2.2.5
 openai == 1.56.0
 python-dotenv == 1.0.0
 scikit-learn
