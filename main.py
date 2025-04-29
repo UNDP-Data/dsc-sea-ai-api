@@ -56,9 +56,8 @@ def get_kg_data():
         for value in root_q_values:
             root_q_array.append(value)
 
-        data_dir = "data/KG"
         # Find the most similar file
-        kg_content = processing_modules.find_kg(root_q_array, data_dir)
+        kg_content = processing_modules.find_kg(root_q_array)
         # Create a response dictionary with the value of "q"
         response = {"kg_data": kg_content}
 
@@ -178,8 +177,7 @@ def send_prompt_llm():
                     list(entities_dict["entities"].keys()) if entities_dict else []
                 )
 
-                data_dir = "data/KG"
-                kg_content = processing_modules.find_kg(entities_array, data_dir)
+                kg_content = processing_modules.find_kg(entities_array)
                 response = {
                     "answer": "Processing final answer... ",
                     "user_query": user_query,

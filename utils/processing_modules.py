@@ -23,9 +23,12 @@ import utils.indicator as indicator_module
 import utils.openai_call as openai_call
 import utils.processing_modules as processing_modules
 
+from . import storage
+
 nlp = spacy.load("en_core_web_sm")
 
-df = pd.read_pickle("./models/df_embed_EN_All_V4.pkl")
+
+df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
 
 
 # Extract entities for the query and return the extract entities as an array
@@ -799,7 +802,8 @@ def find_kgold(keywords, data_dir):
     return found_files
 
 
-def find_kg(keywords, data_dir):
+def find_kg(keywords):
+    data_dir = "KG"
     max_score = 0
     most_similar_file = None
     final_output = {"knowledge_graph": {"entities": [], "relations": {}}}
@@ -808,8 +812,10 @@ def find_kg(keywords, data_dir):
     first_keyword = keywords[0] if keywords else None
 
     # Calculate the similarity score with the first keyword
-    for filename in os.listdir(data_dir):
+    client = storage.get_blob_client()
+    for filename in client.find(f"{storage.CONTAINER_NAME}/{data_dir}"):
         if filename.endswith(".json"):
+            filename = filename.split("/")[-1]
             score = similarity_score_kg(first_keyword, filename)
             if score > max_score:
                 max_score = score
@@ -824,16 +830,14 @@ def find_kg(keywords, data_dir):
     initial_root = most_similar_file[:-5]
     initial_kg = {}
     try:
-        with open(os.path.join(data_dir, f"{initial_root}.json"), "r") as file:
-            initial_kg = json.load(file)
+        initial_kg = storage.load_json(f"{data_dir}/{initial_root}.json")
     except Exception as e:
         print(f"Error loading initial root file: {e}")
         return None
 
     # Load the content of the most similar file
     try:
-        with open(os.path.join(data_dir, most_similar_file), "r") as file:
-            content = json.load(file)
+        content = storage.load_json(f"{data_dir}/{most_similar_file}")
     except Exception as e:
         print(f"Error loading most similar file: {e}")
         return None
@@ -854,22 +858,21 @@ def find_kg(keywords, data_dir):
             object_name = item.get("Object")
 
             # Construct the paths for both original and lowercase filenames
-            json_file_original = os.path.join(data_dir, f"{object_name}.json")
-            json_file_lowercase = os.path.join(data_dir, f"{object_name.lower()}.json")
+            json_file_original = f"{data_dir}/{object_name}.json"
+            json_file_lowercase = f"{data_dir}/{object_name.lower()}.json"
 
-            if os.path.exists(json_file_original) or os.path.exists(
+            if storage.file_exists(json_file_original) or storage.file_exists(
                 json_file_lowercase
             ):
                 json_file = (
                     json_file_original
-                    if os.path.exists(json_file_original)
+                    if storage.file_exists(json_file_original)
                     else json_file_lowercase
                 )
 
                 try:
-                    with open(json_file, "r") as file:
-                        file_content = json.load(file)
-                        found_files.append(file_content)
+                    file_content = storage.load_json(json_file)
+                    found_files.append(file_content)
                 except Exception as e:
                     print(f"Error loading file {json_file}: {e}")
                     continue

@@ -2,7 +2,6 @@ import ast
 import datetime
 import os
 import re
-import sys
 import time
 
 import faiss
@@ -16,7 +15,7 @@ from openai import AzureOpenAI
 import utils.openai_call as openai_call
 import utils.processing_modules as processing_modules
 
-sys.path.insert(1, "../utils")
+from . import storage
 
 load_dotenv()
 
@@ -36,7 +35,7 @@ dfs = []
 
 # Read each CSV file into a DataFrame and append to the list
 for file_name in file_names:
-    df = pd.read_csv(f"data/WDI_CSV/{file_name}")
+    df = storage.read_csv(f"WDI_CSV/{file_name}")
     dfs.append(df)
 
 # Concatenate all DataFrames into one
@@ -47,9 +46,9 @@ wdi_csv = pd.concat(dfs, ignore_index=True)
 
 # wdi_csv = pd.read_csv('data/WDI_CSV/WDICSV.csv')
 # country meta data
-wdi_country = pd.read_csv("data/WDI_CSV/WDICountry.csv")
+wdi_country = storage.read_csv("WDI_CSV/WDICountry.csv")
 # Series meta data
-wdi_series = pd.read_csv("data/WDI_CSV/WDISeries.csv")
+wdi_series = storage.read_csv("WDI_CSV/WDISeries.csv")
 
 openai.api_type = "azure"
 openai.api_key = os.getenv("AZURE_OPENAI_API_KEY")
@@ -66,7 +65,7 @@ client = AzureOpenAI(
 encoding = tiktoken.get_encoding("cl100k_base")
 embedding_model = os.getenv("USER_QUERY_EMBEDDING_ENGINE")
 
-df = pd.read_pickle("models/indicator_meta_embed.pkl")
+df = storage.read_json("models/indicator_meta_embed.jsonl", lines=True)
 
 
 def create_embedding(row):
