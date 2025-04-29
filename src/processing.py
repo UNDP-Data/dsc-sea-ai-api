@@ -1,6 +1,5 @@
 import ast
 import copy
-import os
 import re
 
 import faiss
@@ -147,30 +146,20 @@ def get_answer(user_question, relevant_docs):
         DOCS: {relevant_docs}
         
        """
-    messages = [
-        {
-            "role": "system",
-            "content": f"""You are a helpful assistant and a professional researcher with many years of experience in answering questions. Give answer to the user's inquiry. {formattings_html}""",
-        },
-        {
-            "role": "user",
-            "content": f"""{formattings} 
+    system_message = f"""You are a helpful assistant and a professional researcher with many years of experience in answering questions. Give answer to the user's inquiry. {formattings_html}"""
+    prompt = f"""{formattings} 
                                         {user_question}
                                         
                                          {formattings_html}
-                                        """,
-        },
-    ]
-    client = genai.get_client()
-    response_entities = client.chat.completions.create(
-        model=os.environ["CHAT_MODEL"],
+                                        """
+    response = genai.generate_response(
+        prompt,
+        system_message,
         temperature=0.3,
-        messages=messages,
         top_p=0.8,
         frequency_penalty=0.6,
         presence_penalty=0.8,
     )
-    response = response_entities.choices[0].message.content
     print(f"""cleaned_text {response}""")
 
     # Define the regex pattern to match digits followed by '. do'

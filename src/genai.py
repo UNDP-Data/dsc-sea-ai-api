@@ -18,12 +18,19 @@ def get_client():
     return client
 
 
-def generate_response(prompt):
+def generate_response(
+    prompt: str,
+    system_message: str = "You are a helpful assistant.",
+    **kwargs,
+) -> str:
+    # use the defaults if no kwargs are provided
+    params = {"temperature": 0} | kwargs
     client = get_client()
     response = client.chat.completions.create(
         model=os.environ["CHAT_MODEL"],
-        temperature=0,
+        **params,
         messages=[
+            {"role": "system", "content": system_message},
             {"role": "user", "content": prompt},
         ],
     )
