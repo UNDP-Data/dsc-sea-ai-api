@@ -1,89 +1,61 @@
-# Demo Backend
+# dsc-sea-ai-api
 
-## Flask App
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/release/python-3120/)
+[![License](https://img.shields.io/github/license/undp-data/dsc-sea-ai-api)](https://github.com/undp-data/dsc-sea-ai-api/blob/main/LICENSE)
+[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
-The app will be running at http://127.0.0.1:5000/.
+A Python API to serve data from the knowledge graph for the Sustainable Energy Academy.
 
-Run main.py to start the App.
+> [!WARNING]  
+> The package is currently undergoing a major revamp. Some features may be missing or not working as intended. Feel free to [open an issue](https://github.com/UNDP-Data/dsc-sea-ai-api/issues).
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Getting Started
+
+Follow the steps below to run the API locally.
+
+1. Clone the repository and navigate to the project folder.
+2. Create and activate a virtual environment.
+3. Create and populate the `.env` file base on `.env.example`.
+4. Run `make install` to install project dependencies.
+5. To launch the API, run `python main.py`. The API will be running at http://127.0.0.1:5000.
 
 ```bash
+git clone https://github.com/UNDP-Data/dsc-sea-ai-api
+cd dsc-sea-ai-api
+python -m venv .venv
+source .venv/bin/activate
+make install
 python main.py
+# Running on http://127.0.0.1:5000
 ```
 
-Find the list of the modules and packages required in requirements.txt.
+## Deployment
 
-## Endpoints
+The project is hooked up to a CI/CD pipeline. Committing to `main` branch will trigger deployment to Azure Web App service. A pull request is required to change the branch.
 
-### 1. Semantic Search and Response Generation
+## Contributing
 
-- **Endpoint:** `/llm`
-- **Method:** POST
+All contributions must follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+The codebase is formatted with `black` and `isort`. Use the provided [Makefile](./Makefile) for these
+routine operations.
 
-  ```json
-  {
-    "prompt": "user query"
-  }
-  ```
+1. Clone or fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Make your changes
+4. Ensure your code is properly formatted (`make format`)
+5. Commit your changes (`git commit -m 'Add some feature'`)
+6. Push to the branch (`git push origin feature-branch`)
+7. Open a pull request
 
-### 2. PandasAI Data Analysis
+## License
 
-- **Endpoint:** `/pandasai`
-- **Method:** POST
-
-  ```json
-  {
-    "table_name": "table name",
-    "prompt": "user prompt"
-  }
-  ```
-
-### 3. Get DataFrame Header
-
-- **Endpoint:** `/header`
-- **Method:** GET
-
-  ```json
-  {
-    "table_name": "table name"
-  }
-  ```
-
-## Testing with Jupyter Notebook
-
-Testing cases can be found in 'test.ipynb'
-
-## Running the App Using Docker
-
-Build the docker image:
-
-```bash
-docker build -t <name-of-image> .
-```
-
-Run the docker image:
-
-```bash
- docker run -e API_KEY= <YOUR-OPENAI-API-KEY> -p 5000:5000 <name-of-image>
-```
-
-The app will be running at http://127.0.0.1:5000/ in your browser.
-
-## Running app using Virtual enviroment
-
-It’s advisable to create a virtual environments (optional but recommended)
-
-E.g
-python3.9 -m venv myenv
-source myenv/bin/activate
-
-Then install dependencies
-
-pip install -r requirements.txt
-
-Run this once to install spacy english data on the environment
-
-python3.9 -m spacy download en
-
-Finally run the file :
-
-python3.9 main.py
+This project is licensed under the BSD 3-Clause License. See the [LICENSE](./LICENSE) file.
