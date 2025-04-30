@@ -1,29 +1,10 @@
-# faiss==1.7.4
-faiss_cpu==1.7.4
-Flask==3.0.0
-Flask_Cors==4.0.0
-matplotlib==3.8.1
-numpy==1.25.2
-openai==1.1.2
-pandas==1.5.3
-# pandasai==1.4.8
-Pillow==9.0.1
-python-dotenv==1.0.0
-spacy==3.6.1
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.6.0/en_core_web_sm-3.6.0.tar.gz#egg=en_core_web_sm
-langchain==0.0.279
-sqlalchemy>=1.4.49
-openpyxl==3.1.2
-networkx==3.1
-pycountry
-transformers
-scikit-learn
-websockets
-flask_cors
-flask_session
-PyMuPDF
-country-named-entity-recognition
-a-world-of-countries
-tiktoken
-beautifulsoup4
-nltk
+flask == 3.1.0
+flask-cors == 5.0.1
+flask-session == 0.8.0
+numpy ~= 2.2.5
+pandas[fss] ~= 2.2.3
+adlfs ~= 2024.12.0
+scikit-learn ~= 1.6.1
+faiss_cpu ~= 1.11.0
+openai ~= 1.76.2
+python-dotenv ~= 1.1.0
