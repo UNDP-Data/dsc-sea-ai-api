@@ -1,10 +1,10 @@
-faiss_cpu == 1.11.0
-flask == 3.0.0
-flask-cors == 4.0.0
-flask-session
+flask == 3.1.0
+flask-cors == 5.0.1
+flask-session == 0.8.0
 numpy ~= 2.2.5
-openai == 1.56.0
-python-dotenv == 1.0.0
-scikit-learn
 pandas[fss] ~= 2.2.3
 adlfs ~= 2024.12.0
+scikit-learn ~= 1.6.1
+faiss_cpu ~= 1.11.0
+openai ~= 1.76.2
+python-dotenv ~= 1.1.0
