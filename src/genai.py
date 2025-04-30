@@ -13,7 +13,7 @@ def get_client():
     client = AzureOpenAI(
         api_version="2024-07-01-preview",
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
+        api_key=os.environ["AZURE_OPENAI_KEY"],
     )
     return client
 
