@@ -1,60 +1,44 @@
+"""
+Entry point to the API.
+"""
+
 import json
-import os
 from collections import OrderedDict
+from typing import Annotated
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, request
-from flask_cors import CORS, cross_origin
-from flask_session import Session
+from fastapi import FastAPI, Query
+from pydantic import BaseModel
 
 from src import processing
 
 load_dotenv()
 
-app = Flask(__name__)
-app.secret_key = os.getenv("APP_SECRET_KEY")
-# Configure Flask to use the filesystem for session storage
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SESSION_FILE_DIR"] = (
-    "/tmp/flask_session"  # Directory to store session files
-)
-Session(app)
 
-CORS(app)
+app = FastAPI()
 
 
-@app.route("/kg_query", methods=["GET"])
-@cross_origin()
-def get_kg_data():
+class Message(BaseModel):
+    content: str
+    full: bool = False
+
+
+@app.get(path="/kg_query")
+async def get_kg_data(q: Annotated[list[str], Query()]):
+    # Find the most similar file
+    kg_content = processing.find_kg(q)
+    # Create a response dictionary with the value of "q"
+    response = {"kg_data": kg_content}
+
+    # Return the response as JSON
+    return response
+
+
+@app.post(path="/llm")
+async def send_prompt_llm(message: Message):
     try:
-
-        # Create an empty array to store the values of "q"
-        root_q_array = []
-
-        # Get the value(s) of the "q" parameter from the URL
-        root_q_values = request.args.getlist("q")
-
-        # Append each value of "q" to the array
-        for value in root_q_values:
-            root_q_array.append(value)
-
-        # Find the most similar file
-        kg_content = processing.find_kg(root_q_array)
-        # Create a response dictionary with the value of "q"
-        response = {"kg_data": kg_content}
-
-        # Return the response as JSON
-        return jsonify(response)
-    except Exception as e:
-        print(e)
-
-
-@app.route("/llm", methods=["POST"])
-@cross_origin()
-def send_prompt_llm():
-    try:
-        user_query = request.get_json()["query"]
-        query_type = request.get_json().get("query_type")  # optional
+        user_query = message.content
+        query_type = message.type
         response = {}
 
         if query_type == "full":
@@ -105,22 +89,16 @@ def send_prompt_llm():
             }
 
             # Return the response
-            return jsonify(response)
+            return response
 
     except Exception as e:
         print(e)
         # Return error response
-        return jsonify(
-            {
-                "status": "failed",
-                "message": "an error occurred",
-                "session_id": None,
-                "answers": [],
-                "entities": [],
-                "prompts": [],
-            }
-        )
-
-
-if __name__ == "__main__":
-    app.run()
+        return {
+            "status": "failed",
+            "message": "an error occurred",
+            "session_id": None,
+            "answers": [],
+            "entities": [],
+            "prompts": [],
+        }
