@@ -3,6 +3,7 @@ import copy
 import re
 
 from . import genai, storage
+from .entities import Subgraph
 
 
 # Extract entities for the query and return the extract entities as an array
@@ -25,22 +26,12 @@ def get_knowledge_graph(user_query: str) -> dict:
 
     # generate list of entities based on user query
     entity_list = extract_entities(user_query)
-    my_list = ast.literal_eval(entity_list)
+    entity_list = ast.literal_eval(entity_list)
     prompt_summarise_entites = f"""
-    Summarize all relations between all the entities : {my_list}
+    Summarize all relations between all the entities : {entity_list}
     """
     summarise_entities = genai.generate_response(prompt_summarise_entites)
-    # Initialize an empty dictionary to store information
-    entities_dict = {"relations": summarise_entities, "entities": {}}
-    # Loop through each entity in the list
-    for entity in my_list:
-        # Fetch information about the entity from your knowledge graph
-        prompt = f"Give me a short description 50 words of {entity}"
-        entity_info = ""  # openai_call.generate_response(prompt)
-        # Add the entity information to the dictionary
-        entities_dict["entities"][entity] = entity_info
-
-    return entities_dict
+    return {"relations": summarise_entities, "entities": entity_list}
 
 
 # Function to calculate Jaccard similarity between two texts
@@ -160,11 +151,10 @@ def similarity_score_kg(word1: str, word2: str) -> float:
     return similarity
 
 
-def find_kg(keywords: list[str]) -> list[dict]:
+def find_kg(keywords: list[str]) -> list[Subgraph]:
     data_dir = "KG"
     max_score = 0
     most_similar_file = None
-    final_output = {"knowledge_graph": {"entities": [], "relations": {}}}
 
     # Extract the first keyword from the list
     first_keyword = keywords[0] if keywords else None
@@ -235,4 +225,4 @@ def find_kg(keywords: list[str]) -> list[dict]:
                     print(f"Error loading file {json_file}: {e}")
                     continue
 
-    return found_files
+    return list(map(Subgraph.from_kg, found_files))
