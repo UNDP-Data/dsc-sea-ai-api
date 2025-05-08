@@ -14,7 +14,7 @@ df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
 
 
 # Extract entities for the query and return the extract entities as an array
-def extract_entities(user_query):
+def extract_entities(user_query: str) -> list[str]:
     prompt = f"""
     Extract entities from the following user query: \"{user_query}\" and return output in array format.
     
@@ -29,7 +29,7 @@ def extract_entities(user_query):
 
 
 ## module to get information on the entities from user query using the KG
-def get_knowledge_graph(user_query):
+def get_knowledge_graph(user_query: str) -> dict:
 
     # generate list of entities based on user query
     entity_list = extract_entities(user_query)
@@ -52,7 +52,7 @@ def get_knowledge_graph(user_query):
 
 
 # Function to calculate Jaccard similarity between two texts
-def jaccard_similarity(text1, text2):
+def jaccard_similarity(text1: str, text2: str) -> float:
     # Tokenize texts
     tokens1 = set(text1.lower().split())
     tokens2 = set(text2.lower().split())
@@ -64,7 +64,7 @@ def jaccard_similarity(text1, text2):
     return intersection / union if union > 0 else 0
 
 
-def filter_semantics(user_query):
+def filter_semantics(user_query: str) -> pd.DataFrame:
     # If no documents match the keyword, return an empty DataFrame
     if df.empty:
         return pd.DataFrame()
@@ -100,7 +100,9 @@ def filter_semantics(user_query):
     return filtered_df
 
 
-def search_embeddings(user_query):
+def search_embeddings(
+    user_query: str,
+) -> tuple[pd.DataFrame, list[float], list[int]] | None:
     filtered_result = filter_semantics(user_query)
     # Check if the result is not None before assigning it to df_filtered
     df_filtered = filtered_result if filtered_result is not None else None
@@ -117,13 +119,13 @@ def search_embeddings(user_query):
 
         k = min(5, length)
         distances, indices = index.search(np.array([user_query_embedding]), k)
-        return df_filtered, distances, indices
+        return df_filtered, distances.tolist(), indices.tolist()
     else:
-        return None, None, None
+        return None
 
 
 # get answer
-def get_answer(user_question, relevant_docs):
+def get_answer(user_question: str, relevant_docs: dict[str, dict]) -> str:
 
     formattings_html = f""" 
         Ignore previous
@@ -174,7 +176,7 @@ def get_answer(user_question, relevant_docs):
     return cleaned_text
 
 
-def remove_thumbnails(data):
+def remove_thumbnails(data: dict[str, dict]) -> dict[str, dict]:
     data_no_thumbnails = copy.deepcopy(data)  # Make a deep copy of the data
     for doc_id, doc_info in data_no_thumbnails.items():
         if "document_thumbnail" in doc_info:
@@ -187,7 +189,9 @@ def remove_thumbnails(data):
     return data_no_thumbnails
 
 
-def map_to_structure(qs, user_query):
+def map_to_structure(
+    qs: tuple[pd.DataFrame, list[float], list[int]], user_query: str
+) -> dict[str, dict]:
     result_dict = {}
 
     # Extract the DataFrame from the tuple
@@ -244,12 +248,12 @@ def map_to_structure(qs, user_query):
     return result_dict
 
 
-def process_queries(user_query):
+def process_queries(user_query: str) -> dict[str, dict]:
     merged_result_structure = {}
 
     # for query in queries:
     qs = search_embeddings(user_query)
-    if qs[0] is not None:
+    if qs is not None:
         result_structure = map_to_structure(qs, user_query)
         for doc_id, doc_info in result_structure.items():
             merged_result_structure[doc_id] = doc_info
@@ -257,7 +261,7 @@ def process_queries(user_query):
 
 
 ## module to extract text from documents and return the text and document codes
-def run_semantic_search(user_query):
+def run_semantic_search(user_query: str) -> dict[str, dict]:
     # query_transformation = openai_call.generate_response(f"""
     # Given a question, your job is to break them into 3 main sub-question and return as array.
 
@@ -276,7 +280,7 @@ def run_semantic_search(user_query):
     return merged_results
 
 
-def convert_query_idea_to_array(query_idea_list):
+def convert_query_idea_to_array(query_idea_list: str) -> list[str]:
     # Split the query idea list by the "|" character
     query_ideas = query_idea_list.split(" | ")
     # Print the resulting array
@@ -284,7 +288,7 @@ def convert_query_idea_to_array(query_idea_list):
 
 
 ## module to generate query ideas
-def generate_query_ideas(user_query):  # lower priority
+def generate_query_ideas(user_query: str) -> list[str]:  # lower priority
 
     # Generate query ideas using OpenAI GPT-3
     prompt = f"""
@@ -304,7 +308,7 @@ def generate_query_ideas(user_query):  # lower priority
 
 
 # Function to calculate the similarity score between two strings
-def similarity_score_kg(word1, word2):
+def similarity_score_kg(word1: str, word2: str) -> float:
     # Convert strings to lowercase for case-insensitive comparison
     word1_lower = word1.lower()
     word2_lower = word2[:-5].lower()
@@ -322,7 +326,7 @@ def similarity_score_kg(word1, word2):
     return similarity
 
 
-def find_kg(keywords):
+def find_kg(keywords: list[str]) -> list[dict]:
     data_dir = "KG"
     max_score = 0
     most_similar_file = None
