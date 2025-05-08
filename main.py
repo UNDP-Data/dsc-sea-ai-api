@@ -48,7 +48,7 @@ async def send_prompt_llm(message: Message):
             query_idea_list = processing.generate_query_ideas(user_query)
             excerpts_dict = processing.run_semantic_search(user_query)
             excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
-            answer = processing.get_synthesis(user_query, excerpts_dict_synthesis)
+            answer = processing.get_answer(user_query, excerpts_dict_synthesis)
 
             response = OrderedDict(
                 [

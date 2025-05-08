@@ -303,13 +303,6 @@ def generate_query_ideas(user_query):  # lower priority
     return qIdeasResponse
 
 
-def get_synthesis(user_query, excerpts_dict):
-
-    ###synthesize data into structure within llm prompt engineering instructions
-    answer = get_answer(user_query, excerpts_dict)
-    return answer
-
-
 # Function to calculate the similarity score between two strings
 def similarity_score_kg(word1, word2):
     # Convert strings to lowercase for case-insensitive comparison
