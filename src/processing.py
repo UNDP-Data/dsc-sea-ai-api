@@ -280,13 +280,6 @@ def run_semantic_search(user_query: str) -> dict[str, dict]:
     return merged_results
 
 
-def convert_query_idea_to_array(query_idea_list: str) -> list[str]:
-    # Split the query idea list by the "|" character
-    query_ideas = query_idea_list.split(" | ")
-    # Print the resulting array
-    return query_ideas
-
-
 ## module to generate query ideas
 def generate_query_ideas(user_query: str) -> list[str]:  # lower priority
 
@@ -303,8 +296,8 @@ def generate_query_ideas(user_query: str) -> list[str]:  # lower priority
     -Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
     """
     response = genai.generate_response(prompt)
-    qIdeasResponse = convert_query_idea_to_array(response)
-    return qIdeasResponse
+    query_ideas = response.split(" | ")
+    return query_ideas
 
 
 # Function to calculate the similarity score between two strings
