@@ -38,10 +38,9 @@ async def get_kg_data(q: Annotated[list[str], Query()]):
 async def send_prompt_llm(message: Message):
     try:
         user_query = message.content
-        query_type = message.type
         response = {}
 
-        if query_type == "full":
+        if message.full:
 
             # user is requering ... get all relevant answers
             entities_dict = processing.get_knowledge_graph(user_query)
