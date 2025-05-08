@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
-from src import processing
+from src import database, processing
 
 load_dotenv()
 
@@ -43,7 +43,7 @@ async def send_prompt_llm(message: Message):
     query_idea_list = processing.generate_query_ideas(user_query)
     entities_array = list(entities_dict["entities"]) if entities_dict else []
     if message.full:
-        excerpts_dict = processing.process_queries(user_query)
+        excerpts_dict = database.process_queries(user_query)
         excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
         answer = processing.get_answer(user_query, excerpts_dict_synthesis)
         kg_content = None
