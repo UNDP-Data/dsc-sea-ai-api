@@ -37,13 +37,13 @@ async def get_kg_data(q: Annotated[list[str], Query()]):
 async def send_prompt_llm(message: Message):
     user_query = message.content
     response = {}
-
+    client = database.Client.from_model()
     # user is requering ... get all relevant answers
     entities_dict = processing.get_knowledge_graph(user_query)
     query_idea_list = processing.generate_query_ideas(user_query)
     entities_array = list(entities_dict["entities"]) if entities_dict else []
     if message.full:
-        excerpts_dict = database.process_queries(user_query)
+        excerpts_dict = client.process_queries(user_query)
         excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
         answer = processing.get_answer(user_query, excerpts_dict_synthesis)
         kg_content = None
