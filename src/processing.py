@@ -260,26 +260,6 @@ def process_queries(user_query: str) -> dict[str, dict]:
     return merged_result_structure
 
 
-## module to extract text from documents and return the text and document codes
-def run_semantic_search(user_query: str) -> dict[str, dict]:
-    # query_transformation = openai_call.generate_response(f"""
-    # Given a question, your job is to break them into 3 main sub-question and return as array.
-
-    # - You Must return output seperated by |
-    # - Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
-
-    # QUESTION: {user_query}
-    # """, openai_deployment)
-    # print(f""" query_transformation: {query_transformation} """)
-
-    # # Split the string by the delimiter '|'
-    # questions_array = [question.strip() for question in query_transformation.split('|')]
-
-    merged_results = process_queries(user_query)
-    print(f""" merged_results===  {merged_results} """)
-    return merged_results
-
-
 ## module to generate query ideas
 def generate_query_ideas(user_query: str) -> list[str]:  # lower priority
 

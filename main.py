@@ -46,7 +46,7 @@ async def send_prompt_llm(message: Message):
             # user is requering ... get all relevant answers
             entities_dict = processing.get_knowledge_graph(user_query)
             query_idea_list = processing.generate_query_ideas(user_query)
-            excerpts_dict = processing.run_semantic_search(user_query)
+            excerpts_dict = processing.process_queries(user_query)
             excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
             answer = processing.get_answer(user_query, excerpts_dict_synthesis)
 
