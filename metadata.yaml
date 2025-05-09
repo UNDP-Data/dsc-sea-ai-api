@@ -1,0 +1,12 @@
+title: "UNDP Sustainable Energy Academy AI API"
+version: "0.1.0-alpha"
+description: |
+  ## Overview
+  
+  The Sustainable Energy Academy (SEA) AI API provides access to a knowledge graph and GenAI features that 
+  power various user experiences on the Sustainable Energy Academy platform. The project is part of the 
+  Sustainable Energy Hub at UNDP.
+contact:
+  name: "UNDP Sustainable Energy Hub"
+  url: "https://www.undp.org/energy"
+  email": "data@undp.org"
