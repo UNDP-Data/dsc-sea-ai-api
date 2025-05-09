@@ -6,3 +6,5 @@ format:
 	isort . --profile black --multi-line 3 && black .
 test:
 	python -m pytest tests
+run:
+	uvicorn main:app --reload
