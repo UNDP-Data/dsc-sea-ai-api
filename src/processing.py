@@ -85,7 +85,6 @@ def get_answer(user_question: str, relevant_docs: dict[str, dict]) -> str:
         frequency_penalty=0.6,
         presence_penalty=0.8,
     )
-    print(f"""cleaned_text {response}""")
 
     # Define the regex pattern to match digits followed by '. do'
     pattern = r"\d+\. do"
