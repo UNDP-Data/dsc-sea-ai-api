@@ -27,7 +27,7 @@ Follow the steps below to run the API locally.
 2. Create and activate a virtual environment.
 3. Create and populate the `.env` file base on `.env.example`.
 4. Run `make install` to install project dependencies.
-5. To launch the API, run `python main.py`. The API will be running at http://127.0.0.1:5000.
+5. To launch the API, run `make run`. The API will be running at http://127.0.0.1:8000.
 
 ```bash
 git clone https://github.com/UNDP-Data/dsc-sea-ai-api
@@ -35,8 +35,8 @@ cd dsc-sea-ai-api
 python -m venv .venv
 source .venv/bin/activate
 make install
-python main.py
-# Running on http://127.0.0.1:5000
+make run
+# INFO: Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
 ## Deployment
