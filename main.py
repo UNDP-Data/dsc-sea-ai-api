@@ -42,21 +42,35 @@ app = FastAPI(**metadata, lifespan=lifespan)
 
 
 @app.get(
-    path="/kg_query",
+    path="/graph",
     response_model=KnowledgeGraph,
     response_model_by_alias=False,
 )
-async def get_kg_data(q: Annotated[list[str], Query()]):
-    subgraphs = processing.find_kg(q)
+async def query_knowledge_graph(
+    query: Annotated[
+        list[str],
+        Query(
+            description="One or more queries to retrieve relevant concepts for",
+            example=["climate change mitigation"],
+        ),
+    ],
+):
+    """
+    Get relevant subgraphs for query concepts from the knowledge graph.
+    """
+    subgraphs = processing.find_kg(query)
     return {"subgraphs": subgraphs}
 
 
 @app.post(
-    path="/llm",
+    path="/model",
     response_model=AssistantMessage,
     response_model_by_alias=False,
 )
-async def send_prompt_llm(request: Request, message: HumanMessage):
+async def ask_model(request: Request, message: HumanMessage):
+    """
+    Ask a GenAI model to compose a response supplemented by knowledge graph data.
+    """
     user_query = message.content
     response = {}
     client: database.Client = request.state.client
