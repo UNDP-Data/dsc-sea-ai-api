@@ -5,6 +5,7 @@ Entry point to the API.
 from contextlib import asynccontextmanager
 from typing import Annotated
 
+import yaml
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query, Request
 
@@ -35,7 +36,9 @@ async def lifespan(_: FastAPI):
     yield states
 
 
-app = FastAPI(lifespan=lifespan)
+with open("metadata.yaml", "r", encoding="utf-8") as file:
+    metadata = yaml.safe_load(file)
+app = FastAPI(**metadata, lifespan=lifespan)
 
 
 @app.get(
