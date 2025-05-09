@@ -8,6 +8,9 @@ from typing import Annotated
 import yaml
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query, Request
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from src import database, processing
 from src.entities import AssistantMessage, HumanMessage, KnowledgeGraph
@@ -39,6 +42,39 @@ async def lifespan(_: FastAPI):
 with open("metadata.yaml", "r", encoding="utf-8") as file:
     metadata = yaml.safe_load(file)
 app = FastAPI(**metadata, lifespan=lifespan)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates/")
+
+
+@app.get(
+    path="/",
+    include_in_schema=False,
+)
+async def root(request: Request):
+    """
+    Return the homepage template.
+    """
+    return templates.TemplateResponse(request=request, name="index.html")
+
+
+@app.get(
+    path="/changelog",
+    include_in_schema=False,
+)
+async def changelog(request: Request):
+    """
+    Return the changelog template.
+    """
+    return templates.TemplateResponse(request=request, name="changelog.html")
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    """
+    Use to display the favicon in the homepage. For favicon on the documentation pages,
+    an override of /docs and /redoc endpoints is required.
+    """
+    return FileResponse("./static/favicon.ico")
 
 
 @app.get(
