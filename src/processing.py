@@ -2,19 +2,12 @@ import ast
 import copy
 import re
 
-import faiss
-import numpy as np
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
 from . import genai, storage
-
-df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
+from .entities import Subgraph
 
 
 # Extract entities for the query and return the extract entities as an array
-def extract_entities(user_query):
+def extract_entities(user_query: str) -> list[str]:
     prompt = f"""
     Extract entities from the following user query: \"{user_query}\" and return output in array format.
     
@@ -29,30 +22,20 @@ def extract_entities(user_query):
 
 
 ## module to get information on the entities from user query using the KG
-def get_knowledge_graph(user_query):
+def get_knowledge_graph(user_query: str) -> dict:
 
     # generate list of entities based on user query
     entity_list = extract_entities(user_query)
-    my_list = ast.literal_eval(entity_list)
+    entity_list = ast.literal_eval(entity_list)
     prompt_summarise_entites = f"""
-    Summarize all relations between all the entities : {my_list}
+    Summarize all relations between all the entities : {entity_list}
     """
     summarise_entities = genai.generate_response(prompt_summarise_entites)
-    # Initialize an empty dictionary to store information
-    entities_dict = {"relations": summarise_entities, "entities": {}}
-    # Loop through each entity in the list
-    for entity in my_list:
-        # Fetch information about the entity from your knowledge graph
-        prompt = f"Give me a short description 50 words of {entity}"
-        entity_info = ""  # openai_call.generate_response(prompt)
-        # Add the entity information to the dictionary
-        entities_dict["entities"][entity] = entity_info
-
-    return entities_dict
+    return {"relations": summarise_entities, "entities": entity_list}
 
 
 # Function to calculate Jaccard similarity between two texts
-def jaccard_similarity(text1, text2):
+def jaccard_similarity(text1: str, text2: str) -> float:
     # Tokenize texts
     tokens1 = set(text1.lower().split())
     tokens2 = set(text2.lower().split())
@@ -64,66 +47,8 @@ def jaccard_similarity(text1, text2):
     return intersection / union if union > 0 else 0
 
 
-def filter_semantics(user_query):
-    # If no documents match the keyword, return an empty DataFrame
-    if df.empty:
-        return pd.DataFrame()
-
-    # Concatenate 'Document Title' and 'Country Name' to form the text for each document
-    df["combined_text"] = (
-        df["Document Title"].astype(str) + " " + df["Country Name"].astype(str)
-    )
-
-    # Use TF-IDF Vectorizer to encode the text
-    vectorizer = TfidfVectorizer(stop_words="english")
-    document_embeddings = vectorizer.fit_transform(df["combined_text"])
-    query_embedding = vectorizer.transform([user_query])
-
-    # Calculate cosine similarity between the query and document embeddings
-    similarity_scores = cosine_similarity(
-        query_embedding, document_embeddings
-    ).flatten()
-
-    # Add the similarity scores to the DataFrame
-    df["similarity_score"] = similarity_scores
-
-    # Filter the DataFrame to include only documents with a similarity score above 0.6
-    filtered_df = df[df["similarity_score"] > 0.5]
-
-    # If the filtered DataFrame is empty, relax the threshold
-    if filtered_df.empty:
-        filtered_df = df[df["similarity_score"] > 0.2]
-
-    # Sort the filtered DataFrame by similarity score
-    filtered_df = filtered_df.sort_values(by="similarity_score", ascending=False)
-
-    return filtered_df
-
-
-def search_embeddings(user_query):
-    filtered_result = filter_semantics(user_query)
-    # Check if the result is not None before assigning it to df_filtered
-    df_filtered = filtered_result if filtered_result is not None else None
-
-    if (
-        df_filtered is not None and not df_filtered.empty
-    ):  # Check if DataFrame is not None and not empty
-        length = len(df_filtered.head())
-        filtered_embeddings_arrays = np.array(list(df_filtered["Embedding"]))
-        index = faiss.IndexFlatIP(filtered_embeddings_arrays.shape[1])
-        index.add(filtered_embeddings_arrays)
-
-        user_query_embedding = genai.embed_text(user_query)
-
-        k = min(5, length)
-        distances, indices = index.search(np.array([user_query_embedding]), k)
-        return df_filtered, distances, indices
-    else:
-        return None, None, None
-
-
 # get answer
-def get_answer(user_question, relevant_docs):
+def get_answer(user_question: str, relevant_docs: dict[str, dict]) -> str:
 
     formattings_html = f""" 
         Ignore previous
@@ -160,7 +85,6 @@ def get_answer(user_question, relevant_docs):
         frequency_penalty=0.6,
         presence_penalty=0.8,
     )
-    print(f"""cleaned_text {response}""")
 
     # Define the regex pattern to match digits followed by '. do'
     pattern = r"\d+\. do"
@@ -174,7 +98,7 @@ def get_answer(user_question, relevant_docs):
     return cleaned_text
 
 
-def remove_thumbnails(data):
+def remove_thumbnails(data: dict[str, dict]) -> dict[str, dict]:
     data_no_thumbnails = copy.deepcopy(data)  # Make a deep copy of the data
     for doc_id, doc_info in data_no_thumbnails.items():
         if "document_thumbnail" in doc_info:
@@ -187,104 +111,8 @@ def remove_thumbnails(data):
     return data_no_thumbnails
 
 
-def map_to_structure(qs, user_query):
-    result_dict = {}
-
-    # Extract the DataFrame from the tuple
-    dataframe = qs[0]
-
-    # Create a dictionary for each document
-    document_info = {}
-
-    # Counter to limit the loop to 10 iterations
-    count = 0
-    for index, row in dataframe.iterrows():
-        # Define a unique identifier for each document, you can customize this based on your data
-        document_id = f"doc-{index + 1}"
-        # Handle NaN in content by using fillna
-        content = (
-            str(row["Content"]) if row["Content"] is not None else ""
-        )  # row["Content"]
-        content = " ".join(content.split()[:160])
-
-        title = str(row["Document Title"]) if row["Document Title"] is not None else ""
-        extract = str(content) if content is not None else ""
-
-        extract_similarity = jaccard_similarity(user_query, extract) or 0
-        print(f""" {extract_similarity} {user_query} {title}""")
-
-        document_info = {
-            "document_title": title,
-            "extract": extract,  # Adjust based on your column names
-            "category": str(row["Category"]) if row["Category"] is not None else "",
-            "document_link": (
-                str(row["Link"]).replace("https-//", "https://")
-                if row["Link"] is not None
-                else ""
-            ),
-            "summary": str(row["Summary"]) if row["Summary"] is not None else extract,
-            "document_thumbnail": (
-                str(row["Thumbnail"]) if row["Thumbnail"] is not None else ""
-            ),
-            "relevancy": extract_similarity,
-        }
-
-        # "content": str(row["Content"]).replace("\n","") if row["Content"] is not None else "",
-
-        # Add the document to the result dictionary
-        result_dict[document_id] = document_info
-
-        # Increment the counter
-        count += 1
-
-        # Break out of the loop if the counter reaches top 10
-        if count == 10:
-            break
-
-    return result_dict
-
-
-def process_queries(user_query):
-    merged_result_structure = {}
-
-    # for query in queries:
-    qs = search_embeddings(user_query)
-    if qs[0] is not None:
-        result_structure = map_to_structure(qs, user_query)
-        for doc_id, doc_info in result_structure.items():
-            merged_result_structure[doc_id] = doc_info
-    return merged_result_structure
-
-
-## module to extract text from documents and return the text and document codes
-def run_semantic_search(user_query):
-    # query_transformation = openai_call.generate_response(f"""
-    # Given a question, your job is to break them into 3 main sub-question and return as array.
-
-    # - You Must return output seperated by |
-    # - Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
-
-    # QUESTION: {user_query}
-    # """, openai_deployment)
-    # print(f""" query_transformation: {query_transformation} """)
-
-    # # Split the string by the delimiter '|'
-    # questions_array = [question.strip() for question in query_transformation.split('|')]
-
-    merged_results = process_queries(user_query)
-    print(f""" merged_results===  {merged_results} """)
-    return merged_results
-
-
-def convert_query_idea_to_array(query_idea_list):
-    # Split the query idea list by the "|" character
-    query_ideas = query_idea_list.split(" | ")
-    # Print the resulting array
-    return query_ideas
-
-
 ## module to generate query ideas
-def generate_query_ideas(user_query):  # lower priority
+def generate_query_ideas(user_query: str) -> list[str]:  # lower priority
 
     # Generate query ideas using OpenAI GPT-3
     prompt = f"""
@@ -299,19 +127,12 @@ def generate_query_ideas(user_query):  # lower priority
     -Avoid adding new lines or breaking spaces to your output and must seperate each idea with |
     """
     response = genai.generate_response(prompt)
-    qIdeasResponse = convert_query_idea_to_array(response)
-    return qIdeasResponse
-
-
-def get_synthesis(user_query, excerpts_dict):
-
-    ###synthesize data into structure within llm prompt engineering instructions
-    answer = get_answer(user_query, excerpts_dict)
-    return answer
+    query_ideas = response.split(" | ")
+    return query_ideas
 
 
 # Function to calculate the similarity score between two strings
-def similarity_score_kg(word1, word2):
+def similarity_score_kg(word1: str, word2: str) -> float:
     # Convert strings to lowercase for case-insensitive comparison
     word1_lower = word1.lower()
     word2_lower = word2[:-5].lower()
@@ -329,11 +150,10 @@ def similarity_score_kg(word1, word2):
     return similarity
 
 
-def find_kg(keywords):
+def find_kg(keywords: list[str]) -> list[Subgraph]:
     data_dir = "KG"
     max_score = 0
     most_similar_file = None
-    final_output = {"knowledge_graph": {"entities": [], "relations": {}}}
 
     # Extract the first keyword from the list
     first_keyword = keywords[0] if keywords else None
@@ -404,4 +224,4 @@ def find_kg(keywords):
                     print(f"Error loading file {json_file}: {e}")
                     continue
 
-    return found_files
+    return list(map(Subgraph.from_kg, found_files))

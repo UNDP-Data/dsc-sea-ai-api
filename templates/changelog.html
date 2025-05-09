@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'head.html' %}
+<body>
+{% include 'header.html' %}
+<div id="changelog">
+    <h1>Changelog</h1>
+    <nav aria-label="breadcrumbs" data-viewport="true" class="breadcrumb">
+      <ul>
+        <li><a href="/" aria-label="Home">Home</a></li>
+        <li aria-current="Changelog">Changelog</li>
+      </ul>
+    </nav>
+    <ul class="accordion" aria-label="accordion">
+        <li>{% include 'changelog/v0.1.0-alpha.html' %}</li>
+    </ul>
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

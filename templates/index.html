@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'head.html' %}
+<body>
+{% include 'header.html' %}
+<div id="cards" class="grid-x grid-margin-x content-data" data-viewport="false">
+    {% for item in [
+        {"name": "Swagger UI", "src": "./static/swagger.jpeg", "href": "./docs", "description": "Explore and interact with the API using Swagger UI, a powerful tool for visualising and testing API endpoints effortlessly."},
+        {"name": "ReDoc", "src": "./static/redoc.jpeg", "href": "./redoc", "description": "Dive into the comprehensive API documentation with ReDoc, offering a clean and intuitive interface for understanding and utilising the API."},
+        {"name": "Changelog", "src": "./static/changelog.jpeg", "href": "./changelog", "description": "Keep youself up to date with the latest changes to the API by exploring the release notes in the changelog."}
+    ] %}
+    <div class="cell medium-4 feature__card image">
+        <a href="{{ item.href }}">
+            <div class="feature__card-slide">
+                <div class="feature__card-image">
+                    <img src="{{ item.src }}" alt="{{ item.name}}"/>
+                </div>
+            </div>
+            <article class="feature__card-content">
+                <h6 class="" tabindex="0" data-viewport="false">DOCUMENTATION</h6>
+                <div class="feature__card-description">
+                    <h5 class="" tabindex="0" data-viewport="false">
+                        {{ item.name }}
+                    </h5>
+                    <p>
+                        {{ item.description }}
+                    </p>
+                </div>
+                <span class="cta__link cta--arrow">
+          READ MORE
+          <i></i>
+        </span>
+            </article>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

@@ -5,6 +5,7 @@
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![Build and deploy Python app to Azure Web App](https://github.com/UNDP-Data/dsc-sea-ai-api/actions/workflows/azure-webapps-python.yml/badge.svg)](https://github.com/UNDP-Data/dsc-sea-ai-api/actions/workflows/azure-webapps-python.yml)
 
 A Python API to serve data from the knowledge graph for the Sustainable Energy Academy.
 
@@ -26,7 +27,7 @@ Follow the steps below to run the API locally.
 2. Create and activate a virtual environment.
 3. Create and populate the `.env` file base on `.env.example`.
 4. Run `make install` to install project dependencies.
-5. To launch the API, run `python main.py`. The API will be running at http://127.0.0.1:5000.
+5. To launch the API, run `make run`. The API will be running at http://127.0.0.1:8000.
 
 ```bash
 git clone https://github.com/UNDP-Data/dsc-sea-ai-api
@@ -34,8 +35,8 @@ cd dsc-sea-ai-api
 python -m venv .venv
 source .venv/bin/activate
 make install
-python main.py
-# Running on http://127.0.0.1:5000
+make run
+# INFO: Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
 ## Deployment

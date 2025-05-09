@@ -1,10 +1,11 @@
-flask == 3.1.0
-flask-cors == 5.0.1
-flask-session == 0.8.0
+fastapi == 0.115.12
+uvicorn == 0.34.2
+jinja2 == 3.1.6
+pydantic ~= 2.11.4
+pyyaml ~= 6.0.2
 numpy ~= 2.2.5
 pandas[fss] ~= 2.2.3
 adlfs ~= 2024.12.0
 scikit-learn ~= 1.6.1
-faiss_cpu ~= 1.11.0
 openai ~= 1.76.2
 python-dotenv ~= 1.1.0
