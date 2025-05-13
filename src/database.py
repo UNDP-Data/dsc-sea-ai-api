@@ -2,9 +2,11 @@
 Routines for database operations for RAG.
 """
 
+import os
+
 import lancedb
 
-from . import genai, storage
+from . import genai
 from .entities import Document, Graph
 
 
@@ -17,7 +19,13 @@ def get_connection() -> lancedb.DBConnection:
     lancedb.DBConnection
         Database connection client.
     """
-    return lancedb.connect("az://lancedb", storage_options=storage._get_credentials())
+    return lancedb.connect(
+        "az://lancedb",
+        storage_options={
+            "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
+            "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
+        },
+    )
 
 
 class Client:
