@@ -7,13 +7,13 @@ from typing import Annotated
 
 import yaml
 from dotenv import load_dotenv
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, HTTPException, Query, Request, status
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src import database, genai
-from src.entities import AssistantMessage, Graph, HumanMessage
+from src.entities import AssistantResponse, Graph, Message
 
 load_dotenv()
 
@@ -100,19 +100,28 @@ async def query_knowledge_graph(
 
 @app.post(
     path="/model",
-    response_model=AssistantMessage,
+    response_model=AssistantResponse,
 )
-async def ask_model(request: Request, message: HumanMessage):
+async def ask_model(request: Request, messages: list[Message]):
     """
     Ask a GenAI model to compose a response supplemented by knowledge graph data.
+
+    Messages are expected to be in chronological order, i.e., from the oldest to most recent,
+    with the current user message being the last one.
     """
-    user_query = message.content
+    if messages[-1].role != "human":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="The last message must come from the user.",
+        )
+    user_query = messages[-1].content
     client: database.Client = request.state.client
     documents = client.retrieve_documents(user_query)
     entities = genai.extract_entities(user_query)
     graphs = [client.find_graph(entity) for entity in entities]
     response = {
-        "content": genai.get_answer(user_query, documents),
+        "role": "assistant",
+        "content": genai.get_answer(user_query, documents, messages),
         "ideas": genai.generate_query_ideas(user_query) or None,
         "documents": documents,
         "graph": sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs

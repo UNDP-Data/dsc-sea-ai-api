@@ -10,7 +10,7 @@ from openai import AzureOpenAI
 from pydantic import BaseModel
 
 from . import genai
-from .entities import Document
+from .entities import Document, Message
 
 __all__ = ["get_client", "generate_response", "embed_text"]
 
@@ -66,10 +66,14 @@ def extract_entities(user_query: str) -> list[str]:
     return response.entities
 
 
-def get_answer(user_question: str, documents: list[Document]) -> str:
+def get_answer(
+    user_question: str, documents: list[Document], messages: list[Message]
+) -> str:
     response = genai.generate_response(
         prompt=user_question,
-        system_message=PROMPTS["answer_question"].format(documents=documents),
+        system_message=PROMPTS["answer_question"].format(
+            documents=documents, messages=messages
+        ),
         temperature=0.3,
         top_p=0.8,
         frequency_penalty=0.6,
