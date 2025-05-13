@@ -18,20 +18,7 @@ def extract_entities(user_query: str) -> list[str]:
  
     """
     entity_list = genai.generate_response(prompt)
-    return entity_list
-
-
-## module to get information on the entities from user query using the KG
-def get_knowledge_graph(user_query: str) -> dict:
-
-    # generate list of entities based on user query
-    entity_list = extract_entities(user_query)
-    entity_list = ast.literal_eval(entity_list)
-    prompt_summarise_entites = f"""
-    Summarize all relations between all the entities : {entity_list}
-    """
-    summarise_entities = genai.generate_response(prompt_summarise_entites)
-    return {"relations": summarise_entities, "entities": entity_list}
+    return ast.literal_eval(entity_list)
 
 
 # Function to calculate Jaccard similarity between two texts

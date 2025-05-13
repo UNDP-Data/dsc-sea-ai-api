@@ -111,9 +111,9 @@ async def ask_model(request: Request, message: HumanMessage):
     response = {}
     client: database.Client = request.state.client
     # user is requering ... get all relevant answers
-    entities_dict = processing.get_knowledge_graph(user_query)
+    entity_list = processing.extract_entities(user_query)
     query_idea_list = processing.generate_query_ideas(user_query) or None
-    entities_array = entities_dict["entities"] or None
+    entities_array = entity_list or None
     if message.full:
         excerpts_dict = client.process_queries(user_query)
         excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
