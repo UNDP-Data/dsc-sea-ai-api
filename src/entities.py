@@ -2,175 +2,112 @@
 Entities (models) and related routines to define the data layer.
 """
 
+from lancedb.pydantic import LanceModel
 from pydantic import BaseModel, Field
 
-__all__ = [
-    "BaseConcept",
-    "Concept",
-    "Relation",
-    "Subgraph",
-    "KnowledgeGraph",
-    "HumanMessage",
-    "AssistantMessage",
-]
+__all__ = ["Node", "Edge", "Graph", "Document", "HumanMessage", "AssistantMessage"]
 
 
-class BaseConcept(BaseModel):
+class Node(BaseModel):
     """
-    Base class for concept nodes in the knowledge graph. Also used for subconcepts.
+    A node in the knowledge graph representing a single concept.
     """
 
     name: str = Field(
-        alias="Entity",
-        description="Name of the concept",
+        description="Name of the node",
         examples=["climate change mitigation", "energy policy"],
     )
     description: str | None = Field(
-        alias="Description",
-        description="Description of the concept",
+        description="Description of the node",
         examples=[
             "Actions to limit global warming by reducing greenhouse gas emissions.",
             "Rules managing energy use and resources sustainably.",
         ],
     )
-    importance: int | None = Field(
+    weight: int | None = Field(
         default=1,
-        alias="Importance",
-        description="Numeric value indicating the concept's importance on a 5-point scale",
+        description="Numeric value indicating the node's importance on a 5-point scale",
         examples=[3, 4],
         ge=1,
         le=5,
     )
+    metadata: dict = Field(description="Arbitrary metadata about the node")
 
-    @classmethod
-    def from_subelement(cls, data: dict) -> "BaseConcept":
-        """
-        Class method to create a BaseConcept from Sub-element relation dictionary.
-
-        Parameters
-        ----------
-        data : dict
-            Dictionary containing sub-element data.
-
-        Returns
-        -------
-        BaseConcept
-            Base concept object populated with the data.
-        """
-        data = data.copy()
-        return cls(Entity=data.pop("Sub-element"), **data)
+    def __hash__(self) -> int:
+        return self.name.__hash__()
 
 
-class Concept(BaseConcept):
+class Edge(BaseModel):
     """
-    A basic concept node in the knowledge graph.
+    An edge in the knowledge graph representing a relation between nodes.
+
+    Note that a node for `subject` property is guaranteed to exists, but the `object`
+    value might not have a corresponding node entity in the graph.
     """
 
-    category: str | None = Field(
-        alias="Category",
-        description="One of the predefined categories the concept belongs to",
-        examples=["Crisis", "Policy"],
+    subject: str = Field(
+        description="Name of the node the edge goes from",
+        examples=["climate change mitigation"],
     )
-    tags: list[str] | None = Field(
-        alias="Tags",
-        description="One or more relevant tags from an open vocabulary",
-        examples=[["Adaptation", "Africa"], ["Biomass"]],
+    predicate: str = Field(
+        description="Name of the edge relation",
+        examples=["addresses"],
     )
-    dimension: str | None = Field(
-        alias="Dimension",
-        description="One of the predefined dimensions the concept is relevant to",
-        examples=["Technology", "Sustainable Development"],
-    )
-    acronym: str | None = Field(
-        default=None,
-        description="Acronym used to refer to the concept if applicable",
-        examples=["NDCs", "SIDS"],
-    )
-    synonyms: list[str] | None = Field(
-        default=None,
-        alias="Synonyms",
-        description="One or more relevant synonyms related to the concept if applicable",
-        examples=[["Emissions reduction"], ["Energy governance", "Energy regulation"]],
-    )
-    subconcepts: list[BaseConcept] | None = Field(
-        default=None,
-        description="One or more relevant subconcepts if applicable",
-    )
-
-
-class Relation(BaseModel):
-    """
-    A basic relation edge in the knowledge graph.
-    """
-
-    name: str = Field(
-        alias="Relation",
-        description="Name of the relation",
-        examples=["addresses", "supports"],
+    object: str = Field(
+        description="Name of the node the edge goes to",
+        examples=["energy policy"],
     )
     description: str = Field(
-        alias="Description",
-        description="Description of the relation",
+        description="Description of the edge",
         examples=[
             "Climate adaptation strategies address the impacts of extreme weather events on communities and infrastructure.",
             "Climate adaptation strategies support community engagement to ensure inclusive decision-making and implementation.",
         ],
     )
-    importance: int = Field(
+    weight: int = Field(
         default=1,
-        alias="Importance",
-        description="Numeric value indicating the relation's importance on a 5-point scale",
+        description="Numeric value indicating the edge's importance on a 5-point scale",
         examples=[3, 4],
         ge=1,
         le=5,
     )
     level: int = Field(
-        description="Numeric values indication the relation's level on a 3-point scale",
+        description="Numeric values indication the edge's level on a 3-point scale",
         examples=[1, 2],
         ge=1,
-        le=3,
-    )
-    to_concept: str = Field(
-        alias="Object",
-        description="Name of the concept the relation applies to",
-        examples=["extreme weather events", "community engagement"],
+        le=5,
     )
 
+    def __hash__(self) -> int:
+        return (self.subject + self.predicate + self.object).__hash__()
 
-class Subgraph(BaseModel):
+
+class Graph(BaseModel, frozen=True):
     """
-    Knowledge graph for a single concept.
+    Knowledge graph centred around a single concept.
     """
 
-    concept: Concept = Field(description="The main concept of the subgraph")
-    relations: list[Relation] = Field(description="Relations with other concepts")
+    nodes: list[Node] = Field(description="A list of nodes in the graph.")
+    edges: list[Edge] = Field(description="A list of edges in the graph.")
 
-    @classmethod
-    def from_kg(cls, data: dict) -> "Subgraph":
-        """
-        Class method to create a knowledge grapg for a single concept from KG data.
-
-        Parameters
-        ----------
-        data : dict
-            Dictionary containing knowledge graph data for a single concept.
-
-        Returns
-        -------
-        Subgraph
-            Knowledge graph for a single concept.
-        """
-        kg = data["knowledge graph"]
-        subconcepts = map(BaseConcept.from_subelement, kg["subelement_relations"])
-        concept = Concept(**data["metadata"], subconcepts=subconcepts)
-        relations = []
-        for level, edges in kg["relations"].items():
-            relations.extend([Relation(**edge, level=int(level[-1])) for edge in edges])
-        return cls(concept=concept, relations=relations)
+    def __add__(self, other: "Graph") -> "Graph":
+        if not isinstance(other, Graph):
+            raise NotImplementedError
+        nodes = set(self.nodes) | set(other.nodes)
+        edges = set(self.edges) | set(other.edges)
+        return Graph(nodes=nodes, edges=edges)
 
 
-class KnowledgeGraph(BaseModel):
-    subgraphs: list[Subgraph]
+class Document(LanceModel):
+    """
+    Publication document.
+    """
+
+    title: str | None = Field(description="Document title if available")
+    year: int | None = Field(description="Publication year if available")
+    language: str = Field(description="Document language")
+    url: str = Field(description="URL to the source document")
+    summary: str | None = Field(description="Brief document summary if available")
 
 
 class HumanMessage(BaseModel):
@@ -186,11 +123,6 @@ class HumanMessage(BaseModel):
             "How does climate change adaptation differ from climate change mitigation?"
         ],
     )
-    full: bool = Field(
-        default=False,
-        description="If True, a full response will be returned. Otherwise, a shortened version is used.",
-        examples=[True],
-    )
 
 
 class AssistantMessage(BaseModel):
@@ -199,13 +131,10 @@ class AssistantMessage(BaseModel):
     """
 
     content: str = Field(description="Text content of the message")
-    entities: list[str] | None = Field(
-        description="A list of relevant entities extracted from the user message"
-    )
-    query_ideas: list[str] | None = Field(
+    ideas: list[str] | None = Field(
         description="A list of relevant query ideas based on the user message"
     )
-    excerpts: dict = Field(
-        description="A dictionary of text excerpts relevant to the user message"
+    documents: list[Document] = Field(
+        description="One or more documents relevant to the user message"
     )
-    subgraphs: list[Subgraph] | None = Field(default=None)
+    graph: Graph | None = Field(default=None)
