@@ -12,7 +12,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from src import database, processing
+from src import database, genai
 from src.entities import AssistantMessage, Graph, HumanMessage
 
 load_dotenv()
@@ -109,11 +109,11 @@ async def ask_model(request: Request, message: HumanMessage):
     user_query = message.content
     client: database.Client = request.state.client
     documents = client.retrieve_documents(user_query)
-    entities = processing.extract_entities(user_query)
+    entities = genai.extract_entities(user_query)
     graphs = [client.find_graph(entity) for entity in entities]
     response = {
-        "content": processing.get_answer(user_query, documents),
-        "ideas": processing.generate_query_ideas(user_query) or None,
+        "content": genai.get_answer(user_query, documents),
+        "ideas": genai.generate_query_ideas(user_query) or None,
         "documents": documents,
         "graph": sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     }
