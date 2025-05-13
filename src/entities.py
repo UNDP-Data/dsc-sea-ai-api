@@ -202,7 +202,7 @@ class AssistantMessage(BaseModel):
     entities: list[str] | None = Field(
         description="A list of relevant entities extracted from the user message"
     )
-    query_ideas: list[str] | None = Field(
+    ideas: list[str] | None = Field(
         description="A list of relevant query ideas based on the user message"
     )
     excerpts: dict = Field(

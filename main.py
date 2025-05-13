@@ -112,7 +112,7 @@ async def ask_model(request: Request, message: HumanMessage):
     client: database.Client = request.state.client
     # user is requering ... get all relevant answers
     entity_list = processing.extract_entities(user_query)
-    query_idea_list = processing.generate_query_ideas(user_query) or None
+    ideas = processing.generate_query_ideas(user_query) or None
     entities_array = entity_list or None
     if message.full:
         excerpts_dict = client.process_queries(user_query)
@@ -126,7 +126,7 @@ async def ask_model(request: Request, message: HumanMessage):
     response = {
         "content": answer,
         "entities": entities_array,
-        "query_ideas": query_idea_list,
+        "ideas": ideas,
         "excerpts": excerpts_dict,
         "subgraphs": subgraphs,
     }
