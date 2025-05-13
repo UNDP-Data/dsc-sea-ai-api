@@ -6,6 +6,7 @@ pyyaml ~= 6.0.2
 numpy ~= 2.2.5
 pandas[fss] ~= 2.2.3
 adlfs ~= 2024.12.0
+lancedb[azure] == 0.22.0
 scikit-learn ~= 1.6.1
 openai ~= 1.76.2
 python-dotenv ~= 1.1.0
