@@ -108,28 +108,15 @@ async def ask_model(request: Request, message: HumanMessage):
     Ask a GenAI model to compose a response supplemented by knowledge graph data.
     """
     user_query = message.content
-    response = {}
     client: database.Client = request.state.client
-    # user is requering ... get all relevant answers
     entity_list = processing.extract_entities(user_query)
-    ideas = processing.generate_query_ideas(user_query) or None
-    entities_array = entity_list or None
-    if message.full:
-        excerpts_dict = client.process_queries(user_query)
-        excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
-        answer = processing.get_answer(user_query, excerpts_dict_synthesis)
-        subgraphs = None
-    else:
-        excerpts_dict, answer = {}, "Processing final answer... "
-        subgraphs = processing.find_kg(entities_array)
-
+    excerpts_dict = client.process_queries(user_query)
+    excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
     response = {
-        "content": answer,
-        "entities": entities_array,
-        "ideas": ideas,
+        "content": processing.get_answer(user_query, excerpts_dict_synthesis),
+        "entities": entity_list or None,
+        "ideas": processing.generate_query_ideas(user_query) or None,
         "excerpts": excerpts_dict,
-        "subgraphs": subgraphs,
+        "subgraphs": processing.find_kg(entity_list),
     }
-
-    # Return the response
     return response

@@ -186,11 +186,6 @@ class HumanMessage(BaseModel):
             "How does climate change adaptation differ from climate change mitigation?"
         ],
     )
-    full: bool = Field(
-        default=False,
-        description="If True, a full response will be returned. Otherwise, a shortened version is used.",
-        examples=[True],
-    )
 
 
 class AssistantMessage(BaseModel):
