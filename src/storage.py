@@ -24,7 +24,7 @@ def _get_credentials() -> dict:
     """
     return {
         "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
-        "sas_token": os.environ["STORAGE_SAS_TOKEN"],
+        "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
     }
 
 
