@@ -2,10 +2,12 @@
 Entities (models) and related routines to define the data layer.
 """
 
+from typing import Literal
+
 from lancedb.pydantic import LanceModel
 from pydantic import BaseModel, Field
 
-__all__ = ["Node", "Edge", "Graph", "Document", "HumanMessage", "AssistantMessage"]
+__all__ = ["Node", "Edge", "Graph", "Document", "Message", "AssistantResponse"]
 
 
 class Node(BaseModel):
@@ -110,27 +112,26 @@ class Document(LanceModel):
     summary: str | None = Field(description="Brief document summary if available")
 
 
-class HumanMessage(BaseModel):
-    """
-    User message for the LLM.
-    """
-
+class Message(BaseModel):
+    role: Literal["assistant", "human"] = Field(
+        description="The actor the message belongs to",
+        examples=["human"],
+    )
     content: str = Field(
         description="Text content of the message",
         min_length=8,
-        max_length=1024,
+        max_length=16_384,
         examples=[
             "How does climate change adaptation differ from climate change mitigation?"
         ],
     )
 
 
-class AssistantMessage(BaseModel):
+class AssistantResponse(Message):
     """
     Assistant message from the LLM, optionally with relevant knowledge subgraphs.
     """
 
-    content: str = Field(description="Text content of the message")
     ideas: list[str] | None = Field(
         description="A list of relevant query ideas based on the user message"
     )
