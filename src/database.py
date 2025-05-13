@@ -2,131 +2,60 @@
 Routines for database operations for RAG.
 """
 
-import numpy as np
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+import lancedb
 
-from . import genai, processing, storage
+from . import genai, storage
+from .entities import Document, Graph
+
+
+def get_connection() -> lancedb.DBConnection:
+    """
+    Get a database connection for LanceDB stored on Azure Blob Storage.
+
+    Returns
+    -------
+    lancedb.DBConnection
+        Database connection client.
+    """
+    return lancedb.connect("az://lancedb", storage_options=storage._get_credentials())
 
 
 class Client:
-    def __init__(self, df, vectoriser):
-        self.df = df
-        self.vectoriser = vectoriser
+    """
+    Database client class to perform routine operations using LanceDB.
+    """
 
-    @classmethod
-    def from_model(cls) -> "Client":
-        df = storage.read_json("models/df_embed_EN_All_V4.jsonl", lines=True)
-        # Concatenate 'Document Title' and 'Country Name' to form the text for each document
-        df["combined_text"] = (
-            df["Document Title"].astype(str) + " " + df["Country Name"].astype(str)
+    def __init__(self):
+        self.connection = get_connection()
+
+    def find_graph(self, query: str) -> Graph:
+        # open connections to node and edge tables
+        table_nodes = self.connection.open_table("nodes")
+        table_edges = self.connection.open_table("edges")
+        # perform a full-text search to find the best match
+        if not (
+            results := table_nodes.search(query, query_type="fts")
+            .limit(1)
+            .select(["name"])
+            .to_list()
+        ):
+            return Graph(nodes=[], edges=[])
+        # extract the best matching subject (concept)
+        subject = results[0]["name"]
+        # get the outgoing edges for the subject
+        edges = table_edges.search(None).where(f'subject == "{subject}"').to_list()
+        # get the outgoing edges for objects the subject is related to (1-hop neighbourhood)
+        objects = tuple(edge["object"] for edge in edges)
+        edges.extend(table_edges.search(None).where(f"subject in {objects}").to_list())
+        # get all nodes for the edges in question
+        entities = tuple(
+            {edge["subject"] for edge in edges} | {edge["object"] for edge in edges}
         )
-        vectorizer = TfidfVectorizer(stop_words="english")
-        df["vector"] = vectorizer.fit_transform(df["combined_text"]).todense().tolist()
-        return cls(df=df, vectoriser=vectorizer)
+        nodes = table_nodes.search(None).where(f"name in {entities}").to_list()
+        return Graph(nodes=nodes, edges=edges)
 
-    def filter_semantics(self, user_query: str) -> pd.DataFrame:
-        df = self.df.copy()
-        # Use TF-IDF Vectorizer to encode the text
-        query_embedding = self.vectoriser.transform([user_query])
-        # Calculate cosine similarity between the query and document embeddings
-        df["similarity_score"] = cosine_similarity(
-            query_embedding, np.vstack(df["vector"])
-        ).flatten()
-
-        # Filter the DataFrame to include only documents with a similarity score above 0.6
-        if not (mask := df["similarity_score"].gt(0.5)).any():
-            mask = df["similarity_score"].gt(0.2)
-        df = df.loc[mask].copy()
-        df.sort_values(
-            by="similarity_score",
-            ascending=False,
-            ignore_index=True,
-            inplace=True,
-        )
-        return df
-
-    def search_embeddings(self, user_query: str) -> pd.DataFrame | None:
-        if (df := self.filter_semantics(user_query)).empty:
-            return None
-
-        df["similarity_score"] = cosine_similarity(
-            [genai.embed_text(user_query)],
-            np.vstack(df["Embedding"]),
-        ).flatten()
-        df.sort_values(
-            by="similarity_score",
-            ascending=False,
-            ignore_index=True,
-            inplace=True,
-        )
-        return df.head()
-
-    @staticmethod
-    def map_to_structure(df: pd.DataFrame, user_query: str) -> dict[str, dict]:
-        result_dict = {}
-
-        # Create a dictionary for each document
-        document_info = {}
-
-        # Counter to limit the loop to 10 iterations
-        count = 0
-        for index, row in df.iterrows():
-            # Define a unique identifier for each document, you can customize this based on your data
-            document_id = f"doc-{index + 1}"
-            # Handle NaN in content by using fillna
-            content = (
-                str(row["Content"]) if row["Content"] is not None else ""
-            )  # row["Content"]
-            content = " ".join(content.split()[:160])
-
-            title = (
-                str(row["Document Title"]) if row["Document Title"] is not None else ""
-            )
-            extract = str(content) if content is not None else ""
-
-            extract_similarity = processing.jaccard_similarity(user_query, extract) or 0
-
-            document_info = {
-                "document_title": title,
-                "extract": extract,  # Adjust based on your column names
-                "category": str(row["Category"]) if row["Category"] is not None else "",
-                "document_link": (
-                    str(row["Link"]).replace("https-//", "https://")
-                    if row["Link"] is not None
-                    else ""
-                ),
-                "summary": (
-                    str(row["Summary"]) if row["Summary"] is not None else extract
-                ),
-                "document_thumbnail": (
-                    str(row["Thumbnail"]) if row["Thumbnail"] is not None else ""
-                ),
-                "relevancy": extract_similarity,
-            }
-
-            # "content": str(row["Content"]).replace("\n","") if row["Content"] is not None else "",
-
-            # Add the document to the result dictionary
-            result_dict[document_id] = document_info
-
-            # Increment the counter
-            count += 1
-
-            # Break out of the loop if the counter reaches top 10
-            if count == 10:
-                break
-
-        return result_dict
-
-    def process_queries(self, user_query: str) -> dict[str, dict]:
-        merged_result_structure = {}
-
-        # for query in queries:
-        df = self.search_embeddings(user_query)
-        if df is not None:
-            result_structure = self.map_to_structure(df, user_query)
-            for doc_id, doc_info in result_structure.items():
-                merged_result_structure[doc_id] = doc_info
-        return merged_result_structure
+    def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
+        table = self.connection.open_table("documents")
+        # perform a full-text search to find best matches
+        vector = genai.embed_text(query)
+        return table.search(vector).limit(limit).to_pydantic(Document)

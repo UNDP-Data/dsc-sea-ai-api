@@ -13,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src import database, processing
-from src.entities import AssistantMessage, HumanMessage, KnowledgeGraph
+from src.entities import AssistantMessage, Graph, HumanMessage
 
 load_dotenv()
 
@@ -35,7 +35,7 @@ async def lifespan(_: FastAPI):
     states : dict
         Dictionary of arbitrary state variables.
     """
-    states = {"client": database.Client.from_model()}
+    states = {"client": database.Client()}
     yield states
 
 
@@ -79,29 +79,28 @@ async def favicon():
 
 @app.get(
     path="/graph",
-    response_model=KnowledgeGraph,
-    response_model_by_alias=False,
+    response_model=Graph,
 )
 async def query_knowledge_graph(
+    request: Request,
     query: Annotated[
-        list[str],
+        str,
         Query(
-            description="One or more queries to retrieve relevant concepts for",
-            example=["climate change mitigation"],
+            description="A query to retrieve a knowledge graph for",
+            example="climate change mitigation",
         ),
     ],
 ):
     """
-    Get relevant subgraphs for query concepts from the knowledge graph.
+    Get a knowledge graph that best matches the query concept.
     """
-    subgraphs = processing.find_kg(query)
-    return {"subgraphs": subgraphs}
+    client: database.Client = request.state.client
+    return client.find_graph(query)
 
 
 @app.post(
     path="/model",
     response_model=AssistantMessage,
-    response_model_by_alias=False,
 )
 async def ask_model(request: Request, message: HumanMessage):
     """
@@ -109,14 +108,13 @@ async def ask_model(request: Request, message: HumanMessage):
     """
     user_query = message.content
     client: database.Client = request.state.client
-    entity_list = processing.extract_entities(user_query)
-    excerpts_dict = client.process_queries(user_query)
-    excerpts_dict_synthesis = processing.remove_thumbnails(excerpts_dict)
+    documents = client.retrieve_documents(user_query)
+    entities = processing.extract_entities(user_query)
+    graphs = [client.find_graph(entity) for entity in entities]
     response = {
-        "content": processing.get_answer(user_query, excerpts_dict_synthesis),
-        "entities": entity_list or None,
+        "content": processing.get_answer(user_query, documents),
         "ideas": processing.generate_query_ideas(user_query) or None,
-        "excerpts": excerpts_dict,
-        "subgraphs": processing.find_kg(entity_list),
+        "documents": documents,
+        "graph": sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     }
     return response
