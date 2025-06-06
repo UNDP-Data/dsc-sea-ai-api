@@ -68,8 +68,10 @@ class Edge(BaseModel):
     description: str = Field(
         description="Description of the edge",
         examples=[
-            "Climate adaptation strategies address the impacts of extreme weather events on communities and infrastructure.",
-            "Climate adaptation strategies support community engagement to ensure inclusive decision-making and implementation.",
+            "Climate adaptation strategies address the impacts of extreme weather"
+            " events on communities and infrastructure.",
+            "Climate adaptation strategies support community engagement to ensure"
+            " inclusive decision-making and implementation.",
         ],
     )
     weight: int = Field(
