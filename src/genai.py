@@ -108,6 +108,10 @@ def extract_entities(user_query: str) -> list[str]:
     """
 
     class ResponseFormat(BaseModel):
+        """
+        Response format for leveraging structured outputs.
+        """
+
         entities: list[str]
 
     response: ResponseFormat = generate_response(
@@ -167,6 +171,10 @@ def generate_query_ideas(user_query: str) -> list[str]:
     """
 
     class ResponseFormat(BaseModel):
+        """
+        Response format for leveraging structured outputs.
+        """
+
         ideas: list[str]
 
     response: ResponseFormat = generate_response(

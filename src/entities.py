@@ -119,6 +119,10 @@ class Document(LanceModel):
 
 
 class Message(BaseModel):
+    """
+    Simple message for handling conversations with a chatbot.
+    """
+
     role: Literal["assistant", "human"] = Field(
         description="The actor the message belongs to",
         examples=["human"],

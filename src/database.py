@@ -3,6 +3,7 @@ Routines for database operations for RAG.
 """
 
 import os
+from typing import Iterable
 
 import lancedb
 
@@ -36,7 +37,26 @@ class Client:
     def __init__(self):
         self.connection = get_connection()
 
-    def extract_positions(self, neighbourhoods: dict[int, set[str]]) -> dict[str, int]:
+    def extract_positions(
+        self, neighbourhoods: dict[int, Iterable[str]]
+    ) -> dict[str, int]:
+        """
+        Extract node position in the neighbourhood.
+
+        Since there may be more than one path from a central node A to
+        some other node B – e.g., if the edges are A-B, A-C, C-B – the
+        closest position to the central node is kept.
+
+        Parameters
+        ----------
+        neighbourhoods : dict[int, Iterable[str]]
+            Mapping from neighbourhood indices to an iterable of nodes.
+
+        Returns
+        -------
+        dict[str, int]
+            Mapping from node names to their corresponding neighbourhood indices.
+        """
         positions = {}
         # traverse from the closest neighbours
         for hop, node_names in sorted(neighbourhoods.items(), key=lambda x: x[0]):
@@ -47,6 +67,21 @@ class Client:
         return positions
 
     def find_graph(self, query: str, hops: int = 2) -> Graph:
+        """
+        Find a graph relevant to a given query.
+
+        Parameters
+        ----------
+        query : str
+            Plain text user query.
+        hops : int, default=2
+            The size of the neighbourhood to extract the graph from.
+
+        Returns
+        -------
+        Graph
+            Object with node and edge lists.
+        """
         # open connections to node and edge tables
         table_nodes = self.connection.open_table("nodes")
         table_edges = self.connection.open_table("edges")
@@ -98,6 +133,21 @@ class Client:
         return Graph(nodes=nodes, edges=edges)
 
     def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
+        """
+        Retrieve the documents from the database that best match a query.
+
+        Parameters
+        ----------
+        query : str
+            Plain text user query.
+        limit : int, default=5
+            Maximum number of best matching documents to retrieve.
+
+        Returns
+        -------
+        list[Document]
+            List of most relevant documents.
+        """
         table = self.connection.open_table("documents")
         # perform a full-text search to find best matches
         vector = genai.embed_text(query)
