@@ -106,7 +106,7 @@ class Client:
                     .where(
                         f"subject in {subjects}"
                         if len(subjects) > 1
-                        else f'subject == "{subjects[0]}"'
+                        else f"subject == '{subjects[0]}'"
                     )
                     .to_list()
                 )
@@ -128,7 +128,15 @@ class Client:
         )
         # extract the nodes and assign neighbourhood positions
         positions = self.extract_positions(neighbourhoods)
-        nodes = table_nodes.search(None).where(f"name in {node_names}").to_list()
+        nodes = (
+            table_nodes.search(None)
+            .where(
+                f"name in {node_names}"
+                if node_names
+                else f"name == '{subjects[0]}'"  # handle an edge case when hops is set to zero
+            )
+            .to_list()
+        )
         nodes = [node | {"neighbourhood": positions[node["name"]]} for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
