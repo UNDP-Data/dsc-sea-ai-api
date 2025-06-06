@@ -36,6 +36,16 @@ class Client:
     def __init__(self):
         self.connection = get_connection()
 
+    def extract_positions(self, neighbourhoods: dict[int, set[str]]) -> dict[str, int]:
+        positions = {}
+        # traverse from the closest neighbours
+        for hop, node_names in sorted(neighbourhoods.items(), key=lambda x: x[0]):
+            for node_name in node_names:
+                # keep only the position closest to the central node
+                if node_name not in positions:
+                    positions[node_name] = hop
+        return positions
+
     def find_graph(self, query: str, hops: int = 2) -> Graph:
         # open connections to node and edge tables
         table_nodes = self.connection.open_table("nodes")
@@ -81,7 +91,10 @@ class Client:
         node_names = tuple(
             {edge["subject"] for edge in edges} | {edge["object"] for edge in edges}
         )
+        # extract the nodes and assign neighbourhood positions
+        positions = self.extract_positions(neighbourhoods)
         nodes = table_nodes.search(None).where(f"name in {node_names}").to_list()
+        nodes = [node | {"neighbourhood": positions[node["name"]]} for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
     def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
