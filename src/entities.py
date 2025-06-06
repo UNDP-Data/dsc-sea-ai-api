@@ -106,12 +106,11 @@ class Edge(BaseModel):
             " inclusive decision-making and implementation.",
         ],
     )
-    weight: int = Field(
-        default=1,
-        description="Numeric value indicating the edge's importance on a 5-point scale",
-        examples=[3, 4],
-        ge=1,
-        le=5,
+    weight: float = Field(
+        default=1.0,
+        description="Numeric value indicating the edge's importance",
+        examples=[2.71828, 3.14159],
+        ge=0.0,
     )
     level: int = Field(
         description="Numeric values indication the edge's level on a 3-point scale",
