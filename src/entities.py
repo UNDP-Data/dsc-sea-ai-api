@@ -7,7 +7,40 @@ from typing import Literal
 from lancedb.pydantic import LanceModel
 from pydantic import BaseModel, Field
 
-__all__ = ["Node", "Edge", "Graph", "Document", "Message", "AssistantResponse"]
+__all__ = [
+    "GraphParameters",
+    "Node",
+    "Edge",
+    "Graph",
+    "Document",
+    "Message",
+    "AssistantResponse",
+]
+
+
+class SharedParameters(BaseModel):
+    """
+    Shared query parameters for the underlying knowledge graph.
+    """
+
+    hops: int = Field(
+        default=2,
+        ge=0,
+        description="Number of hops to extract nodes from."
+        "For example, 1 means extract the central node and the immediate neighbours"
+        " (1-hop neighbourhood).",
+    )
+
+
+class GraphParameters(SharedParameters):
+    """
+    Query parameters for `/graph` endpoint.
+    """
+
+    query: str = Field(
+        description="A query to retrieve a knowledge graph for",
+        example="climate change mitigation",
+    )
 
 
 class Node(BaseModel):

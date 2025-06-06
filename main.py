@@ -13,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src import database, genai
-from src.entities import AssistantResponse, Graph, Message
+from src.entities import AssistantResponse, Graph, GraphParameters, Message
 
 load_dotenv()
 
@@ -83,19 +83,13 @@ async def favicon():
 )
 async def query_knowledge_graph(
     request: Request,
-    query: Annotated[
-        str,
-        Query(
-            description="A query to retrieve a knowledge graph for",
-            example="climate change mitigation",
-        ),
-    ],
+    params: Annotated[GraphParameters, Query()],
 ):
     """
     Get a knowledge graph that best matches the query concept.
     """
     client: database.Client = request.state.client
-    return client.find_graph(query)
+    return client.find_graph(**params.model_dump())
 
 
 @app.post(
