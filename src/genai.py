@@ -9,7 +9,6 @@ import yaml
 from openai import AzureOpenAI
 from pydantic import BaseModel
 
-from . import genai
 from .entities import Document, Message
 
 __all__ = ["get_client", "generate_response", "embed_text"]
@@ -111,7 +110,7 @@ def extract_entities(user_query: str) -> list[str]:
     class ResponseFormat(BaseModel):
         entities: list[str]
 
-    response: ResponseFormat = genai.generate_response(
+    response: ResponseFormat = generate_response(
         prompt=user_query,
         system_message=PROMPTS["extract_entities"],
         response_format=ResponseFormat,
@@ -139,7 +138,7 @@ def get_answer(
     str
         Model response.
     """
-    response = genai.generate_response(
+    response = generate_response(
         prompt=user_query,
         system_message=PROMPTS["answer_question"].format(
             documents=documents, messages=messages
@@ -170,7 +169,7 @@ def generate_query_ideas(user_query: str) -> list[str]:
     class ResponseFormat(BaseModel):
         ideas: list[str]
 
-    response: ResponseFormat = genai.generate_response(
+    response: ResponseFormat = generate_response(
         prompt=user_query,
         system_message=PROMPTS["suggest_ideas"],
         response_format=ResponseFormat,
