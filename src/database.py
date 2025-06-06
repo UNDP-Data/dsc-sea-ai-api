@@ -109,6 +109,9 @@ class Client:
                     else f"name == '{subjects[0]}'"
                 ),  # handle an edge case when hops is set to zero
             )
+            .limit(
+                len(node_names)
+            )  # add an explicit limit as per https://github.com/lancedb/lancedb/issues/1852
             .select(
                 {
                     "name": "name",
