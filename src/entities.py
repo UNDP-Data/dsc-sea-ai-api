@@ -66,7 +66,6 @@ class Node(BaseModel):
         ge=0.0,
     )
     weight: float = Field(
-        alias="_score",
         description="Numeric value indicating the node's relevance",
         examples=[2.71828, 3.14159],
         ge=0.0,

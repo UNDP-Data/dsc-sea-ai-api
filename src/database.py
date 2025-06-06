@@ -55,9 +55,10 @@ class Client:
         # open connections to node and edge tables
         table_nodes = self.connection.open_table("nodes")
         table_edges = self.connection.open_table("edges")
-        # perform a full-text search to find the best match, i.e., a central node
+        vector = genai.embed_text(query)
+        # perform a search to find the best match, i.e., a central node
         if not (
-            results := table_nodes.search(query, query_type="fts")
+            results := table_nodes.search(vector, query_type="vector")
             .limit(1)
             .select(["name"])
             .to_list()
@@ -99,11 +100,22 @@ class Client:
         # extract the nodes and assign neighbourhood positions
         positions = utils.extract_node_positions(neighbourhoods)
         nodes = (
-            table_nodes.search(query, query_type="fts")
+            table_nodes.search(vector, query_type="vector")
+            .distance_type("cosine")
             .where(
-                f"name in {node_names}"
-                if node_names
-                else f"name == '{subjects[0]}'"  # handle an edge case when hops is set to zero
+                (
+                    f"name in {node_names}"
+                    if node_names
+                    else f"name == '{subjects[0]}'"
+                ),  # handle an edge case when hops is set to zero
+            )
+            .select(
+                {
+                    "name": "name",
+                    "description": "description",
+                    "metadata": "metadata",
+                    "weight": "1 - _distance",  # SQL expression
+                }
             )
             .to_list()
         )
