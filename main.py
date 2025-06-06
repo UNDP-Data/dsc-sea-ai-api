@@ -80,6 +80,7 @@ async def favicon():
 @app.get(
     path="/graph",
     response_model=Graph,
+    response_model_by_alias=False,
 )
 async def query_knowledge_graph(
     request: Request,
@@ -95,6 +96,7 @@ async def query_knowledge_graph(
 @app.post(
     path="/model",
     response_model=AssistantResponse,
+    response_model_by_alias=False,
 )
 async def ask_model(request: Request, messages: list[Message]):
     """

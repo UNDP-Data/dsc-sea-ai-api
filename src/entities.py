@@ -61,16 +61,15 @@ class Node(BaseModel):
     )
     neighbourhood: int = Field(
         description="""Numeric value for a k-hop neighbourhood, with designations as follows:
-        0 for the central node(s), 1 for secondary nodes and so on.""",
+        0 for the central node(s), 1 for secondary nodes and so on""",
         examples=[0, 2],
-        ge=0,
+        ge=0.0,
     )
-    weight: int | None = Field(
-        default=1,
-        description="Numeric value indicating the node's importance on a 5-point scale",
-        examples=[3, 4],
-        ge=1,
-        le=5,
+    weight: float = Field(
+        alias="_score",
+        description="Numeric value indicating the node's relevance",
+        examples=[2.71828, 3.14159],
+        ge=0.0,
     )
     metadata: dict = Field(description="Arbitrary metadata about the node")
 

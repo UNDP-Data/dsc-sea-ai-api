@@ -129,7 +129,7 @@ class Client:
         # extract the nodes and assign neighbourhood positions
         positions = self.extract_positions(neighbourhoods)
         nodes = (
-            table_nodes.search(None)
+            table_nodes.search(query, query_type="fts")
             .where(
                 f"name in {node_names}"
                 if node_names
