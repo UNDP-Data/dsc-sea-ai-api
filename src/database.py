@@ -36,11 +36,11 @@ class Client:
     def __init__(self):
         self.connection = get_connection()
 
-    def find_graph(self, query: str) -> Graph:
+    def find_graph(self, query: str, hops: int = 2) -> Graph:
         # open connections to node and edge tables
         table_nodes = self.connection.open_table("nodes")
         table_edges = self.connection.open_table("edges")
-        # perform a full-text search to find the best match
+        # perform a full-text search to find the best match, i.e., a central node
         if not (
             results := table_nodes.search(query, query_type="fts")
             .limit(1)
@@ -48,18 +48,40 @@ class Client:
             .to_list()
         ):
             return Graph(nodes=[], edges=[])
-        # extract the best matching subject (concept)
-        subject = results[0]["name"]
-        # get the outgoing edges for the subject
-        edges = table_edges.search(None).where(f'subject == "{subject}"').to_list()
-        # get the outgoing edges for objects the subject is related to (1-hop neighbourhood)
-        objects = tuple(edge["object"] for edge in edges)
-        edges.extend(table_edges.search(None).where(f"subject in {objects}").to_list())
+        # extract a graph in a k-hop neighbourhood around the central node
+        neighbourhoods, edges = {}, []
+        subjects = (results[0]["name"],)  # start with the central node
+        for hop in range(hops):
+            # save the subjects as neighbourhood nodes
+            neighbourhoods[hop] = subjects
+            # get the outgoing edges for the subject(s)
+            if not (
+                edges_out := (
+                    table_edges.search(None)
+                    .where(
+                        f"subject in {subjects}"
+                        if len(subjects) > 1
+                        else f'subject == "{subjects[0]}"'
+                    )
+                    .to_list()
+                )
+            ):
+                # exit if there are no more nodes in the neighbourhood
+                break
+            # save the edges
+            edges.extend(edges_out)
+            # extract and store adjacent nodes as new subjects
+            subjects = tuple(edge["object"] for edge in edges_out)
+        # save the outmost subjects after the last iteration too
+        neighbourhoods[hops] = subjects
+        # deduplicate the edges
+        edges = {frozenset(edge.items()) for edge in edges}
+        edges = list(map(dict, edges))
         # get all nodes for the edges in question
-        entities = tuple(
+        node_names = tuple(
             {edge["subject"] for edge in edges} | {edge["object"] for edge in edges}
         )
-        nodes = table_nodes.search(None).where(f"name in {entities}").to_list()
+        nodes = table_nodes.search(None).where(f"name in {node_names}").to_list()
         return Graph(nodes=nodes, edges=edges)
 
     def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
