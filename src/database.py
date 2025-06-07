@@ -5,6 +5,7 @@ Routines for database operations for RAG.
 import os
 
 import lancedb
+import networkx as nx
 
 from . import genai, utils
 from .entities import Document, Graph
@@ -64,9 +65,10 @@ class Client:
             .to_list()
         ):
             return Graph(nodes=[], edges=[])
+        central_node_name = results[0]["name"]
         # extract a graph in a k-hop neighbourhood around the central node
         neighbourhoods, edges = {}, []
-        subjects = (results[0]["name"],)  # start with the central node
+        subjects = (central_node_name,)
         for hop in range(hops):
             # save the subjects as neighbourhood nodes
             neighbourhoods[hop] = subjects
@@ -123,6 +125,12 @@ class Client:
             .to_list()
         )
         nodes = [node | {"neighbourhood": positions[node["name"]]} for node in nodes]
+        # construct a graph to easily traverse it
+        graph = nx.DiGraph()
+        graph.add_nodes_from([node["name"] for node in nodes])
+        graph.add_edges_from([(edge["subject"], edge["object"]) for edge in edges])
+        colours = utils.get_node_colours(graph, central_node_name)
+        nodes = [node | {"colour": colours[node["name"]]} for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
     def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:

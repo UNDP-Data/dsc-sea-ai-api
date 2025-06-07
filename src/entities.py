@@ -70,6 +70,11 @@ class Node(BaseModel):
         examples=[2.71828, 3.14159],
         ge=0.0,
     )
+    colour: str = Field(
+        default="#A9B1B7",
+        description="Hex colour value for the node",
+        examples=["#3288CE", "#55606E"],
+    )
     metadata: dict = Field(description="Arbitrary metadata about the node")
 
     def __hash__(self) -> int:
