@@ -99,8 +99,6 @@ class Client:
         node_names = tuple(
             {edge["subject"] for edge in edges} | {edge["object"] for edge in edges}
         )
-        # extract the nodes and assign neighbourhood positions
-        positions = utils.extract_node_positions(neighbourhoods)
         nodes = (
             table_nodes.search(vector, query_type="vector")
             .distance_type("cosine")
@@ -124,13 +122,12 @@ class Client:
             )
             .to_list()
         )
-        nodes = [node | {"neighbourhood": positions[node["name"]]} for node in nodes]
         # construct a graph to easily traverse it
         graph = nx.DiGraph()
         graph.add_nodes_from([node["name"] for node in nodes])
         graph.add_edges_from([(edge["subject"], edge["object"]) for edge in edges])
-        colours = utils.get_node_colours(graph, central_node_name)
-        nodes = [node | {"colour": colours[node["name"]]} for node in nodes]
+        metadata = utils.get_node_metadata(graph, central_node_name)
+        nodes = [node | metadata[node["name"]] for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
     def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
