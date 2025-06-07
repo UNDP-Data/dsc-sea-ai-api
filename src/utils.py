@@ -14,14 +14,20 @@ BLUES = ["#095aab", "#347cbc", "#5f9dcc", "#89bfdc", "#bae0e1"]
 PALLETES = [GRAYS, GREENS, REDS, YELLOWS, BLUES]
 
 
-def get_node_metadata(graph: nx.Graph, source: str) -> dict[str, dict]:
+def get_node_metadata(
+    nodes: list[str],
+    edges: list[tuple[str, str]],
+    source: str,
+) -> dict[str, dict]:
     """
     Get node metadata such as neighbourhood position and colours from a graph.
 
     Parameters
     ----------
-    G : nx.Graph
-        A graph to traverse.
+    nodes : list[str]
+        List of node names.
+    edges : list[tuple[str, str]]
+        List of edges in the form (source, target).
     source : str
         Name of the source node to find paths from, i.e., the central node.
 
@@ -30,6 +36,9 @@ def get_node_metadata(graph: nx.Graph, source: str) -> dict[str, dict]:
     dict[str, dict]
         Mapping from node names to metadata dictionary.
     """
+    graph = nx.DiGraph()
+    graph.add_nodes_from(nodes)
+    graph.add_edges_from(edges)
     graph.nodes[source]["neighbourhood"] = 0
     graph.nodes[source]["colour"] = "#9F7DC5"
     # there may be more than one shortest path, but any one works

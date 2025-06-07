@@ -5,7 +5,6 @@ Routines for database operations for RAG.
 import os
 
 import lancedb
-import networkx as nx
 
 from . import genai, utils
 from .entities import Document, Graph
@@ -123,10 +122,11 @@ class Client:
             .to_list()
         )
         # construct a graph to easily traverse it
-        graph = nx.DiGraph()
-        graph.add_nodes_from([node["name"] for node in nodes])
-        graph.add_edges_from([(edge["subject"], edge["object"]) for edge in edges])
-        metadata = utils.get_node_metadata(graph, central_node_name)
+        metadata = utils.get_node_metadata(
+            nodes=[node["name"] for node in nodes],
+            edges=[(edge["subject"], edge["object"]) for edge in edges],
+            source=central_node_name,
+        )
         nodes = [node | metadata[node["name"]] for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
