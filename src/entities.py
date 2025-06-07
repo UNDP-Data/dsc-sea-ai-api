@@ -39,7 +39,7 @@ class GraphParameters(SharedParameters):
 
     query: str = Field(
         description="A query to retrieve a knowledge graph for",
-        example="climate change mitigation",
+        json_schema_extra={"example": "climate change mitigation"},
     )
 
 
