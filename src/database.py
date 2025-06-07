@@ -109,7 +109,7 @@ class Client:
                 ),  # handle an edge case when hops is set to zero
             )
             .limit(
-                len(node_names)
+                len(node_names) or 1  # handle an edge case when hops is set to zero too
             )  # add an explicit limit as per https://github.com/lancedb/lancedb/issues/1852
             .select(
                 {
