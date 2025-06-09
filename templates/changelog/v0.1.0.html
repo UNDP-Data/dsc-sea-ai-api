@@ -1,0 +1,41 @@
+<button tabindex="0" aria-expanded="false">v0.1.0 (2025-06-09)</button>
+<div class="accordion__panel" aria-hidden="true">
+    <p>
+        This release streamlines graph extraction process, extends parameters for <code>/graph</code> endpoint
+        and adds basic API tests.
+    </p>
+    <br>
+    <h5>What's New</h5>
+    <ul>
+        <li>
+            <code>/graph</code> endpoint now uses vector search which enables querying it in various languages. For example,
+            "energia solare" will return a graph matching "solar energy". Graph data are still in English only.
+        </li>
+        <li>
+            Optional <code>hops</code> parameter has been added to control graph size. Setting this parameter to zero will result in only
+            a central node being returned, while one and two will produce 1- and 2-hop neighbourhoods respectively. That is, it will 
+            produce nodes that are no more than <code>hops</code> edges away from the central node.
+        </li>
+        <li>
+            <code>weight</code> property on nodes now corresponds to cosine similarity between a <code>query</code> and a node.
+            It is a floating-point number in the [0.0, 1.0] range with higher values indicating closer similarity.
+        </li>
+        <li>
+            Nodes have gained two new properties: <code>neighbourhood</code>, which is a non-negative integer corresponding to the
+            distance from a central node to this node, i.e., 0 for the central node, 1 for nodes that are 1-hop away and so on, and
+            <code>colour</code>, which is a hex colour value for the node. Nodes are coloured along shortest paths from the central
+            node such that the nodes in the same path share the same colour but use a different shade of it.
+        </li>
+        <li>
+            Basic API tests are now included in the codebase.
+        </li>
+    </ul>
+    <br>
+    <h5>Bug Fixes</h5>
+    <ul>
+        <li>
+            Previously, <code>edges</code> could contain <code>subject</code> or <code>object</code> names that were not present
+            among <code>nodes</code>. This is no longer the case and graph edges and nodes are consistent.
+        </li>
+    </ul>
+</div>
