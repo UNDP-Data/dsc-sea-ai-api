@@ -7,7 +7,41 @@ from typing import Literal
 from lancedb.pydantic import LanceModel
 from pydantic import BaseModel, Field
 
-__all__ = ["Node", "Edge", "Graph", "Document", "Message", "AssistantResponse"]
+__all__ = [
+    "GraphParameters",
+    "Node",
+    "Edge",
+    "Graph",
+    "Document",
+    "Message",
+    "AssistantResponse",
+]
+
+
+class SharedParameters(BaseModel):
+    """
+    Shared query parameters for the underlying knowledge graph.
+    """
+
+    hops: int = Field(
+        default=2,
+        ge=0,
+        description="Number of hops to extract nodes from."
+        "For example, 1 means extract the central node and the immediate neighbours"
+        " (1-hop neighbourhood).",
+    )
+
+
+class GraphParameters(SharedParameters):
+    """
+    Query parameters for `/graph` endpoint.
+    """
+
+    query: str = Field(
+        description="A query to retrieve a knowledge graph for",
+        min_length=2,
+        json_schema_extra={"example": "climate change mitigation"},
+    )
 
 
 class Node(BaseModel):
@@ -26,12 +60,21 @@ class Node(BaseModel):
             "Rules managing energy use and resources sustainably.",
         ],
     )
-    weight: int | None = Field(
-        default=1,
-        description="Numeric value indicating the node's importance on a 5-point scale",
-        examples=[3, 4],
-        ge=1,
-        le=5,
+    neighbourhood: int = Field(
+        description="""Numeric value for a k-hop neighbourhood, with designations as follows:
+        0 for the central node(s), 1 for secondary nodes and so on""",
+        examples=[0, 2],
+        ge=0.0,
+    )
+    weight: float = Field(
+        description="Numeric value indicating the node's relevance",
+        examples=[2.71828, 3.14159],
+        ge=0.0,
+    )
+    colour: str = Field(
+        default="#A9B1B7",
+        description="Hex colour value for the node",
+        examples=["#3288CE", "#55606E"],
     )
     metadata: dict = Field(description="Arbitrary metadata about the node")
 
@@ -62,16 +105,17 @@ class Edge(BaseModel):
     description: str = Field(
         description="Description of the edge",
         examples=[
-            "Climate adaptation strategies address the impacts of extreme weather events on communities and infrastructure.",
-            "Climate adaptation strategies support community engagement to ensure inclusive decision-making and implementation.",
+            "Climate adaptation strategies address the impacts of extreme weather"
+            " events on communities and infrastructure.",
+            "Climate adaptation strategies support community engagement to ensure"
+            " inclusive decision-making and implementation.",
         ],
     )
-    weight: int = Field(
-        default=1,
-        description="Numeric value indicating the edge's importance on a 5-point scale",
-        examples=[3, 4],
-        ge=1,
-        le=5,
+    weight: float = Field(
+        default=1.0,
+        description="Numeric value indicating the edge's importance",
+        examples=[2.71828, 3.14159],
+        ge=0.0,
     )
     level: int = Field(
         description="Numeric values indication the edge's level on a 3-point scale",
@@ -113,6 +157,10 @@ class Document(LanceModel):
 
 
 class Message(BaseModel):
+    """
+    Simple message for handling conversations with a chatbot.
+    """
+
     role: Literal["assistant", "human"] = Field(
         description="The actor the message belongs to",
         examples=["human"],
