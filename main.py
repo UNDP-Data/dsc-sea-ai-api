@@ -2,6 +2,7 @@
 Entry point to the API.
 """
 
+import asyncio
 from contextlib import asynccontextmanager
 from typing import Annotated
 
@@ -35,7 +36,8 @@ async def lifespan(_: FastAPI):
     states : dict
         Dictionary of arbitrary state variables.
     """
-    states = {"client": database.Client()}
+    connection = await database.get_connection()
+    states = {"client": database.Client(connection)}
     yield states
 
 
@@ -90,7 +92,7 @@ async def query_knowledge_graph(
     Get a knowledge graph that best matches the query concept.
     """
     client: database.Client = request.state.client
-    return client.find_graph(**params.model_dump())
+    return await client.find_graph(**params.model_dump())
 
 
 @app.post(
@@ -112,13 +114,16 @@ async def ask_model(request: Request, messages: list[Message]):
         )
     user_query = messages[-1].content
     client: database.Client = request.state.client
-    documents = client.retrieve_documents(user_query)
-    entities = genai.extract_entities(user_query)
-    graphs = [client.find_graph(entity) for entity in entities]
+    documents, entities, ideas = await asyncio.gather(
+        client.retrieve_documents(user_query),
+        genai.extract_entities(user_query),
+        genai.generate_query_ideas(user_query),
+    )
+    graphs = await asyncio.gather(*[client.find_graph(entity) for entity in entities])
     response = {
         "role": "assistant",
-        "content": genai.get_answer(user_query, documents, messages),
-        "ideas": genai.generate_query_ideas(user_query) or None,
+        "content": await genai.get_answer(user_query, documents, messages),
+        "ideas": ideas or None,
         "documents": documents,
         "graph": sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     }
