@@ -6,7 +6,7 @@ import os
 import pkgutil
 
 import yaml
-from openai import AzureOpenAI
+from openai import AsyncAzureOpenAI
 from pydantic import BaseModel
 
 from .entities import Document, Message
@@ -16,16 +16,16 @@ __all__ = ["get_client", "generate_response", "embed_text"]
 PROMPTS = yaml.safe_load(pkgutil.get_data(__name__, "prompts.yaml"))
 
 
-def get_client() -> AzureOpenAI:
+def get_client() -> AsyncAzureOpenAI:
     """
-    Get a client for Azure OpenAI service.
+    Get a asynchronous client for Azure OpenAI service.
 
     Returns
     -------
-    AzureOpenAI
-        An Azure OpenAI client.
+    AsyncAzureOpenAI
+        An asynchronous Azure OpenAI client.
     """
-    client = AzureOpenAI(
+    client = AsyncAzureOpenAI(
         api_version="2024-12-01-preview",
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
@@ -33,7 +33,7 @@ def get_client() -> AzureOpenAI:
     return client
 
 
-def generate_response(
+async def generate_response(
     prompt: str,
     system_message: str = "You are a helpful assistant.",
     **kwargs,
@@ -60,7 +60,7 @@ def generate_response(
     # use the defaults if no kwargs are provided
     params = {"temperature": 0} | kwargs
     client = get_client()
-    response = client.beta.chat.completions.parse(
+    response = await client.beta.chat.completions.parse(
         model=os.environ["CHAT_MODEL"],
         **params,
         messages=[
@@ -73,7 +73,7 @@ def generate_response(
     return message.parsed if "response_format" in params else message.content
 
 
-def embed_text(text: str) -> list[float]:
+async def embed_text(text: str) -> list[float]:
     """
     Embed a text into a multidimensional vector space.
 
@@ -88,11 +88,13 @@ def embed_text(text: str) -> list[float]:
         Embedding for the text as a 1,536 vector of float.
     """
     client = get_client()
-    response = client.embeddings.create(model=os.environ["EMBED_MODEL"], input=text)
+    response = await client.embeddings.create(
+        model=os.environ["EMBED_MODEL"], input=text
+    )
     return response.data[0].embedding
 
 
-def extract_entities(user_query: str) -> list[str]:
+async def extract_entities(user_query: str) -> list[str]:
     """
     Extract relevant entities from the user query.
 
@@ -114,7 +116,7 @@ def extract_entities(user_query: str) -> list[str]:
 
         entities: list[str]
 
-    response: ResponseFormat = generate_response(
+    response: ResponseFormat = await generate_response(
         prompt=user_query,
         system_message=PROMPTS["extract_entities"],
         response_format=ResponseFormat,
@@ -122,7 +124,7 @@ def extract_entities(user_query: str) -> list[str]:
     return response.entities
 
 
-def get_answer(
+async def get_answer(
     user_query: str, documents: list[Document], messages: list[Message]
 ) -> str:
     """
@@ -142,7 +144,7 @@ def get_answer(
     str
         Model response.
     """
-    response = generate_response(
+    response = await generate_response(
         prompt=user_query,
         system_message=PROMPTS["answer_question"].format(
             documents=documents, messages=messages
@@ -155,7 +157,7 @@ def get_answer(
     return response
 
 
-def generate_query_ideas(user_query: str) -> list[str]:
+async def generate_query_ideas(user_query: str) -> list[str]:
     """
     Generate query ideas based on the user message.
 
@@ -177,7 +179,7 @@ def generate_query_ideas(user_query: str) -> list[str]:
 
         ideas: list[str]
 
-    response: ResponseFormat = generate_response(
+    response: ResponseFormat = await generate_response(
         prompt=user_query,
         system_message=PROMPTS["suggest_ideas"],
         response_format=ResponseFormat,
