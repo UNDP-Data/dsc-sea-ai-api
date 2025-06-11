@@ -10,16 +10,16 @@ from . import genai, utils
 from .entities import Document, Graph
 
 
-def get_connection() -> lancedb.DBConnection:
+async def get_connection() -> lancedb.AsyncConnection:
     """
-    Get a database connection for LanceDB stored on Azure Blob Storage.
+    Get an asynchronous database connection for LanceDB stored on Azure Blob Storage.
 
     Returns
     -------
-    lancedb.DBConnection
-        Database connection client.
+    lancedb.AsyncConnection
+        Asynchronous database connection client.
     """
-    return lancedb.connect(
+    return await lancedb.connect_async(
         "az://lancedb",
         storage_options={
             "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
@@ -33,10 +33,10 @@ class Client:
     Database client class to perform routine operations using LanceDB.
     """
 
-    def __init__(self):
-        self.connection = get_connection()
+    def __init__(self, connection: lancedb.AsyncConnection):
+        self.connection = connection
 
-    def find_graph(self, query: str, hops: int = 2) -> Graph:
+    async def find_graph(self, query: str, hops: int = 2) -> Graph:
         """
         Find a graph relevant to a given query.
 
@@ -53,12 +53,12 @@ class Client:
             Object with node and edge lists.
         """
         # open connections to node and edge tables
-        table_nodes = self.connection.open_table("nodes")
-        table_edges = self.connection.open_table("edges")
+        table_nodes = await self.connection.open_table("nodes")
+        table_edges = await self.connection.open_table("edges")
         vector = genai.embed_text(query)
         # perform a search to find the best match, i.e., a central node
         if not (
-            results := table_nodes.search(vector, query_type="vector")
+            results := await table_nodes.vector_search(vector)
             .limit(1)
             .select(["name"])
             .to_list()
@@ -74,7 +74,7 @@ class Client:
             # get the outgoing edges for the subject(s)
             if not (
                 edges_out := (
-                    table_edges.search(None)
+                    await table_edges.query()
                     .where(
                         f"subject in {subjects}"
                         if len(subjects) > 1
@@ -99,7 +99,7 @@ class Client:
             {edge["subject"] for edge in edges} | {edge["object"] for edge in edges}
         )
         nodes = (
-            table_nodes.search(vector, query_type="vector")
+            await table_nodes.vector_search(vector)
             .distance_type("cosine")
             .where(
                 (
@@ -130,7 +130,7 @@ class Client:
         nodes = [node | metadata[node["name"]] for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
-    def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
+    async def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
         """
         Retrieve the documents from the database that best match a query.
 
@@ -146,7 +146,10 @@ class Client:
         list[Document]
             List of most relevant documents.
         """
-        table = self.connection.open_table("documents")
-        # perform a full-text search to find best matches
+        table = await self.connection.open_table("documents")
+        # perform a vector search to find best matches
         vector = genai.embed_text(query)
-        return table.search(vector).limit(limit).to_pydantic(Document)
+        return [
+            Document(**doc)
+            for doc in await table.vector_search(vector).limit(limit).to_list()
+        ]
