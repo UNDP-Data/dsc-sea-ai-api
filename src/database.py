@@ -55,7 +55,7 @@ class Client:
         # open connections to node and edge tables
         table_nodes = await self.connection.open_table("nodes")
         table_edges = await self.connection.open_table("edges")
-        vector = genai.embed_text(query)
+        vector = await genai.embed_text(query)
         # perform a search to find the best match, i.e., a central node
         if not (
             results := await table_nodes.vector_search(vector)
@@ -148,7 +148,7 @@ class Client:
         """
         table = await self.connection.open_table("documents")
         # perform a vector search to find best matches
-        vector = genai.embed_text(query)
+        vector = await genai.embed_text(query)
         return [
             Document(**doc)
             for doc in await table.vector_search(vector).limit(limit).to_list()
