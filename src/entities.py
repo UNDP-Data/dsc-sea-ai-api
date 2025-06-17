@@ -2,12 +2,14 @@
 Entities (models) and related routines to define the data layer.
 """
 
+from enum import Enum, auto
 from typing import Literal
 
 from lancedb.pydantic import LanceModel
 from pydantic import BaseModel, Field
 
 __all__ = [
+    "SearchMethod",
     "GraphParameters",
     "Node",
     "Edge",
@@ -16,6 +18,15 @@ __all__ = [
     "Message",
     "AssistantResponse",
 ]
+
+
+class SearchMethod(Enum):
+    """
+    Search method for graph retrieval.
+    """
+
+    EXACT = auto()
+    VECTOR = auto()
 
 
 class SharedParameters(BaseModel):
