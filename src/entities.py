@@ -72,12 +72,14 @@ class Node(BaseModel):
         ],
     )
     neighbourhood: int = Field(
+        default=0,
         description="""Numeric value for a k-hop neighbourhood, with designations as follows:
         0 for the central node(s), 1 for secondary nodes and so on""",
         examples=[0, 2],
-        ge=0.0,
+        ge=0,
     )
     weight: float = Field(
+        default=0.0,
         description="Numeric value indicating the node's relevance",
         examples=[2.71828, 3.14159],
         ge=0.0,
