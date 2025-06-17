@@ -94,6 +94,11 @@ class Node(BaseModel):
     def __hash__(self) -> int:
         return self.name.__hash__()
 
+    def __lt__(self, other):
+        if isinstance(other, Node):
+            return self.name < other.name
+        return NotImplemented
+
 
 class Edge(BaseModel):
     """
