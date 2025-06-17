@@ -36,7 +36,9 @@ class Client:
     def __init__(self, connection: lancedb.AsyncConnection):
         self.connection = connection
 
-    async def find_node(self, query: str, method: SearchMethod) -> Node | None:
+    async def find_node(
+        self, query: str, method: SearchMethod, with_vector: bool = True
+    ) -> Node | None:
         """
         Find the node that best matches the query.
 
@@ -46,6 +48,8 @@ class Client:
             Plain text query.
         method : {SearchMethod.EXACT, SearchMethod.VECTOR}
             Search method to utilise.
+        with_vector : bool, default=True
+            If True, include the node's vector in `metadata` property.
 
         Returns
         -------
@@ -64,13 +68,12 @@ class Client:
         if not (nodes := await results.limit(1).to_list()):
             return None
         node = nodes[0]
-        return Node(
-            **(node | {"neighbourhood": 0, "metadata": {"vector": node["vector"]}})
-        )
+        metadata = node.pop("metadata")
+        if with_vector:
+            metadata |= {"vector": node.pop("vector")}
+        return Node(**node, metadata=metadata)
 
-    async def find_graph(
-        self, query: str, hops: int = 2, method: SearchMethod = SearchMethod.VECTOR
-    ) -> Graph:
+    async def find_graph(self, query: str, hops: int = 2) -> Graph:
         """
         Find a graph relevant to a given query.
 
