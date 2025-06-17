@@ -14,7 +14,14 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src import database, genai
-from src.entities import AssistantResponse, Graph, GraphParameters, Message
+from src.entities import (
+    AssistantResponse,
+    Graph,
+    GraphParameters,
+    Message,
+    Node,
+    SearchMethod,
+)
 
 load_dotenv()
 
@@ -77,6 +84,40 @@ async def favicon():
     an override of /docs and /redoc endpoints is required.
     """
     return FileResponse("./static/favicon.ico")
+
+
+@app.get(
+    path="/nodes",
+    response_model=list[Node],
+    response_model_by_alias=False,
+)
+async def list_nodes(request: Request):
+    """
+    List all nodes in the graph. Since there is no central node,
+    `neighbourhood` is set to zero for all nodes.
+    """
+    client: database.Client = request.state.client
+    return await client.list_nodes()
+
+
+@app.get(
+    path="/nodes/{name}",
+    response_model=Node,
+    response_model_by_alias=False,
+)
+async def get_node(request: Request, name: str):
+    """
+    Get a single node by name. Case insensitive.
+    """
+    client: database.Client = request.state.client
+    if (
+        node := await client.find_node(name, SearchMethod.EXACT, with_vector=False)
+    ) is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Node '{name}' does not exist.",
+        )
+    return node
 
 
 @app.get(

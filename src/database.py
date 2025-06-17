@@ -36,6 +36,18 @@ class Client:
     def __init__(self, connection: lancedb.AsyncConnection):
         self.connection = connection
 
+    async def list_nodes(self) -> list[Node]:
+        """
+        List all nodes in the graph.
+
+        Returns
+        -------
+        list[Node]
+            A list of nodes sorted by name.
+        """
+        table = await self.connection.open_table("nodes")
+        return sorted([Node(**node) for node in await table.query().to_list()])
+
     async def find_node(
         self, query: str, method: SearchMethod, with_vector: bool = True
     ) -> Node | None:
@@ -62,7 +74,8 @@ class Client:
                 vector = await genai.embed_text(query)
                 results = table.vector_search(vector)
             case SearchMethod.EXACT:
-                results = table.query().where(f"name == '{query}'")
+                # case insensitive
+                results = table.query().where(f"lower(name) == '{query.lower()}'")
             case _:
                 raise ValueError(f"Method {method} is not supported.")
         if not (nodes := await results.limit(1).to_list()):
@@ -93,7 +106,7 @@ class Client:
         table_nodes = await self.connection.open_table("nodes")
         table_edges = await self.connection.open_table("edges")
         # perform a search to find the best match, i.e., a central node
-        central_node = await self.find_node(query, method)
+        central_node = await self.find_node(query, SearchMethod.VECTOR)
         # extract a graph in a k-hop neighbourhood around the central node
         neighbourhoods, edges = {}, []
         subjects = (central_node.name,)
