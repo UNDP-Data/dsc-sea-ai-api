@@ -2,6 +2,9 @@
 Utility functions for validating data structures in responses.
 """
 
+from fastapi import Response
+from fastapi.testclient import TestClient
+
 __all__ = ["validate_graph", "validate_node", "validate_edge"]
 
 
@@ -39,3 +42,19 @@ def validate_edge(edge):
     assert isinstance(edge.get("subject"), str)
     assert isinstance(edge.get("object"), str)
     assert edge["subject"] != edge["object"]
+
+
+def get_response(
+    client: TestClient, endpoint: str, method: str, payload: dict | list | None
+) -> Response:
+    """
+    Generic function to send a request to an endpoint with specified parameters.
+    """
+    match method:
+        case "GET":
+            response = client.get(endpoint, params=payload)
+        case "POST":
+            response = client.post(endpoint, json=payload)
+        case _:
+            raise ValueError(f"Unknown method {method}")
+    return response
