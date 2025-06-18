@@ -8,7 +8,7 @@ from typing import Annotated
 
 import yaml
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Query, Request, status
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -22,6 +22,7 @@ from src.entities import (
     Node,
     SearchMethod,
 )
+from src.security import authenticate
 
 load_dotenv()
 
@@ -90,6 +91,7 @@ async def favicon():
     path="/nodes",
     response_model=list[Node],
     response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
 )
 async def list_nodes(request: Request):
     """
@@ -104,6 +106,7 @@ async def list_nodes(request: Request):
     path="/nodes/{name}",
     response_model=Node,
     response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
 )
 async def get_node(request: Request, name: str):
     """
@@ -124,6 +127,7 @@ async def get_node(request: Request, name: str):
     path="/graph",
     response_model=Graph,
     response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
 )
 async def query_knowledge_graph(
     request: Request,
@@ -140,6 +144,7 @@ async def query_knowledge_graph(
     path="/model",
     response_model=AssistantResponse,
     response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
 )
 async def ask_model(request: Request, messages: list[Message]):
     """
