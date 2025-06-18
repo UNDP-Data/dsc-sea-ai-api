@@ -9,7 +9,7 @@ from typing import Annotated
 import yaml
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query, Request, status
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -146,7 +146,8 @@ async def ask_model(request: Request, messages: list[Message]):
     Ask a GenAI model to compose a response supplemented by knowledge graph data.
 
     Messages are expected to be in chronological order, i.e., from the oldest to most recent,
-    with the current user message being the last one.
+    with the current user message being the last one. This endpoint streams the response in
+    NDJSON format.
     """
     if messages[-1].role != "human":
         raise HTTPException(
@@ -161,11 +162,14 @@ async def ask_model(request: Request, messages: list[Message]):
         genai.generate_query_ideas(user_query),
     )
     graphs = await asyncio.gather(*[client.find_graph(entity) for entity in entities])
-    response = {
-        "role": "assistant",
-        "content": await genai.get_answer(user_query, documents, messages),
-        "ideas": ideas or None,
-        "documents": documents,
-        "graph": sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
-    }
-    return response
+    response = AssistantResponse(
+        role="assistant",
+        content="",
+        ideas=ideas or None,
+        documents=documents,
+        graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
+    )
+    return StreamingResponse(
+        content=genai.get_answer(user_query, documents, messages, response),
+        media_type="application/x-ndjson",
+    )

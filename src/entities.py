@@ -185,7 +185,7 @@ class Message(BaseModel):
     )
     content: str = Field(
         description="Text content of the message",
-        min_length=8,
+        min_length=0,
         max_length=16_384,
         examples=[
             "How does climate change adaptation differ from climate change mitigation?"
@@ -201,7 +201,7 @@ class AssistantResponse(Message):
     ideas: list[str] | None = Field(
         description="A list of relevant query ideas based on the user message"
     )
-    documents: list[Document] = Field(
+    documents: list[Document] | None = Field(
         description="One or more documents relevant to the user message"
     )
     graph: Graph | None = Field(default=None)
