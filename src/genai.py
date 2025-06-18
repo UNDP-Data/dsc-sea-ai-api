@@ -4,14 +4,15 @@ Functions for interacting with GenAI models via Azure OpenAI.
 
 import os
 import pkgutil
+from typing import AsyncGenerator
 
 import yaml
 from openai import AsyncAzureOpenAI
 from pydantic import BaseModel
 
-from .entities import Document, Message
+from .entities import AssistantResponse, Document, Message
 
-__all__ = ["get_client", "generate_response", "embed_text"]
+__all__ = ["get_client", "generate_response", "stream_response", "embed_text"]
 
 PROMPTS = yaml.safe_load(pkgutil.get_data(__name__, "prompts.yaml"))
 
@@ -54,7 +55,7 @@ async def generate_response(
 
     Returns
     -------
-    str or Base Model
+    str or BaseModel
         String if no `response_format` is specified, otherwise a Pydantic model.
     """
     # use the defaults if no kwargs are provided
@@ -71,6 +72,48 @@ async def generate_response(
     )
     message = response.choices[0].message
     return message.parsed if "response_format" in params else message.content
+
+
+async def stream_response(
+    prompt: str,
+    system_message: str = "You are a helpful assistant.",
+    **kwargs,
+) -> AsyncGenerator[str, None]:
+    """
+    Stream a response using Azure OpenAI service.
+
+    Parameters
+    ----------
+    prompt : str
+        User message.
+    system_message : str, optional
+        System message to customise model behaviour.
+    **kwargs
+        Extra arguments to be passed to `client.beta.chat.completions.stream`.
+
+    Yields
+    ------
+    str
+        Chunk content.
+    """
+    # use the defaults if no kwargs are provided
+    params = {"temperature": 0} | kwargs
+    client = get_client()
+    async with client.beta.chat.completions.stream(
+        model=os.environ["CHAT_MODEL"],
+        **params,
+        messages=[
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": prompt},
+        ],
+        timeout=10,
+    ) as stream:
+        async for event in stream:
+            if event.type == "chunk":
+                chunk = event.chunk
+                content = chunk.choices[0].delta.content
+                if isinstance(content, str):
+                    yield content
 
 
 async def embed_text(text: str) -> list[float]:
@@ -125,8 +168,11 @@ async def extract_entities(user_query: str) -> list[str]:
 
 
 async def get_answer(
-    user_query: str, documents: list[Document], messages: list[Message]
-) -> str:
+    user_query: str,
+    documents: list[Document],
+    messages: list[Message],
+    response: AssistantResponse,
+) -> AsyncGenerator[str, None]:
     """
     Respond to the user message using RAG and conversation history.
 
@@ -139,12 +185,12 @@ async def get_answer(
     messages : list[Message]
         Conversation history as a list of messages.
 
-    Returns
-    -------
+    Yields
+    ------
     str
-        Model response.
+        String representation of JSON model response.
     """
-    response = await generate_response(
+    async for chunk in stream_response(
         prompt=user_query,
         system_message=PROMPTS["answer_question"].format(
             documents=documents, messages=messages
@@ -153,8 +199,12 @@ async def get_answer(
         top_p=0.8,
         frequency_penalty=0.6,
         presence_penalty=0.8,
-    )
-    return response
+    ):
+        # send deltas only
+        response.content = chunk
+        yield response.model_dump_json() + "\n"
+        # once the full response has been yielded, nullify properties to reduce payload
+        response.graph, response.ideas, response.documents = None, None, None
 
 
 async def generate_query_ideas(user_query: str) -> list[str]:

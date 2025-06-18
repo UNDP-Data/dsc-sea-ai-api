@@ -8,13 +8,21 @@ from typing import Annotated
 
 import yaml
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Query, Request, status
-from fastapi.responses import FileResponse
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src import database, genai
-from src.entities import AssistantResponse, Graph, GraphParameters, Message
+from src.entities import (
+    AssistantResponse,
+    Graph,
+    GraphParameters,
+    Message,
+    Node,
+    SearchMethod,
+)
+from src.security import authenticate
 
 load_dotenv()
 
@@ -80,9 +88,46 @@ async def favicon():
 
 
 @app.get(
+    path="/nodes",
+    response_model=list[Node],
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def list_nodes(request: Request):
+    """
+    List all nodes in the graph. Since there is no central node,
+    `neighbourhood` is set to zero for all nodes.
+    """
+    client: database.Client = request.state.client
+    return await client.list_nodes()
+
+
+@app.get(
+    path="/nodes/{name}",
+    response_model=Node,
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def get_node(request: Request, name: str):
+    """
+    Get a single node by name. Case insensitive.
+    """
+    client: database.Client = request.state.client
+    if (
+        node := await client.find_node(name, SearchMethod.EXACT, with_vector=False)
+    ) is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Node '{name}' does not exist.",
+        )
+    return node
+
+
+@app.get(
     path="/graph",
     response_model=Graph,
     response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
 )
 async def query_knowledge_graph(
     request: Request,
@@ -99,13 +144,15 @@ async def query_knowledge_graph(
     path="/model",
     response_model=AssistantResponse,
     response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
 )
 async def ask_model(request: Request, messages: list[Message]):
     """
     Ask a GenAI model to compose a response supplemented by knowledge graph data.
 
     Messages are expected to be in chronological order, i.e., from the oldest to most recent,
-    with the current user message being the last one.
+    with the current user message being the last one. This endpoint streams the response in
+    NDJSON format.
     """
     if messages[-1].role != "human":
         raise HTTPException(
@@ -120,11 +167,14 @@ async def ask_model(request: Request, messages: list[Message]):
         genai.generate_query_ideas(user_query),
     )
     graphs = await asyncio.gather(*[client.find_graph(entity) for entity in entities])
-    response = {
-        "role": "assistant",
-        "content": await genai.get_answer(user_query, documents, messages),
-        "ideas": ideas or None,
-        "documents": documents,
-        "graph": sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
-    }
-    return response
+    response = AssistantResponse(
+        role="assistant",
+        content="",
+        ideas=ideas or None,
+        documents=documents,
+        graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
+    )
+    return StreamingResponse(
+        content=genai.get_answer(user_query, documents, messages, response),
+        media_type="application/x-ndjson",
+    )

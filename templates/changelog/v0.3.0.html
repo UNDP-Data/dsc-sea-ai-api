@@ -1,0 +1,28 @@
+<button tabindex="0" aria-expanded="false">v0.3.0 (2025-06-18)</button>
+<div class="accordion__panel" aria-hidden="true">
+    <p>
+        This release includes new endpoints for nodes, support for streaming model responses and
+        key-based authentication.
+    </p>
+    <br>
+    <h5>What's New</h5>
+    <ul>
+        <li>
+            <b>BREAKING CHANGE</b> all endpoints now require authentication with <code>X-Api-Key</code>
+            in the header.
+        </li>
+        <li>
+            <b>BREAKING CHANGE</b> response from <code>/model</code>> endpoint is now streamed in NDJSON format.
+            Each object is <code>AssistantResponse</code> as before but only the first one contains
+            <code>ideas</code>, <code>documents</code> and  <code>graph</code>.  <code>content</code> property only
+            includes new content produced by the model (delta streaming).
+        </li>
+        <li>
+            Two new  <code>/nodes</code> endpoints have been added to list all available nodes and retrieve data
+            for a single node.
+        </li>
+    </ul>
+    <br>
+    <h5>Bug Fixes</h5>
+    None.
+</div>
