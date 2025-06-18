@@ -2,12 +2,14 @@
 Entities (models) and related routines to define the data layer.
 """
 
+from enum import Enum, auto
 from typing import Literal
 
 from lancedb.pydantic import LanceModel
 from pydantic import BaseModel, Field
 
 __all__ = [
+    "SearchMethod",
     "GraphParameters",
     "Node",
     "Edge",
@@ -16,6 +18,15 @@ __all__ = [
     "Message",
     "AssistantResponse",
 ]
+
+
+class SearchMethod(Enum):
+    """
+    Search method for graph retrieval.
+    """
+
+    EXACT = auto()
+    VECTOR = auto()
 
 
 class SharedParameters(BaseModel):
@@ -61,12 +72,14 @@ class Node(BaseModel):
         ],
     )
     neighbourhood: int = Field(
+        default=0,
         description="""Numeric value for a k-hop neighbourhood, with designations as follows:
         0 for the central node(s), 1 for secondary nodes and so on""",
         examples=[0, 2],
-        ge=0.0,
+        ge=0,
     )
     weight: float = Field(
+        default=0.0,
         description="Numeric value indicating the node's relevance",
         examples=[2.71828, 3.14159],
         ge=0.0,
@@ -80,6 +93,11 @@ class Node(BaseModel):
 
     def __hash__(self) -> int:
         return self.name.__hash__()
+
+    def __lt__(self, other):
+        if isinstance(other, Node):
+            return self.name < other.name
+        return NotImplemented
 
 
 class Edge(BaseModel):
@@ -167,7 +185,7 @@ class Message(BaseModel):
     )
     content: str = Field(
         description="Text content of the message",
-        min_length=8,
+        min_length=0,
         max_length=16_384,
         examples=[
             "How does climate change adaptation differ from climate change mitigation?"
@@ -181,9 +199,10 @@ class AssistantResponse(Message):
     """
 
     ideas: list[str] | None = Field(
-        description="A list of relevant query ideas based on the user message"
+        default=None,
+        description="A list of relevant query ideas based on the user message",
     )
-    documents: list[Document] = Field(
-        description="One or more documents relevant to the user message"
+    documents: list[Document] | None = Field(
+        default=None, description="One or more documents relevant to the user message"
     )
     graph: Graph | None = Field(default=None)

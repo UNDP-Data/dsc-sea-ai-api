@@ -2,6 +2,7 @@
 Basic tests for `/model` endpoint.
 """
 
+import json
 import re
 from random import choices
 from string import ascii_letters, digits
@@ -23,17 +24,29 @@ def test_model_structure(test_client):
     ]
     response = test_client.post("/model", json=messages)
     assert response.status_code == 200
-    data = response.json()
-    assert isinstance(data, dict)
-    assert data.get("role") == "assistant"
-    assert (content := data.get("content")) is not None
-    assert isinstance(content, str)
+    assert response.headers["content-type"] == "application/x-ndjson"
+    contents = []
+    for index, line in enumerate(response.iter_lines()):
+        assert line
+        data = json.loads(line)
+        assert isinstance(data, dict)
+        assert data.get("role") == "assistant"
+        assert (content := data.get("content")) is not None
+        assert isinstance(content, str)
+        contents.append(content)
+        # only the first object contains graph, documents and ideas
+        if index == 0:
+            assert (documents := data.get("documents")) is not None
+            assert isinstance(documents, list)
+            assert len(documents) > 0
+            assert all(map(lambda document: isinstance(document, dict), documents))
+            validate_graph(data["graph"])
+        else:
+            assert data.get("ideas") is None
+            assert data.get("documents") is None
+            assert data.get("graph") is None
+    content = "".join(contents)
     assert "climate change adaptation" in content.lower()
-    assert (documents := data.get("documents")) is not None
-    assert isinstance(documents, list)
-    assert len(documents) > 0
-    assert all(map(lambda document: isinstance(document, dict), documents))
-    validate_graph(data["graph"])
 
 
 @pytest.mark.parametrize(
@@ -74,7 +87,12 @@ def test_model_response(test_client, messages: list[dict], pattern: str):
     """
     response = test_client.post("/model", json=messages)
     assert response.status_code == 200
-    data = response.json()
+    contents = []
+    for index, line in enumerate(response.iter_lines()):
+        if index == 0:
+            data = json.loads(line)
+        contents.append(json.loads(line).get("content", ""))
+    data["content"] = "".join(contents)
     assert data["role"] == "assistant"
     assert re.search(pattern, data["content"])
 
@@ -107,7 +125,12 @@ def test_model_memory(test_client, name: str, access_code: str):
     ]
     response = test_client.post("/model", json=messages)
     assert response.status_code == 200
-    data = response.json()
+    contents = []
+    for index, line in enumerate(response.iter_lines()):
+        if index == 0:
+            data = json.loads(line)
+        contents.append(json.loads(line).get("content", ""))
+    data["content"] = "".join(contents)
     assert data["role"] == "assistant"
     content = data["content"]
     assert re.search(name, content)

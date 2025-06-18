@@ -2,6 +2,8 @@
 Shared pytest fixtures and setup for FastAPI application tests.
 """
 
+import os
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -15,5 +17,5 @@ def test_client():
 
     See https://fastapi.tiangolo.com/advanced/testing-events/.
     """
-    with TestClient(app) as client:
+    with TestClient(app, headers={"X-Api-Key": os.environ["API_KEY"]}) as client:
         yield client
