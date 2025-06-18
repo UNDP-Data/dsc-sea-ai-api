@@ -199,9 +199,10 @@ class AssistantResponse(Message):
     """
 
     ideas: list[str] | None = Field(
-        description="A list of relevant query ideas based on the user message"
+        default=None,
+        description="A list of relevant query ideas based on the user message",
     )
     documents: list[Document] | None = Field(
-        description="One or more documents relevant to the user message"
+        default=None, description="One or more documents relevant to the user message"
     )
     graph: Graph | None = Field(default=None)
