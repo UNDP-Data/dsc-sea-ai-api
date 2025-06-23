@@ -7,7 +7,11 @@ import pkgutil
 from typing import AsyncGenerator
 
 import yaml
-from langchain_core.messages import AIMessageChunk
+from langchain_core.messages import (
+    AIMessageChunk,
+    MessageLikeRepresentation,
+    SystemMessage,
+)
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 from pydantic import BaseModel
 
@@ -99,19 +103,15 @@ async def generate_response(
 
 
 async def stream_response(
-    prompt: str,
-    system_message: str = "You are a helpful assistant.",
-    **kwargs,
+    messages: MessageLikeRepresentation, **kwargs
 ) -> AsyncGenerator[str, None]:
     """
     Stream a response using Azure OpenAI service.
 
     Parameters
     ----------
-    prompt : str
-        User message.
-    system_message : str, optional
-        System message to customise model behaviour.
+    messages : MessageLikeRepresentation
+        Model input as accepted by `astream` method.
     **kwargs
         Extra arguments to be passed to `client.beta.chat.completions.stream`.
 
@@ -123,13 +123,7 @@ async def stream_response(
     # use the defaults if no kwargs are provided
     params = {"temperature": 0} | kwargs | {"timeout": 10}
     chat = get_chat_client()
-    async for chunk in chat.astream(
-        input=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": prompt},
-        ],
-        **params,
-    ):
+    async for chunk in chat.astream(messages, **params):
         if isinstance(chunk, AIMessageChunk):
             yield chunk.content
 
@@ -165,9 +159,8 @@ async def extract_entities(user_query: str) -> list[str]:
 
 
 async def get_answer(
-    user_query: str,
-    documents: list[Document],
     messages: list[Message],
+    documents: list[Document],
     response: AssistantResponse,
 ) -> AsyncGenerator[str, None]:
     """
@@ -175,8 +168,8 @@ async def get_answer(
 
     Parameters
     ----------
-    user_query : str
-        Raw user message.
+    messages : list[Message]
+        Conversation history as a list of messages.
     documents : list[Document]
         List of relevant documents to ground the answer in.
     messages : list[Message]
@@ -187,11 +180,11 @@ async def get_answer(
     str
         String representation of JSON model response.
     """
+    messages = [
+        SystemMessage(PROMPTS["answer_question"].format(documents=documents))
+    ] + [message.to_langchain() for message in messages]
     async for chunk in stream_response(
-        prompt=user_query,
-        system_message=PROMPTS["answer_question"].format(
-            documents=documents, messages=messages
-        ),
+        messages=messages,
         temperature=0.3,
         top_p=0.8,
         frequency_penalty=0.6,

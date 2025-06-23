@@ -17,12 +17,7 @@ answer_question: |
   ```json
   {documents}
   ```
-  
-  ### Conversation History
 
-  ```json
-  {messages}
-  ```
 suggest_ideas: |
   You are a knowledge management expert working at the United Nations. You help the staff deep-dive
   into the Sustainable Energy Academy. Your task is to generate query ideas (questions) based on 
