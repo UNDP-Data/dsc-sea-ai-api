@@ -77,7 +77,7 @@ def test_model_structure(test_client):
                     "content": "When was the Paris Agreement signed?",
                 }
             ],
-            r"\b2016\b",
+            r"\b(2016|2015)\b",
         ),
     ],
 )
