@@ -27,9 +27,20 @@ __all__ = [
 PROMPTS = yaml.safe_load(pkgutil.get_data(__name__, "prompts.yaml"))
 
 
-def get_chat_client() -> AzureChatOpenAI:
+def get_chat_client(
+    temperature: float = 0.0, timeout: int = 10, **kwargs
+) -> AzureChatOpenAI:
     """
     Get a chat client for Azure OpenAI service.
+
+    Parameters
+    ----------
+    temperature : float, default=0.0
+        Model temperature setting.
+    timeout : int, default=10
+        Request timeout setting in seconds.
+    **kwargs
+        Additional keyword arguments to pass to `AzureChatOpenAI`.
 
     Returns
     -------
@@ -38,9 +49,12 @@ def get_chat_client() -> AzureChatOpenAI:
     """
     return AzureChatOpenAI(
         azure_deployment=os.environ["CHAT_MODEL"],
-        api_version="2024-12-01-preview",
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_version="2024-12-01-preview",
         api_key=os.environ["AZURE_OPENAI_KEY"],
+        temperature=temperature,
+        timeout=timeout,
+        **kwargs,
     )
 
 
@@ -80,24 +94,21 @@ async def generate_response(
     schema : BaseModel, optional
         `pydantic` schema for structured output.
     **kwargs
-        Extra arguments to be passed to `client.beta.chat.completions.parse`.
+        Addtional keyword arguments to pass to `get_chat_client`.
 
     Returns
     -------
     str or BaseModel
         String if no `response_format` is specified, otherwise a Pydantic model.
     """
-    # use the defaults if no kwargs are provided
-    params = {"temperature": 0} | kwargs | {"timeout": 10}
-    chat = get_chat_client()
+    chat = get_chat_client(**kwargs)
     if schema is not None:
         chat = chat.with_structured_output(schema)
     response = await chat.ainvoke(
-        input=[
+        [
             {"role": "system", "content": system_message},
             {"role": "user", "content": prompt},
-        ],
-        **params,
+        ]
     )
     return response if schema is not None else response.content
 
@@ -113,17 +124,15 @@ async def stream_response(
     messages : MessageLikeRepresentation
         Model input as accepted by `astream` method.
     **kwargs
-        Extra arguments to be passed to `client.beta.chat.completions.stream`.
+        Addtional keyword arguments to pass to `get_chat_client`.
 
     Yields
     ------
     str
         Chunk content.
     """
-    # use the defaults if no kwargs are provided
-    params = {"temperature": 0} | kwargs | {"timeout": 10}
-    chat = get_chat_client()
-    async for chunk in chat.astream(messages, **params):
+    chat = get_chat_client(**kwargs)
+    async for chunk in chat.astream(messages):
         if isinstance(chunk, AIMessageChunk):
             yield chunk.content
 
