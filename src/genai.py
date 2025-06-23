@@ -7,36 +7,59 @@ import pkgutil
 from typing import AsyncGenerator
 
 import yaml
-from openai import AsyncAzureOpenAI
+from langchain_core.messages import AIMessageChunk
+from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 from pydantic import BaseModel
 
 from .entities import AssistantResponse, Document, Message
 
-__all__ = ["get_client", "generate_response", "stream_response", "embed_text"]
+__all__ = [
+    "get_chat_client",
+    "get_embedding_client",
+    "generate_response",
+    "stream_response",
+]
 
 PROMPTS = yaml.safe_load(pkgutil.get_data(__name__, "prompts.yaml"))
 
 
-def get_client() -> AsyncAzureOpenAI:
+def get_chat_client() -> AzureChatOpenAI:
     """
-    Get a asynchronous client for Azure OpenAI service.
+    Get a chat client for Azure OpenAI service.
 
     Returns
     -------
-    AsyncAzureOpenAI
-        An asynchronous Azure OpenAI client.
+    AzureChatOpenAI
+       An Azure OpenAI integration client for chat models.
     """
-    client = AsyncAzureOpenAI(
+    return AzureChatOpenAI(
+        azure_deployment=os.environ["CHAT_MODEL"],
         api_version="2024-12-01-preview",
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
     )
-    return client
+
+
+def get_embedding_client() -> AzureOpenAIEmbeddings:
+    """
+    Get an embedding client for Azure OpenAI service.
+
+    Returns
+    -------
+    AzureOpenAIEmbeddings
+        An Azure OpenAI integration client for embedding.
+    """
+    return AzureOpenAIEmbeddings(
+        model=os.environ["EMBED_MODEL"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_key=os.environ["AZURE_OPENAI_KEY"],
+    )
 
 
 async def generate_response(
     prompt: str,
     system_message: str = "You are a helpful assistant.",
+    schema: BaseModel | None = None,
     **kwargs,
 ) -> str | BaseModel:
     """
@@ -50,6 +73,8 @@ async def generate_response(
         User message.
     system_message : str, optional
         System message to customise model behaviour.
+    schema : BaseModel, optional
+        `pydantic` schema for structured output.
     **kwargs
         Extra arguments to be passed to `client.beta.chat.completions.parse`.
 
@@ -59,19 +84,18 @@ async def generate_response(
         String if no `response_format` is specified, otherwise a Pydantic model.
     """
     # use the defaults if no kwargs are provided
-    params = {"temperature": 0} | kwargs
-    client = get_client()
-    response = await client.beta.chat.completions.parse(
-        model=os.environ["CHAT_MODEL"],
-        **params,
-        messages=[
+    params = {"temperature": 0} | kwargs | {"timeout": 10}
+    chat = get_chat_client()
+    if schema is not None:
+        chat = chat.with_structured_output(schema)
+    response = await chat.ainvoke(
+        input=[
             {"role": "system", "content": system_message},
             {"role": "user", "content": prompt},
         ],
-        timeout=10,
+        **params,
     )
-    message = response.choices[0].message
-    return message.parsed if "response_format" in params else message.content
+    return response if schema is not None else response.content
 
 
 async def stream_response(
@@ -97,44 +121,17 @@ async def stream_response(
         Chunk content.
     """
     # use the defaults if no kwargs are provided
-    params = {"temperature": 0} | kwargs
-    client = get_client()
-    async with client.beta.chat.completions.stream(
-        model=os.environ["CHAT_MODEL"],
-        **params,
-        messages=[
+    params = {"temperature": 0} | kwargs | {"timeout": 10}
+    chat = get_chat_client()
+    async for chunk in chat.astream(
+        input=[
             {"role": "system", "content": system_message},
             {"role": "user", "content": prompt},
         ],
-        timeout=10,
-    ) as stream:
-        async for event in stream:
-            if event.type == "chunk":
-                chunk = event.chunk
-                content = chunk.choices[0].delta.content
-                if isinstance(content, str):
-                    yield content
-
-
-async def embed_text(text: str) -> list[float]:
-    """
-    Embed a text into a multidimensional vector space.
-
-    Parameters
-    ----------
-    text : str
-        A text to embed. Must be shorter than 8,191 tokens.
-
-    Returns
-    -------
-    list[float]
-        Embedding for the text as a 1,536 vector of float.
-    """
-    client = get_client()
-    response = await client.embeddings.create(
-        model=os.environ["EMBED_MODEL"], input=text
-    )
-    return response.data[0].embedding
+        **params,
+    ):
+        if isinstance(chunk, AIMessageChunk):
+            yield chunk.content
 
 
 async def extract_entities(user_query: str) -> list[str]:
@@ -162,7 +159,7 @@ async def extract_entities(user_query: str) -> list[str]:
     response: ResponseFormat = await generate_response(
         prompt=user_query,
         system_message=PROMPTS["extract_entities"],
-        response_format=ResponseFormat,
+        schema=ResponseFormat,
     )
     return response.entities
 
@@ -232,6 +229,6 @@ async def generate_query_ideas(user_query: str) -> list[str]:
     response: ResponseFormat = await generate_response(
         prompt=user_query,
         system_message=PROMPTS["suggest_ideas"],
-        response_format=ResponseFormat,
+        schema=ResponseFormat,
     )
     return response.ideas

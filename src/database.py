@@ -35,6 +35,7 @@ class Client:
 
     def __init__(self, connection: lancedb.AsyncConnection):
         self.connection = connection
+        self.embedder = genai.get_embedding_client()
 
     async def list_nodes(self) -> list[Node]:
         """
@@ -71,7 +72,7 @@ class Client:
         table = await self.connection.open_table("nodes")
         match method:
             case SearchMethod.VECTOR:
-                vector = await genai.embed_text(query)
+                vector = await self.embedder.aembed_query(query)
                 results = table.vector_search(vector)
             case SearchMethod.EXACT:
                 # case insensitive
@@ -190,7 +191,7 @@ class Client:
         """
         table = await self.connection.open_table("documents")
         # perform a vector search to find best matches
-        vector = await genai.embed_text(query)
+        vector = await self.embedder.aembed_query(query)
         return [
             Document(**doc)
             for doc in await table.vector_search(vector).limit(limit).to_list()
