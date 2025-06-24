@@ -2,9 +2,11 @@
 Routines for database operations for RAG.
 """
 
+import json
 import os
 
 import lancedb
+from langchain_core.tools import tool
 
 from . import genai, utils
 from .entities import Document, Graph, Node, SearchMethod
@@ -196,3 +198,24 @@ class Client:
             Document(**doc)
             for doc in await table.vector_search(vector).limit(limit).to_list()
         ]
+
+
+@tool(parse_docstring=True)
+async def retrieve_documents(query: str) -> str:
+    """Retrieve relevant documents from the Sustainable Energy Academy database.
+
+    The database can be used to answer questions to energy, climate change and
+    sustainable development in general. Use the database to provide accurate and
+    grounded responses.
+
+    Args:
+        query (str): Plain text user query.
+
+    Returns:
+        str: JSON object containing the most relevant document chunks.
+    """
+    connection = await get_connection()
+    client = Client(connection)
+    documents = await client.retrieve_documents(query)
+    data = json.dumps([document.model_dump() for document in documents])
+    return data

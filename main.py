@@ -175,6 +175,8 @@ async def ask_model(request: Request, messages: list[Message]):
         graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     )
     return StreamingResponse(
-        content=genai.get_answer(messages, documents, response),
+        content=genai.get_answer(
+            messages, response, tools=[database.retrieve_documents]
+        ),
         media_type="application/x-ndjson",
     )
