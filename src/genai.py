@@ -2,6 +2,7 @@
 Functions for interacting with GenAI models via Azure OpenAI.
 """
 
+import json
 import os
 import pkgutil
 from typing import AsyncGenerator
@@ -9,8 +10,10 @@ from typing import AsyncGenerator
 import yaml
 from langchain_core.messages import (
     AIMessageChunk,
+    BaseMessageChunk,
     MessageLikeRepresentation,
     SystemMessage,
+    ToolMessage,
 )
 from langchain_core.tools import BaseTool
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
@@ -117,7 +120,7 @@ async def generate_response(
 
 async def stream_response(
     messages: MessageLikeRepresentation, tools: list[BaseTool] | None = None, **kwargs
-) -> AsyncGenerator[str, None]:
+) -> AsyncGenerator[BaseMessageChunk, None]:
     """
     Stream a response from Azure OpenAI service using ReAct Agent.
 
@@ -133,14 +136,13 @@ async def stream_response(
 
     Yields
     ------
-    str
-        Chunk content.
+    BaseMessageChunk
+        Messaage chunk from the model.
     """
     chat = get_chat_client(**kwargs)
     agent = create_react_agent(chat, tools=tools)
     async for chunk, _ in agent.astream({"messages": messages}, stream_mode="messages"):
-        if isinstance(chunk, AIMessageChunk):
-            yield chunk.content
+        yield chunk
 
 
 async def extract_entities(user_query: str) -> list[str]:
@@ -204,11 +206,15 @@ async def get_answer(
         frequency_penalty=0.6,
         presence_penalty=0.8,
     ):
-        # send deltas only
-        response.content = chunk
-        yield response.model_dump_json() + "\n"
-        # once the full response has been yielded, nullify properties to reduce payload
-        response.graph, response.ideas, response.documents = None, None, None
+        if isinstance(chunk, AIMessageChunk):
+            # send deltas only
+            response.content = chunk.content
+            yield response.model_dump_json() + "\n"
+            # once the full response has been yielded, nullify properties to reduce payload
+            response.graph, response.ideas, response.documents = None, None, None
+        elif isinstance(chunk, ToolMessage):
+            # assign the documents based on tool usage
+            response.documents = [Document(**doc) for doc in json.loads(chunk.content)]
 
 
 async def generate_query_ideas(user_query: str) -> list[str]:
