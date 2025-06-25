@@ -5,7 +5,8 @@ pydantic ~= 2.11.4
 pyyaml ~= 6.0.2
 pandas ~= 2.2.3
 lancedb[azure] == 0.23.0
+sqlalchemy ~= 2.0.41
 networkx[default] ~= 3.5.0
-langchain[openai] ~= 0.3.26
+langchain[openai, community] ~= 0.3.26
 langgraph ~= 0.4.8
 python-dotenv ~= 1.1.0
