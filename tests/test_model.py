@@ -29,23 +29,21 @@ def test_model_structure(test_client, content: str, rag: bool):
     response = test_client.post("/model", json=[{"role": "human", "content": content}])
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/x-ndjson"
-    contents, documents = [], []
+    documents = []
     for index, line in enumerate(response.iter_lines()):
         assert line
         data = json.loads(line)
         assert isinstance(data, dict)
         assert data.get("role") == "assistant"
-        assert (content := data.get("content")) is not None
-        assert isinstance(content, str)
-        contents.append(content)
+        assert isinstance(data.get("content"), str)
         documents.append(data["documents"] is not None)
         if index == 0:
-            # only the first object contains graph, ideas may be `None` still
+            # only the first object contains graph
             assert data["graph"] is not None
         else:
-            assert data["ideas"] is None
             assert data["graph"] is None
-    content = "".join(contents)
+    # ideas are included in the last chunk only
+    assert data["ideas"] is not None
     if rag:
         # at least one chunk contains documents
         assert any(documents)
