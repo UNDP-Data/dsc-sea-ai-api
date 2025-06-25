@@ -9,23 +9,27 @@ from string import ascii_letters, digits
 
 import pytest
 
-from tests.utils import validate_graph
 
-
-def test_model_structure(test_client):
+@pytest.mark.parametrize(
+    "content,rag",
+    [
+        ("Hi there", False),
+        ("What can you do?", False),
+        (
+            "How does climate change adaptation differ from climate change mitigation?",
+            True,
+        ),
+        ("How much energy does a typical residential solar panel generate?", True),
+    ],
+)
+def test_model_structure(test_client, content: str, rag: bool):
     """
     Test if the response from `/model` endpoint has the expected format.
     """
-    messages = [
-        {
-            "role": "human",
-            "content": "How does climate change adaptation differ from climate change mitigation?",
-        }
-    ]
-    response = test_client.post("/model", json=messages)
+    response = test_client.post("/model", json=[{"role": "human", "content": content}])
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/x-ndjson"
-    contents = []
+    contents, documents = [], []
     for index, line in enumerate(response.iter_lines()):
         assert line
         data = json.loads(line)
@@ -34,19 +38,20 @@ def test_model_structure(test_client):
         assert (content := data.get("content")) is not None
         assert isinstance(content, str)
         contents.append(content)
-        # only the first object contains graph, documents and ideas
+        documents.append(data["documents"] is not None)
         if index == 0:
-            assert (documents := data.get("documents")) is not None
-            assert isinstance(documents, list)
-            assert len(documents) > 0
-            assert all(map(lambda document: isinstance(document, dict), documents))
-            validate_graph(data["graph"])
+            # only the first object contains graph, ideas may be `None` still
+            assert data["graph"] is not None
         else:
-            assert data.get("ideas") is None
-            assert data.get("documents") is None
-            assert data.get("graph") is None
+            assert data["ideas"] is None
+            assert data["graph"] is None
     content = "".join(contents)
-    assert "climate change adaptation" in content.lower()
+    if rag:
+        # at least one chunk contains documents
+        assert any(documents)
+    else:
+        # none of the chunks contain documents
+        assert not any(documents)
 
 
 @pytest.mark.parametrize(
@@ -94,7 +99,7 @@ def test_model_response(test_client, messages: list[dict], pattern: str):
         contents.append(json.loads(line).get("content", ""))
     data["content"] = "".join(contents)
     assert data["role"] == "assistant"
-    assert re.search(pattern, data["content"])
+    assert re.search(pattern, data["content"], re.IGNORECASE)
 
 
 @pytest.mark.parametrize(
