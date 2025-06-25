@@ -197,11 +197,12 @@ async def get_answer(
     str
         String representation of JSON model response.
     """
-    messages = [SystemMessage(PROMPTS["answer_question"])] + [
-        message.to_langchain() for message in messages
-    ]
+    contents = []
     async for chunk in stream_response(
-        messages=messages,
+        messages=(
+            [SystemMessage(PROMPTS["answer_question"])]
+            + [message.to_langchain() for message in messages]
+        ),
         tools=tools,
         temperature=0.3,
         top_p=0.8,
@@ -211,12 +212,22 @@ async def get_answer(
         if isinstance(chunk, AIMessageChunk):
             # send deltas only
             response.content = chunk.content
+            # save the chunks
+            contents.append(chunk.content)
             yield response.model_dump_json() + "\n"
             # once the full response has been yielded, nullify properties to reduce payload
             response.graph, response.ideas, response.documents = None, None, None
         elif isinstance(chunk, ToolMessage):
             # assign the documents based on tool usage
             response.documents = [Document(**doc) for doc in json.loads(chunk.content)]
+    else:
+        # include the assistant response in the history for generating ideas
+        response.documents, response.content = None, ""
+        response.ideas = await generate_query_ideas(
+            messages + [Message(role="assistant", content="".join(contents))]
+        )
+        # return the final chunk that includes ideas only
+        yield response.model_dump_json() + "\n"
 
 
 async def generate_query_ideas(messages: list[Message]) -> list[str]:

@@ -161,16 +161,11 @@ async def ask_model(request: Request, messages: list[Message]):
         )
     user_query = messages[-1].content
     client: database.Client = request.state.client
-    entities, ideas = await asyncio.gather(
-        genai.extract_entities(user_query),
-        genai.generate_query_ideas(user_query),
-    )
+    entities = await genai.extract_entities(user_query)
     graphs = await asyncio.gather(*[client.find_graph(entity) for entity in entities])
     response = AssistantResponse(
         role="assistant",
         content="",
-        ideas=ideas or None,
-        documents=None,
         graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     )
     return StreamingResponse(
