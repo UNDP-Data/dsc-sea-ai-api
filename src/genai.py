@@ -18,7 +18,7 @@ from langchain_core.messages import (
 from langchain_core.tools import BaseTool
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 from langgraph.prebuilt import create_react_agent
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .entities import AssistantResponse, Document, Message
 
@@ -219,14 +219,14 @@ async def get_answer(
             response.documents = [Document(**doc) for doc in json.loads(chunk.content)]
 
 
-async def generate_query_ideas(user_query: str) -> list[str]:
+async def generate_query_ideas(messages: list[Message]) -> list[str]:
     """
-    Generate query ideas based on the user message.
+    Generate query ideas based on the conversation history.
 
     Parameters
     ----------
-    user_query : str
-        Raw user message.
+    messages : list[Message]
+        Conversation history as a list of messages.
 
     Returns
     -------
@@ -239,10 +239,12 @@ async def generate_query_ideas(user_query: str) -> list[str]:
         Response format for leveraging structured outputs.
         """
 
-        ideas: list[str]
+        ideas: list[str] = Field(
+            description="Up to 3 relevant, clear and succint user message ideas."
+        )
 
     response: ResponseFormat = await generate_response(
-        prompt=user_query,
+        prompt=json.dumps([message.model_dump() for message in messages], indent=4),
         system_message=PROMPTS["suggest_ideas"],
         schema=ResponseFormat,
     )
