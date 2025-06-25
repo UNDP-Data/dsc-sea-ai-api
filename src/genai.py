@@ -187,8 +187,10 @@ async def get_answer(
     ----------
     messages : list[Message]
         Conversation history as a list of messages.
-    messages : list[Message]
-        Conversation history as a list of messages.
+    response : AssistantResponse
+        Template AssistantResponse to be used to return streamed tokens.
+    tools : list[BaseTool]
+        List of tool the agent can utilise while generating an answer.
 
     Yields
     ------
