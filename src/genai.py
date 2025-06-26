@@ -263,6 +263,7 @@ async def generate_query_ideas(messages: list[Message]) -> list[str]:
         prompt=json.dumps([message.model_dump() for message in messages], indent=4),
         system_message=PROMPTS["suggest_ideas"],
         schema=ResponseFormat,
+        temperature=0.3,
     )
     return response.ideas
 
