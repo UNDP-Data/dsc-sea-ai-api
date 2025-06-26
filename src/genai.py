@@ -209,10 +209,7 @@ async def get_answer(
             + [message.to_langchain() for message in messages]
         ),
         tools=tools,
-        temperature=0.3,
-        top_p=0.8,
-        frequency_penalty=0.6,
-        presence_penalty=0.8,
+        temperature=0.1,
     ):
         if isinstance(chunk, AIMessageChunk):
             # send deltas only
