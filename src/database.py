@@ -11,6 +11,13 @@ from langchain_core.tools import tool
 from . import genai, utils
 from .entities import Document, Graph, Node, SearchMethod
 
+__all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_documents"]
+
+STORAGE_OPTIONS = {
+    "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
+    "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
+}
+
 
 async def get_connection() -> lancedb.AsyncConnection:
     """
@@ -21,13 +28,7 @@ async def get_connection() -> lancedb.AsyncConnection:
     lancedb.AsyncConnection
         Asynchronous database connection client.
     """
-    return await lancedb.connect_async(
-        "az://lancedb",
-        storage_options={
-            "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
-            "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
-        },
-    )
+    return await lancedb.connect_async("az://lancedb", storage_options=STORAGE_OPTIONS)
 
 
 class Client:
