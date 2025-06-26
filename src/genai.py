@@ -60,7 +60,7 @@ def get_chat_client(
     return AzureChatOpenAI(
         azure_deployment=os.environ["AZURE_OPENAI_CHAT_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_version="2024-12-01-preview",
+        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
         temperature=temperature,
         timeout=timeout,
