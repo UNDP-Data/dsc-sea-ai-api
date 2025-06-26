@@ -7,7 +7,10 @@ import os
 import pkgutil
 from typing import AsyncGenerator
 
+import pandas as pd
 import yaml
+from langchain_community.agent_toolkits import SQLDatabaseToolkit
+from langchain_community.utilities import SQLDatabase
 from langchain_core.messages import (
     AIMessageChunk,
     BaseMessageChunk,
@@ -19,6 +22,7 @@ from langchain_core.tools import BaseTool
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
 from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel, Field
+from sqlalchemy import StaticPool, create_engine
 
 from .entities import AssistantResponse, Document, Message
 
@@ -27,6 +31,7 @@ __all__ = [
     "get_embedding_client",
     "generate_response",
     "stream_response",
+    "get_sql_tools",
 ]
 
 PROMPTS = yaml.safe_load(pkgutil.get_data(__name__, "prompts.yaml"))
@@ -219,7 +224,10 @@ async def get_answer(
             response.graph, response.ideas, response.documents = None, None, None
         elif isinstance(chunk, ToolMessage):
             # assign the documents based on tool usage
-            response.documents = [Document(**doc) for doc in json.loads(chunk.content)]
+            if chunk.name == "retrieve_documents":
+                response.documents = [
+                    Document(**doc) for doc in json.loads(chunk.content)
+                ]
     else:
         # include the assistant response in the history for generating ideas
         response.documents, response.content = None, ""
@@ -260,3 +268,34 @@ async def generate_query_ideas(messages: list[Message]) -> list[str]:
         schema=ResponseFormat,
     )
     return response.ideas
+
+
+def get_sql_tools(data: list[pd.DataFrame]) -> list[BaseTool]:
+    """
+    Get SQL tools for an in-memory SQLite database.
+
+    Parameters
+    ----------
+    data : list[pd.DataFrame]
+        List of data frames to be included in the database as table.
+        All data frames must contain a `name` property to be used
+        as a table name.
+
+    Returns
+    -------
+    list[BaseTools]
+        List of SQL tools for question answering over SQL data.
+    """
+    engine = create_engine(
+        url="sqlite:///:memory:",
+        poolclass=StaticPool,
+        connect_args={"check_same_thread": False},
+    )
+    # populate the database
+    for df in data:
+        df.to_sql(df.name, con=engine)
+    toolkit = SQLDatabaseToolkit(
+        db=SQLDatabase(engine=engine, sample_rows_in_table_info=10),
+        llm=get_chat_client(),
+    )
+    return toolkit.get_tools()
