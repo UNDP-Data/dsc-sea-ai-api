@@ -2,41 +2,92 @@
 Functions for interacting with GenAI models via Azure OpenAI.
 """
 
+import json
 import os
 import pkgutil
 from typing import AsyncGenerator
 
+import pandas as pd
 import yaml
-from openai import AsyncAzureOpenAI
-from pydantic import BaseModel
+from langchain_community.agent_toolkits import SQLDatabaseToolkit
+from langchain_community.utilities import SQLDatabase
+from langchain_core.messages import (
+    AIMessageChunk,
+    BaseMessageChunk,
+    MessageLikeRepresentation,
+    SystemMessage,
+    ToolMessage,
+)
+from langchain_core.tools import BaseTool
+from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
+from langgraph.prebuilt import create_react_agent
+from pydantic import BaseModel, Field
+from sqlalchemy import StaticPool, create_engine
 
 from .entities import AssistantResponse, Document, Message
 
-__all__ = ["get_client", "generate_response", "stream_response", "embed_text"]
+__all__ = [
+    "get_chat_client",
+    "get_embedding_client",
+    "generate_response",
+    "stream_response",
+    "get_sql_tools",
+]
 
 PROMPTS = yaml.safe_load(pkgutil.get_data(__name__, "prompts.yaml"))
 
 
-def get_client() -> AsyncAzureOpenAI:
+def get_chat_client(
+    temperature: float = 0.0, timeout: int = 10, **kwargs
+) -> AzureChatOpenAI:
     """
-    Get a asynchronous client for Azure OpenAI service.
+    Get a chat client for Azure OpenAI service.
+
+    Parameters
+    ----------
+    temperature : float, default=0.0
+        Model temperature setting.
+    timeout : int, default=10
+        Request timeout setting in seconds.
+    **kwargs
+        Additional keyword arguments to pass to `AzureChatOpenAI`.
 
     Returns
     -------
-    AsyncAzureOpenAI
-        An asynchronous Azure OpenAI client.
+    AzureChatOpenAI
+       An Azure OpenAI integration client for chat models.
     """
-    client = AsyncAzureOpenAI(
-        api_version="2024-12-01-preview",
+    return AzureChatOpenAI(
+        azure_deployment=os.environ["AZURE_OPENAI_CHAT_MODEL"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+        api_key=os.environ["AZURE_OPENAI_KEY"],
+        temperature=temperature,
+        timeout=timeout,
+        **kwargs,
+    )
+
+
+def get_embedding_client() -> AzureOpenAIEmbeddings:
+    """
+    Get an embedding client for Azure OpenAI service.
+
+    Returns
+    -------
+    AzureOpenAIEmbeddings
+        An Azure OpenAI integration client for embedding.
+    """
+    return AzureOpenAIEmbeddings(
+        model=os.environ["AZURE_OPENAI_EMBED_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
     )
-    return client
 
 
 async def generate_response(
     prompt: str,
     system_message: str = "You are a helpful assistant.",
+    schema: BaseModel | None = None,
     **kwargs,
 ) -> str | BaseModel:
     """
@@ -50,91 +101,53 @@ async def generate_response(
         User message.
     system_message : str, optional
         System message to customise model behaviour.
+    schema : BaseModel, optional
+        `pydantic` schema for structured output.
     **kwargs
-        Extra arguments to be passed to `client.beta.chat.completions.parse`.
+        Addtional keyword arguments to pass to `get_chat_client`.
 
     Returns
     -------
     str or BaseModel
         String if no `response_format` is specified, otherwise a Pydantic model.
     """
-    # use the defaults if no kwargs are provided
-    params = {"temperature": 0} | kwargs
-    client = get_client()
-    response = await client.beta.chat.completions.parse(
-        model=os.environ["CHAT_MODEL"],
-        **params,
-        messages=[
+    chat = get_chat_client(**kwargs)
+    if schema is not None:
+        chat = chat.with_structured_output(schema)
+    response = await chat.ainvoke(
+        [
             {"role": "system", "content": system_message},
             {"role": "user", "content": prompt},
-        ],
-        timeout=10,
+        ]
     )
-    message = response.choices[0].message
-    return message.parsed if "response_format" in params else message.content
+    return response if schema is not None else response.content
 
 
 async def stream_response(
-    prompt: str,
-    system_message: str = "You are a helpful assistant.",
-    **kwargs,
-) -> AsyncGenerator[str, None]:
+    messages: MessageLikeRepresentation, tools: list[BaseTool] | None = None, **kwargs
+) -> AsyncGenerator[BaseMessageChunk, None]:
     """
-    Stream a response using Azure OpenAI service.
+    Stream a response from Azure OpenAI service using ReAct Agent.
 
     Parameters
     ----------
-    prompt : str
-        User message.
-    system_message : str, optional
-        System message to customise model behaviour.
+    messages : MessageLikeRepresentation
+        Model input as accepted by `astream` method.
+    tools : list[BaseTool], optional
+        A list of tools the agent can access. If not provided
+        the agent will consist of a single LLM node without tools.
     **kwargs
-        Extra arguments to be passed to `client.beta.chat.completions.stream`.
+        Addtional keyword arguments to pass to `get_chat_client`.
 
     Yields
     ------
-    str
-        Chunk content.
+    BaseMessageChunk
+        Messaage chunk from the model.
     """
-    # use the defaults if no kwargs are provided
-    params = {"temperature": 0} | kwargs
-    client = get_client()
-    async with client.beta.chat.completions.stream(
-        model=os.environ["CHAT_MODEL"],
-        **params,
-        messages=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": prompt},
-        ],
-        timeout=10,
-    ) as stream:
-        async for event in stream:
-            if event.type == "chunk":
-                chunk = event.chunk
-                content = chunk.choices[0].delta.content
-                if isinstance(content, str):
-                    yield content
-
-
-async def embed_text(text: str) -> list[float]:
-    """
-    Embed a text into a multidimensional vector space.
-
-    Parameters
-    ----------
-    text : str
-        A text to embed. Must be shorter than 8,191 tokens.
-
-    Returns
-    -------
-    list[float]
-        Embedding for the text as a 1,536 vector of float.
-    """
-    client = get_client()
-    response = await client.embeddings.create(
-        model=os.environ["EMBED_MODEL"], input=text
-    )
-    return response.data[0].embedding
+    chat = get_chat_client(**kwargs)
+    agent = create_react_agent(chat, tools=tools)
+    async for chunk, _ in agent.astream({"messages": messages}, stream_mode="messages"):
+        yield chunk
 
 
 async def extract_entities(user_query: str) -> list[str]:
@@ -162,59 +175,74 @@ async def extract_entities(user_query: str) -> list[str]:
     response: ResponseFormat = await generate_response(
         prompt=user_query,
         system_message=PROMPTS["extract_entities"],
-        response_format=ResponseFormat,
+        schema=ResponseFormat,
     )
     return response.entities
 
 
 async def get_answer(
-    user_query: str,
-    documents: list[Document],
     messages: list[Message],
     response: AssistantResponse,
+    tools: list[BaseTool],
 ) -> AsyncGenerator[str, None]:
     """
     Respond to the user message using RAG and conversation history.
 
     Parameters
     ----------
-    user_query : str
-        Raw user message.
-    documents : list[Document]
-        List of relevant documents to ground the answer in.
     messages : list[Message]
         Conversation history as a list of messages.
+    response : AssistantResponse
+        Template AssistantResponse to be used to return streamed tokens.
+    tools : list[BaseTool]
+        List of tool the agent can utilise while generating an answer.
 
     Yields
     ------
     str
         String representation of JSON model response.
     """
+    contents = []
     async for chunk in stream_response(
-        prompt=user_query,
-        system_message=PROMPTS["answer_question"].format(
-            documents=documents, messages=messages
+        messages=(
+            [SystemMessage(PROMPTS["answer_question"])]
+            + [message.to_langchain() for message in messages]
         ),
-        temperature=0.3,
-        top_p=0.8,
-        frequency_penalty=0.6,
-        presence_penalty=0.8,
+        tools=tools,
+        temperature=0.1,
     ):
-        # send deltas only
-        response.content = chunk
+        if isinstance(chunk, AIMessageChunk):
+            # send deltas only
+            response.content = chunk.content
+            # save the chunks
+            contents.append(chunk.content)
+            yield response.model_dump_json() + "\n"
+            # once the full response has been yielded, nullify properties to reduce payload
+            response.graph, response.ideas, response.documents = None, None, None
+        elif isinstance(chunk, ToolMessage):
+            # assign the documents based on tool usage
+            if chunk.name == "retrieve_documents":
+                response.documents = [
+                    Document(**doc) for doc in json.loads(chunk.content)
+                ]
+    else:
+        # include the assistant response in the history for generating ideas
+        response.documents, response.content = None, ""
+        response.ideas = await generate_query_ideas(
+            messages + [Message(role="assistant", content="".join(contents))]
+        )
+        # return the final chunk that includes ideas only
         yield response.model_dump_json() + "\n"
-        # once the full response has been yielded, nullify properties to reduce payload
-        response.graph, response.ideas, response.documents = None, None, None
 
 
-async def generate_query_ideas(user_query: str) -> list[str]:
+async def generate_query_ideas(messages: list[Message]) -> list[str]:
     """
-    Generate query ideas based on the user message.
+    Generate query ideas based on the conversation history.
 
     Parameters
     ----------
-    user_query : str
-        Raw user message.
+    messages : list[Message]
+        Conversation history as a list of messages.
 
     Returns
     -------
@@ -227,11 +255,45 @@ async def generate_query_ideas(user_query: str) -> list[str]:
         Response format for leveraging structured outputs.
         """
 
-        ideas: list[str]
+        ideas: list[str] = Field(
+            description="Up to 3 relevant, clear and succint user message ideas."
+        )
 
     response: ResponseFormat = await generate_response(
-        prompt=user_query,
+        prompt=json.dumps([message.model_dump() for message in messages], indent=4),
         system_message=PROMPTS["suggest_ideas"],
-        response_format=ResponseFormat,
+        schema=ResponseFormat,
+        temperature=0.3,
     )
     return response.ideas
+
+
+def get_sql_tools(data: list[pd.DataFrame]) -> list[BaseTool]:
+    """
+    Get SQL tools for an in-memory SQLite database.
+
+    Parameters
+    ----------
+    data : list[pd.DataFrame]
+        List of data frames to be included in the database as table.
+        All data frames must contain a `name` property to be used
+        as a table name.
+
+    Returns
+    -------
+    list[BaseTools]
+        List of SQL tools for question answering over SQL data.
+    """
+    engine = create_engine(
+        url="sqlite:///:memory:",
+        poolclass=StaticPool,
+        connect_args={"check_same_thread": False},
+    )
+    # populate the database
+    for df in data:
+        df.to_sql(df.name, con=engine)
+    toolkit = SQLDatabaseToolkit(
+        db=SQLDatabase(engine=engine, sample_rows_in_table_info=10),
+        llm=get_chat_client(),
+    )
+    return toolkit.get_tools()

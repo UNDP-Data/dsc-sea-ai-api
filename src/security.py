@@ -14,7 +14,7 @@ api_key_header = APIKeyHeader(
 )
 
 
-async def authenticate(api_key: str = Security(api_key_header)) -> None:
+async def authenticate(api_key: str = Security(api_key_header)) -> bool:
     """
     Authenticate a request using an API Key header.
 

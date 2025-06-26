@@ -6,6 +6,7 @@ from enum import Enum, auto
 from typing import Literal
 
 from lancedb.pydantic import LanceModel
+from langchain_core.messages import AIMessage, HumanMessage
 from pydantic import BaseModel, Field
 
 __all__ = [
@@ -191,6 +192,21 @@ class Message(BaseModel):
             "How does climate change adaptation differ from climate change mitigation?"
         ],
     )
+
+    def to_langchain(self) -> AIMessage | HumanMessage:
+        """
+        Convert the message to a langchain-compatible class.
+
+        Returns
+        -------
+        AIMessage | HumanMessage
+            Langchain message class for AI or human.
+        """
+        return (
+            AIMessage(self.content)
+            if self.role == "assistant"
+            else HumanMessage(self.content)
+        )
 
 
 class AssistantResponse(Message):

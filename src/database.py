@@ -2,12 +2,21 @@
 Routines for database operations for RAG.
 """
 
+import json
 import os
 
 import lancedb
+from langchain_core.tools import tool
 
 from . import genai, utils
 from .entities import Document, Graph, Node, SearchMethod
+
+__all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_documents"]
+
+STORAGE_OPTIONS = {
+    "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
+    "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
+}
 
 
 async def get_connection() -> lancedb.AsyncConnection:
@@ -19,13 +28,7 @@ async def get_connection() -> lancedb.AsyncConnection:
     lancedb.AsyncConnection
         Asynchronous database connection client.
     """
-    return await lancedb.connect_async(
-        "az://lancedb",
-        storage_options={
-            "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
-            "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
-        },
-    )
+    return await lancedb.connect_async("az://lancedb", storage_options=STORAGE_OPTIONS)
 
 
 class Client:
@@ -35,6 +38,7 @@ class Client:
 
     def __init__(self, connection: lancedb.AsyncConnection):
         self.connection = connection
+        self.embedder = genai.get_embedding_client()
 
     async def list_nodes(self) -> list[Node]:
         """
@@ -71,7 +75,7 @@ class Client:
         table = await self.connection.open_table("nodes")
         match method:
             case SearchMethod.VECTOR:
-                vector = await genai.embed_text(query)
+                vector = await self.embedder.aembed_query(query)
                 results = table.vector_search(vector)
             case SearchMethod.EXACT:
                 # case insensitive
@@ -190,8 +194,29 @@ class Client:
         """
         table = await self.connection.open_table("documents")
         # perform a vector search to find best matches
-        vector = await genai.embed_text(query)
+        vector = await self.embedder.aembed_query(query)
         return [
             Document(**doc)
             for doc in await table.vector_search(vector).limit(limit).to_list()
         ]
+
+
+@tool(parse_docstring=True)
+async def retrieve_documents(query: str) -> str:
+    """Retrieve relevant documents from the Sustainable Energy Academy database.
+
+    The database can be used to answer questions to energy, climate change and
+    sustainable development in general. Use the database to provide accurate and
+    grounded responses.
+
+    Args:
+        query (str): Plain text user query.
+
+    Returns:
+        str: JSON object containing the most relevant document chunks.
+    """
+    connection = await get_connection()
+    client = Client(connection)
+    documents = await client.retrieve_documents(query)
+    data = json.dumps([document.model_dump() for document in documents])
+    return data
