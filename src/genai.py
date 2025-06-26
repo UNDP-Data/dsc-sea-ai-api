@@ -58,7 +58,7 @@ def get_chat_client(
        An Azure OpenAI integration client for chat models.
     """
     return AzureChatOpenAI(
-        azure_deployment=os.environ["CHAT_MODEL"],
+        azure_deployment=os.environ["AZURE_OPENAI_CHAT_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_version="2024-12-01-preview",
         api_key=os.environ["AZURE_OPENAI_KEY"],
@@ -78,7 +78,7 @@ def get_embedding_client() -> AzureOpenAIEmbeddings:
         An Azure OpenAI integration client for embedding.
     """
     return AzureOpenAIEmbeddings(
-        model=os.environ["EMBED_MODEL"],
+        model=os.environ["AZURE_OPENAI_EMBED_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
     )
