@@ -1,0 +1,32 @@
+<button tabindex="0" aria-expanded="false">v0.4.0 (2025-06-26)</button>
+<div class="accordion__panel" aria-hidden="true">
+    <p>
+        This release focuses on improving GenAI capabilities of the <code>/model</code> endpoint.
+    </p>
+    <br>
+    <h5>What's New</h5>
+    <ul>
+        <li>
+            <b>POSSIBLY BREAKING CHANGE</b> the first chunk in the streamed response from <code>/model</code>
+            endpoint no longer contains <code>documents</code> or <code>ideas</code>, but still contains <code>graph</code>.
+            <code>documents</code> may be present in one of the chunks or may be <code>null</code> in all chunks, while
+            <code>ideas</code> are typically included in the last chunk. The client should not make any assumptions
+            as to which chunk contains these properties.
+        </li>
+        <li>
+            <b>/model</b> endpoint now uses a ReAct agent with tools that can respond to questions directly, use RAG
+            or SQL queries to database. This improves the user experience as well as quality and, in some cases, speed
+            of the responses.
+        </li>
+        <li>
+            <code>ideas</code> in the streamed response are now generated based on the last model's response too.
+            So they are more natural, user-centric and helpful.
+        </li>
+        <li>
+            Minor refactoring changes, test coverage improvements and documentation updates.
+        </li>
+    </ul>
+    <br>
+    <h5>Bug Fixes</h5>
+    None.
+</div>

@@ -6,6 +6,7 @@ import asyncio
 from contextlib import asynccontextmanager
 from typing import Annotated
 
+import pandas as pd
 import yaml
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
@@ -45,7 +46,11 @@ async def lifespan(_: FastAPI):
         Dictionary of arbitrary state variables.
     """
     connection = await database.get_connection()
-    states = {"client": database.Client(connection)}
+    df = pd.read_csv(
+        "abfs://datasets/sdg-7.csv", storage_options=database.STORAGE_OPTIONS
+    )
+    df.name = "indicators"
+    states = {"client": database.Client(connection), "dataset": df}
     yield states
 
 
@@ -161,20 +166,15 @@ async def ask_model(request: Request, messages: list[Message]):
         )
     user_query = messages[-1].content
     client: database.Client = request.state.client
-    documents, entities, ideas = await asyncio.gather(
-        client.retrieve_documents(user_query),
-        genai.extract_entities(user_query),
-        genai.generate_query_ideas(user_query),
-    )
+    entities = await genai.extract_entities(user_query)
     graphs = await asyncio.gather(*[client.find_graph(entity) for entity in entities])
     response = AssistantResponse(
         role="assistant",
         content="",
-        ideas=ideas or None,
-        documents=documents,
         graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     )
+    tools = [database.retrieve_documents] + genai.get_sql_tools([request.state.dataset])
     return StreamingResponse(
-        content=genai.get_answer(user_query, documents, messages, response),
+        content=genai.get_answer(messages, response, tools=tools),
         media_type="application/x-ndjson",
     )

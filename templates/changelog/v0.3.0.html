@@ -12,7 +12,7 @@
             in the header.
         </li>
         <li>
-            <b>BREAKING CHANGE</b> response from <code>/model</code>> endpoint is now streamed in NDJSON format.
+            <b>BREAKING CHANGE</b> response from <code>/model</code> endpoint is now streamed in NDJSON format.
             Each object is <code>AssistantResponse</code> as before but only the first one contains
             <code>ideas</code>, <code>documents</code> and  <code>graph</code>.  <code>content</code> property only
             includes new content produced by the model (delta streaming).
