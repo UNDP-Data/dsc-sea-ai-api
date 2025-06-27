@@ -68,9 +68,14 @@ def get_chat_client(
     )
 
 
-def get_embedding_client() -> AzureOpenAIEmbeddings:
+def get_embedding_client(**kwargs) -> AzureOpenAIEmbeddings:
     """
     Get an embedding client for Azure OpenAI service.
+
+    Parameters
+    ----------
+    **kwargs
+        Additional keyword arguments to pass to `AzureOpenAIEmbeddings`.
 
     Returns
     -------
@@ -81,6 +86,7 @@ def get_embedding_client() -> AzureOpenAIEmbeddings:
         model=os.environ["AZURE_OPENAI_EMBED_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
+        **kwargs,
     )
 
 
