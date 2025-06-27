@@ -11,7 +11,7 @@ from langchain_core.tools import tool
 from . import genai, utils
 from .entities import Chunk, Graph, Node, SearchMethod
 
-__all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_documents"]
+__all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_chunks"]
 
 STORAGE_OPTIONS = {
     "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
@@ -176,7 +176,7 @@ class Client:
         nodes = [node | metadata[node["name"]] for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
-    async def retrieve_documents(self, query: str, limit: int = 5) -> list[Chunk]:
+    async def retrieve_chunks(self, query: str, limit: int = 5) -> list[Chunk]:
         """
         Retrieve the document chunks from the database that best match a query.
 
@@ -202,7 +202,7 @@ class Client:
 
 
 @tool(parse_docstring=True)
-async def retrieve_documents(query: str) -> str:
+async def retrieve_chunks(query: str) -> str:
     """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
     The database can be used to answer questions to energy, climate change and
@@ -217,6 +217,6 @@ async def retrieve_documents(query: str) -> str:
     """
     connection = await get_connection()
     client = Client(connection)
-    chunks = await client.retrieve_documents(query)
+    chunks = await client.retrieve_chunks(query)
     data = json.dumps([chunk.model_dump() for chunk in chunks])
     return data

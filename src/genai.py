@@ -221,7 +221,8 @@ async def get_answer(
             response.graph, response.ideas, response.documents = None, None, None
         elif isinstance(chunk, ToolMessage):
             # assign the documents based on tool usage
-            if chunk.name == "retrieve_documents":
+            if chunk.name == "retrieve_chunks":
+                # convert chunks to documents to discard `content`
                 response.documents = [
                     Document(**doc) for doc in json.loads(chunk.content)
                 ]

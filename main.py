@@ -173,7 +173,7 @@ async def ask_model(request: Request, messages: list[Message]):
         content="",
         graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     )
-    tools = [database.retrieve_documents] + genai.get_sql_tools([request.state.dataset])
+    tools = [database.retrieve_chunks] + genai.get_sql_tools([request.state.dataset])
     return StreamingResponse(
         content=genai.get_answer(messages, response, tools=tools),
         media_type="application/x-ndjson",
