@@ -9,7 +9,7 @@ import lancedb
 from langchain_core.tools import tool
 
 from . import genai, utils
-from .entities import Document, Graph, Node, SearchMethod
+from .entities import Chunk, Graph, Node, SearchMethod
 
 __all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_documents"]
 
@@ -176,34 +176,34 @@ class Client:
         nodes = [node | metadata[node["name"]] for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
-    async def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
+    async def retrieve_documents(self, query: str, limit: int = 5) -> list[Chunk]:
         """
-        Retrieve the documents from the database that best match a query.
+        Retrieve the document chunks from the database that best match a query.
 
         Parameters
         ----------
         query : str
             Plain text user query.
         limit : int, default=5
-            Maximum number of best matching documents to retrieve.
+            Maximum number of best matching chunks to retrieve.
 
         Returns
         -------
-        list[Document]
-            List of most relevant documents.
+        list[Chunk]
+            List of most relevant document chunks.
         """
         table = await self.connection.open_table("documents")
         # perform a vector search to find best matches
         vector = await self.embedder.aembed_query(query)
         return [
-            Document(**doc)
-            for doc in await table.vector_search(vector).limit(limit).to_list()
+            Chunk(**chunk)
+            for chunk in await table.vector_search(vector).limit(limit).to_list()
         ]
 
 
 @tool(parse_docstring=True)
 async def retrieve_documents(query: str) -> str:
-    """Retrieve relevant documents from the Sustainable Energy Academy database.
+    """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
     The database can be used to answer questions to energy, climate change and
     sustainable development in general. Use the database to provide accurate and
@@ -217,6 +217,6 @@ async def retrieve_documents(query: str) -> str:
     """
     connection = await get_connection()
     client = Client(connection)
-    documents = await client.retrieve_documents(query)
-    data = json.dumps([document.model_dump() for document in documents])
+    chunks = await client.retrieve_documents(query)
+    data = json.dumps([chunk.model_dump() for chunk in chunks])
     return data

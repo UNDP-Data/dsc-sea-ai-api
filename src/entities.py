@@ -16,6 +16,7 @@ __all__ = [
     "Edge",
     "Graph",
     "Document",
+    "Chunk",
     "Message",
     "AssistantResponse",
 ]
@@ -173,6 +174,14 @@ class Document(LanceModel):
     language: str = Field(description="Document language")
     url: str = Field(description="URL to the source document")
     summary: str | None = Field(description="Brief document summary if available")
+
+
+class Chunk(Document):
+    """
+    Chunk of a publication document.
+    """
+
+    content: str = Field(description="Text content of a chunk")
 
 
 class Message(BaseModel):
