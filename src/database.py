@@ -6,12 +6,14 @@ import json
 import os
 
 import lancedb
+import pyarrow as pa
+from lancedb.rerankers import Reranker
 from langchain_core.tools import tool
 
 from . import genai, utils
-from .entities import Document, Graph, Node, SearchMethod
+from .entities import Chunk, Document, Graph, Node, SearchMethod
 
-__all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_documents"]
+__all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_chunks"]
 
 STORAGE_OPTIONS = {
     "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
@@ -29,6 +31,32 @@ async def get_connection() -> lancedb.AsyncConnection:
         Asynchronous database connection client.
     """
     return await lancedb.connect_async("az://lancedb", storage_options=STORAGE_OPTIONS)
+
+
+class TimeReranker(Reranker):
+    """
+    Custom reranker class to prioritise more recent documents.
+
+    See https://lancedb.github.io/lancedb/reranking/custom_reranker.
+    """
+
+    def rerank_hybrid(
+        self, query: str, vector_results: pa.Table, fts_results: pa.Table
+    ):
+        """
+        Required method for reranking.
+        """
+        return self.merge_results(vector_results, fts_results)
+
+    def rerank_vector(self, query: str, vector_results: pa.Table):
+        """
+        Rerank vector search results to promote more recent documents.
+        """
+        df = vector_results.to_pandas()
+        # use exponential decay function to increase the distance for older documents
+        df["_distance"] = df.eval("_distance / exp(-0.1 * (2025 - year))")
+        df.sort_values("_distance", ignore_index=True, inplace=True)
+        return pa.Table.from_pandas(df)
 
 
 class Client:
@@ -176,38 +204,44 @@ class Client:
         nodes = [node | metadata[node["name"]] for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
-    async def retrieve_documents(self, query: str, limit: int = 5) -> list[Document]:
+    async def retrieve_chunks(self, query: str, limit: int = 20) -> list[Chunk]:
         """
-        Retrieve the documents from the database that best match a query.
+        Retrieve the document chunks from the database that best match a query.
 
         Parameters
         ----------
         query : str
             Plain text user query.
-        limit : int, default=5
-            Maximum number of best matching documents to retrieve.
+        limit : int, default=20
+            Maximum number of best matching chunks to retrieve.
 
         Returns
         -------
-        list[Document]
-            List of most relevant documents.
+        list[Chunk]
+            List of most relevant document chunks.
         """
-        table = await self.connection.open_table("documents")
+        table = await self.connection.open_table("chunks")
         # perform a vector search to find best matches
         vector = await self.embedder.aembed_query(query)
+        reranker = TimeReranker()
         return [
-            Document(**doc)
-            for doc in await table.vector_search(vector).limit(limit).to_list()
+            Chunk(**chunk)
+            for chunk in await table.vector_search(vector)
+            .rerank(reranker, query_string=query)
+            .limit(limit)
+            .to_list()
         ]
 
 
-@tool(parse_docstring=True)
-async def retrieve_documents(query: str) -> str:
-    """Retrieve relevant documents from the Sustainable Energy Academy database.
+# since the model uses the docstring, don't mention the artifacts there
+@tool(parse_docstring=True, response_format="content_and_artifact")
+async def retrieve_chunks(query: str) -> tuple[str, list[Document]]:
+    """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
-    The database can be used to answer questions to energy, climate change and
+    The database can be used to answer questions on energy, climate change and
     sustainable development in general. Use the database to provide accurate and
-    grounded responses.
+    grounded responses. Make sure to cite sources in-line and provide a list of documents
+    used at the end.
 
     Args:
         query (str): Plain text user query.
@@ -217,6 +251,8 @@ async def retrieve_documents(query: str) -> str:
     """
     connection = await get_connection()
     client = Client(connection)
-    documents = await client.retrieve_documents(query)
-    data = json.dumps([document.model_dump() for document in documents])
-    return data
+    chunks = await client.retrieve_chunks(query)
+    data = json.dumps([chunk.to_context() for chunk in chunks])
+    # deduplicate and sort
+    documents = sorted(set(Document(**chunk.model_dump()) for chunk in chunks))
+    return data, documents
