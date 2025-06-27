@@ -46,8 +46,8 @@ async def lifespan(_: FastAPI):
         Dictionary of arbitrary state variables.
     """
     connection = await database.get_connection()
-    df = pd.read_csv(
-        "abfs://datasets/sdg-7.csv", storage_options=database.STORAGE_OPTIONS
+    df = pd.read_parquet(
+        "abfs://datasets/sdg-7.parquet", storage_options=database.STORAGE_OPTIONS
     )
     df.name = "indicators"
     states = {"client": database.Client(connection), "dataset": df}
