@@ -8,5 +8,5 @@ lancedb[azure] == 0.23.0
 sqlalchemy ~= 2.0.41
 networkx[default] ~= 3.5.0
 langchain[openai, community] ~= 0.3.26
-langgraph ~= 0.4.8
+langgraph == 0.5.0
 python-dotenv ~= 1.1.0
