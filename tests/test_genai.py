@@ -18,7 +18,7 @@ async def test_embed_text(text: str):
     """
     embedder = genai.get_embedding_client()
     embedding = await embedder.aembed_query(text)
-    assert len(embedding) == 1_536
+    assert len(embedding) == 1_024
     assert abs(sum(embedding)) > 0.0
 
 
