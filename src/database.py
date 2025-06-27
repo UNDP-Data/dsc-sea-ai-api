@@ -204,7 +204,7 @@ class Client:
         nodes = [node | metadata[node["name"]] for node in nodes]
         return Graph(nodes=nodes, edges=edges)
 
-    async def retrieve_chunks(self, query: str, limit: int = 5) -> list[Chunk]:
+    async def retrieve_chunks(self, query: str, limit: int = 20) -> list[Chunk]:
         """
         Retrieve the document chunks from the database that best match a query.
 
@@ -212,7 +212,7 @@ class Client:
         ----------
         query : str
             Plain text user query.
-        limit : int, default=5
+        limit : int, default=20
             Maximum number of best matching chunks to retrieve.
 
         Returns
