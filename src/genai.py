@@ -86,6 +86,8 @@ def get_embedding_client(**kwargs) -> AzureOpenAIEmbeddings:
         model=os.environ["AZURE_OPENAI_EMBED_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
+        # see https://platform.openai.com/docs/api-reference/embeddings#embeddings-create-dimensions
+        dimensions=1_024,  # leverage native support for shortening embeddings
         **kwargs,
     )
 

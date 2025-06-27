@@ -192,7 +192,7 @@ class Client:
         list[Chunk]
             List of most relevant document chunks.
         """
-        table = await self.connection.open_table("documents")
+        table = await self.connection.open_table("chunks")
         # perform a vector search to find best matches
         vector = await self.embedder.aembed_query(query)
         return [
