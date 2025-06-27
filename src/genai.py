@@ -15,7 +15,6 @@ from langchain_core.messages import (
     AIMessageChunk,
     BaseMessageChunk,
     MessageLikeRepresentation,
-    SystemMessage,
     ToolMessage,
 )
 from langchain_core.tools import BaseTool
@@ -153,7 +152,7 @@ async def stream_response(
         Messaage chunk from the model.
     """
     chat = get_chat_client(**kwargs)
-    agent = create_react_agent(chat, tools=tools)
+    agent = create_react_agent(chat, prompt=PROMPTS["answer_question"], tools=tools)
     async for chunk, _ in agent.astream({"messages": messages}, stream_mode="messages"):
         yield chunk
 
@@ -212,10 +211,7 @@ async def get_answer(
     """
     contents = []
     async for chunk in stream_response(
-        messages=(
-            [SystemMessage(PROMPTS["answer_question"])]
-            + [message.to_langchain() for message in messages]
-        ),
+        messages=[message.to_langchain() for message in messages],
         tools=tools,
         temperature=0.1,
     ):
