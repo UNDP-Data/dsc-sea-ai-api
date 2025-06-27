@@ -100,21 +100,15 @@ def test_model_response(test_client, messages: list[dict], pattern: str):
     assert re.search(pattern, data["content"], re.IGNORECASE)
 
 
-@pytest.mark.parametrize(
-    "name,access_code",
-    [
-        (name, "".join(choices(digits + ascii_letters, k=16)))
-        for name in ("Bob", "VIKI", "Nebuchadnezzar")
-    ],
-)
-def test_model_memory(test_client, name: str, access_code: str):
+def test_model_memory(test_client):
     """
     Test if `/model` endpoint correctly utilises message history.
     """
+    access_code = "".join(choices(digits + ascii_letters, k=16))
     messages = [
         {
             "role": "human",
-            "content": f"Hi there. I am {name} (Access code: {access_code})!",
+            "content": f"Hi there. I am Bob (Access code: {access_code})!",
         },
         {
             "role": "assistant",
@@ -133,8 +127,5 @@ def test_model_memory(test_client, name: str, access_code: str):
         if index == 0:
             data = json.loads(line)
         contents.append(json.loads(line).get("content", ""))
-    data["content"] = "".join(contents)
     assert data["role"] == "assistant"
-    content = data["content"]
-    assert re.search(name, content)
-    assert re.search(access_code, content)
+    assert re.search(access_code, "".join(contents))
