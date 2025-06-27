@@ -1,0 +1,33 @@
+<button tabindex="0" aria-expanded="false">v0.5.0 (2025-06-27)</button>
+<div class="accordion__panel" aria-hidden="true">
+    <p>
+        This release enhances RAG performance of the <code>/model</code> endpoint and includes an important bugfix.
+    </p>
+    <br>
+    <h5>What's New</h5>
+    <ul>
+        <li>
+            The RAG flow now uses a new collection of SDG 7 reports and UNDP documents related to the energy topic.
+        </li>
+        <li>
+            Embedding engine has changed to <code>text-embedding-3-large</code>, using reduced vector space (1024 dimensions).
+        </li>
+        <li>
+            The underlying chat model has been upgraded to <code>gpt-4.1-nano</code>.
+        </li>
+        <li>
+            RAG performance and quality have been improved by tuning the prompts and increasing the limit of documents for retrieval.
+            A custom reranker is now used to promote results from more recent documents.
+        </li>
+        <li>
+            The use of SQL tools is experimental and not encouraged in the model instructions.
+        </li>
+    </ul>
+    <br>
+    <h5>Bug Fixes</h5>
+    <ul>
+        <li>
+            Previously, document content was not correctly passed to the model, making RAG rely on document summaries only. This has been fixed now.
+        </li>
+    </ul>
+</div>

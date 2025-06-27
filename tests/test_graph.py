@@ -22,7 +22,7 @@ def test_graph_structure(test_client):
 @pytest.mark.parametrize(
     "query,node_name",
     [
-        ("climate change mitigation", "climate adaptation strategies"),
+        ("climate change mitigation", "climate change scenario analysis"),
         ("solar energy", "solar energy"),
         ("energia solare", "solar energy"),  # Italian query
         ("Ηλιακή ενέργεια", "solar energy"),  # Greek query

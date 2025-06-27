@@ -15,7 +15,6 @@ from langchain_core.messages import (
     AIMessageChunk,
     BaseMessageChunk,
     MessageLikeRepresentation,
-    SystemMessage,
     ToolMessage,
 )
 from langchain_core.tools import BaseTool
@@ -24,7 +23,7 @@ from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel, Field
 from sqlalchemy import StaticPool, create_engine
 
-from .entities import AssistantResponse, Document, Message
+from .entities import AssistantResponse, Message
 
 __all__ = [
     "get_chat_client",
@@ -68,9 +67,14 @@ def get_chat_client(
     )
 
 
-def get_embedding_client() -> AzureOpenAIEmbeddings:
+def get_embedding_client(**kwargs) -> AzureOpenAIEmbeddings:
     """
     Get an embedding client for Azure OpenAI service.
+
+    Parameters
+    ----------
+    **kwargs
+        Additional keyword arguments to pass to `AzureOpenAIEmbeddings`.
 
     Returns
     -------
@@ -81,6 +85,9 @@ def get_embedding_client() -> AzureOpenAIEmbeddings:
         model=os.environ["AZURE_OPENAI_EMBED_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_KEY"],
+        # see https://platform.openai.com/docs/api-reference/embeddings#embeddings-create-dimensions
+        dimensions=1_024,  # leverage native support for shortening embeddings
+        **kwargs,
     )
 
 
@@ -145,7 +152,7 @@ async def stream_response(
         Messaage chunk from the model.
     """
     chat = get_chat_client(**kwargs)
-    agent = create_react_agent(chat, tools=tools)
+    agent = create_react_agent(chat, prompt=PROMPTS["answer_question"], tools=tools)
     async for chunk, _ in agent.astream({"messages": messages}, stream_mode="messages"):
         yield chunk
 
@@ -204,10 +211,7 @@ async def get_answer(
     """
     contents = []
     async for chunk in stream_response(
-        messages=(
-            [SystemMessage(PROMPTS["answer_question"])]
-            + [message.to_langchain() for message in messages]
-        ),
+        messages=[message.to_langchain() for message in messages],
         tools=tools,
         temperature=0.1,
     ):
@@ -221,10 +225,9 @@ async def get_answer(
             response.graph, response.ideas, response.documents = None, None, None
         elif isinstance(chunk, ToolMessage):
             # assign the documents based on tool usage
-            if chunk.name == "retrieve_documents":
-                response.documents = [
-                    Document(**doc) for doc in json.loads(chunk.content)
-                ]
+            if chunk.name == "retrieve_chunks":
+                # get the documents from the chunk
+                response.documents = chunk.artifact
     else:
         # include the assistant response in the history for generating ideas
         response.documents, response.content = None, ""

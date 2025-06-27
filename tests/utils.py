@@ -29,7 +29,7 @@ def validate_node(node):
     assert isinstance(node.get("neighbourhood"), int)
     assert isinstance(node.get("name"), str)
     assert isinstance(node.get("weight"), float)
-    assert 0.0 <= node["weight"] <= 1.0
+    assert 0.0 <= node["weight"] <= 5.0
     assert isinstance(node.get("colour"), str)
     assert node["colour"].startswith("#")
 

@@ -170,3 +170,4 @@ env/
 # Manually added
 .DS_Store
 /data/
+/corpus/
