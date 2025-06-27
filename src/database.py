@@ -9,7 +9,7 @@ import lancedb
 from langchain_core.tools import tool
 
 from . import genai, utils
-from .entities import Chunk, Graph, Node, SearchMethod
+from .entities import Chunk, Document, Graph, Node, SearchMethod
 
 __all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_chunks"]
 
@@ -201,8 +201,9 @@ class Client:
         ]
 
 
-@tool(parse_docstring=True)
-async def retrieve_chunks(query: str) -> str:
+# since the model uses the docstring, don't mention the artifacts there
+@tool(parse_docstring=True, response_format="content_and_artifact")
+async def retrieve_chunks(query: str) -> tuple[str, list[Document]]:
     """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
     The database can be used to answer questions to energy, climate change and
@@ -218,5 +219,7 @@ async def retrieve_chunks(query: str) -> str:
     connection = await get_connection()
     client = Client(connection)
     chunks = await client.retrieve_chunks(query)
-    data = json.dumps([chunk.model_dump() for chunk in chunks])
-    return data
+    data = json.dumps([chunk.to_context() for chunk in chunks])
+    # deduplicate and sort
+    documents = sorted(set(Document(**chunk.model_dump()) for chunk in chunks))
+    return data, documents

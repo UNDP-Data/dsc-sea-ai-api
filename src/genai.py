@@ -24,7 +24,7 @@ from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel, Field
 from sqlalchemy import StaticPool, create_engine
 
-from .entities import AssistantResponse, Document, Message
+from .entities import AssistantResponse, Message
 
 __all__ = [
     "get_chat_client",
@@ -230,10 +230,8 @@ async def get_answer(
         elif isinstance(chunk, ToolMessage):
             # assign the documents based on tool usage
             if chunk.name == "retrieve_chunks":
-                # convert chunks to documents to discard `content`
-                response.documents = [
-                    Document(**doc) for doc in json.loads(chunk.content)
-                ]
+                # get the documents from the chunk
+                response.documents = chunk.artifact
     else:
         # include the assistant response in the history for generating ideas
         response.documents, response.content = None, ""
