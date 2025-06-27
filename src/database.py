@@ -6,6 +6,8 @@ import json
 import os
 
 import lancedb
+import pyarrow as pa
+from lancedb.rerankers import Reranker
 from langchain_core.tools import tool
 
 from . import genai, utils
@@ -29,6 +31,32 @@ async def get_connection() -> lancedb.AsyncConnection:
         Asynchronous database connection client.
     """
     return await lancedb.connect_async("az://lancedb", storage_options=STORAGE_OPTIONS)
+
+
+class TimeReranker(Reranker):
+    """
+    Custom reranker class to prioritise more recent documents.
+
+    See https://lancedb.github.io/lancedb/reranking/custom_reranker.
+    """
+
+    def rerank_hybrid(
+        self, query: str, vector_results: pa.Table, fts_results: pa.Table
+    ):
+        """
+        Required method for reranking.
+        """
+        return self.merge_results(vector_results, fts_results)
+
+    def rerank_vector(self, query: str, vector_results: pa.Table):
+        """
+        Rerank vector search results to promote more recent documents.
+        """
+        df = vector_results.to_pandas()
+        # use exponential decay function to increase the distance for older documents
+        df["_distance"] = df.eval("_distance / exp(-0.1 * (2025 - year))")
+        df.sort_values("_distance", ignore_index=True, inplace=True)
+        return pa.Table.from_pandas(df)
 
 
 class Client:
@@ -195,9 +223,13 @@ class Client:
         table = await self.connection.open_table("chunks")
         # perform a vector search to find best matches
         vector = await self.embedder.aembed_query(query)
+        reranker = TimeReranker()
         return [
             Chunk(**chunk)
-            for chunk in await table.vector_search(vector).limit(limit).to_list()
+            for chunk in await table.vector_search(vector)
+            .rerank(reranker, query_string=query)
+            .limit(limit)
+            .to_list()
         ]
 
 
