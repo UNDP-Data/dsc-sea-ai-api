@@ -238,9 +238,10 @@ class Client:
 async def retrieve_chunks(query: str) -> tuple[str, list[Document]]:
     """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
-    The database can be used to answer questions to energy, climate change and
+    The database can be used to answer questions on energy, climate change and
     sustainable development in general. Use the database to provide accurate and
-    grounded responses.
+    grounded responses. Make sure to cite sources in-line and provide a list of documents
+    used at the end.
 
     Args:
         query (str): Plain text user query.
