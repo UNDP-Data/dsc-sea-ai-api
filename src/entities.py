@@ -169,11 +169,35 @@ class Document(LanceModel):
     Publication document.
     """
 
-    title: str | None = Field(description="Document title if available")
-    year: int | None = Field(description="Publication year if available")
+    title: str = Field(description="Document title if available")
+    year: int = Field(description="Publication year if available")
     language: str = Field(description="Document language")
     url: str = Field(description="URL to the source document")
     summary: str | None = Field(description="Brief document summary if available")
+
+    def __hash__(self) -> int:
+        """
+        Allows Document instances to be hashable based on the title.
+        """
+        return hash(self.title)
+
+    def __eq__(self, other: "Document") -> bool:
+        """
+        Compares two Document instances for equality based only on the title.
+        """
+        if not isinstance(other, Document):
+            return NotImplemented
+        return self.title == other.title
+
+    def __lt__(self, other: "Document") -> bool:
+        """
+        Less-than comparison for sorting by year first, then title.
+        """
+        if self.year != other.year:
+            # descending order by year
+            return self.year > other.year
+        # alphabetically by title (if years are the same)
+        return self.title < other.title
 
 
 class Chunk(Document):
@@ -182,6 +206,15 @@ class Chunk(Document):
     """
 
     content: str = Field(description="Text content of a chunk")
+
+    def to_context(self) -> dict:
+        """
+        Convert a chunk to a simple context to be fed to a GenAI model.
+        """
+        return {
+            "content": self.content,
+            "source": f"[{self.title} ({self.year})]({self.url})",
+        }
 
 
 class Message(BaseModel):
