@@ -204,7 +204,7 @@ class Client:
                     "name": "name",
                     "description": "description",
                     "metadata": "metadata",
-                    "weight": "1 - _distance",  # SQL expression
+                    "weight": "1:float - _distance",  # SQL expression
                 }
             )
             .to_list()
