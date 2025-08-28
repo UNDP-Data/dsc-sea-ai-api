@@ -264,3 +264,11 @@ class AssistantResponse(Message):
         default=None, description="One or more documents relevant to the user message"
     )
     graph: Graph | None = Field(default=None)
+
+    def clear(self) -> None:
+        """
+        Set non-message properties to `None` to reduce payload size.
+        """
+        self.ideas = None
+        self.documents = None
+        self.graph = None
