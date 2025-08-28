@@ -47,7 +47,7 @@ async def lifespan(_: FastAPI):
     """
     connection = await database.get_connection()
     df = pd.read_parquet(
-        "abfs://datasets/sdg-7.parquet", storage_options=database.STORAGE_OPTIONS
+        "abfs://datasets/sdg-7.parquet", storage_options=database.get_storage_options()
     )
     df.name = "indicators"
     states = {"client": database.Client(connection), "dataset": df}

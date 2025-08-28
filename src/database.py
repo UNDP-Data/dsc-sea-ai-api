@@ -13,12 +13,24 @@ from langchain_core.tools import tool
 from . import genai, utils
 from .entities import Chunk, Document, Graph, Node, SearchMethod
 
-__all__ = ["STORAGE_OPTIONS", "get_connection", "Client", "retrieve_chunks"]
+__all__ = ["get_storage_options", "get_connection", "Client", "retrieve_chunks"]
 
-STORAGE_OPTIONS = {
-    "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
-    "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
-}
+
+def get_storage_options() -> dict[str, str]:
+    """
+    Get storage options for Azure Blob Storage backend.
+
+    The options can be passed to LanceDB or pandas to connect to remote storage.
+
+    Returns
+    -------
+    dict
+        Mapping storage options.
+    """
+    return {
+        "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
+        "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
+    }
 
 
 async def get_connection() -> lancedb.AsyncConnection:
@@ -30,7 +42,9 @@ async def get_connection() -> lancedb.AsyncConnection:
     lancedb.AsyncConnection
         Asynchronous database connection client.
     """
-    return await lancedb.connect_async("az://lancedb", storage_options=STORAGE_OPTIONS)
+    return await lancedb.connect_async(
+        "az://lancedb", storage_options=get_storage_options()
+    )
 
 
 class TimeReranker(Reranker):
