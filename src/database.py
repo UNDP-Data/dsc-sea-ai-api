@@ -6,6 +6,7 @@ import json
 import os
 
 import lancedb
+import pandas as pd
 import pyarrow as pa
 from lancedb.rerankers import Reranker
 from langchain_core.tools import tool
@@ -253,6 +254,20 @@ class Client:
             .limit(limit)
             .to_list()
         ]
+
+    async def get_sdg7_dataset(self) -> pd.DataFrame:
+        """
+        Get SDG 7 dataset.
+
+        Returns
+        -------
+        pd.DataFrame
+            Pandas data frame with SDG 7 indicators.
+        """
+        table = await self.connection.open_table("sdg7")
+        df = await table.to_pandas()
+        df.name = "indicators"
+        return df
 
 
 # since the model uses the docstring, don't mention the artifacts there

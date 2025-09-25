@@ -46,11 +46,7 @@ async def lifespan(_: FastAPI):
         Dictionary of arbitrary state variables.
     """
     connection = await database.get_connection()
-    df = pd.read_parquet(
-        "abfs://datasets/sdg-7.parquet", storage_options=database.get_storage_options()
-    )
-    df.name = "indicators"
-    states = {"client": database.Client(connection), "dataset": df}
+    states = {"client": database.Client(connection)}
     yield states
 
 
@@ -175,7 +171,8 @@ async def ask_model(request: Request, messages: list[Message]):
         content="",
         graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
     )
-    tools = [database.retrieve_chunks] + genai.get_sql_tools([request.state.dataset])
+    datasets = [await client.get_sdg7_dataset()]
+    tools = [database.retrieve_chunks] + genai.get_sql_tools(datasets)
     return StreamingResponse(
         content=genai.get_answer(messages, response, tools=tools),
         media_type="application/x-ndjson",
