@@ -6,6 +6,7 @@ import json
 import os
 
 import lancedb
+import networkx as nx
 import pandas as pd
 import pyarrow as pa
 from lancedb.rerankers import Reranker
@@ -268,6 +269,37 @@ class Client:
         df = await table.to_pandas()
         df.name = "indicators"
         return df
+
+    async def get_knowledge_graph(self) -> nx.Graph:
+        """
+        Create a (weighted directed) knowledge graph from database tables.
+
+        Returns
+        -------
+        nx.Graph
+            Knowledge graph.
+        """
+        table = await self.connection.open_table("nodes")
+        df = await table.query().select(["name", "description", "weight"]).to_pandas()
+        nodes = zip(
+            df["name"].tolist(),
+            df[["description", "weight"]].to_dict(orient="records"),
+        )
+        table = await self.connection.open_table("edges")
+        df = (
+            await table.query()
+            .select(["subject", "object", "predicate", "description", "weight"])
+            .to_pandas()
+        )
+        edges = zip(
+            df["subject"].tolist(),
+            df["object"].tolist(),
+            df[["predicate", "description", "weight"]].to_dict(orient="records"),
+        )
+        graph = nx.DiGraph()
+        graph.add_nodes_from(nodes)
+        graph.add_edges_from(edges)
+        return graph
 
 
 # since the model uses the docstring, don't mention the artifacts there
