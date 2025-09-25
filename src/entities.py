@@ -166,6 +166,22 @@ class Graph(BaseModel, frozen=True):
 
     @classmethod
     def from_networkx(cls, graph: nx.Graph, source: str) -> "Graph":
+        """
+        Create a graph response from a NetworkX graph.
+
+        Parameters
+        ----------
+        graph : nx.Graph
+            Abitrary NetworkX graph.
+        source : str
+            Name of the central node to define neighbourhood.
+
+        Returns
+        -------
+        Graph
+            Response graph with colour-coded nodes based on the neighbourhood
+            around the source node.
+        """
         graph.nodes[source]["neighbourhood"] = 0
         graph.nodes[source]["colour"] = "#9F7DC5"
         # there may be more than one shortest path, but any one works
