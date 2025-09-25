@@ -5,9 +5,12 @@ Entities (models) and related routines to define the data layer.
 from enum import Enum, auto
 from typing import Literal
 
+import networkx as nx
 from lancedb.pydantic import LanceModel
 from langchain_core.messages import AIMessage, HumanMessage
 from pydantic import BaseModel, Field
+
+from .utils import PALLETES
 
 __all__ = [
     "SearchMethod",
@@ -160,6 +163,29 @@ class Graph(BaseModel, frozen=True):
         nodes = set(self.nodes) | set(other.nodes)
         edges = set(self.edges) | set(other.edges)
         return Graph(nodes=nodes, edges=edges)
+
+    @classmethod
+    def from_networkx(cls, graph: nx.Graph, source: str) -> "Graph":
+        graph.nodes[source]["neighbourhood"] = 0
+        graph.nodes[source]["colour"] = "#9F7DC5"
+        # there may be more than one shortest path, but any one works
+        for _, (path, *_) in nx.single_source_all_shortest_paths(graph, source=source):
+            # skip the source node as it is already processed
+            for hop, node_name in enumerate(path[1:], start=1):
+                graph.nodes[node_name]["neighbourhood"] = hop
+                # colours for nodes in a path are determined by 1-hop neighbours
+                if hop == 1:
+                    # deterministically choose a palette based on a node's name
+                    index = sum(map(ord, node_name)) % len(PALLETES)
+                # reuse the same palette for all nodes along the path but use a different shade
+                graph.nodes[node_name]["colour"] = PALLETES[index][hop - 1]
+        return cls(
+            nodes=[{"name": name} | data for name, data in graph.nodes(data=True)],
+            edges=[
+                {"subject": subject, "object": object} | data
+                for subject, object, data in graph.edges(data=True)
+            ],
+        )
 
 
 class Document(LanceModel):
