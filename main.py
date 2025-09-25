@@ -122,9 +122,7 @@ async def get_node(request: Request, name: str):
     Get a single node by name. Case insensitive.
     """
     client: database.Client = request.state.client
-    if (
-        node := await client.find_node(name, SearchMethod.EXACT, with_vector=False)
-    ) is None:
+    if (node := await client.find_node(name, SearchMethod.EXACT)) is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Node '{name}' does not exist.",

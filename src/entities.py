@@ -91,7 +91,11 @@ class Node(BaseModel):
         description="Hex colour value for the node",
         examples=["#3288CE", "#55606E"],
     )
-    metadata: dict = Field(description="Arbitrary metadata about the node")
+    vector: list[float] | None = Field(
+        default=None,
+        description="Vector embedding of the node",
+        exclude=True,
+    )
 
     def __hash__(self) -> int:
         return self.name.__hash__()

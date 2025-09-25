@@ -111,9 +111,7 @@ class Client:
             ]
         )
 
-    async def find_node(
-        self, query: str, method: SearchMethod, with_vector: bool = True
-    ) -> Node | None:
+    async def find_node(self, query: str, method: SearchMethod) -> Node | None:
         """
         Find the node that best matches the query.
 
@@ -123,8 +121,6 @@ class Client:
             Plain text query.
         method : {SearchMethod.EXACT, SearchMethod.VECTOR}
             Search method to utilise.
-        with_vector : bool, default=True
-            If True, include the node's vector in `metadata` property.
 
         Returns
         -------
@@ -143,11 +139,7 @@ class Client:
                 raise ValueError(f"Method {method} is not supported.")
         if not (nodes := await results.limit(1).to_list()):
             return None
-        node = nodes[0]
-        metadata = node.pop("metadata")
-        if with_vector:
-            metadata |= {"vector": node.pop("vector")}
-        return Node(**node, metadata=metadata)
+        return Node(**nodes[0])
 
     async def find_graph(self, query: str, hops: int = 2) -> Graph:
         """
@@ -204,7 +196,7 @@ class Client:
             {edge["subject"] for edge in edges} | {edge["object"] for edge in edges}
         )
         nodes = (
-            await table_nodes.vector_search(central_node.metadata["vector"])
+            await table_nodes.vector_search(central_node.vector)
             .distance_type("cosine")
             .where(
                 (
@@ -220,7 +212,6 @@ class Client:
                 {
                     "name": "name",
                     "description": "description",
-                    "metadata": "metadata",
                     "weight": "1:float - _distance",  # SQL expression
                 }
             )
