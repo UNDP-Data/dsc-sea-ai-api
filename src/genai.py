@@ -222,7 +222,7 @@ async def get_answer(
             contents.append(chunk.content)
             yield response.model_dump_json() + "\n"
             # once the full response has been yielded, nullify properties to reduce payload
-            response.graph, response.ideas, response.documents = None, None, None
+            response.clear()
         elif isinstance(chunk, ToolMessage):
             # assign the documents based on tool usage
             if chunk.name == "retrieve_chunks":

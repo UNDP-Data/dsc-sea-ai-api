@@ -2,11 +2,10 @@
 Entry point to the API.
 """
 
-import asyncio
 from contextlib import asynccontextmanager
 from typing import Annotated
 
-import pandas as pd
+import networkx as nx
 import yaml
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
@@ -46,11 +45,8 @@ async def lifespan(_: FastAPI):
         Dictionary of arbitrary state variables.
     """
     connection = await database.get_connection()
-    df = pd.read_parquet(
-        "abfs://datasets/sdg-7.parquet", storage_options=database.STORAGE_OPTIONS
-    )
-    df.name = "indicators"
-    states = {"client": database.Client(connection), "dataset": df}
+    client = database.Client(connection)
+    states = {"client": client, "graph": await client.get_knowledge_graph()}
     yield states
 
 
@@ -98,13 +94,17 @@ async def favicon():
     response_model_by_alias=False,
     dependencies=[Depends(authenticate)],
 )
-async def list_nodes(request: Request):
+async def search_nodes(
+    request: Request,
+    pattern: Annotated[str | None, Query(max_length=50)] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 10,
+):
     """
-    List all nodes in the graph. Since there is no central node,
+    Search nodes in the graph. Since there is no central node,
     `neighbourhood` is set to zero for all nodes.
     """
     client: database.Client = request.state.client
-    return await client.list_nodes()
+    return await client.search_nodes(pattern or "", limit)
 
 
 @app.get(
@@ -118,9 +118,7 @@ async def get_node(request: Request, name: str):
     Get a single node by name. Case insensitive.
     """
     client: database.Client = request.state.client
-    if (
-        node := await client.find_node(name, SearchMethod.EXACT, with_vector=False)
-    ) is None:
+    if (node := await client.find_node(name, SearchMethod.EXACT)) is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Node '{name}' does not exist.",
@@ -142,7 +140,8 @@ async def query_knowledge_graph(
     Get a knowledge graph that best matches the query concept.
     """
     client: database.Client = request.state.client
-    return await client.find_graph(**params.model_dump())
+    graph: nx.Graph = request.state.graph
+    return await client.find_subgraph(graph, **params.model_dump())
 
 
 @app.post(
@@ -166,14 +165,16 @@ async def ask_model(request: Request, messages: list[Message]):
         )
     user_query = messages[-1].content
     client: database.Client = request.state.client
+    graph: nx.Graph = request.state.graph
     entities = await genai.extract_entities(user_query)
-    graphs = await asyncio.gather(*[client.find_graph(entity) for entity in entities])
+    graph = await client.find_subgraph(graph, entities)
     response = AssistantResponse(
         role="assistant",
         content="",
-        graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
+        graph=graph,
     )
-    tools = [database.retrieve_chunks] + genai.get_sql_tools([request.state.dataset])
+    datasets = [await client.get_sdg7_dataset()]
+    tools = [database.retrieve_chunks] + genai.get_sql_tools(datasets)
     return StreamingResponse(
         content=genai.get_answer(messages, response, tools=tools),
         media_type="application/x-ndjson",
