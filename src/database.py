@@ -2,9 +2,9 @@
 Routines for database operations for RAG.
 """
 
+import asyncio
 import json
 import os
-from copy import deepcopy
 
 import lancedb
 import networkx as nx
@@ -144,7 +144,9 @@ class Client:
             return None
         return Node(**nodes[0])
 
-    async def find_subgraph(self, graph: nx.Graph, query: str, hops: int = 2) -> Graph:
+    async def find_subgraph(
+        self, graph: nx.Graph, query: str | list[str], hops: int = 2
+    ) -> Graph:
         """
         Find a subgraph relevant to a given query.
 
@@ -160,11 +162,20 @@ class Client:
         Graph
             Object with node and edge lists.
         """
-        # perform a search to find the best match, i.e., a central node
-        central_node = await self.find_node(query, SearchMethod.VECTOR)
-        nodes = utils.get_neighbourhood_nodes(graph, [central_node.name], hops)
-        graph = deepcopy(graph.subgraph(nodes))
-        return Graph.from_networkx(graph, central_node.name)
+        # match query or queries to find central nodes
+        queries = [query] if isinstance(query, str) else query
+        central_nodes = await asyncio.gather(
+            *[self.find_node(query, SearchMethod.VECTOR) for query in queries]
+        )
+        # subset the graph using central nodes as sources
+        sources = [node.name for node in central_nodes]
+        nodes = utils.get_neighbourhood_nodes(graph, sources, hops)
+        graph = graph.subgraph(nodes).copy()
+        nodes = utils.get_closest_nodes(graph, sources)
+        graph = graph.subgraph(nodes).copy()
+        graph = utils.prune_edges(graph)
+        # pick one of the central nodes to centre the graph around
+        return Graph.from_networkx(graph, sources[0])
 
     async def retrieve_chunks(self, query: str, limit: int = 20) -> list[Chunk]:
         """

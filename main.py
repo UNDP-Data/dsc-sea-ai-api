@@ -2,7 +2,6 @@
 Entry point to the API.
 """
 
-import asyncio
 from contextlib import asynccontextmanager
 from typing import Annotated
 
@@ -168,13 +167,11 @@ async def ask_model(request: Request, messages: list[Message]):
     client: database.Client = request.state.client
     graph: nx.Graph = request.state.graph
     entities = await genai.extract_entities(user_query)
-    graphs = await asyncio.gather(
-        *[client.find_subgraph(graph, entity) for entity in entities]
-    )
+    graph = await client.find_subgraph(graph, entities)
     response = AssistantResponse(
         role="assistant",
         content="",
-        graph=sum(graphs, Graph(nodes=[], edges=[])),  # merge all graphs
+        graph=graph,
     )
     datasets = [await client.get_sdg7_dataset()]
     tools = [database.retrieve_chunks] + genai.get_sql_tools(datasets)
