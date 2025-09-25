@@ -82,9 +82,18 @@ class Client:
         self.connection = connection
         self.embedder = genai.get_embedding_client()
 
-    async def list_nodes(self) -> list[Node]:
+    async def search_nodes(self, pattern: str = "", limit: int = 10) -> list[Node]:
         """
-        List all nodes in the graph.
+        Search nodes in the graph, optionally utilising RegEx patterns.
+
+        The search is case insentitive.
+
+        Parameters
+        ----------
+        pattern : str, optional
+            Optional pattern to match the nodes.
+        limit : int, default=10
+            Number of matching nodes to return.
 
         Returns
         -------
@@ -92,7 +101,15 @@ class Client:
             A list of nodes sorted by name.
         """
         table = await self.connection.open_table("nodes")
-        return sorted([Node(**node) for node in await table.query().to_list()])
+        return sorted(
+            [
+                Node(**node)
+                for node in await table.query()
+                .where(f"regexp_match(name, '(?i){pattern}')")
+                .limit(limit)
+                .to_list()
+            ]
+        )
 
     async def find_node(
         self, query: str, method: SearchMethod, with_vector: bool = True

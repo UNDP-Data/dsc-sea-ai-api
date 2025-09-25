@@ -98,13 +98,17 @@ async def favicon():
     response_model_by_alias=False,
     dependencies=[Depends(authenticate)],
 )
-async def list_nodes(request: Request):
+async def search_nodes(
+    request: Request,
+    pattern: Annotated[str | None, Query(max_length=50)] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 10,
+):
     """
-    List all nodes in the graph. Since there is no central node,
+    Search nodes in the graph. Since there is no central node,
     `neighbourhood` is set to zero for all nodes.
     """
     client: database.Client = request.state.client
-    return await client.list_nodes()
+    return await client.search_nodes(pattern or "", limit)
 
 
 @app.get(
