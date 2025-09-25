@@ -5,20 +5,21 @@ Basic tests for `/nodes` endpoints.
 import pytest
 
 
-def test_list_nodes(test_client):
+@pytest.mark.parametrize("pattern", [None, "climate", "environment"])
+def test_search_nodes(test_client, pattern: str):
     """
     Test if `/nodes` endpoint produces the expected response.
     """
-    response = test_client.get("/nodes")
+    response = test_client.get("/nodes", params={"pattern": pattern})
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data, list)
-    assert len(data) > 10
+    assert len(data) >= 1
     assert all(isinstance(node, dict) for node in data)
     # no central node
     assert all(node.get("neighbourhood") == 0 for node in data)
     assert any(
-        node.get("name", "").lower() == "climate adaptation strategies" for node in data
+        pattern is None or pattern in node.get("name", "").lower() for node in data
     )
 
 

@@ -8,7 +8,7 @@ If this pull request addresses an issue, please link to it here. For example:
 - Related to #456
 -->
 
-This requests adds/enhances/fixes/refactors...
+This request adds/enhances/fixes/refactors...
 
 ## New Features
 

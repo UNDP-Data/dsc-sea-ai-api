@@ -5,9 +5,12 @@ Entities (models) and related routines to define the data layer.
 from enum import Enum, auto
 from typing import Literal
 
+import networkx as nx
 from lancedb.pydantic import LanceModel
 from langchain_core.messages import AIMessage, HumanMessage
 from pydantic import BaseModel, Field
+
+from .utils import PALLETES
 
 __all__ = [
     "SearchMethod",
@@ -91,7 +94,11 @@ class Node(BaseModel):
         description="Hex colour value for the node",
         examples=["#3288CE", "#55606E"],
     )
-    metadata: dict = Field(description="Arbitrary metadata about the node")
+    vector: list[float] | None = Field(
+        default=None,
+        description="Vector embedding of the node",
+        exclude=True,
+    )
 
     def __hash__(self) -> int:
         return self.name.__hash__()
@@ -137,12 +144,6 @@ class Edge(BaseModel):
         examples=[2.71828, 3.14159],
         ge=0.0,
     )
-    level: int = Field(
-        description="Numeric values indication the edge's level on a 3-point scale",
-        examples=[1, 2],
-        ge=1,
-        le=5,
-    )
 
     def __hash__(self) -> int:
         return (self.subject + self.predicate + self.object).__hash__()
@@ -162,6 +163,45 @@ class Graph(BaseModel, frozen=True):
         nodes = set(self.nodes) | set(other.nodes)
         edges = set(self.edges) | set(other.edges)
         return Graph(nodes=nodes, edges=edges)
+
+    @classmethod
+    def from_networkx(cls, graph: nx.Graph, source: str) -> "Graph":
+        """
+        Create a graph response from a NetworkX graph.
+
+        Parameters
+        ----------
+        graph : nx.Graph
+            Abitrary NetworkX graph.
+        source : str
+            Name of the central node to define neighbourhood.
+
+        Returns
+        -------
+        Graph
+            Response graph with colour-coded nodes based on the neighbourhood
+            around the source node.
+        """
+        graph.nodes[source]["neighbourhood"] = 0
+        graph.nodes[source]["colour"] = "#9F7DC5"
+        # there may be more than one shortest path, but any one works
+        for _, (path, *_) in nx.single_source_all_shortest_paths(graph, source=source):
+            # skip the source node as it is already processed
+            for hop, node_name in enumerate(path[1:], start=1):
+                graph.nodes[node_name]["neighbourhood"] = hop
+                # colours for nodes in a path are determined by 1-hop neighbours
+                if hop == 1:
+                    # deterministically choose a palette based on a node's name
+                    index = sum(map(ord, node_name)) % len(PALLETES)
+                # reuse the same palette for all nodes along the path but use a different shade
+                graph.nodes[node_name]["colour"] = PALLETES[index][hop - 1]
+        return cls(
+            nodes=[{"name": name} | data for name, data in graph.nodes(data=True)],
+            edges=[
+                {"subject": subject, "object": object} | data
+                for subject, object, data in graph.edges(data=True)
+            ],
+        )
 
 
 class Document(LanceModel):
@@ -264,3 +304,11 @@ class AssistantResponse(Message):
         default=None, description="One or more documents relevant to the user message"
     )
     graph: Graph | None = Field(default=None)
+
+    def clear(self) -> None:
+        """
+        Set non-message properties to `None` to reduce payload size.
+        """
+        self.ideas = None
+        self.documents = None
+        self.graph = None

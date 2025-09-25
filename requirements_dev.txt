@@ -1,9 +1,9 @@
 -r requirements.txt
-pylint ~= 3.3.6
-black ~= 25.1.0
+pylint ~= 3.3.8
+black[jupyter] ~= 25.1.0
 isort ~= 6.0.1
-pytest ~= 8.3.5
-pytest-asyncio ~= 1.0.0
+pytest ~= 8.4.1
+pytest-asyncio ~= 1.1.0
 httpx ~= 0.28.1
-locust ~= 2.37.10
-notebook ~= 7.4.1
+locust ~= 2.39.0
+notebook ~= 7.4.5
