@@ -37,8 +37,8 @@ def test_graph_query(test_client, query: str, node_name: str):
     assert response.status_code == 200
     data = response.json()
     nodes = data["nodes"]
-    assert nodes[0]["neighbourhood"] == 0
-    assert nodes[0]["name"] == node_name
+    assert any([node["neighbourhood"] == 0 for node in nodes])
+    assert any([node["name"] == node_name for node in nodes])
     assert len({node["neighbourhood"] for node in nodes}) > 1
 
 

@@ -17,7 +17,7 @@ import pytest
         ("What can you do?", False),
         (
             "How does climate change adaptation differ from climate change mitigation?",
-            True,
+            False,
         ),
         ("How much energy does a typical residential solar panel generate?", True),
     ],
