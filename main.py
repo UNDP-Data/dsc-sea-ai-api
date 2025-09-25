@@ -6,7 +6,7 @@ import asyncio
 from contextlib import asynccontextmanager
 from typing import Annotated
 
-import pandas as pd
+import networkx as nx
 import yaml
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
@@ -46,7 +46,8 @@ async def lifespan(_: FastAPI):
         Dictionary of arbitrary state variables.
     """
     connection = await database.get_connection()
-    states = {"client": database.Client(connection)}
+    client = database.Client(connection)
+    states = {"client": client, "graph": await client.get_knowledge_graph()}
     yield states
 
 
@@ -140,7 +141,8 @@ async def query_knowledge_graph(
     Get a knowledge graph that best matches the query concept.
     """
     client: database.Client = request.state.client
-    return await client.find_graph(**params.model_dump())
+    graph: nx.Graph = request.state.graph
+    return await client.find_subgraph(graph, **params.model_dump())
 
 
 @app.post(
@@ -164,8 +166,11 @@ async def ask_model(request: Request, messages: list[Message]):
         )
     user_query = messages[-1].content
     client: database.Client = request.state.client
+    graph: nx.Graph = request.state.graph
     entities = await genai.extract_entities(user_query)
-    graphs = await asyncio.gather(*[client.find_graph(entity) for entity in entities])
+    graphs = await asyncio.gather(
+        *[client.find_subgraph(graph, entity) for entity in entities]
+    )
     response = AssistantResponse(
         role="assistant",
         content="",
