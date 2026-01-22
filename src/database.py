@@ -237,13 +237,13 @@ class Client:
         table = await self.connection.open_table("edges")
         df = (
             await table.query()
-            .select(["subject", "object", "predicate", "description", "weight"])
+            .select(["subject", "object", "predicate", "description", "weight", "level"])
             .to_pandas()
         )
         edges = zip(
             df["subject"].tolist(),
             df["object"].tolist(),
-            df[["predicate", "description", "weight"]].to_dict(orient="records"),
+            df[["predicate", "description", "weight", "level"]].to_dict(orient="records"),
         )
         graph = nx.DiGraph()
         graph.add_nodes_from(nodes)
