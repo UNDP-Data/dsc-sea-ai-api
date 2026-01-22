@@ -144,12 +144,11 @@ class Edge(BaseModel):
         examples=[2.71828, 3.14159],
         ge=0.0,
     )
-    level: int | None = Field(
-        default=None,
-        description="Numeric value indicating the edge's level on a 3-point scale",
-        examples=[1, 2],
+    level: int = Field(
+        default=1,
+        description="Hop distance from the central node (1 = direct connection, 2 = 2-hop, etc.)",
+        examples=[1, 2, 3],
         ge=1,
-        le=5,
     )
 
     def __hash__(self) -> int:
@@ -205,7 +204,7 @@ class Graph(BaseModel, frozen=True):
         return cls(
             nodes=[{"name": name} | data for name, data in graph.nodes(data=True)],
             edges=[
-                {"subject": subject, "object": object} | data
+                {"subject": subject, "object": object, "level": graph.nodes[subject].get("neighbourhood", 0) + 1} | data
                 for subject, object, data in graph.edges(data=True)
             ],
         )

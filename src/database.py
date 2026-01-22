@@ -235,18 +235,15 @@ class Client:
             df[["description", "weight"]].to_dict(orient="records"),
         )
         table = await self.connection.open_table("edges")
-        # check if level column exists in the table schema
-        schema = await table.schema()
-        edge_columns = ["subject", "object", "predicate", "description", "weight"]
-        edge_attrs = ["predicate", "description", "weight"]
-        if "level" in [field.name for field in schema]:
-            edge_columns.append("level")
-            edge_attrs.append("level")
-        df = await table.query().select(edge_columns).to_pandas()
+        df = (
+            await table.query()
+            .select(["subject", "object", "predicate", "description", "weight"])
+            .to_pandas()
+        )
         edges = zip(
             df["subject"].tolist(),
             df["object"].tolist(),
-            df[edge_attrs].to_dict(orient="records"),
+            df[["predicate", "description", "weight"]].to_dict(orient="records"),
         )
         graph = nx.DiGraph()
         graph.add_nodes_from(nodes)
