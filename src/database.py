@@ -168,14 +168,14 @@ class Client:
             *[self.find_node(query, SearchMethod.VECTOR) for query in queries]
         )
         # subset the graph using central nodes as sources
-        sources = [node.name for node in central_nodes]
+        sources = [node.name for node in central_nodes if node is not None]
         nodes = utils.get_neighbourhood_nodes(graph, sources, hops)
         graph = graph.subgraph(nodes).copy()
         nodes = utils.get_closest_nodes(graph, sources)
         graph = graph.subgraph(nodes).copy()
         graph = utils.prune_edges(graph)
-        # pick one of the central nodes to centre the graph around
-        return Graph.from_networkx(graph, sources[0])
+        # pass all sources to compute neighbourhood from nearest central node
+        return Graph.from_networkx(graph, sources)
 
     async def retrieve_chunks(self, query: str, limit: int = 20) -> list[Chunk]:
         """

@@ -171,7 +171,7 @@ class Graph(BaseModel, frozen=True):
         return Graph(nodes=nodes, edges=edges)
 
     @classmethod
-    def from_networkx(cls, graph: nx.Graph, source: str) -> "Graph":
+    def from_networkx(cls, graph: nx.Graph, sources: str | list[str]) -> "Graph":
         """
         Create a graph response from a NetworkX graph.
 
@@ -179,28 +179,35 @@ class Graph(BaseModel, frozen=True):
         ----------
         graph : nx.Graph
             Abitrary NetworkX graph.
-        source : str
-            Name of the central node to define neighbourhood.
+        sources : str | list[str]
+            Name(s) of the central node(s) to define neighbourhood.
 
         Returns
         -------
         Graph
             Response graph with colour-coded nodes based on the neighbourhood
-            around the source node.
+            around the source nodes.
         """
-        graph.nodes[source]["neighbourhood"] = 0
-        graph.nodes[source]["colour"] = "#9F7DC5"
-        # there may be more than one shortest path, but any one works
-        for _, (path, *_) in nx.single_source_all_shortest_paths(graph, source=source):
-            # skip the source node as it is already processed
-            for hop, node_name in enumerate(path[1:], start=1):
-                graph.nodes[node_name]["neighbourhood"] = hop
-                # colours for nodes in a path are determined by 1-hop neighbours
-                if hop == 1:
-                    # deterministically choose a palette based on a node's name
-                    index = sum(map(ord, node_name)) % len(PALLETES)
-                # reuse the same palette for all nodes along the path but use a different shade
-                graph.nodes[node_name]["colour"] = PALLETES[index][hop - 1]
+        sources = [sources] if isinstance(sources, str) else sources
+        # mark all source nodes as central (neighbourhood=0)
+        for source in sources:
+            graph.nodes[source]["neighbourhood"] = 0
+            graph.nodes[source]["colour"] = "#9F7DC5"
+        # compute minimum neighbourhood from any source using undirected paths
+        undirected = graph.to_undirected()
+        for source in sources:
+            for target, (path, *_) in nx.single_source_all_shortest_paths(undirected, source=source):
+                hop = len(path) - 1
+                if hop == 0:
+                    continue  # skip source nodes
+                # keep the minimum neighbourhood value across all sources
+                current = graph.nodes[target].get("neighbourhood")
+                if current is None or hop < current:
+                    graph.nodes[target]["neighbourhood"] = hop
+                    # colours for nodes are determined by their neighbourhood
+                    if hop <= len(PALLETES[0]):
+                        index = sum(map(ord, target)) % len(PALLETES)
+                        graph.nodes[target]["colour"] = PALLETES[index][hop - 1]
         return cls(
             nodes=[{"name": name} | data for name, data in graph.nodes(data=True)],
             edges=[
