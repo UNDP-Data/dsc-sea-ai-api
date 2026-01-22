@@ -144,6 +144,13 @@ class Edge(BaseModel):
         examples=[2.71828, 3.14159],
         ge=0.0,
     )
+    level: int | None = Field(
+        default=None,
+        description="Numeric value indicating the edge's level on a 3-point scale",
+        examples=[1, 2],
+        ge=1,
+        le=5,
+    )
 
     def __hash__(self) -> int:
         return (self.subject + self.predicate + self.object).__hash__()
