@@ -3,6 +3,7 @@ Entry point to the API.
 """
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Annotated
 
 import networkx as nx
@@ -12,6 +13,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from packaging.version import Version
 
 from src import database, genai
 from src.entities import (
@@ -76,7 +78,17 @@ async def changelog(request: Request):
     """
     Return the changelog template.
     """
-    return templates.TemplateResponse(request=request, name="changelog.html")
+    file_paths = sorted(
+        Path("templates", "changelog").glob("*.html"),
+        reverse=True,
+        key=lambda path: Version(path.with_suffix("").name.lstrip("v")),
+    )
+    file_names = [file_path.name for file_path in file_paths]
+    return templates.TemplateResponse(
+        request=request,
+        name="changelog.html",
+        context={"file_names": file_names},
+    )
 
 
 @app.get("/favicon.ico", include_in_schema=False)

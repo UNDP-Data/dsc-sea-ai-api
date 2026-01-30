@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'head.html' %}
+
 <body>
-{% include 'header.html' %}
-<div id="changelog">
+  {% include 'header.html' %}
+  <div id="changelog">
     <h1>Changelog</h1>
     <nav aria-label="breadcrumbs" data-viewport="true" class="breadcrumb">
       <ul>
@@ -12,16 +13,12 @@
       </ul>
     </nav>
     <ul class="accordion" aria-label="accordion">
-      <li>{% include 'changelog/v0.5.1.html' %}</li>
-      <li>{% include 'changelog/v0.5.0.html' %}</li>
-      <li>{% include 'changelog/v0.4.0.html' %}</li>
-      <li>{% include 'changelog/v0.3.0.html' %}</li>
-      <li>{% include 'changelog/v0.2.0.html' %}</li>
-      <li>{% include 'changelog/v0.1.0.html' %}</li>
-      <li>{% include 'changelog/v0.1.0-beta.html' %}</li>
-      <li>{% include 'changelog/v0.1.0-alpha.html' %}</li>
+      {% for file_name in file_names %}
+      <li>{% include 'changelog/' + file_name %}</li>
+      {% endfor %}
     </ul>
-</div>
-{% include 'footer.html' %}
+  </div>
+  {% include 'footer.html' %}
 </body>
+
 </html>

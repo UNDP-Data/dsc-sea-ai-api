@@ -177,7 +177,9 @@ class Client:
         # pass all sources to compute neighbourhood from nearest central node
         return Graph.from_networkx(graph, sources)
 
-    async def retrieve_chunks(self, query: str, limit: int = 20) -> list[Chunk]:
+    async def retrieve_chunks(
+        self, query: str, where: str = "", limit: int = 20
+    ) -> list[Chunk]:
         """
         Retrieve the document chunks from the database that best match a query.
 
@@ -185,6 +187,8 @@ class Client:
         ----------
         query : str
             Plain text user query.
+        where : str, optional
+            Filtering conditions for the where clause.
         limit : int, default=20
             Maximum number of best matching chunks to retrieve.
 
@@ -200,6 +204,7 @@ class Client:
         return [
             Chunk(**chunk)
             for chunk in await table.vector_search(vector)
+            .where(where)
             .rerank(reranker, query_string=query)
             .limit(limit)
             .to_list()
@@ -256,7 +261,9 @@ class Client:
 
 # since the model uses the docstring, don't mention the artifacts there
 @tool(parse_docstring=True, response_format="content_and_artifact")
-async def retrieve_chunks(query: str) -> tuple[str, list[Document]]:
+async def retrieve_chunks(
+    query: str, years: int | list[int] = 2025
+) -> tuple[str, list[Document]]:
     """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
     The database can be used to answer questions on energy, climate change and
@@ -266,13 +273,20 @@ async def retrieve_chunks(query: str) -> tuple[str, list[Document]]:
 
     Args:
         query (str): Plain text user query.
+        years (Union[int, Tuple[int, ...]]): Specific year or years the user refers to if
+            applicable. Otherwise, use the current year.
 
     Returns:
         str: JSON object containing the most relevant document chunks.
     """
     connection = await get_connection()
     client = Client(connection)
-    chunks = await client.retrieve_chunks(query)
+    where = (
+        f"year = {years}"
+        if isinstance(years, int)
+        else f"year IN ({', '.join(map(str, years))})"
+    )
+    chunks = await client.retrieve_chunks(query, where)
     data = json.dumps([chunk.to_context() for chunk in chunks])
     # deduplicate and sort
     documents = sorted(set(Document(**chunk.model_dump()) for chunk in chunks))
