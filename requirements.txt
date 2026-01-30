@@ -10,3 +10,4 @@ networkx[default] ~= 3.5.0
 langchain[openai, community] ~= 0.3.27
 langgraph == 0.6.7
 python-dotenv ~= 1.1.1
+packaging >= 25.0
