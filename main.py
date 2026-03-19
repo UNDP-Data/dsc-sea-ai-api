@@ -3,13 +3,16 @@ Entry point to the API.
 """
 
 from contextlib import asynccontextmanager
+from inspect import isawaitable
 from pathlib import Path
 from typing import Annotated
+import json
+import os
 
 import networkx as nx
 import yaml
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -24,6 +27,9 @@ from src.entities import (
     Node,
     SearchMethod,
 )
+from src.kg import v1 as kg_v1
+from src.kg import v2 as kg_v2
+from src.kg.types import GraphV2, GraphV2Parameters
 from src.security import authenticate
 
 load_dotenv()
@@ -91,6 +97,22 @@ async def changelog(request: Request):
     )
 
 
+@app.get(
+    path="/kg-tester",
+    include_in_schema=False,
+)
+async def kg_tester(request: Request):
+    """
+    Return an interactive page for testing and visualizing `/graph` responses.
+    """
+    remote_api_base_url = os.getenv("KG_TESTER_REMOTE_API_BASE_URL", "").strip().rstrip("/")
+    return templates.TemplateResponse(
+        request=request,
+        name="kg_tester.html",
+        context={"remote_api_base_url": remote_api_base_url},
+    )
+
+
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     """
@@ -153,7 +175,75 @@ async def query_knowledge_graph(
     """
     client: database.Client = request.state.client
     graph: nx.Graph = request.state.graph
-    return await client.find_subgraph(graph, **params.model_dump())
+    return await kg_v1.build_subgraph_v1(client, graph, **params.model_dump())
+
+
+@app.get(
+    path="/graph/v2",
+    response_model=GraphV2,
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def query_knowledge_graph_v2(
+    request: Request,
+    response: Response,
+    params: Annotated[GraphV2Parameters, Query()],
+):
+    """
+    Get a staged knowledge graph with central / secondary / periphery tiers.
+    """
+    client: database.Client = request.state.client
+    graph: nx.Graph = request.state.graph
+    timings: dict[str, float] = {}
+    result = await kg_v2.build_subgraph_v2(client, graph, params.query, timings=timings)
+    response.headers["X-KG-Timing"] = json.dumps(timings, separators=(",", ":"))
+    server_timing = []
+    key_to_metric = {
+        "central_exact_match_ms": "central_exact",
+        "central_lexical_ms": "central_lexical",
+        "central_embed_ms": "central_embed",
+        "central_vector_search_ms": "central_search",
+        "central_selection_ms": "central",
+        "stage1_ms": "stage1",
+        "stage2_ms": "stage2",
+        "stage3_ms": "stage3",
+        "total_ms": "total",
+    }
+    for key, metric in key_to_metric.items():
+        if key in timings:
+            server_timing.append(f"{metric};dur={timings[key]:.2f}")
+    if server_timing:
+        response.headers["Server-Timing"] = ", ".join(server_timing)
+    return result
+
+
+@app.get(
+    path="/debug/tables",
+    dependencies=[Depends(authenticate)],
+    include_in_schema=False,
+)
+async def debug_tables(request: Request):
+    """
+    Return table presence and row counts to validate storage wiring.
+    """
+    async def maybe_await(value):
+        return await value if isawaitable(value) else value
+
+    client: database.Client = request.state.client
+    names = await maybe_await(client.connection.table_names())
+    names = list(names)
+    status = {}
+    for name in ("nodes", "edges", "chunks", "sdg7"):
+        if name in names:
+            try:
+                table = await maybe_await(client.connection.open_table(name))
+                rows = await maybe_await(table.count_rows())
+                status[name] = {"exists": True, "rows": rows}
+            except Exception as error:
+                status[name] = {"exists": True, "rows": None, "error": str(error)}
+        else:
+            status[name] = {"exists": False, "rows": 0}
+    return {"tables": status, "all_tables": sorted(names)}
 
 
 @app.post(

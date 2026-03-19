@@ -5,6 +5,7 @@ Routines for database operations for RAG.
 import asyncio
 import json
 import os
+from urllib.parse import urlparse
 
 import lancedb
 import networkx as nx
@@ -30,10 +31,35 @@ def get_storage_options() -> dict[str, str]:
     dict
         Mapping storage options.
     """
-    return {
-        "account_name": os.environ["STORAGE_ACCOUNT_NAME"],
-        "account_key": os.environ["STORAGE_ACCOUNT_KEY"],
-    }
+    sas_url = os.getenv("STORAGE_SAS_URL")
+    if sas_url:
+        parsed = urlparse(sas_url)
+        host = parsed.netloc.split(":")[0]
+        account_name = host.split(".")[0] if host else ""
+        query = parsed.query.lstrip("?")
+        if account_name and query:
+            return {"account_name": account_name, "sas_token": query}
+        raise RuntimeError(
+            "Invalid `STORAGE_SAS_URL`. Expected a full Azure Blob SAS URL like "
+            "`https://<account>.blob.core.windows.net/...?...`."
+        )
+
+    account_name = os.getenv("STORAGE_ACCOUNT_NAME")
+    account_key = os.getenv("STORAGE_ACCOUNT_KEY")
+    sas_token = os.getenv("STORAGE_SAS_TOKEN")
+    if not account_name:
+        raise RuntimeError(
+            "Missing `STORAGE_ACCOUNT_NAME` environment variable. "
+            "Populate it in your `.env` file."
+        )
+    if account_key:
+        return {"account_name": account_name, "account_key": account_key}
+    if sas_token:
+        return {"account_name": account_name, "sas_token": sas_token}
+    raise RuntimeError(
+        "Missing storage credentials. Set either `STORAGE_ACCOUNT_KEY` or "
+        "`STORAGE_SAS_TOKEN` in your `.env` file."
+    )
 
 
 async def get_connection() -> lancedb.AsyncConnection:
@@ -103,7 +129,12 @@ class Client:
         list[Node]
             A list of nodes sorted by name.
         """
-        table = await self.connection.open_table("nodes")
+        try:
+            table = await self.connection.open_table("nodes")
+        except ValueError as error:
+            if "was not found" in str(error):
+                return []
+            raise
         return sorted(
             [
                 Node(**node)
@@ -130,7 +161,12 @@ class Client:
         Node | None
             A matching node if found, otherwise None is returned.
         """
-        table = await self.connection.open_table("nodes")
+        try:
+            table = await self.connection.open_table("nodes")
+        except ValueError as error:
+            if "was not found" in str(error):
+                return None
+            raise
         match method:
             case SearchMethod.VECTOR:
                 vector = await self.embedder.aembed_query(query)
@@ -169,6 +205,8 @@ class Client:
         )
         # subset the graph using central nodes as sources
         sources = [node.name for node in central_nodes if node is not None]
+        if not sources:
+            return Graph(nodes=[], edges=[])
         nodes = utils.get_neighbourhood_nodes(graph, sources, hops)
         graph = graph.subgraph(nodes).copy()
         nodes = utils.get_closest_nodes(graph, sources)
@@ -233,13 +271,25 @@ class Client:
         nx.Graph
             Knowledge graph.
         """
-        table = await self.connection.open_table("nodes")
+        try:
+            table = await self.connection.open_table("nodes")
+        except ValueError as error:
+            if "was not found" in str(error):
+                return nx.DiGraph()
+            raise
         df = await table.query().select(["name", "description", "weight"]).to_pandas()
         nodes = zip(
             df["name"].tolist(),
             df[["description", "weight"]].to_dict(orient="records"),
         )
-        table = await self.connection.open_table("edges")
+        try:
+            table = await self.connection.open_table("edges")
+        except ValueError as error:
+            if "was not found" in str(error):
+                graph = nx.DiGraph()
+                graph.add_nodes_from(nodes)
+                return graph
+            raise
         # check if level column exists in the table schema
         schema = await table.schema()
         edge_columns = ["subject", "object", "predicate", "description", "weight"]
