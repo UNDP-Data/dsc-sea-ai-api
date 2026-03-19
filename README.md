@@ -14,8 +14,10 @@ A Python API to serve data from the knowledge graph for the Sustainable Energy A
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
+- [Getting Started](#getting-started)
+- [API Structure](#api-structure)
+- [KG Subgraph Tester](#kg-subgraph-tester)
+- [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -39,9 +41,79 @@ make run
 # INFO: Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 ```
 
+For Azure Blob auth you can use either:
+- `STORAGE_SAS_URL` (full SAS URL), or
+- `STORAGE_ACCOUNT_NAME` with `STORAGE_ACCOUNT_KEY` / `STORAGE_SAS_TOKEN`.
+
+Optional local tester env:
+- `KG_TESTER_REMOTE_API_BASE_URL` to prefill the remote API target in `/kg-tester`.
+
+## API Structure
+
+All protected endpoints require `X-Api-Key`.
+
+### V1 Graph Endpoint
+
+- `GET /graph?query=<text>[&hops=<int>]`
+- Response:
+  - `nodes[]` with `name`, `description`, `neighbourhood`, `weight`, `colour`
+  - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`
+
+### V2 Graph Endpoint
+
+- `GET /graph/v2?query=<text>`
+- Response:
+  - `nodes[]` with `name`, `description`, `tier`, `weight`, `colour`
+    - `tier` is one of: `central`, `secondary`, `periphery`
+  - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`
+  - `level` is not returned in the API payload.
+
+### Internal KG Module Layout
+
+Knowledge graph logic is versioned under:
+- `src/kg/v1.py` for V1 graph assembly
+- `src/kg/v2.py` for V2 staged graph assembly
+- `src/kg/types.py` for V2 response models
+
+Compatibility adapters are retained:
+- `src/entities_v2.py`
+- `src/graph_v2.py`
+
+## KG Subgraph Tester
+
+The API includes a built-in testing page for the current knowledge graph subgraph system.
+
+1. Start the API locally (`make run`).
+2. Open [http://127.0.0.1:8000/kg-tester](http://127.0.0.1:8000/kg-tester).
+3. Enter:
+   - target (`Local server` or `Remote API`),
+   - endpoint version (`/graph` or `/graph/v2`),
+   - a graph `query` (for example `climate change mitigation`),
+   - remote API base URL (only when target is `Remote API`),
+   - your `X-Api-Key` value (from `API_KEY` in your environment).
+4. Submit to call the selected graph endpoint and view:
+   - an interactive D3 force graph,
+   - the raw JSON response payload.
+
+Notes:
+- In browser-based `Remote API` mode, the remote API must allow CORS from your local tester origin and allow header `X-Api-Key`.
+
+To evaluate V2 output quality over a representative query set:
+
+```bash
+python3 scripts/evaluate_graph_v2.py --api-key "$API_KEY"
+```
+
+Optional flags:
+- `--queries-file path/to/queries.txt` for custom query sets
+- `--output /tmp/graph_v2_eval.json` to persist full metrics
+
 ## Deployment
 
-The project is hooked up to a CI/CD pipeline. Committing to `main` branch will trigger deployment to Azure Web App service. A pull request is required to change the branch.
+The project is hooked up to CI/CD via GitHub Actions.
+- Workflow: `.github/workflows/azure-webapps-python.yml`
+- Azure Web App name: `sea-ai-api`
+- A push to `main` triggers deployment.
 
 ## Contributing
 
