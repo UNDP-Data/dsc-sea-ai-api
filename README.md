@@ -57,7 +57,7 @@ All protected endpoints require `X-Api-Key`.
 - `GET /graph?query=<text>[&hops=<int>]`
 - Response:
   - `nodes[]` with `name`, `description`, `neighbourhood`, `weight`, `colour`
-  - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`
+  - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`, `level`
 
 ### V2 Graph Endpoint
 
@@ -66,7 +66,6 @@ All protected endpoints require `X-Api-Key`.
   - `nodes[]` with `name`, `description`, `tier`, `weight`, `colour`
     - `tier` is one of: `central`, `secondary`, `periphery`
   - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`
-  - `level` is not returned in the API payload.
 
 ### Internal KG Module Layout
 
