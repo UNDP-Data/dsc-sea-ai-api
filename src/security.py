@@ -2,6 +2,7 @@
 Security routines for authenticating requests.
 """
 
+import hmac
 import os
 
 from fastapi import HTTPException, Security, status
@@ -33,7 +34,13 @@ async def authenticate(api_key: str = Security(api_key_header)) -> bool:
     HTTPException
         If no key is provided or the key is invalid.
     """
-    if api_key == os.environ["API_KEY"]:
+    expected_key = os.getenv("API_KEY")
+    if not expected_key:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="API key is not configured on the server.",
+        )
+    if hmac.compare_digest(api_key, expected_key):
         return True
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key."

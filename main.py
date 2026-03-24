@@ -2,12 +2,14 @@
 Entry point to the API.
 """
 
+import asyncio
 from contextlib import asynccontextmanager
 from inspect import isawaitable
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
+from uuid import uuid4
 import json
-import os
+import logging
 
 import networkx as nx
 import yaml
@@ -33,6 +35,7 @@ from src.kg.types import GraphV2, GraphV2Parameters
 from src.security import authenticate
 
 load_dotenv()
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
@@ -94,22 +97,6 @@ async def changelog(request: Request):
         request=request,
         name="changelog.html",
         context={"file_names": file_names},
-    )
-
-
-@app.get(
-    path="/kg-tester",
-    include_in_schema=False,
-)
-async def kg_tester(request: Request):
-    """
-    Return an interactive page for testing and visualizing `/graph` responses.
-    """
-    remote_api_base_url = os.getenv("KG_TESTER_REMOTE_API_BASE_URL", "").strip().rstrip("/")
-    return templates.TemplateResponse(
-        request=request,
-        name="kg_tester.html",
-        context={"remote_api_base_url": remote_api_base_url},
     )
 
 
@@ -252,7 +239,17 @@ async def debug_tables(request: Request):
     response_model_by_alias=False,
     dependencies=[Depends(authenticate)],
 )
-async def ask_model(request: Request, messages: list[Message]):
+async def ask_model(
+    request: Request,
+    messages: list[Message],
+    graph_version: Annotated[
+        Literal["v1", "v2"],
+        Query(
+            description="Knowledge graph response schema version.",
+            json_schema_extra={"example": "v2"},
+        ),
+    ] = "v2",
+):
     """
     Ask a GenAI model to compose a response supplemented by knowledge graph data.
 
@@ -265,19 +262,134 @@ async def ask_model(request: Request, messages: list[Message]):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The last message must come from the user.",
         )
+    request_id = request.headers.get("X-Request-Id") or uuid4().hex
     user_query = messages[-1].content
     client: database.Client = request.state.client
     graph: nx.Graph = request.state.graph
-    entities = await genai.extract_entities(user_query)
-    graph = await client.find_subgraph(graph, entities)
-    response = AssistantResponse(
-        role="assistant",
-        content="",
-        graph=graph,
+    logger.info(
+        "Model request started request_id=%s graph_version=%s",
+        request_id,
+        graph_version,
     )
-    datasets = [await client.get_sdg7_dataset()]
-    tools = [database.retrieve_chunks] + genai.get_sql_tools(datasets)
+
+    async def get_response_graph() -> Graph | GraphV2:
+        if graph_version == "v1":
+            entities = await genai.extract_entities(user_query)
+            return await client.find_subgraph(graph, entities)
+        return await kg_v2.build_subgraph_v2(client, graph, user_query)
+
+    async def stream_model_response():
+        emitted_chunks = 0
+        if await request.is_disconnected():
+            logger.info(
+                "Client disconnected before /model stream started request_id=%s.",
+                request_id,
+            )
+            return
+        queue: asyncio.Queue[tuple[str, str | None]] = asyncio.Queue()
+
+        async def produce_graph() -> None:
+            try:
+                response_graph = await get_response_graph()
+            except Exception as error:
+                logger.exception(
+                    "Failed to build response graph request_id=%s: %s",
+                    request_id,
+                    error,
+                )
+                return
+            if await request.is_disconnected():
+                logger.info(
+                    "Client disconnected before graph chunk was sent request_id=%s.",
+                    request_id,
+                )
+                return
+            graph_response = AssistantResponse(
+                role="assistant",
+                content="",
+                graph=response_graph,
+            )
+            await queue.put(("data", graph_response.model_dump_json() + "\n"))
+
+        async def produce_answer() -> None:
+            tools = [database.retrieve_chunks]
+            try:
+                datasets = [await client.get_sdg7_dataset()]
+                tools += genai.get_sql_tools(datasets)
+            except Exception as error:
+                logger.exception(
+                    "Failed to prepare SQL tools request_id=%s: %s",
+                    request_id,
+                    error,
+                )
+            response = AssistantResponse(
+                role="assistant",
+                content="",
+                graph=None,
+            )
+            try:
+                async for chunk in genai.get_answer(messages, response, tools=tools):
+                    if await request.is_disconnected():
+                        logger.info(
+                            "Client disconnected during /model token stream request_id=%s.",
+                            request_id,
+                        )
+                        return
+                    await queue.put(("data", chunk))
+            except Exception as error:
+                logger.exception(
+                    "Failed while streaming answer request_id=%s: %s",
+                    request_id,
+                    error,
+                )
+                fallback = AssistantResponse(
+                    role="assistant",
+                    content="I ran into a temporary issue while generating a response. Please retry your question.",
+                    graph=None,
+                )
+                await queue.put(("data", fallback.model_dump_json() + "\n"))
+
+        async def run_producer(done_label: str, producer) -> None:
+            try:
+                await producer()
+            finally:
+                await queue.put((done_label, None))
+
+        producer_tasks = [
+            asyncio.create_task(run_producer("graph_done", produce_graph)),
+            asyncio.create_task(run_producer("answer_done", produce_answer)),
+        ]
+        completed: set[str] = set()
+        try:
+            while len(completed) < 2:
+                if await request.is_disconnected():
+                    logger.info(
+                        "Client disconnected before /model stream completion request_id=%s.",
+                        request_id,
+                    )
+                    break
+                try:
+                    label, payload = await asyncio.wait_for(queue.get(), timeout=0.5)
+                except asyncio.TimeoutError:
+                    continue
+                if payload is None:
+                    completed.add(label)
+                    continue
+                yield payload
+                emitted_chunks += 1
+        finally:
+            for task in producer_tasks:
+                if not task.done():
+                    task.cancel()
+            await asyncio.gather(*producer_tasks, return_exceptions=True)
+        logger.info(
+            "Model request finished request_id=%s chunks=%s",
+            request_id,
+            emitted_chunks,
+        )
+
     return StreamingResponse(
-        content=genai.get_answer(messages, response, tools=tools),
+        content=stream_model_response(),
         media_type="application/x-ndjson",
+        headers={"X-Request-Id": request_id},
     )

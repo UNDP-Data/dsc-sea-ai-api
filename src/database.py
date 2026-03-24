@@ -4,6 +4,7 @@ Routines for database operations for RAG.
 
 import asyncio
 import json
+import logging
 import os
 from urllib.parse import urlparse
 
@@ -18,6 +19,7 @@ from . import genai, utils
 from .entities import Chunk, Document, Graph, Node, SearchMethod
 
 __all__ = ["get_storage_options", "get_connection", "Client", "retrieve_chunks"]
+logger = logging.getLogger(__name__)
 
 
 def get_storage_options() -> dict[str, str]:
@@ -239,10 +241,13 @@ class Client:
         # perform a vector search to find best matches
         vector = await self.embedder.aembed_query(query)
         reranker = TimeReranker()
+        search = table.vector_search(vector)
+        where = (where or "").strip()
+        if where:
+            search = search.where(where)
         return [
             Chunk(**chunk)
-            for chunk in await table.vector_search(vector)
-            .where(where)
+            for chunk in await search
             .rerank(reranker, query_string=query)
             .limit(limit)
             .to_list()
@@ -312,7 +317,7 @@ class Client:
 # since the model uses the docstring, don't mention the artifacts there
 @tool(parse_docstring=True, response_format="content_and_artifact")
 async def retrieve_chunks(
-    query: str, years: int | list[int] = 2025
+    query: str, years: int | list[int] | None = 2025
 ) -> tuple[str, list[Document]]:
     """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
@@ -323,21 +328,41 @@ async def retrieve_chunks(
 
     Args:
         query (str): Plain text user query.
-        years (Union[int, Tuple[int, ...]]): Specific year or years the user refers to if
-            applicable. Otherwise, use the current year.
+        years (Union[int, Tuple[int, ...], None]): Specific year or years the user refers
+            to if applicable. If not provided, defaults to 2025 to prioritize the
+            most recent SDG 7 reporting cycle.
 
     Returns:
         str: JSON object containing the most relevant document chunks.
     """
-    connection = await get_connection()
-    client = Client(connection)
-    where = (
-        f"year = {years}"
-        if isinstance(years, int)
-        else f"year IN ({', '.join(map(str, years))})"
-    )
-    chunks = await client.retrieve_chunks(query, where)
-    data = json.dumps([chunk.to_context() for chunk in chunks])
-    # deduplicate and sort
-    documents = sorted(set(Document(**chunk.model_dump()) for chunk in chunks))
-    return data, documents
+    def normalize_years(value: int | list[int] | None) -> list[int]:
+        if value is None:
+            return [2025]
+        if isinstance(value, int):
+            return [value]
+        clean = []
+        for item in value:
+            if isinstance(item, int):
+                clean.append(item)
+            elif isinstance(item, str) and item.isdigit():
+                clean.append(int(item))
+        return clean or [2025]
+
+    safe_years = normalize_years(years)
+    where = ""
+    if len(safe_years) == 1:
+        where = f"year = {safe_years[0]}"
+    elif safe_years:
+        where = f"year IN ({', '.join(map(str, safe_years))})"
+    try:
+        connection = await get_connection()
+        client = Client(connection)
+        chunks = await client.retrieve_chunks(query, where)
+        data = json.dumps([chunk.to_context() for chunk in chunks])
+        # deduplicate and sort
+        documents = sorted(set(Document(**chunk.model_dump()) for chunk in chunks))
+        return data, documents
+    except Exception as error:
+        logger.exception("retrieve_chunks tool failed: %s", error)
+        # Return empty evidence payload so the agent can continue answering.
+        return "[]", []
