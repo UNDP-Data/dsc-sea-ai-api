@@ -137,6 +137,22 @@ async def changelog(request: Request):
     )
 
 
+@app.get(
+    path="/kg-tester",
+    include_in_schema=False,
+)
+async def kg_tester(request: Request):
+    """
+    Return an interactive page for testing and visualizing `/graph` responses.
+    """
+    remote_api_base_url = os.getenv("KG_TESTER_REMOTE_API_BASE_URL", "").strip().rstrip("/")
+    return templates.TemplateResponse(
+        request=request,
+        name="kg_tester.html",
+        context={"remote_api_base_url": remote_api_base_url},
+    )
+
+
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     """
