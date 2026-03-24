@@ -22,6 +22,7 @@ load_dotenv()
 
 app = FastAPI(title="KG Tester Frontend", docs_url=None, redoc_url=None, openapi_url=None)
 templates = Jinja2Templates(directory="frontend/templates")
+DEFAULT_REMOTE_API_BASE_URL = "https://sea-ai-api.azurewebsites.net"
 
 
 class ProxyMessage(BaseModel):
@@ -53,7 +54,7 @@ def _get_local_base() -> str:
 
 
 def _get_remote_default_base() -> str:
-    configured = os.getenv("KG_TESTER_REMOTE_API_BASE_URL", "")
+    configured = os.getenv("KG_TESTER_REMOTE_API_BASE_URL", DEFAULT_REMOTE_API_BASE_URL)
     return _validated_base(configured) if configured.strip() else ""
 
 
