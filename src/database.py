@@ -3,8 +3,13 @@ Routines for database operations for RAG.
 """
 
 import asyncio
+import contextlib
 import json
+import logging
 import os
+import re
+from difflib import SequenceMatcher
+from inspect import isawaitable
 from urllib.parse import urlparse
 
 import lancedb
@@ -18,6 +23,43 @@ from . import genai, utils
 from .entities import Chunk, Document, Graph, Node, SearchMethod
 
 __all__ = ["get_storage_options", "get_connection", "Client", "retrieve_chunks"]
+logger = logging.getLogger(__name__)
+
+
+def _env_timeout_seconds(
+    name: str,
+    default: float,
+    *,
+    min_value: float = 0.1,
+) -> float:
+    """
+    Parse timeout configuration from environment with safe fallback.
+
+    Invalid, empty, or too-small values fall back to the provided default.
+    """
+    raw = (os.getenv(name) or "").strip()
+    if not raw:
+        return default
+    try:
+        parsed = float(raw)
+    except ValueError:
+        logger.warning(
+            "Invalid %s value %r; using default=%s",
+            name,
+            raw,
+            default,
+        )
+        return default
+    if parsed < min_value:
+        logger.warning(
+            "Ignoring %s value %s below minimum %s; using default=%s",
+            name,
+            parsed,
+            min_value,
+            default,
+        )
+        return default
+    return parsed
 
 
 def get_storage_options() -> dict[str, str]:
@@ -198,13 +240,85 @@ class Client:
         Graph
             Object with node and edge lists.
         """
+        def lexical_source(candidate_query: str) -> str | None:
+            norm_query = " ".join(re.findall(r"[a-z0-9]+", candidate_query.lower()))
+            if not norm_query:
+                return None
+            exact = [
+                name
+                for name in graph.nodes
+                if isinstance(name, str)
+                and " ".join(re.findall(r"[a-z0-9]+", name.lower())) == norm_query
+            ]
+            if exact:
+                return max(
+                    exact,
+                    key=lambda name: float(graph.nodes[name].get("weight", 0.0) or 0.0),
+                )
+            query_tokens = set(norm_query.split())
+            if not query_tokens:
+                return None
+            best_name = None
+            best_score = 0.0
+            for name in graph.nodes:
+                if not isinstance(name, str):
+                    continue
+                norm_name = " ".join(re.findall(r"[a-z0-9]+", name.lower()))
+                if not norm_name:
+                    continue
+                name_tokens = set(norm_name.split())
+                if not name_tokens:
+                    continue
+                overlap = len(query_tokens & name_tokens) / max(1, len(name_tokens))
+                ratio = SequenceMatcher(None, norm_query, norm_name).ratio()
+                score = max(overlap, ratio)
+                if score > best_score:
+                    best_score = score
+                    best_name = name
+            if best_name and best_score >= 0.45:
+                return best_name
+            return None
+
+        async def vector_source(candidate_query: str) -> str | None:
+            timeout_seconds = _env_timeout_seconds(
+                "GRAPH_VECTOR_TIMEOUT_SECONDS",
+                20.0,
+            )
+            try:
+                node = await asyncio.wait_for(
+                    self.find_node(candidate_query, SearchMethod.VECTOR),
+                    timeout=timeout_seconds,
+                )
+            except asyncio.TimeoutError:
+                logger.warning(
+                    "find_subgraph vector source timeout after %ss for query=%r",
+                    timeout_seconds,
+                    candidate_query,
+                )
+                return None
+            except Exception as error:
+                logger.warning(
+                    "find_subgraph vector source failed for query=%r: %s",
+                    candidate_query,
+                    error,
+                )
+                return None
+            return node.name if node is not None else None
+
         # match query or queries to find central nodes
         queries = [query] if isinstance(query, str) else query
-        central_nodes = await asyncio.gather(
-            *[self.find_node(query, SearchMethod.VECTOR) for query in queries]
-        )
-        # subset the graph using central nodes as sources
-        sources = [node.name for node in central_nodes if node is not None]
+        sources: list[str] = []
+        for candidate_query in queries:
+            source = lexical_source(candidate_query)
+            if source is None:
+                source = await vector_source(candidate_query)
+            if source is None and graph.number_of_nodes() > 0:
+                source = max(
+                    graph.nodes,
+                    key=lambda name: float(graph.nodes[name].get("weight", 0.0) or 0.0),
+                )
+            if source and source in graph and source not in sources:
+                sources.append(source)
         if not sources:
             return Graph(nodes=[], edges=[])
         nodes = utils.get_neighbourhood_nodes(graph, sources, hops)
@@ -239,10 +353,13 @@ class Client:
         # perform a vector search to find best matches
         vector = await self.embedder.aembed_query(query)
         reranker = TimeReranker()
+        search = table.vector_search(vector)
+        where = (where or "").strip()
+        if where:
+            search = search.where(where)
         return [
             Chunk(**chunk)
-            for chunk in await table.vector_search(vector)
-            .where(where)
+            for chunk in await search
             .rerank(reranker, query_string=query)
             .limit(limit)
             .to_list()
@@ -312,7 +429,7 @@ class Client:
 # since the model uses the docstring, don't mention the artifacts there
 @tool(parse_docstring=True, response_format="content_and_artifact")
 async def retrieve_chunks(
-    query: str, years: int | list[int] = 2025
+    query: str, years: int | list[int] | None = 2025
 ) -> tuple[str, list[Document]]:
     """Retrieve relevant document chunks from the Sustainable Energy Academy database.
 
@@ -323,21 +440,63 @@ async def retrieve_chunks(
 
     Args:
         query (str): Plain text user query.
-        years (Union[int, Tuple[int, ...]]): Specific year or years the user refers to if
-            applicable. Otherwise, use the current year.
+        years (Union[int, Tuple[int, ...], None]): Specific year or years the user refers
+            to if applicable. If not provided, defaults to 2025 to prioritize the
+            most recent SDG 7 reporting cycle.
 
     Returns:
         str: JSON object containing the most relevant document chunks.
     """
-    connection = await get_connection()
-    client = Client(connection)
-    where = (
-        f"year = {years}"
-        if isinstance(years, int)
-        else f"year IN ({', '.join(map(str, years))})"
+    def normalize_years(value: int | list[int] | None) -> list[int]:
+        if value is None:
+            return [2025]
+        if isinstance(value, int):
+            return [value]
+        clean = []
+        for item in value:
+            if isinstance(item, int):
+                clean.append(item)
+            elif isinstance(item, str) and item.isdigit():
+                clean.append(int(item))
+        return clean or [2025]
+
+    safe_years = normalize_years(years)
+    where = ""
+    if len(safe_years) == 1:
+        where = f"year = {safe_years[0]}"
+    elif safe_years:
+        where = f"year IN ({', '.join(map(str, safe_years))})"
+    timeout_seconds = _env_timeout_seconds(
+        "RETRIEVE_CHUNKS_TIMEOUT_SECONDS",
+        60.0,
     )
-    chunks = await client.retrieve_chunks(query, where)
-    data = json.dumps([chunk.to_context() for chunk in chunks])
-    # deduplicate and sort
-    documents = sorted(set(Document(**chunk.model_dump()) for chunk in chunks))
-    return data, documents
+    connection = None
+    try:
+        connection = await get_connection()
+        client = Client(connection)
+        chunks = await asyncio.wait_for(
+            client.retrieve_chunks(query, where),
+            timeout=timeout_seconds,
+        )
+        data = json.dumps([chunk.to_context() for chunk in chunks])
+        # deduplicate and sort
+        documents = sorted(set(Document(**chunk.model_dump()) for chunk in chunks))
+        return data, documents
+    except asyncio.TimeoutError:
+        logger.warning(
+            "retrieve_chunks timed out after %ss for query=%r",
+            timeout_seconds,
+            query,
+        )
+        return "[]", []
+    except Exception as error:
+        logger.exception("retrieve_chunks tool failed: %s", error)
+        # Return empty evidence payload so the agent can continue answering.
+        return "[]", []
+    finally:
+        close = getattr(connection, "close", None)
+        if callable(close):
+            result = close()
+            if isawaitable(result):
+                with contextlib.suppress(Exception):
+                    await result

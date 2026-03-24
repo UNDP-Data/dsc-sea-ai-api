@@ -62,9 +62,9 @@ def _make_synthetic_graph() -> nx.DiGraph:
         add_node(centre, weight=4.0)
 
     first_nodes = []
-    for centre in centres:
+    for centre_index, centre in enumerate(centres, start=1):
         for index in range(1, 8):
-            node = f"{centre}_s{index}"
+            node = f"s{centre_index}_{index}"
             first_nodes.append(node)
             add_node(node, weight=3.0 - index * 0.1)
             graph.add_edge(
@@ -77,7 +77,7 @@ def _make_synthetic_graph() -> nx.DiGraph:
 
     for parent in first_nodes:
         for index in range(1, 6):
-            child = f"{parent}_x{index}"
+            child = f"x_{parent}_{index}"
             add_node(child, weight=2.0 - index * 0.1)
             graph.add_edge(
                 parent,
@@ -87,7 +87,7 @@ def _make_synthetic_graph() -> nx.DiGraph:
                 weight=2.8 - index * 0.2,
             )
             for leaf_index in range(1, 4):
-                leaf = f"{child}_p{leaf_index}"
+                leaf = f"p_{child}_{leaf_index}"
                 add_node(leaf, weight=1.0)
                 graph.add_edge(
                     child,

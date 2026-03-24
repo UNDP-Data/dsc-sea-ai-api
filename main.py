@@ -2,12 +2,16 @@
 Entry point to the API.
 """
 
-from contextlib import asynccontextmanager
+import asyncio
+from contextlib import asynccontextmanager, suppress
 from inspect import isawaitable
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
+from uuid import uuid4
 import json
+import logging
 import os
+from time import monotonic
 
 import networkx as nx
 import yaml
@@ -25,7 +29,6 @@ from src.entities import (
     GraphParameters,
     Message,
     Node,
-    SearchMethod,
 )
 from src.kg import v1 as kg_v1
 from src.kg import v2 as kg_v2
@@ -33,6 +36,43 @@ from src.kg.types import GraphV2, GraphV2Parameters
 from src.security import authenticate
 
 load_dotenv()
+logger = logging.getLogger(__name__)
+
+
+def _env_timeout_seconds(
+    name: str,
+    default: float,
+    *,
+    min_value: float = 0.1,
+) -> float:
+    """
+    Parse timeout configuration from environment with safe fallback.
+
+    Invalid, empty, or too-small values fall back to the provided default.
+    """
+    raw = (os.getenv(name) or "").strip()
+    if not raw:
+        return default
+    try:
+        parsed = float(raw)
+    except ValueError:
+        logger.warning(
+            "Invalid %s value %r; using default=%s",
+            name,
+            raw,
+            default,
+        )
+        return default
+    if parsed < min_value:
+        logger.warning(
+            "Ignoring %s value %s below minimum %s; using default=%s",
+            name,
+            parsed,
+            min_value,
+            default,
+        )
+        return default
+    return parsed
 
 
 @asynccontextmanager
@@ -137,8 +177,22 @@ async def search_nodes(
     Search nodes in the graph. Since there is no central node,
     `neighbourhood` is set to zero for all nodes.
     """
-    client: database.Client = request.state.client
-    return await client.search_nodes(pattern or "", limit)
+    graph: nx.Graph = request.state.graph
+    token = (pattern or "").strip().lower()
+    nodes: list[Node] = []
+    for name, attrs in graph.nodes(data=True):
+        if not isinstance(name, str):
+            continue
+        if token and token not in name.lower():
+            continue
+        nodes.append(
+            Node(
+                name=name,
+                description=attrs.get("description"),
+                weight=float(attrs.get("weight", 0.0) or 0.0),
+            )
+        )
+    return sorted(nodes)[:limit]
 
 
 @app.get(
@@ -151,13 +205,24 @@ async def get_node(request: Request, name: str):
     """
     Get a single node by name. Case insensitive.
     """
-    client: database.Client = request.state.client
-    if (node := await client.find_node(name, SearchMethod.EXACT)) is None:
+    graph: nx.Graph = request.state.graph
+    query = name.lower()
+    if not query:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Node '{name}' does not exist.",
         )
-    return node
+    for node_name, attrs in graph.nodes(data=True):
+        if isinstance(node_name, str) and node_name.lower() == query:
+            return Node(
+                name=node_name,
+                description=attrs.get("description"),
+                weight=float(attrs.get("weight", 0.0) or 0.0),
+            )
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"Node '{name}' does not exist.",
+    )
 
 
 @app.get(
@@ -252,7 +317,17 @@ async def debug_tables(request: Request):
     response_model_by_alias=False,
     dependencies=[Depends(authenticate)],
 )
-async def ask_model(request: Request, messages: list[Message]):
+async def ask_model(
+    request: Request,
+    messages: list[Message],
+    graph_version: Annotated[
+        Literal["v1", "v2"],
+        Query(
+            description="Knowledge graph response schema version.",
+            json_schema_extra={"example": "v2"},
+        ),
+    ] = "v2",
+):
     """
     Ask a GenAI model to compose a response supplemented by knowledge graph data.
 
@@ -260,24 +335,262 @@ async def ask_model(request: Request, messages: list[Message]):
     with the current user message being the last one. This endpoint streams the response in
     NDJSON format.
     """
+    if not messages:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="At least one message is required.",
+        )
     if messages[-1].role != "human":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The last message must come from the user.",
         )
+    request_id = request.headers.get("X-Request-Id") or uuid4().hex
     user_query = messages[-1].content
-    client: database.Client = request.state.client
     graph: nx.Graph = request.state.graph
-    entities = await genai.extract_entities(user_query)
-    graph = await client.find_subgraph(graph, entities)
-    response = AssistantResponse(
-        role="assistant",
-        content="",
-        graph=graph,
+    logger.info(
+        "Model request started request_id=%s graph_version=%s",
+        request_id,
+        graph_version,
     )
-    datasets = [await client.get_sdg7_dataset()]
-    tools = [database.retrieve_chunks] + genai.get_sql_tools(datasets)
+
+    async def stream_model_response():
+        emitted_chunks = 0
+        if await request.is_disconnected():
+            logger.info(
+                "Client disconnected before /model stream started request_id=%s.",
+                request_id,
+            )
+            return
+        queue: asyncio.Queue[tuple[str, str | None]] = asyncio.Queue()
+        graph_timeout_seconds = _env_timeout_seconds(
+            "MODEL_GRAPH_TIMEOUT_SECONDS", 120.0
+        )
+        stream_idle_timeout_seconds = _env_timeout_seconds(
+            "MODEL_STREAM_IDLE_TIMEOUT_SECONDS", 90.0
+        )
+        tools_prep_timeout_seconds = _env_timeout_seconds(
+            "MODEL_TOOLS_PREP_TIMEOUT_SECONDS", 45.0
+        )
+        stream_watchdog_seconds = _env_timeout_seconds(
+            "MODEL_STREAM_WATCHDOG_SECONDS", 150.0
+        )
+
+        async def maybe_close(connection) -> None:
+            close = getattr(connection, "close", None)
+            if close is None:
+                return
+            result = close()
+            if isawaitable(result):
+                with suppress(Exception):
+                    await asyncio.wait_for(result, timeout=2.0)
+
+        async def produce_graph() -> None:
+            fallback_graph: Graph | GraphV2
+            if graph_version == "v1":
+                fallback_graph = Graph(nodes=[], edges=[])
+            else:
+                fallback_graph = GraphV2(nodes=[], edges=[])
+            graph_connection = None
+            try:
+                # Use a dedicated connection to avoid lock/contention with concurrent answer flow.
+                graph_connection = await database.get_connection()
+                graph_client = database.Client(graph_connection)
+                if graph_version == "v1":
+                    entities = await genai.extract_entities(user_query)
+                    response_graph = await asyncio.wait_for(
+                        graph_client.find_subgraph(graph, entities),
+                        timeout=graph_timeout_seconds,
+                    )
+                else:
+                    response_graph = await asyncio.wait_for(
+                        kg_v2.build_subgraph_v2(graph_client, graph, user_query),
+                        timeout=graph_timeout_seconds,
+                    )
+            except asyncio.TimeoutError:
+                logger.warning(
+                    "Graph build timed out request_id=%s timeout=%ss",
+                    request_id,
+                    graph_timeout_seconds,
+                )
+                response_graph = fallback_graph
+            except Exception as error:
+                logger.exception(
+                    "Failed to build response graph request_id=%s: %s",
+                    request_id,
+                    error,
+                )
+                response_graph = fallback_graph
+            finally:
+                if graph_connection is not None:
+                    await maybe_close(graph_connection)
+            if await request.is_disconnected():
+                logger.info(
+                    "Client disconnected before graph chunk was sent request_id=%s.",
+                    request_id,
+                )
+                return
+            graph_response = AssistantResponse(
+                role="assistant",
+                content="",
+                graph=response_graph,
+            )
+            await queue.put(("graph_data", graph_response.model_dump_json() + "\n"))
+
+        async def produce_answer() -> None:
+            tools = [database.retrieve_chunks]
+            answer_connection = None
+            try:
+                # Use a dedicated connection to avoid concurrency issues with graph producer.
+                answer_connection = await database.get_connection()
+                answer_client = database.Client(answer_connection)
+                datasets = [
+                    await asyncio.wait_for(
+                        answer_client.get_sdg7_dataset(),
+                        timeout=tools_prep_timeout_seconds,
+                    )
+                ]
+                tools += genai.get_sql_tools(datasets)
+            except asyncio.TimeoutError:
+                logger.warning(
+                    "Tool preparation timed out request_id=%s timeout=%ss",
+                    request_id,
+                    tools_prep_timeout_seconds,
+                )
+            except Exception as error:
+                logger.exception(
+                    "Failed to prepare SQL tools request_id=%s: %s",
+                    request_id,
+                    error,
+                )
+            finally:
+                if answer_connection is not None:
+                    await maybe_close(answer_connection)
+            response = AssistantResponse(
+                role="assistant",
+                content="",
+                graph=None,
+            )
+            answer_iter = genai.get_answer(messages, response, tools=tools)
+            try:
+                while True:
+                    try:
+                        chunk = await asyncio.wait_for(
+                            answer_iter.__anext__(),
+                            timeout=stream_idle_timeout_seconds,
+                        )
+                    except StopAsyncIteration:
+                        break
+                    except asyncio.TimeoutError:
+                        logger.warning(
+                            "Model stream idle timeout request_id=%s timeout=%ss",
+                            request_id,
+                            stream_idle_timeout_seconds,
+                        )
+                        fallback = AssistantResponse(
+                            role="assistant",
+                            content="I ran into a temporary delay while retrieving supporting data. Please retry your question.",
+                            graph=None,
+                        )
+                        await queue.put(("data", fallback.model_dump_json() + "\n"))
+                        break
+                    if await request.is_disconnected():
+                        logger.info(
+                            "Client disconnected during /model token stream request_id=%s.",
+                            request_id,
+                        )
+                        return
+                    await queue.put(("answer_data", chunk))
+            except Exception as error:
+                logger.exception(
+                    "Failed while streaming answer request_id=%s: %s",
+                    request_id,
+                    error,
+                )
+                fallback = AssistantResponse(
+                    role="assistant",
+                    content="I ran into a temporary issue while generating a response. Please retry your question.",
+                    graph=None,
+                )
+                await queue.put(("answer_data", fallback.model_dump_json() + "\n"))
+            finally:
+                with suppress(Exception):
+                    await asyncio.wait_for(answer_iter.aclose(), timeout=1.0)
+
+        async def run_producer(done_label: str, producer) -> None:
+            try:
+                await producer()
+            finally:
+                await queue.put((done_label, None))
+
+        producer_tasks = [
+            asyncio.create_task(run_producer("graph_done", produce_graph)),
+            asyncio.create_task(run_producer("answer_done", produce_answer)),
+        ]
+        completed: set[str] = set()
+        graph_emitted = False
+        last_event_at = monotonic()
+        try:
+            while len(completed) < 2:
+                if await request.is_disconnected():
+                    logger.info(
+                        "Client disconnected before /model stream completion request_id=%s.",
+                        request_id,
+                    )
+                    break
+                try:
+                    label, payload = await asyncio.wait_for(queue.get(), timeout=0.5)
+                except asyncio.TimeoutError:
+                    if monotonic() - last_event_at >= stream_watchdog_seconds:
+                        logger.warning(
+                            "Model stream watchdog timeout request_id=%s timeout=%ss",
+                            request_id,
+                            stream_watchdog_seconds,
+                        )
+                        if not graph_emitted:
+                            empty_graph: Graph | GraphV2
+                            if graph_version == "v1":
+                                empty_graph = Graph(nodes=[], edges=[])
+                            else:
+                                empty_graph = GraphV2(nodes=[], edges=[])
+                            fallback_graph = AssistantResponse(
+                                role="assistant",
+                                content="",
+                                graph=empty_graph,
+                            )
+                            yield fallback_graph.model_dump_json() + "\n"
+                            emitted_chunks += 1
+                            graph_emitted = True
+                        fallback = AssistantResponse(
+                            role="assistant",
+                            content="I ran into a temporary delay while streaming this response. Please retry your question.",
+                            graph=None,
+                        )
+                        yield fallback.model_dump_json() + "\n"
+                        emitted_chunks += 1
+                        break
+                    continue
+                last_event_at = monotonic()
+                if payload is None:
+                    completed.add(label)
+                    continue
+                if label == "graph_data":
+                    graph_emitted = True
+                yield payload
+                emitted_chunks += 1
+        finally:
+            for task in producer_tasks:
+                if not task.done():
+                    task.cancel()
+            await asyncio.gather(*producer_tasks, return_exceptions=True)
+        logger.info(
+            "Model request finished request_id=%s chunks=%s",
+            request_id,
+            emitted_chunks,
+        )
+
     return StreamingResponse(
-        content=genai.get_answer(messages, response, tools=tools),
+        content=stream_model_response(),
         media_type="application/x-ndjson",
+        headers={"X-Request-Id": request_id},
     )

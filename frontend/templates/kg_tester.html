@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KG Subgraph Tester</title>
+    <style>
+        :root {
+            --bg: #080b10;
+            --panel: #111821;
+            --line: #233243;
+            --text: #dbe7f3;
+            --muted: #95a8bd;
+            --accent: #1e88e5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background: radial-gradient(circle at 20% 0%, #101824 0%, #080b10 42%);
+        }
+
+        .page {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            gap: 14px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 24px;
+            color: #f6fbff;
+        }
+
+        .subtitle {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 0.45fr 0.55fr 1.35fr 1.35fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        label {
+            display: grid;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        input,
+        select {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            color: var(--text);
+            background: #0f1520;
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            background: var(--accent);
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .status {
+            min-height: 20px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .kg-tooltip {
+            position: absolute;
+            max-width: 320px;
+            padding: 10px 12px;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            background: rgba(9, 14, 22, 0.96);
+            color: #dbe7f3;
+            font-size: 12px;
+            line-height: 1.35;
+            pointer-events: none;
+            opacity: 0;
+            display: none;
+            left: -9999px;
+            top: -9999px;
+            transition: opacity 90ms ease-out;
+            z-index: 9999;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .kg-tooltip .title {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 700;
+            color: #f8fbff;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 14px;
+            min-height: 600px;
+        }
+
+        .graph {
+            position: relative;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #graph-svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+            background: radial-gradient(circle at 40% 20%, #182236 0%, #0b111c 65%);
+        }
+
+        #raw-json {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            max-height: 600px;
+            overflow: auto;
+            color: #b8d0e7;
+        }
+
+        #stream-answer {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            max-height: 240px;
+            overflow: auto;
+            color: #dbe7f3;
+            background: #0d1420;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .ideas-panel {
+            margin-top: 12px;
+        }
+
+        #query-ideas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 28px;
+        }
+
+        .idea-chip {
+            border: 1px solid #2f4866;
+            background: #102036;
+            color: #dbe7f3;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 120ms ease-out, border-color 120ms ease-out;
+        }
+
+        .idea-chip:hover {
+            background: #153155;
+            border-color: #4f7fb2;
+        }
+
+        .ideas-empty {
+            color: #95a8bd;
+            font-size: 12px;
+            margin: 2px 0 0;
+        }
+
+        .legend {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 980px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+
+            #graph-svg,
+            #raw-json {
+                min-height: 420px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <section class="panel">
+            <h1>Knowledge Graph Subgraph Tester</h1>
+            <p class="subtitle">
+                Test streamed <code>/model</code> responses, visualize returned graphs, and inspect payloads.
+            </p>
+            <div class="legend">
+                <span><span class="dot" style="background:#E5E7EB"></span>Central (largest)</span>
+                <span><span class="dot" style="background:#2563EB"></span>Secondary</span>
+                <span><span class="dot" style="background:#1D4ED8"></span>Periphery (small, hover labels only)</span>
+            </div>
+        </section>
+
+        <section class="panel">
+            <form id="graph-form">
+                <label>
+                    Target
+                    <select id="target" name="target">
+                        <option value="local" selected>Local server</option>
+                        <option value="remote">Remote API</option>
+                    </select>
+                </label>
+                <label>
+                    Graph Version
+                    <select id="version" name="version">
+                        <option value="default" selected>default (server)</option>
+                        <option value="v2">v2 (tiered)</option>
+                        <option value="v1">v1 (legacy)</option>
+                    </select>
+                </label>
+                <label id="remote-base-label" style="display:none;">
+                    Remote API Base URL
+                    <input id="remote-base" name="remote-base" type="url" placeholder="https://your-api-host">
+                </label>
+                <label>
+                    Query
+                    <input id="query" name="query" type="text" required minlength="2" value="climate change mitigation">
+                </label>
+                <button id="run-btn" type="button" disabled>Run</button>
+            </form>
+            <p id="status" class="status">Ready.</p>
+        </section>
+
+        <section class="workspace">
+            <div class="panel graph">
+                <svg id="graph-svg" aria-label="Knowledge graph visualization"></svg>
+            </div>
+            <div class="panel">
+                <h3 style="margin-top: 0;">Streamed Answer</h3>
+                <pre id="stream-answer"></pre>
+                <div class="ideas-panel">
+                    <h3 style="margin: 0 0 6px;">Query Ideas</h3>
+                    <div id="query-ideas"></div>
+                </div>
+                <h3>Raw Response</h3>
+                <pre id="raw-json">{}</pre>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script>
+        const defaultRemoteApiBase = {{ remote_api_base_url | tojson }};
+        const form = document.getElementById("graph-form");
+        const targetSelect = document.getElementById("target");
+        const versionSelect = document.getElementById("version");
+        const remoteBaseLabel = document.getElementById("remote-base-label");
+        const remoteBaseInput = document.getElementById("remote-base");
+        const queryInput = document.getElementById("query");
+        const runBtn = document.getElementById("run-btn");
+        const statusEl = document.getElementById("status");
+        const streamAnswerEl = document.getElementById("stream-answer");
+        const queryIdeasEl = document.getElementById("query-ideas");
+        const rawJsonEl = document.getElementById("raw-json");
+        const svg = d3.select("#graph-svg");
+        const graphPanel = document.querySelector(".panel.graph");
+        const tooltip = document.createElement("div");
+        tooltip.className = "kg-tooltip";
+        graphPanel.appendChild(tooltip);
+        let tooltipHideTimer = null;
+        let tooltipPinned = false;
+        let activeController = null;
+        let activeRequestId = 0;
+        let graphDefs = null;
+        let graphRoot = null;
+        let graphSimulation = null;
+        let zoomTransform = d3.zoomIdentity;
+        const lastNodePositions = new Map();
+        const zoomBehavior = d3.zoom()
+            .scaleExtent([0.25, 4])
+            .on("zoom", (event) => {
+                zoomTransform = event.transform;
+                if (graphRoot) {
+                    graphRoot.attr("transform", zoomTransform);
+                }
+            });
+        if (defaultRemoteApiBase) {
+            remoteBaseInput.value = defaultRemoteApiBase;
+        }
+        function logStep(step, details = {}) {
+            console.log(`[KG tester] ${step}`, details);
+        }
+        logStep("init", {
+            hasDefaultRemoteBase: Boolean(defaultRemoteApiBase),
+        });
+
+        function setStatus(message, isError = false) {
+            statusEl.textContent = message;
+            statusEl.style.color = isError ? "#f87171" : "#95a8bd";
+        }
+
+        function normaliseIdeas(ideas) {
+            if (!Array.isArray(ideas)) {
+                return [];
+            }
+            return ideas
+                .map((idea) => (typeof idea === "string" ? idea.trim() : ""))
+                .filter((idea, index, all) => idea.length > 0 && all.indexOf(idea) === index);
+        }
+
+        function renderQueryIdeas(ideas) {
+            queryIdeasEl.innerHTML = "";
+            const cleanIdeas = normaliseIdeas(ideas);
+            if (!cleanIdeas.length) {
+                const empty = document.createElement("p");
+                empty.className = "ideas-empty";
+                empty.textContent = "Ideas will appear when the model finishes.";
+                queryIdeasEl.appendChild(empty);
+                return;
+            }
+            for (const idea of cleanIdeas) {
+                const chip = document.createElement("button");
+                chip.type = "button";
+                chip.className = "idea-chip";
+                chip.textContent = idea;
+                chip.addEventListener("click", () => {
+                    logStep("idea-click-query", { idea });
+                    runQuery(idea, "idea-click");
+                });
+                queryIdeasEl.appendChild(chip);
+            }
+        }
+
+        function ensureGraphLayers() {
+            if (!graphDefs || graphDefs.empty()) {
+                graphDefs = svg.select("defs");
+                if (graphDefs.empty()) {
+                    graphDefs = svg.append("defs");
+                }
+            }
+            if (!graphRoot || graphRoot.empty()) {
+                graphRoot = svg.select("g.graph-root");
+                if (graphRoot.empty()) {
+                    graphRoot = svg.append("g").attr("class", "graph-root");
+                }
+            }
+            graphRoot.attr("transform", zoomTransform);
+        }
+
+        function clearGraph() {
+            if (graphSimulation) {
+                graphSimulation.stop();
+                graphSimulation = null;
+            }
+            ensureGraphLayers();
+            graphDefs.selectAll("*").remove();
+            graphRoot.selectAll("*").remove();
+            tooltipPinned = false;
+            if (tooltipHideTimer) {
+                clearTimeout(tooltipHideTimer);
+                tooltipHideTimer = null;
+            }
+            tooltip.style.opacity = "0";
+            tooltip.style.display = "none";
+            tooltip.style.left = "-9999px";
+            tooltip.style.top = "-9999px";
+        }
+
+        function getNodeColor(node) {
+            return node.colour || "#6B7280";
+        }
+
+        function getNodeRadius(node) {
+            if (node.tier === "central") return 15;
+            if (node.tier === "secondary") return 8;
+            if (node.tier === "periphery") return 4;
+            const w = Number(node.weight) || 0;
+            const base = 7 + Math.min(w * 2, 8);
+            return node.neighbourhood === 0 ? base + 2 : base;
+        }
+
+        function shouldShowLabel(node) {
+            return node.tier !== "periphery";
+        }
+
+        function edgeWidth(weight) {
+            const w = Number(weight) || 0;
+            return Math.max(1, Math.min(4, 1 + w));
+        }
+
+        function getEdgeKey(edge) {
+            return `${edge.subject}|||${edge.predicate}|||${edge.object}`;
+        }
+
+        function hashString(value) {
+            let hash = 2166136261;
+            for (let i = 0; i < value.length; i += 1) {
+                hash ^= value.charCodeAt(i);
+                hash = Math.imul(hash, 16777619);
+            }
+            return (hash >>> 0).toString(16);
+        }
+
+        function getEdgeGradientId(edgeId) {
+            return `edge-grad-${hashString(edgeId)}`;
+        }
+
+        function normaliseBaseUrl(url) {
+            return (url || "").trim().replace(/\/+$/, "");
+        }
+
+        function updateTargetUI() {
+            const isRemote = targetSelect.value === "remote";
+            remoteBaseLabel.style.display = isRemote ? "grid" : "none";
+            logStep("update-target-ui", { target: targetSelect.value, isRemote });
+        }
+
+        function renderGraph(graph) {
+            logStep("render-graph-start", {
+                nodes: (graph.nodes || []).length,
+                edges: (graph.edges || []).length,
+            });
+            if (graphSimulation) {
+                graphSimulation.stop();
+                graphSimulation = null;
+            }
+            const bounds = document.getElementById("graph-svg").getBoundingClientRect();
+            const width = Math.max(320, bounds.width);
+            const height = Math.max(420, bounds.height);
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            const nodes = (graph.nodes || []).map((node) => ({
+                ...node,
+                id: node.name
+            }));
+            for (const node of nodes) {
+                const prev = lastNodePositions.get(node.id);
+                if (prev) {
+                    node.x = prev.x;
+                    node.y = prev.y;
+                    node.vx = 0;
+                    node.vy = 0;
+                } else {
+                    node.x = centerX + (Math.random() - 0.5) * 26;
+                    node.y = centerY + (Math.random() - 0.5) * 26;
+                }
+            }
+            const nodeById = new Map(nodes.map((node) => [node.id, node]));
+
+            const links = (graph.edges || [])
+                .map((edge) => {
+                    const id = getEdgeKey(edge);
+                    return {
+                        ...edge,
+                        id,
+                        source: edge.subject,
+                        target: edge.object,
+                        gid: getEdgeGradientId(id),
+                    };
+                })
+                .filter((edge) => nodeById.has(edge.source) && nodeById.has(edge.target));
+
+            if (!nodes.length) {
+                setStatus("No nodes returned for this query.");
+                logStep("render-graph-empty");
+                return;
+            }
+
+            svg.attr("viewBox", [0, 0, width, height]);
+            ensureGraphLayers();
+            svg.call(zoomBehavior);
+            svg.call(zoomBehavior.transform, zoomTransform);
+
+            let edgeLayer = graphRoot.select("g.edges-layer");
+            if (edgeLayer.empty()) {
+                edgeLayer = graphRoot.append("g").attr("class", "edges-layer");
+            }
+            let nodeLayer = graphRoot.select("g.nodes-layer");
+            if (nodeLayer.empty()) {
+                nodeLayer = graphRoot.append("g").attr("class", "nodes-layer");
+            }
+
+            const colorForRef = (ref) => {
+                const id = typeof ref === "object" ? ref.id : ref;
+                const node = nodeById.get(id);
+                return node ? getNodeColor(node) : "#6B7280";
+            };
+
+            const gradients = graphDefs.selectAll("linearGradient")
+                .data(links, (d) => d.id);
+            gradients.exit().remove();
+
+            const gradientsEnter = gradients.enter()
+                .append("linearGradient")
+                .attr("id", (d) => d.gid)
+                .attr("gradientUnits", "userSpaceOnUse");
+            gradientsEnter.append("stop").attr("offset", "0%");
+            gradientsEnter.append("stop").attr("offset", "100%");
+
+            const gradientsMerged = gradientsEnter.merge(gradients)
+                .attr("id", (d) => d.gid);
+
+            gradientsMerged.each(function(d) {
+                const gradient = d3.select(this);
+                gradient.select("stop[offset='0%']")
+                    .transition()
+                    .duration(900)
+                    .attr("stop-color", colorForRef(d.source));
+                gradient.select("stop[offset='100%']")
+                    .transition()
+                    .duration(900)
+                    .attr("stop-color", colorForRef(d.target));
+            });
+
+            const link = edgeLayer.selectAll("line.edge")
+                .data(links, (d) => d.id);
+            link.exit()
+                .transition()
+                .duration(700)
+                .attr("stroke-opacity", 0)
+                .remove();
+
+            const linkEnter = link.enter()
+                .append("line")
+                .attr("class", "edge")
+                .attr("stroke-opacity", 0)
+                .attr("stroke-width", (d) => edgeWidth(d.weight))
+                .attr("stroke", (d) => `url(#${d.gid})`);
+
+            const linkMerged = linkEnter.merge(link)
+                .attr("stroke", (d) => `url(#${d.gid})`)
+                .attr("stroke-width", (d) => edgeWidth(d.weight));
+            linkMerged.transition().duration(900).attr("stroke-opacity", 0.88);
+
+            const nodeGroup = nodeLayer.selectAll("g.node")
+                .data(nodes, (d) => d.id);
+            const nodeExit = nodeGroup.exit();
+            nodeExit.select("circle")
+                .transition()
+                .duration(700)
+                .attr("r", 0);
+            nodeExit.select("text")
+                .transition()
+                .duration(700)
+                .attr("opacity", 0);
+            nodeExit
+                .transition()
+                .duration(700)
+                .attr("opacity", 0)
+                .remove();
+
+            let simulation = null;
+
+            const nodeEnter = nodeGroup.enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", (d) => `translate(${d.x},${d.y})`)
+                .attr("opacity", 0);
+
+            function escapeHtml(value) {
+                return String(value).replace(/[&<>]/g, (ch) => (
+                    ch === "&" ? "&amp;" : (ch === "<" ? "&lt;" : "&gt;")
+                ));
+            }
+
+            function setTooltipContent(node) {
+                const title = escapeHtml(node.name || "Unknown node");
+                const description = escapeHtml(node.description || "No description available.");
+                tooltip.innerHTML = `<span class="title">${title}</span><span>${description}</span>`;
+            }
+
+            function moveTooltip(event) {
+                const [x, y] = d3.pointer(event, graphPanel);
+                tooltip.style.left = `${Math.max(8, x + 14)}px`;
+                tooltip.style.top = `${Math.max(8, y + 12)}px`;
+            }
+
+            function showTooltip(event, node) {
+                if (tooltipHideTimer) {
+                    clearTimeout(tooltipHideTimer);
+                    tooltipHideTimer = null;
+                }
+                setTooltipContent(node);
+                moveTooltip(event);
+                tooltip.style.display = "block";
+                tooltip.style.opacity = "1";
+            }
+
+            function hideTooltip(immediate = false) {
+                if (tooltipPinned && !immediate) {
+                    return;
+                }
+                const hide = () => {
+                    if (tooltipPinned && !immediate) {
+                        return;
+                    }
+                    tooltip.style.opacity = "0";
+                    tooltip.style.display = "none";
+                    tooltip.style.left = "-9999px";
+                    tooltip.style.top = "-9999px";
+                };
+                if (immediate) {
+                    hide();
+                    return;
+                }
+                if (tooltipHideTimer) {
+                    clearTimeout(tooltipHideTimer);
+                }
+                tooltipHideTimer = setTimeout(() => {
+                    tooltipHideTimer = null;
+                    hide();
+                }, 140);
+            }
+
+            function handleNodeClick(event, d) {
+                if (event.defaultPrevented) {
+                    return;
+                }
+                const query = buildNodeFollowupQuery(d.name);
+                tooltipPinned = true;
+                showTooltip(event, d);
+                setTimeout(() => {
+                    tooltipPinned = false;
+                    hideTooltip();
+                }, 1800);
+                logStep("node-click-query", { node: d.name, query });
+                runQuery(query, "node-click");
+            }
+
+            nodeEnter.append("circle")
+                .attr("r", 0)
+                .attr("fill", (d) => getNodeColor(d))
+                .attr("stroke", "#dbe7f3")
+                .attr("stroke-width", (d) => (d.tier === "central" ? 1.2 : 0.6));
+
+            nodeEnter.append("text")
+                .attr("opacity", 0);
+
+            const nodeMerged = nodeEnter.merge(nodeGroup)
+                .attr("opacity", 1)
+                .call(
+                    d3.drag()
+                        .on("start", (event, d) => {
+                            if (!simulation) return;
+                            if (!event.active) simulation.alphaTarget(0.3).restart();
+                            d.fx = d.x;
+                            d.fy = d.y;
+                        })
+                        .on("drag", (event, d) => {
+                            d.fx = event.x;
+                            d.fy = event.y;
+                        })
+                        .on("end", (event, d) => {
+                            if (!simulation) return;
+                            if (!event.active) simulation.alphaTarget(0);
+                            d.fx = null;
+                            d.fy = null;
+                        })
+                );
+            nodeMerged.transition().duration(900).attr("opacity", 1);
+
+            const nodeCircle = nodeMerged.select("circle")
+                .attr("fill", (d) => getNodeColor(d))
+                .attr("stroke", "#dbe7f3")
+                .attr("stroke-width", (d) => (d.tier === "central" ? 1.2 : 0.6));
+            nodeCircle.transition()
+                .duration(850)
+                .ease(d3.easeCubicOut)
+                .attr("fill", (d) => getNodeColor(d))
+                .attr("r", (d) => getNodeRadius(d));
+
+            nodeCircle
+                .on("mouseover", (event, d) => {
+                    showTooltip(event, d);
+                })
+                .on("mousemove", (event) => moveTooltip(event))
+                .on("mouseout", (event, d) => {
+                    hideTooltip();
+                })
+                .on("click", handleNodeClick);
+
+            const nodeLabel = nodeMerged.select("text")
+                .text((d) => (shouldShowLabel(d) ? d.name : ""))
+                .attr("x", (d) => getNodeRadius(d) + 4)
+                .attr("y", 4)
+                .attr("font-size", (d) => (d.tier === "central" ? 12.5 : 11))
+                .attr("fill", "#f3f8ff");
+            nodeLabel.transition()
+                .duration(900)
+                .attr("opacity", (d) => (shouldShowLabel(d) ? 1 : 0));
+
+            nodeLabel
+                .style("pointer-events", (d) => (shouldShowLabel(d) ? "auto" : "none"))
+                .on("mouseover", (event, d) => {
+                    showTooltip(event, d);
+                })
+                .on("mousemove", (event) => moveTooltip(event))
+                .on("mouseout", (event, d) => {
+                    hideTooltip();
+                })
+                .on("click", handleNodeClick);
+
+            simulation = d3.forceSimulation(nodes)
+                .alpha(0.9)
+                .alphaDecay(0.0115)
+                .velocityDecay(0.38)
+                .force("link", d3.forceLink(links).id((d) => d.id).distance(90).strength(0.24))
+                .force("charge", d3.forceManyBody().strength(-210))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collide", d3.forceCollide().radius((d) => getNodeRadius(d) + 22));
+            graphSimulation = simulation;
+
+            simulation.on("tick", () => {
+                gradientsMerged
+                    .attr("x1", (d) => d.source.x)
+                    .attr("y1", (d) => d.source.y)
+                    .attr("x2", (d) => d.target.x)
+                    .attr("y2", (d) => d.target.y);
+
+                linkMerged
+                    .attr("x1", (d) => d.source.x)
+                    .attr("y1", (d) => d.source.y)
+                    .attr("x2", (d) => d.target.x)
+                    .attr("y2", (d) => d.target.y);
+
+                nodeMerged.attr("transform", (d) => `translate(${d.x},${d.y})`);
+                for (const node of nodes) {
+                    if (Number.isFinite(node.x) && Number.isFinite(node.y)) {
+                        lastNodePositions.set(node.id, { x: node.x, y: node.y });
+                    }
+                }
+            });
+            logStep("render-graph-complete", {
+                nodes: nodes.length,
+                edges: links.length,
+            });
+        }
+
+        function logTimingHeaders(response, query, version) {
+            const timingHeader = response.headers.get("X-KG-Timing");
+            const serverTiming = response.headers.get("Server-Timing");
+            if (timingHeader) {
+                try {
+                    const timings = JSON.parse(timingHeader);
+                    console.log(`[KG timing] ${version} query="${query}"`, timings);
+                } catch (_error) {
+                    console.log("[KG timing] invalid X-KG-Timing header", timingHeader);
+                }
+            }
+            if (serverTiming) {
+                console.log(`[KG server-timing] ${serverTiming}`);
+            }
+        }
+
+        async function readNdjsonStream(response, onChunk) {
+            logStep("stream-start", {
+                hasBodyReader: Boolean(response.body?.getReader),
+                contentType: response.headers.get("content-type"),
+            });
+            const chunks = [];
+            const reader = response.body?.getReader();
+            if (!reader) {
+                const text = await response.text();
+                const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
+                logStep("stream-fallback-text", { lines: lines.length });
+                for (const line of lines) {
+                    const chunk = JSON.parse(line);
+                    chunks.push(chunk);
+                    const chunkText = extractChunkText(chunk.content);
+                    logStep("stream-chunk", {
+                        index: chunks.length - 1,
+                        hasGraph: Boolean(chunk.graph),
+                        contentLength: chunkText.length,
+                    });
+                    onChunk(chunk, chunks.length - 1);
+                }
+                return chunks;
+            }
+            const decoder = new TextDecoder();
+            let buffer = "";
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split("\n");
+                buffer = lines.pop() || "";
+                for (const line of lines) {
+                    const text = line.trim();
+                    if (!text) continue;
+                    const chunk = JSON.parse(text);
+                    chunks.push(chunk);
+                    const chunkText = extractChunkText(chunk.content);
+                    logStep("stream-chunk", {
+                        index: chunks.length - 1,
+                        hasGraph: Boolean(chunk.graph),
+                        contentLength: chunkText.length,
+                    });
+                    onChunk(chunk, chunks.length - 1);
+                }
+            }
+            buffer += decoder.decode();
+            const tail = buffer.trim();
+            if (tail) {
+                const chunk = JSON.parse(tail);
+                chunks.push(chunk);
+                const chunkText = extractChunkText(chunk.content);
+                logStep("stream-chunk", {
+                    index: chunks.length - 1,
+                    hasGraph: Boolean(chunk.graph),
+                    contentLength: chunkText.length,
+                });
+                onChunk(chunk, chunks.length - 1);
+            }
+            logStep("stream-complete", { chunkCount: chunks.length });
+            return chunks;
+        }
+
+        function abortActiveRequest(reason) {
+            if (!activeController) return;
+            if (!activeController.signal.aborted) {
+                activeController.abort();
+                logStep("request-aborted", { reason });
+            }
+            activeController = null;
+        }
+
+        function setQueryInput(query) {
+            queryInput.value = query;
+        }
+
+        function buildNodeFollowupQuery(nodeName) {
+            return `tell me more about ${nodeName}`;
+        }
+
+        function extractChunkText(content) {
+            if (typeof content === "string") {
+                return content;
+            }
+            if (Array.isArray(content)) {
+                return content.map((item) => {
+                    if (typeof item === "string") {
+                        return item;
+                    }
+                    if (item && typeof item === "object") {
+                        if (typeof item.text === "string") {
+                            return item.text;
+                        }
+                        if (item.text && typeof item.text.value === "string") {
+                            return item.text.value;
+                        }
+                        if (typeof item.content === "string") {
+                            return item.content;
+                        }
+                        if (Array.isArray(item.content)) {
+                            return extractChunkText(item.content);
+                        }
+                    }
+                    return "";
+                }).join("");
+            }
+            if (content && typeof content === "object") {
+                if (typeof content.text === "string") {
+                    return content.text;
+                }
+                if (content.text && typeof content.text.value === "string") {
+                    return content.text.value;
+                }
+                if (typeof content.content === "string") {
+                    return content.content;
+                }
+                if (Array.isArray(content.content)) {
+                    return extractChunkText(content.content);
+                }
+            }
+            return "";
+        }
+
+        async function loadGraph(query, source = "form-submit") {
+            const target = targetSelect.value;
+            const version = versionSelect.value;
+            const remoteBase = normaliseBaseUrl(remoteBaseInput.value);
+            logStep("load-start", { source, target, version, query });
+
+            if (!query) {
+                setStatus("Query is required.", true);
+                logStep("load-invalid", { reason: "missing-query" });
+                runBtn.disabled = false;
+                return;
+            }
+            if (target === "remote" && !remoteBase) {
+                setStatus("Remote API base URL is required when target is Remote API.", true);
+                logStep("load-invalid", { reason: "missing-remote-base" });
+                runBtn.disabled = false;
+                return;
+            }
+
+            const requestId = activeRequestId + 1;
+            activeRequestId = requestId;
+            abortActiveRequest("superseded");
+            const controller = new AbortController();
+            activeController = controller;
+            logStep("load-request-accepted", { requestId, source });
+
+            runBtn.disabled = true;
+            setStatus("Loading streamed model response...");
+            streamAnswerEl.textContent = "";
+            rawJsonEl.textContent = "{}";
+            renderQueryIdeas([]);
+
+            try {
+                const endpoint = "/kg-tester/api/model";
+                logStep("request-prepared", { endpoint, method: "POST", target, version });
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        target,
+                        graph_version: version,
+                        remote_base: target === "remote" ? remoteBase : "",
+                        messages: [{ role: "human", content: query }],
+                    }),
+                    signal: controller.signal,
+                });
+                if (requestId !== activeRequestId) {
+                    logStep("response-stale", { requestId, activeRequestId });
+                    return;
+                }
+                logStep("response-received", {
+                    status: response.status,
+                    ok: response.ok,
+                    contentType: response.headers.get("content-type"),
+                });
+                logTimingHeaders(response, query, version);
+
+                if (!response.ok) {
+                    let detail = `Request failed (${response.status}).`;
+                    try {
+                        const payload = await response.json();
+                        rawJsonEl.textContent = JSON.stringify(payload, null, 2);
+                        detail = payload && payload.detail ? payload.detail : detail;
+                    } catch (_error) {
+                        // keep fallback detail
+                    }
+                    throw new Error(detail);
+                }
+
+                let answerText = "";
+                let graphPayload = null;
+                let graphRendered = false;
+                let lastChunk = null;
+                const chunks = await readNdjsonStream(response, (chunk, chunkIndex) => {
+                    if (requestId !== activeRequestId) {
+                        return;
+                    }
+                    lastChunk = chunk;
+                    if (chunk.graph) {
+                        graphPayload = chunk.graph;
+                        logStep("graph-chunk-detected", {
+                            nodeCount: (graphPayload.nodes || []).length,
+                            edgeCount: (graphPayload.edges || []).length,
+                        });
+                        if (!graphRendered) {
+                            logStep("graph-render-immediate");
+                            renderGraph(graphPayload);
+                            graphRendered = true;
+                            rawJsonEl.textContent = JSON.stringify(
+                                {
+                                    graph_version: version,
+                                    graph: graphPayload,
+                                    final_chunk: chunk,
+                                    chunk_count_so_far: chunkIndex + 1,
+                                },
+                                null,
+                                2,
+                            );
+                        }
+                    }
+                    const textDelta = extractChunkText(chunk.content);
+                    if (textDelta.length > 0) {
+                        answerText += textDelta;
+                        streamAnswerEl.textContent = answerText;
+                        streamAnswerEl.scrollTop = streamAnswerEl.scrollHeight;
+                    }
+                    if (Array.isArray(chunk.ideas) && chunk.ideas.length > 0) {
+                        renderQueryIdeas(chunk.ideas);
+                    }
+                });
+
+                if (graphPayload && !graphRendered) {
+                    logStep("graph-render-late");
+                    renderGraph(graphPayload);
+                } else {
+                    if (!graphPayload) {
+                        logStep("graph-missing-from-stream");
+                    }
+                }
+                if (requestId !== activeRequestId) {
+                    logStep("load-success-stale", { requestId, activeRequestId });
+                    return;
+                }
+                rawJsonEl.textContent = JSON.stringify(
+                    {
+                        graph_version: version,
+                        graph: graphPayload,
+                        final_chunk: lastChunk,
+                        chunk_count: chunks.length,
+                    },
+                    null,
+                    2,
+                );
+                const targetName = target === "remote" ? remoteBase : "local server";
+                setStatus(
+                    `Loaded streamed /model response (${version === "default" ? "graph_version=default(server)" : `graph_version=${version}`}) from ${targetName}.`
+                );
+                logStep("load-success", {
+                    target: targetName,
+                    graphReceived: Boolean(graphPayload),
+                    chunkCount: chunks.length,
+                });
+            } catch (error) {
+                if (error?.name === "AbortError") {
+                    if (requestId === activeRequestId) {
+                        setStatus("Previous request canceled; running latest query...");
+                    }
+                    logStep("load-abort", { requestId });
+                    return;
+                }
+                if (requestId !== activeRequestId) {
+                    logStep("load-error-stale", { requestId, activeRequestId });
+                    return;
+                }
+                streamAnswerEl.textContent = "";
+                setStatus(error.message || "Failed to load model response.", true);
+                logStep("load-error", { message: error.message || "unknown-error" });
+            } finally {
+                if (requestId === activeRequestId) {
+                    runBtn.disabled = false;
+                    activeController = null;
+                    logStep("load-finish", { requestId });
+                } else {
+                    logStep("load-finish-stale", { requestId, activeRequestId });
+                }
+            }
+        }
+
+        async function runQuery(query, source = "form-submit") {
+            setQueryInput(query);
+            return loadGraph(query.trim(), source);
+        }
+
+        function restoreFromUrlAndMaybeRun() {
+            const params = new URLSearchParams(window.location.search);
+            if (!params.toString()) {
+                return false;
+            }
+            const target = params.get("target");
+            const version = params.get("version");
+            const remoteBase = params.get("remote-base");
+            const query = params.get("query");
+
+            if (target === "local" || target === "remote") {
+                targetSelect.value = target;
+            }
+            if (version === "default" || version === "v1" || version === "v2") {
+                versionSelect.value = version;
+            }
+            if (typeof remoteBase === "string" && remoteBase.length > 0) {
+                remoteBaseInput.value = remoteBase;
+            }
+            updateTargetUI();
+
+            const restoredQuery = (query || "").trim();
+            if (restoredQuery) {
+                logStep("url-restore-run", {
+                    target: targetSelect.value,
+                    version: versionSelect.value,
+                    query: restoredQuery,
+                });
+                runQuery(restoredQuery, "url-restore");
+                return true;
+            }
+            return false;
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const query = queryInput.value.trim();
+            runQuery(query, "form-submit");
+        }
+
+        function handleRunClick(event) {
+            event.preventDefault();
+            const query = queryInput.value.trim();
+            runQuery(query, "run-button");
+        }
+
+        function handleFormKeydown(event) {
+            if (event.key !== "Enter" || event.shiftKey) {
+                return;
+            }
+            event.preventDefault();
+            const query = queryInput.value.trim();
+            runQuery(query, "enter-key");
+        }
+
+        targetSelect.addEventListener("change", updateTargetUI);
+        form.addEventListener("keydown", handleFormKeydown);
+        form.addEventListener("submit", handleFormSubmit);
+        runBtn.addEventListener("click", handleRunClick);
+        updateTargetUI();
+        renderQueryIdeas([]);
+        const didAutoRun = restoreFromUrlAndMaybeRun();
+        if (!didAutoRun) {
+            runBtn.disabled = false;
+        }
+    </script>
+</body>
+</html>

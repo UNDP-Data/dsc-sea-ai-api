@@ -41,7 +41,7 @@ def test_get_node_200(test_client, name: str):
 
 @pytest.mark.parametrize(
     "name",
-    [" solar energy ", "energia solare", "decarbonisation"],
+    [" solar energy ", "energia solare", "__definitely_missing_node__"],
 )
 def test_get_node_404(test_client, name: str):
     """
