@@ -9,11 +9,12 @@ import os
 import ipaddress
 from typing import Literal
 from urllib.parse import urlparse
+from uuid import uuid4
 
 import httpx
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import RedirectResponse, StreamingResponse
+from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
@@ -32,7 +33,7 @@ class ModelProxyRequest(BaseModel):
     target: Literal["local", "remote"] = "local"
     graph_version: Literal["default", "v1", "v2"] = "default"
     remote_base: str | None = None
-    messages: list[ProxyMessage]
+    messages: list[ProxyMessage] = Field(min_length=1)
 
 
 def _normalise_base(url: str) -> str:
@@ -109,6 +110,12 @@ async def root(request: Request):
     return RedirectResponse(url="/kg-tester", status_code=307)
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon(request: Request):
+    _require_local_request(request)
+    return FileResponse("static/favicon.ico")
+
+
 @app.get("/kg-tester", include_in_schema=False)
 async def kg_tester_page(request: Request):
     _require_local_request(request)
@@ -124,14 +131,16 @@ async def proxy_model(request: Request, payload: ModelProxyRequest):
     _require_local_request(request)
     api_base = _get_api_base(payload.target, payload.remote_base)
     api_key = _get_api_key()
+    request_id = request.headers.get("X-Request-Id") or f"kg-tester-{uuid4().hex}"
     path = "/model" if payload.graph_version == "default" else f"/model?graph_version={payload.graph_version}"
     upstream_url = f"{api_base}{path}"
     request_headers = {
         "Content-Type": "application/json",
         "X-Api-Key": api_key,
+        "X-Request-Id": request_id,
     }
 
-    client = httpx.AsyncClient(timeout=httpx.Timeout(connect=10, read=None, write=60))
+    client = httpx.AsyncClient(timeout=httpx.Timeout(60.0, connect=10.0, read=None))
     try:
         upstream = await client.send(
             client.build_request(
@@ -161,6 +170,8 @@ async def proxy_model(request: Request, payload: ModelProxyRequest):
         value = upstream.headers.get(header)
         if value:
             response_headers[header] = value
+    if "X-Request-Id" not in response_headers:
+        response_headers["X-Request-Id"] = request_id
 
     async def stream_upstream():
         try:

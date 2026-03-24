@@ -74,9 +74,16 @@ All protected endpoints require `X-Api-Key`.
 
 - `POST /model[?graph_version=v1|v2]`
 - `graph_version` default is `v2`.
+- Request body must include at least one message; empty lists return `400`.
 - Response includes `X-Request-Id` header for request correlation.
 - The stream is NDJSON; graph and text generation run in parallel.
 - Chunk order is not fixed. The graph chunk usually arrives early, but clients must handle it arriving before, during, or after text deltas.
+- To avoid stalled streams under slow storage/model conditions, `/model` applies:
+  - `MODEL_GRAPH_TIMEOUT_SECONDS` (graph build timeout),
+  - `MODEL_STREAM_IDLE_TIMEOUT_SECONDS` (max idle gap between streamed chunks),
+  - `MODEL_TOOLS_PREP_TIMEOUT_SECONDS` (SQL/RAG tool preparation timeout),
+  - `MODEL_STREAM_WATCHDOG_SECONDS` (overall no-progress watchdog for stream completion),
+  - `RETRIEVE_CHUNKS_TIMEOUT_SECONDS` (RAG chunk retrieval timeout).
 - This controls the schema of `graph` returned in streamed `/model` chunks:
   - `v1`: legacy graph schema (`neighbourhood` on nodes, `level` on edges)
   - `v2`: staged graph schema (`tier` on nodes, no edge `level`)
@@ -120,6 +127,7 @@ Interaction shortcuts:
 Notes:
 - The tester proxy uses `KG_TESTER_API_KEY` (or `API_KEY`) from environment and does not expose
   API keys in browser JavaScript.
+- The tester proxy forwards `X-Request-Id` (or generates one) to simplify backend trace correlation.
 - The tester app calls backend APIs server-to-server, so browser CORS is not required for remote targets.
 - No extra CORS proxy is needed when using the standalone tester app.
 - The tester app is local-only by design (loopback clients only).
