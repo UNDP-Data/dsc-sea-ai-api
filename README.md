@@ -48,7 +48,7 @@ For Azure Blob auth you can use either:
 Optional local tester env (separate tester app):
 - `KG_TESTER_API_KEY` (or fallback `API_KEY`) for tester proxy authentication to backend.
 - `KG_TESTER_LOCAL_API_BASE_URL` for local backend target (default `http://127.0.0.1:8000`).
-- `KG_TESTER_REMOTE_API_BASE_URL` to prefill remote backend target.
+- `KG_TESTER_REMOTE_API_BASE_URL` to prefill remote backend target (default `https://sea-ai-api.azurewebsites.net`).
 
 ## API Structure
 
