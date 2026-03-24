@@ -27,7 +27,7 @@ Follow the steps below to run the API locally.
 
 1. Clone the repository and navigate to the project folder.
 2. Create and activate a virtual environment.
-3. Create and populate the `.env` file base on `.env.example`.
+3. Create and populate the `.env` file based on `.env.example`.
 4. Run `make install` to install project dependencies.
 5. To launch the API, run `make run`. The API will be running at http://127.0.0.1:8000.
 
@@ -45,8 +45,10 @@ For Azure Blob auth you can use either:
 - `STORAGE_SAS_URL` (full SAS URL), or
 - `STORAGE_ACCOUNT_NAME` with `STORAGE_ACCOUNT_KEY` / `STORAGE_SAS_TOKEN`.
 
-Optional local tester env:
-- `KG_TESTER_REMOTE_API_BASE_URL` to prefill the remote API target in `/kg-tester`.
+Optional local tester env (separate tester app):
+- `KG_TESTER_API_KEY` (or fallback `API_KEY`) for tester proxy authentication to backend.
+- `KG_TESTER_LOCAL_API_BASE_URL` for local backend target (default `http://127.0.0.1:8000`).
+- `KG_TESTER_REMOTE_API_BASE_URL` to prefill remote backend target.
 
 ## API Structure
 
@@ -57,7 +59,7 @@ All protected endpoints require `X-Api-Key`.
 - `GET /graph?query=<text>[&hops=<int>]`
 - Response:
   - `nodes[]` with `name`, `description`, `neighbourhood`, `weight`, `colour`
-  - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`, `level`
+  - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`
 
 ### V2 Graph Endpoint
 
@@ -66,6 +68,25 @@ All protected endpoints require `X-Api-Key`.
   - `nodes[]` with `name`, `description`, `tier`, `weight`, `colour`
     - `tier` is one of: `central`, `secondary`, `periphery`
   - `edges[]` with `subject`, `predicate`, `object`, `description`, `weight`
+  - `level` is not returned in the API payload.
+
+### Model Endpoint Graph Version
+
+- `POST /model[?graph_version=v1|v2]`
+- `graph_version` default is `v2`.
+- Request body must include at least one message; empty lists return `400`.
+- Response includes `X-Request-Id` header for request correlation.
+- The stream is NDJSON; graph and text generation run in parallel.
+- Chunk order is not fixed. The graph chunk usually arrives early, but clients must handle it arriving before, during, or after text deltas.
+- To avoid stalled streams under slow storage/model conditions, `/model` applies:
+  - `MODEL_GRAPH_TIMEOUT_SECONDS` (graph build timeout),
+  - `MODEL_STREAM_IDLE_TIMEOUT_SECONDS` (max idle gap between streamed chunks),
+  - `MODEL_TOOLS_PREP_TIMEOUT_SECONDS` (SQL/RAG tool preparation timeout),
+  - `MODEL_STREAM_WATCHDOG_SECONDS` (overall no-progress watchdog for stream completion),
+  - `RETRIEVE_CHUNKS_TIMEOUT_SECONDS` (RAG chunk retrieval timeout).
+- This controls the schema of `graph` returned in streamed `/model` chunks:
+  - `v1`: legacy graph schema (`neighbourhood` on nodes, `level` on edges)
+  - `v2`: staged graph schema (`tier` on nodes, no edge `level`)
 
 ### Internal KG Module Layout
 
@@ -80,22 +101,56 @@ Compatibility adapters are retained:
 
 ## KG Subgraph Tester
 
-The API includes a built-in testing page for the current knowledge graph subgraph system.
+The KG tester is now a separate frontend app in `frontend/`. The backend API deployment
+does not include the tester route.
 
-1. Start the API locally (`make run`).
-2. Open [http://127.0.0.1:8000/kg-tester](http://127.0.0.1:8000/kg-tester).
-3. Enter:
+1. Start the API backend locally (`make run`).
+2. Start the tester frontend app (`make run-tester`).
+3. Open [http://127.0.0.1:8010/kg-tester](http://127.0.0.1:8010/kg-tester).
+4. Enter:
    - target (`Local server` or `Remote API`),
-   - endpoint version (`/graph` or `/graph/v2`),
+   - graph version (`default`, `v1`, or `v2`, sent as `graph_version` to `/model` when selected),
    - a graph `query` (for example `climate change mitigation`),
-   - remote API base URL (only when target is `Remote API`),
-   - your `X-Api-Key` value (from `API_KEY` in your environment).
-4. Submit to call the selected graph endpoint and view:
+   - remote API base URL (only when target is `Remote API`).
+5. Submit to call `/model` and view:
+   - streamed answer text (delta chunks),
+   - query ideas (clickable chips that trigger a new query),
+   - graph payload returned in the stream,
    - an interactive D3 force graph,
    - the raw JSON response payload.
 
+Interaction shortcuts:
+- Press `Enter` in the form to run the current query.
+- Click a graph node to run a follow-up query (`tell me more about <node>`).
+- Click an idea chip to run that suggestion immediately.
+
 Notes:
-- In browser-based `Remote API` mode, the remote API must allow CORS from your local tester origin and allow header `X-Api-Key`.
+- The tester proxy uses `KG_TESTER_API_KEY` (or `API_KEY`) from environment and does not expose
+  API keys in browser JavaScript.
+- The tester proxy forwards `X-Request-Id` (or generates one) to simplify backend trace correlation.
+- The tester app calls backend APIs server-to-server, so browser CORS is not required for remote targets.
+- No extra CORS proxy is needed when using the standalone tester app.
+- The tester app is local-only by design (loopback clients only).
+
+Example local startup:
+
+```bash
+# terminal 1
+make run
+
+# terminal 2
+export KG_TESTER_API_KEY="$API_KEY"
+make run-tester
+```
+
+`make run-tester` binds to `127.0.0.1:8010` by default.
+
+Pre-commit validation:
+
+```bash
+python3 -m py_compile main.py src/security.py src/database.py src/genai.py src/entities.py src/kg/__init__.py src/kg/v1.py src/kg/v2.py frontend/kg_tester_app.py tests/test_model.py tests/test_genai.py
+make test   # requires dev dependencies installed
+```
 
 To evaluate V2 output quality over a representative query set:
 
@@ -113,6 +168,7 @@ The project is hooked up to CI/CD via GitHub Actions.
 - Workflow: `.github/workflows/azure-webapps-python.yml`
 - Azure Web App name: `sea-ai-api`
 - A push to `main` triggers deployment.
+- The `frontend/` KG tester app is intentionally separate and is not required for API deployment.
 
 ## Contributing
 

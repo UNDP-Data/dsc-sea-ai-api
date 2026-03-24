@@ -10,3 +10,5 @@ loadtest:
 	python -m locust --config locust.conf --host $${HOST:="http://127.0.0.1:8000"}
 run:
 	uvicorn main:app --reload
+run-tester:
+	uvicorn frontend.kg_tester_app:app --reload --host 127.0.0.1 --port 8010

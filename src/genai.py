@@ -2,7 +2,9 @@
 Functions for interacting with GenAI models via Azure OpenAI.
 """
 
+import asyncio
 import json
+import logging
 import os
 import pkgutil
 from typing import AsyncGenerator
@@ -34,10 +36,49 @@ __all__ = [
 ]
 
 PROMPTS = yaml.safe_load(pkgutil.get_data(__name__, "prompts.yaml"))
+logger = logging.getLogger(__name__)
+
+
+def _extract_chunk_text(content: object) -> str:
+    """
+    Normalize provider chunk content into plain text.
+    """
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        chunks = []
+        for item in content:
+            if isinstance(item, str):
+                chunks.append(item)
+                continue
+            if isinstance(item, dict):
+                text = item.get("text")
+                if isinstance(text, str):
+                    chunks.append(text)
+                    continue
+                if isinstance(text, dict) and isinstance(text.get("value"), str):
+                    chunks.append(text["value"])
+                    continue
+                nested = item.get("content")
+                if nested is not None:
+                    nested_text = _extract_chunk_text(nested)
+                    if nested_text:
+                        chunks.append(nested_text)
+        return "".join(chunks)
+    if isinstance(content, dict):
+        text = content.get("text")
+        if isinstance(text, str):
+            return text
+        if isinstance(text, dict) and isinstance(text.get("value"), str):
+            return text["value"]
+        nested = content.get("content")
+        if nested is not None:
+            return _extract_chunk_text(nested)
+    return ""
 
 
 def get_chat_client(
-    temperature: float = 0.0, timeout: int = 10, **kwargs
+    temperature: float = 0.0, timeout: int | None = None, **kwargs
 ) -> AzureChatOpenAI:
     """
     Get a chat client for Azure OpenAI service.
@@ -46,8 +87,9 @@ def get_chat_client(
     ----------
     temperature : float, default=0.0
         Model temperature setting.
-    timeout : int, default=10
-        Request timeout setting in seconds.
+    timeout : int | None, default=None
+        Request timeout setting in seconds. If not provided, falls back to
+        `AZURE_OPENAI_TIMEOUT` env var (default: 60 seconds).
     **kwargs
         Additional keyword arguments to pass to `AzureChatOpenAI`.
 
@@ -56,6 +98,8 @@ def get_chat_client(
     AzureChatOpenAI
        An Azure OpenAI integration client for chat models.
     """
+    if timeout is None:
+        timeout = int(os.getenv("AZURE_OPENAI_TIMEOUT", "60"))
     return AzureChatOpenAI(
         azure_deployment=os.environ["AZURE_OPENAI_CHAT_MODEL"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
@@ -209,33 +253,120 @@ async def get_answer(
     str
         String representation of JSON model response.
     """
-    contents = []
-    async for chunk in stream_response(
-        messages=[message.to_langchain() for message in messages],
-        tools=tools,
-        temperature=0.1,
-    ):
-        if isinstance(chunk, AIMessageChunk):
-            # send deltas only
-            response.content = chunk.content
-            # save the chunks
-            contents.append(chunk.content)
+    def normalize_ideas(raw: object) -> list[str] | None:
+        if isinstance(raw, BaseModel):
+            raw = getattr(raw, "ideas", None)
+        if not isinstance(raw, list):
+            return None
+        ideas = [idea.strip() for idea in raw if isinstance(idea, str) and idea.strip()]
+        return ideas or None
+
+    async def maybe_emit_ideas() -> AsyncGenerator[str, None]:
+        nonlocal ideas_payload, ideas_emitted_in_stream
+        if ideas_emitted_in_stream:
+            return
+        if not ideas_task.done():
+            return
+        try:
+            ideas_payload = normalize_ideas(ideas_task.result())
+        except Exception as error:
+            logger.exception("Error while generating query ideas: %s", error)
+            ideas_payload = None
+        if ideas_payload:
+            response.documents, response.content = None, ""
+            response.ideas = ideas_payload
             yield response.model_dump_json() + "\n"
-            # once the full response has been yielded, nullify properties to reduce payload
             response.clear()
-        elif isinstance(chunk, ToolMessage):
-            # assign the documents based on tool usage
-            if chunk.name == "retrieve_chunks":
-                # get the documents from the chunk
-                response.documents = chunk.artifact
-    else:
+        ideas_emitted_in_stream = True
+
+    contents: list[str] = []
+    ideas_task = asyncio.create_task(generate_query_ideas(messages))
+    # Yield once so an already-computable ideas task can start before first token chunks.
+    await asyncio.sleep(0)
+    ideas_payload: list[str] | None = None
+    ideas_emitted_in_stream = False
+    try:
+        try:
+            async for chunk in stream_response(
+                messages=[message.to_langchain() for message in messages],
+                tools=tools,
+                temperature=0.1,
+            ):
+                if isinstance(chunk, AIMessageChunk):
+                    delta = _extract_chunk_text(chunk.content)
+                    if not delta:
+                        continue
+                    # send deltas only
+                    response.content = delta
+                    # save the chunks
+                    contents.append(delta)
+                    yield response.model_dump_json() + "\n"
+                    # once the full response has been yielded, nullify properties to reduce payload
+                    response.clear()
+                    async for ideas_chunk in maybe_emit_ideas():
+                        yield ideas_chunk
+                elif isinstance(chunk, ToolMessage):
+                    # assign the documents based on tool usage
+                    if chunk.name == "retrieve_chunks":
+                        # get the documents from the chunk
+                        response.documents = chunk.artifact
+                    async for ideas_chunk in maybe_emit_ideas():
+                        yield ideas_chunk
+        except Exception as error:
+            logger.exception("Error while streaming model response: %s", error)
+            response.clear()
+            response.content = (
+                "I couldn't access supporting documents right now. "
+                "I'll still provide a best-effort response."
+            )
+            yield response.model_dump_json() + "\n"
+            response.clear()
+            # Fallback: stream directly from model without tools.
+            try:
+                async for chunk in stream_response(
+                    messages=[message.to_langchain() for message in messages],
+                    tools=None,
+                    temperature=0.1,
+                ):
+                    if isinstance(chunk, AIMessageChunk):
+                        delta = _extract_chunk_text(chunk.content)
+                        if not delta:
+                            continue
+                        response.content = delta
+                        contents.append(delta)
+                        yield response.model_dump_json() + "\n"
+                        response.clear()
+                        async for ideas_chunk in maybe_emit_ideas():
+                            yield ideas_chunk
+            except Exception as fallback_error:
+                logger.exception(
+                    "Error while streaming fallback model response: %s",
+                    fallback_error,
+                )
+                response.content = (
+                    "I ran into a temporary issue while generating a response. "
+                    "Please retry your question."
+                )
+                yield response.model_dump_json() + "\n"
+                return
         # include the assistant response in the history for generating ideas
         response.documents, response.content = None, ""
-        response.ideas = await generate_query_ideas(
-            messages + [Message(role="assistant", content="".join(contents))]
-        )
+        if ideas_payload is None:
+            try:
+                ideas_payload = normalize_ideas(await ideas_task)
+            except Exception as error:
+                logger.exception("Error while generating query ideas: %s", error)
+                ideas_payload = None
+        response.ideas = ideas_payload
         # return the final chunk that includes ideas only
         yield response.model_dump_json() + "\n"
+    finally:
+        if not ideas_task.done():
+            ideas_task.cancel()
+            try:
+                await ideas_task
+            except asyncio.CancelledError:
+                pass
 
 
 async def generate_query_ideas(messages: list[Message]) -> list[str]:

@@ -10,6 +10,7 @@ from lancedb.pydantic import LanceModel
 from langchain_core.messages import AIMessage, HumanMessage
 from pydantic import BaseModel, Field
 
+from .kg.types import GraphV2
 from .utils import PALLETES
 
 __all__ = [
@@ -316,7 +317,7 @@ class AssistantResponse(Message):
     documents: list[Document] | None = Field(
         default=None, description="One or more documents relevant to the user message"
     )
-    graph: Graph | None = Field(default=None)
+    graph: Graph | GraphV2 | None = Field(default=None)
 
     def clear(self) -> None:
         """

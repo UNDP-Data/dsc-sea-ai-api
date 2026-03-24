@@ -30,8 +30,14 @@ async def build_subgraph_v2(*args, **kwargs):
     """
     Delegate to the real V2 builder, while honoring test monkeypatches.
     """
+    original_find = _impl._find_central_nodes
+    original_pick = _impl._pick_diverse
     _sync_test_overrides()
-    return await _impl.build_subgraph_v2(*args, **kwargs)
+    try:
+        return await _impl.build_subgraph_v2(*args, **kwargs)
+    finally:
+        _impl._find_central_nodes = original_find
+        _impl._pick_diverse = original_pick
 
 
 __all__ = [
