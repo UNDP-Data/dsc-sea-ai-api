@@ -182,6 +182,56 @@
             margin-top: 12px;
         }
 
+        .documents-panel {
+            margin-top: 12px;
+        }
+
+        #stream-documents {
+            display: grid;
+            gap: 8px;
+            min-height: 28px;
+        }
+
+        .document-card {
+            padding: 10px;
+            background: #0d1420;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .document-title {
+            display: inline-block;
+            color: #8fc6ff;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .document-title:hover {
+            text-decoration: underline;
+        }
+
+        .document-meta {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .document-summary {
+            margin: 8px 0 0;
+            color: #c9d9e8;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .documents-empty {
+            color: #95a8bd;
+            font-size: 12px;
+            margin: 2px 0 0;
+        }
+
         #query-ideas {
             display: flex;
             flex-wrap: wrap;
@@ -296,6 +346,10 @@
             <div class="panel">
                 <h3 style="margin-top: 0;">Streamed Answer</h3>
                 <pre id="stream-answer"></pre>
+                <div class="documents-panel">
+                    <h3 style="margin: 0 0 6px;">Streamed References</h3>
+                    <div id="stream-documents"></div>
+                </div>
                 <div class="ideas-panel">
                     <h3 style="margin: 0 0 6px;">Query Ideas</h3>
                     <div id="query-ideas"></div>
@@ -318,6 +372,7 @@
         const runBtn = document.getElementById("run-btn");
         const statusEl = document.getElementById("status");
         const streamAnswerEl = document.getElementById("stream-answer");
+        const streamDocumentsEl = document.getElementById("stream-documents");
         const queryIdeasEl = document.getElementById("query-ideas");
         const rawJsonEl = document.getElementById("raw-json");
         const svg = d3.select("#graph-svg");
@@ -387,6 +442,149 @@
                 });
                 queryIdeasEl.appendChild(chip);
             }
+        }
+
+        function normaliseDocuments(documents) {
+            if (!Array.isArray(documents)) {
+                return [];
+            }
+            const seen = new Set();
+            const cleanDocuments = [];
+            for (const documentItem of documents) {
+                if (!documentItem || typeof documentItem !== "object") {
+                    continue;
+                }
+                const title = typeof documentItem.title === "string" ? documentItem.title.trim() : "";
+                const url = typeof documentItem.url === "string" ? documentItem.url.trim() : "";
+                const summary = typeof documentItem.summary === "string" ? documentItem.summary.trim() : "";
+                const language = typeof documentItem.language === "string" ? documentItem.language.trim() : "";
+                const year = Number.isInteger(documentItem.year) ? documentItem.year : null;
+                const key = url || `${title}|||${year || ""}`;
+                if (!title || seen.has(key)) {
+                    continue;
+                }
+                seen.add(key);
+                cleanDocuments.push({
+                    title,
+                    url,
+                    summary,
+                    language,
+                    year,
+                });
+            }
+            return cleanDocuments;
+        }
+
+        function renderDocuments(documents) {
+            streamDocumentsEl.innerHTML = "";
+            const cleanDocuments = normaliseDocuments(documents);
+            if (!cleanDocuments.length) {
+                const empty = document.createElement("p");
+                empty.className = "documents-empty";
+                empty.textContent = "References will appear as soon as retrieval identifies them.";
+                streamDocumentsEl.appendChild(empty);
+                return;
+            }
+            for (const documentItem of cleanDocuments) {
+                const card = document.createElement("div");
+                card.className = "document-card";
+
+                const title = document.createElement(documentItem.url ? "a" : "div");
+                title.className = "document-title";
+                title.textContent = documentItem.title;
+                if (documentItem.url) {
+                    title.href = documentItem.url;
+                    title.target = "_blank";
+                    title.rel = "noreferrer noopener";
+                }
+                card.appendChild(title);
+
+                const metaParts = [];
+                if (documentItem.year) {
+                    metaParts.push(String(documentItem.year));
+                }
+                if (documentItem.language) {
+                    metaParts.push(documentItem.language);
+                }
+                if (metaParts.length) {
+                    const meta = document.createElement("p");
+                    meta.className = "document-meta";
+                    meta.textContent = metaParts.join(" • ");
+                    card.appendChild(meta);
+                }
+
+                if (documentItem.summary) {
+                    const summary = document.createElement("p");
+                    summary.className = "document-summary";
+                    summary.textContent = documentItem.summary;
+                    card.appendChild(summary);
+                }
+
+                streamDocumentsEl.appendChild(card);
+            }
+        }
+
+        function buildGraphDebugSummary(graph) {
+            if (!graph || typeof graph !== "object") {
+                return null;
+            }
+            const nodes = Array.isArray(graph.nodes) ? graph.nodes : [];
+            const edges = Array.isArray(graph.edges) ? graph.edges : [];
+            return {
+                present: true,
+                node_count: nodes.length,
+                edge_count: edges.length,
+                sample_nodes: nodes.slice(0, 5).map((node) => node?.name).filter(Boolean),
+            };
+        }
+
+        function buildChunkDebugSummary(chunk) {
+            if (!chunk || typeof chunk !== "object") {
+                return null;
+            }
+            return {
+                role: chunk.role || null,
+                content: extractChunkText(chunk.content),
+                ideas: Array.isArray(chunk.ideas) ? chunk.ideas : null,
+                documents: Array.isArray(chunk.documents) ? normaliseDocuments(chunk.documents) : null,
+                graph: buildGraphDebugSummary(chunk.graph),
+            };
+        }
+
+        function writeRawDebugPayload(payload) {
+            rawJsonEl.textContent = JSON.stringify(payload, null, 2);
+        }
+
+        function buildStreamDebugPayload({
+            query,
+            source,
+            version,
+            graphPayload,
+            answerText,
+            latestDocuments,
+            latestIdeas,
+            lastChunk,
+            chunkCount,
+            stats,
+        }) {
+            return {
+                query,
+                source,
+                graph_version: version,
+                graph: buildGraphDebugSummary(graphPayload),
+                answer_text: answerText,
+                answer_length: answerText.length,
+                documents: latestDocuments,
+                ideas: latestIdeas,
+                final_chunk: buildChunkDebugSummary(lastChunk),
+                chunk_count: chunkCount,
+                stream_stats: {
+                    graph_chunks: stats.graphChunks,
+                    text_chunks: stats.textChunks,
+                    document_chunks: stats.documentChunks,
+                    ideas_chunks: stats.ideasChunks,
+                },
+            };
         }
 
         function ensureGraphLayers() {
@@ -964,6 +1162,7 @@
             setStatus("Loading streamed model response...");
             streamAnswerEl.textContent = "";
             rawJsonEl.textContent = "{}";
+            renderDocuments([]);
             renderQueryIdeas([]);
 
             try {
@@ -1006,13 +1205,22 @@
                 let answerText = "";
                 let graphPayload = null;
                 let graphRendered = false;
+                let latestDocuments = [];
+                let latestIdeas = [];
                 let lastChunk = null;
+                const stats = {
+                    graphChunks: 0,
+                    textChunks: 0,
+                    documentChunks: 0,
+                    ideasChunks: 0,
+                };
                 const chunks = await readNdjsonStream(response, (chunk, chunkIndex) => {
                     if (requestId !== activeRequestId) {
                         return;
                     }
                     lastChunk = chunk;
                     if (chunk.graph) {
+                        stats.graphChunks += 1;
                         graphPayload = chunk.graph;
                         logStep("graph-chunk-detected", {
                             nodeCount: (graphPayload.nodes || []).length,
@@ -1022,26 +1230,41 @@
                             logStep("graph-render-immediate");
                             renderGraph(graphPayload);
                             graphRendered = true;
-                            rawJsonEl.textContent = JSON.stringify(
-                                {
-                                    graph_version: version,
-                                    graph: graphPayload,
-                                    final_chunk: chunk,
-                                    chunk_count_so_far: chunkIndex + 1,
-                                },
-                                null,
-                                2,
+                            writeRawDebugPayload(
+                                buildStreamDebugPayload({
+                                    query,
+                                    source,
+                                    version,
+                                    graphPayload,
+                                    answerText,
+                                    latestDocuments,
+                                    latestIdeas,
+                                    lastChunk: chunk,
+                                    chunkCount: chunkIndex + 1,
+                                    stats,
+                                })
                             );
                         }
                     }
                     const textDelta = extractChunkText(chunk.content);
                     if (textDelta.length > 0) {
+                        stats.textChunks += 1;
                         answerText += textDelta;
                         streamAnswerEl.textContent = answerText;
                         streamAnswerEl.scrollTop = streamAnswerEl.scrollHeight;
                     }
+                    if (Array.isArray(chunk.documents) && chunk.documents.length > 0) {
+                        stats.documentChunks += 1;
+                        latestDocuments = normaliseDocuments(chunk.documents);
+                        renderDocuments(latestDocuments);
+                        logStep("documents-chunk-detected", {
+                            count: latestDocuments.length,
+                        });
+                    }
                     if (Array.isArray(chunk.ideas) && chunk.ideas.length > 0) {
-                        renderQueryIdeas(chunk.ideas);
+                        stats.ideasChunks += 1;
+                        latestIdeas = normaliseIdeas(chunk.ideas);
+                        renderQueryIdeas(latestIdeas);
                     }
                 });
 
@@ -1057,15 +1280,19 @@
                     logStep("load-success-stale", { requestId, activeRequestId });
                     return;
                 }
-                rawJsonEl.textContent = JSON.stringify(
-                    {
-                        graph_version: version,
-                        graph: graphPayload,
-                        final_chunk: lastChunk,
-                        chunk_count: chunks.length,
-                    },
-                    null,
-                    2,
+                writeRawDebugPayload(
+                    buildStreamDebugPayload({
+                        query,
+                        source,
+                        version,
+                        graphPayload,
+                        answerText,
+                        latestDocuments,
+                        latestIdeas,
+                        lastChunk,
+                        chunkCount: chunks.length,
+                        stats,
+                    })
                 );
                 const targetName = target === "remote" ? remoteBase : "local server";
                 setStatus(
