@@ -293,6 +293,7 @@ class RetrievalProfile:
     explanatory: bool
     intent: str
     current_data_query: bool
+    data_focus: str | None
     country_scopes: frozenset[str]
     region_scopes: frozenset[str]
     fallback_region_scopes: frozenset[str]
@@ -308,6 +309,7 @@ class DocumentCandidate:
     document_type: str
     score: float
     topicality: float
+    focus_match: bool
     rows: tuple[tuple[dict, float], ...]
 
 
@@ -468,6 +470,25 @@ def _is_current_data_query(query: str, explicit_years: list[int]) -> bool:
     return False
 
 
+def _infer_data_focus(query: str) -> str | None:
+    normalized = " ".join((query or "").lower().split())
+    if any(
+        marker in normalized
+        for marker in (
+            "clean cooking",
+            "cooking fuel",
+            "cooking fuels",
+            "cookstove",
+            "cookstoves",
+            "household air pollution",
+        )
+    ):
+        return "clean_cooking"
+    if _is_energy_access_query(normalized):
+        return "electricity_access"
+    return None
+
+
 def _prefer_recent_documents(query: str, explicit_years: list[int]) -> bool:
     if _is_current_data_query(query, explicit_years):
         return True
@@ -516,6 +537,7 @@ def _build_retrieval_profile(
         explanatory=_is_explanatory_query(query),
         intent=_classify_query_intent(query, explicit_years),
         current_data_query=_is_current_data_query(query, explicit_years),
+        data_focus=_infer_data_focus(query),
         country_scopes=country_scopes,
         region_scopes=region_scopes,
         fallback_region_scopes=fallback_region_scopes,
@@ -905,6 +927,7 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
     year = row.get("year")
     text_blob = " ".join(filter(None, [title, subtitle, summary, series_name, publisher]))
     topics_text = _safe_list_text(row.get("topic_tags")) or (row.get("topic_tags_text") or "")
+    source_org = _infer_source_org(_infer_source_domain(row.get("url") or ""))
     normalized_title = _normalize_text(title)
     normalized_summary = _normalize_text(summary)
     normalized_text_blob = _normalize_text(text_blob)
@@ -970,6 +993,14 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
             missing_focus_penalty = 1.0
     geo = _classify_geography_match(row, profile)
     geography_component = _geography_bonus(str(geo["match_class"]))
+    data_focus_component, data_focus_penalty, data_focus_match = _data_focus_components(
+        title=title,
+        summary=summary,
+        content="",
+        topics_text=topics_text,
+        profile=profile,
+        source_org=source_org,
+    )
     score = (
         title_component
         + summary_component
@@ -988,10 +1019,12 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
         + data_report_component
         + document_type_component
         + geography_component
+        + data_focus_component
         - status_penalty
         - concept_flagship_penalty
         - no_signal_penalty
         - missing_focus_penalty
+        - data_focus_penalty
     )
     return {
         "document_id": row.get("document_id"),
@@ -1014,6 +1047,10 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
         "country_codes": geo["country_codes"],
         "region_codes": geo["region_codes"],
         "geography_component": _round_debug(geography_component),
+        "data_focus": profile.data_focus,
+        "data_focus_match": data_focus_match,
+        "data_focus_component": _round_debug(data_focus_component),
+        "data_focus_penalty": _round_debug(data_focus_penalty),
         "focus_phrase_component": _round_debug(focus_phrase_component),
         "missing_focus_penalty": _round_debug(missing_focus_penalty),
         "signal_strength": _round_debug(signal_strength),
@@ -1053,7 +1090,10 @@ def _document_has_min_signal(row: dict, profile: RetrievalProfile) -> bool:
     token_hits = int(breakdown["token_hits"])
     focus_hits = int(breakdown["focus_hits"])
     focus_phrases = list(breakdown["focus_phrases"])
+    data_focus_match = bool(breakdown.get("data_focus_match", True))
     if focus_phrases and focus_hits == 0 and profile.intent in {"definition", "policy", "implementation"}:
+        return False
+    if profile.current_data_query and profile.data_focus and not data_focus_match:
         return False
     return (
         signal_strength >= 0.2
@@ -1073,11 +1113,15 @@ def _select_chunk_rows(
     filtered_rows, _mode, _rejected = _filter_rows_by_geography(rows, profile)
     if not filtered_rows:
         return []
-    ranked_rows = sorted(
-        ((row, _score_chunk_row(row, profile)) for row in filtered_rows),
-        key=lambda item: item[1],
-        reverse=True,
-    )
+    candidate_rows: list[tuple[dict, float]] = []
+    for row in filtered_rows:
+        breakdown = _chunk_score_breakdown(row, profile)
+        if profile.current_data_query and profile.data_focus and not bool(
+            breakdown.get("data_focus_match", True)
+        ):
+            continue
+        candidate_rows.append((row, float(breakdown["score"])))
+    ranked_rows = sorted(candidate_rows, key=lambda item: item[1], reverse=True)
     chunks: list[Chunk] = []
     for row, _score in ranked_rows[:limit]:
         chunks.append(
@@ -1336,6 +1380,100 @@ def _round_debug(value: float) -> float:
     return round(float(value), 4)
 
 
+def _data_focus_components(
+    *,
+    title: str,
+    summary: str,
+    content: str,
+    topics_text: str,
+    profile: RetrievalProfile,
+    source_org: str = "",
+) -> tuple[float, float, bool]:
+    if not profile.current_data_query or not profile.data_focus:
+        return 0.0, 0.0, True
+
+    text_blob = _normalize_text(" ".join(filter(None, [title, summary, content, topics_text])))
+    if profile.data_focus == "electricity_access":
+        strong_markers = (
+            "access to electricity",
+            "electricity access",
+            "without access to electricity",
+            "electricity",
+            "electrification",
+            "grid connection",
+            "grid connections",
+            "mini grid",
+            "mini grids",
+            "off grid",
+            "off grids",
+        )
+        side_topic_markers = (
+            "clean cooking",
+            "cooking",
+            "cookstove",
+            "cookstoves",
+            "woodfuel",
+            "woodfuels",
+            "biomass",
+            "charcoal",
+            "forest",
+            "forests",
+            "livelihoods",
+            "household air pollution",
+        )
+        has_strong_focus = any(marker in text_blob for marker in strong_markers)
+        has_side_topic = any(marker in text_blob for marker in side_topic_markers)
+        component = 1.6 if has_strong_focus else 0.0
+        if source_org == "tracking_sdg7":
+            component += 0.45
+        penalty = 0.0
+        if not has_strong_focus:
+            penalty += 1.8
+        if has_side_topic and not has_strong_focus:
+            penalty += 2.2
+        return component, penalty, has_strong_focus
+
+    if profile.data_focus == "clean_cooking":
+        strong_markers = (
+            "clean cooking",
+            "cooking fuel",
+            "cooking fuels",
+            "cookstove",
+            "cookstoves",
+            "household air pollution",
+        )
+        has_strong_focus = any(marker in text_blob for marker in strong_markers)
+        component = 1.4 if has_strong_focus else 0.0
+        penalty = 1.6 if not has_strong_focus else 0.0
+        return component, penalty, has_strong_focus
+
+    return 0.0, 0.0, True
+
+
+def _sdg7_priority_bonus(
+    *,
+    source_org: str,
+    year: int | None,
+    profile: RetrievalProfile,
+    topicality: float,
+) -> float:
+    if source_org != "tracking_sdg7":
+        return 0.0
+    if year is None or year < 2025:
+        return 0.0
+    if topicality < 0.8:
+        return 0.0
+    if profile.current_data_query:
+        return 2.0
+    if profile.intent == "data":
+        return 1.2
+    if profile.intent in {"concept", "implementation"}:
+        return 0.45
+    if profile.intent == "policy":
+        return 0.25
+    return 0.35
+
+
 def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, object]:
     title = row.get("title") or ""
     summary = row.get("summary") or ""
@@ -1386,6 +1524,20 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         low_topicality_penalty = 0.6
     geo = _classify_geography_match(row, profile)
     geography_component = _geography_bonus(str(geo["match_class"]))
+    data_focus_component, data_focus_penalty, data_focus_match = _data_focus_components(
+        title=title,
+        summary=summary,
+        content=content,
+        topics_text=_safe_list_text(row.get("topic_tags")) or "",
+        profile=profile,
+        source_org=source_org,
+    )
+    sdg7_priority_component = _sdg7_priority_bonus(
+        source_org=source_org,
+        year=year if isinstance(year, int) else None,
+        profile=profile,
+        topicality=topicality,
+    )
     score = (
         distance_component
         + title_overlap_component
@@ -1402,8 +1554,11 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         + authority_component
         + document_type_component
         + geography_component
+        + data_focus_component
+        + sdg7_priority_component
         - generic_penalty
         - low_topicality_penalty
+        - data_focus_penalty
     )
     return {
         "title": title,
@@ -1432,6 +1587,11 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         "country_codes": geo["country_codes"],
         "region_codes": geo["region_codes"],
         "geography_component": _round_debug(geography_component),
+        "data_focus": profile.data_focus,
+        "data_focus_match": data_focus_match,
+        "data_focus_component": _round_debug(data_focus_component),
+        "data_focus_penalty": _round_debug(data_focus_penalty),
+        "sdg7_priority_component": _round_debug(sdg7_priority_component),
         "recentness_component": _round_debug(recentness_component),
         "generic_report_penalty": _round_debug(generic_penalty),
         "low_topicality_penalty": _round_debug(low_topicality_penalty),
@@ -1502,6 +1662,20 @@ def _document_candidate_breakdown(
         low_topicality_penalty = 0.65
     geo = _classify_geography_match(best_row, profile)
     geography_component = _geography_bonus(str(geo["match_class"]))
+    data_focus_component, data_focus_penalty, data_focus_match = _data_focus_components(
+        title=title,
+        summary=combined_summary,
+        content=combined_content,
+        topics_text=_safe_list_text(best_row.get("topic_tags")) or "",
+        profile=profile,
+        source_org=source_org,
+    )
+    sdg7_priority_component = _sdg7_priority_bonus(
+        source_org=source_org,
+        year=year if isinstance(year, int) else None,
+        profile=profile,
+        topicality=topicality,
+    )
 
     score = (
         support_score
@@ -1513,8 +1687,11 @@ def _document_candidate_breakdown(
         + authority_component
         + document_type_component
         + geography_component
+        + data_focus_component
+        + sdg7_priority_component
         - specificity_penalty
         - low_topicality_penalty
+        - data_focus_penalty
     )
     return {
         "key": key,
@@ -1544,6 +1721,11 @@ def _document_candidate_breakdown(
         "country_codes": geo["country_codes"],
         "region_codes": geo["region_codes"],
         "geography_component": _round_debug(geography_component),
+        "data_focus": profile.data_focus,
+        "data_focus_match": data_focus_match,
+        "data_focus_component": _round_debug(data_focus_component),
+        "data_focus_penalty": _round_debug(data_focus_penalty),
+        "sdg7_priority_component": _round_debug(sdg7_priority_component),
         "specificity_penalty": _round_debug(specificity_penalty),
         "low_topicality_penalty": _round_debug(low_topicality_penalty),
         "score": _round_debug(score),
@@ -1573,6 +1755,7 @@ def _build_document_candidate(
         document_type=str(breakdown["document_type"]),
         score=float(breakdown["score"]),
         topicality=float(breakdown["topicality"]),
+        focus_match=bool(breakdown.get("data_focus_match", True)),
         rows=tuple(scored_rows),
     )
 
@@ -1590,6 +1773,11 @@ def _select_documents_and_chunks(
 
     ranked_rows = []
     for row in filtered_rows:
+        breakdown = _chunk_score_breakdown(row, profile)
+        if profile.current_data_query and profile.data_focus and not bool(
+            breakdown.get("data_focus_match", True)
+        ):
+            continue
         ranked_rows.append((row, _score_chunk_row(row, profile)))
     ranked_rows.sort(key=lambda item: item[1], reverse=True)
 
@@ -1612,6 +1800,8 @@ def _select_documents_and_chunks(
     for candidate in ranked_documents:
         if len(selected_keys) >= max_documents:
             break
+        if profile.current_data_query and profile.data_focus and not candidate.focus_match:
+            continue
         if candidate.series_id in seen_series:
             continue
         best_row = candidate.rows[0][0]
