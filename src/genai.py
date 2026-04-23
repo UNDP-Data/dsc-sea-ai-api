@@ -591,6 +591,7 @@ async def get_answer(
     messages: list[Message],
     response: AssistantResponse,
     publication_task: Awaitable[tuple[list[dict], list[Document]]] | None = None,
+    defer_initial_answer: bool = False,
 ) -> AsyncGenerator[str, None]:
     """
     Respond to the user message using RAG and conversation history.
@@ -603,6 +604,10 @@ async def get_answer(
         Template AssistantResponse to be used to return streamed tokens.
     publication_task : Awaitable[tuple[list[dict], list[Document]]] | None
         Optional task that resolves to retrieved publication chunks and document metadata.
+    defer_initial_answer : bool
+        If true, skip the generic draft answer and wait for publication-backed
+        evidence first. Intended for current-data queries that should anchor on
+        the latest authoritative report.
 
     Yields
     ------
@@ -661,40 +666,46 @@ async def get_answer(
     ideas_emitted_in_stream = False
     try:
         initial_stream_failed = False
-        try:
-            async for chunk in stream_chat_response(
-                messages=[message.to_langchain() for message in messages],
-                system_message=PROMPTS["draft_answer"],
-                temperature=0.1,
-            ):
-                delta = _extract_chunk_text(getattr(chunk, "content", None))
-                if not delta:
-                    continue
-                response.content = delta
-                contents.append(delta)
+        if not defer_initial_answer:
+            try:
+                async for chunk in stream_chat_response(
+                    messages=[message.to_langchain() for message in messages],
+                    system_message=PROMPTS["draft_answer"],
+                    temperature=0.1,
+                ):
+                    delta = _extract_chunk_text(getattr(chunk, "content", None))
+                    if not delta:
+                        continue
+                    response.content = delta
+                    contents.append(delta)
+                    yield response.model_dump_json() + "\n"
+                    reset_response_payload()
+                    async for ideas_chunk in maybe_emit_ideas():
+                        yield ideas_chunk
+            except Exception as error:
+                logger.exception("Error while streaming initial model response: %s", error)
+                initial_stream_failed = True
+                reset_response_payload()
+                response.content = "I ran into a temporary issue while drafting the initial answer."
                 yield response.model_dump_json() + "\n"
                 reset_response_payload()
-                async for ideas_chunk in maybe_emit_ideas():
-                    yield ideas_chunk
-        except Exception as error:
-            logger.exception("Error while streaming initial model response: %s", error)
-            initial_stream_failed = True
-            reset_response_payload()
-            response.content = "I ran into a temporary issue while drafting the initial answer."
+        else:
+            response.content = "I will check the publications for the latest data.\n\n"
             yield response.model_dump_json() + "\n"
             reset_response_payload()
 
-        bridge_text = (
-            "\n\nI will check the publications for more insights.\n\n"
-            if contents
-            else "I will check the publications for more insights.\n\n"
-        )
-        response.content = bridge_text
-        contents.append(bridge_text)
-        yield response.model_dump_json() + "\n"
-        reset_response_payload()
-        async for ideas_chunk in maybe_emit_ideas():
-            yield ideas_chunk
+        if not defer_initial_answer:
+            bridge_text = (
+                "\n\nI will check the publications for more insights.\n\n"
+                if contents
+                else "I will check the publications for more insights.\n\n"
+            )
+            response.content = bridge_text
+            contents.append(bridge_text)
+            yield response.model_dump_json() + "\n"
+            reset_response_payload()
+            async for ideas_chunk in maybe_emit_ideas():
+                yield ideas_chunk
 
         publication_chunks: list[dict] = []
         publication_documents: list[Document] = []
