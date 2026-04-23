@@ -54,6 +54,23 @@ Optional local tester env (separate tester app):
 
 All protected endpoints require `X-Api-Key`.
 
+### Corpus Metadata Endpoints
+
+- `GET /documents[?pattern=<text>&limit=<int>]`
+  - Searches canonical publication records in the `documents` table when available.
+  - Response fields include legacy metadata plus additive fields such as:
+    - `document_id`
+    - `source`
+    - `publisher`
+    - `document_type`
+    - `publication_date`
+    - `series_name`
+    - `topics`
+    - `geographies`
+
+- `GET /sources`
+  - Lists source registry records from the `sources` table when available.
+
 ### V1 Graph Endpoint
 
 - `GET /graph?query=<text>[&hops=<int>]`
@@ -77,6 +94,8 @@ All protected endpoints require `X-Api-Key`.
 - Request body must include at least one message; empty lists return `400`.
 - Response includes `X-Request-Id` header for request correlation.
 - The stream is NDJSON; graph and text generation run in parallel.
+- A deterministic scope guard runs before generation. Off-topic, prompt-extraction,
+  and clearly unsafe requests are blocked before they reach the model or retrieval stack.
 - Chunk order is not fixed. The graph chunk usually arrives early, but clients must handle it arriving before, during, or after text deltas.
 - To avoid stalled streams under slow storage/model conditions, `/model` applies:
   - `MODEL_GRAPH_TIMEOUT_SECONDS` (graph build timeout),
@@ -87,6 +106,25 @@ All protected endpoints require `X-Api-Key`.
 - This controls the schema of `graph` returned in streamed `/model` chunks:
   - `v1`: legacy graph schema (`neighbourhood` on nodes, `level` on edges)
   - `v2`: staged graph schema (`tier` on nodes, no edge `level`)
+- Publication retrieval is now document-centric when a `documents` table is present:
+  - the backend ranks canonical document records first,
+  - then loads chunks only from shortlisted approved documents,
+  - and streams `documents[]` references separately from answer text.
+
+### Corpus Data Model
+
+The retrieval corpus now supports a document-centric layout:
+
+- `sources`
+  - canonical source registry with publisher / authority metadata
+- `documents`
+  - canonical publication records with approval status, source linkage, document type,
+    publication date, topical tags, geography tags, and quality signals
+- `chunks`
+  - chunk-level text records linked to `document_id`
+
+The API remains backward-compatible with the previous chunk-only flow. If `documents`
+or `sources` tables do not exist yet, retrieval falls back to the legacy chunk-first path.
 
 ### Internal KG Module Layout
 
@@ -161,6 +199,87 @@ python3 scripts/evaluate_graph_v2.py --api-key "$API_KEY"
 Optional flags:
 - `--queries-file path/to/queries.txt` for custom query sets
 - `--output /tmp/graph_v2_eval.json` to persist full metrics
+
+## Corpus Bootstrap and Validation
+
+Use the scripts below to upgrade an existing chunk-only corpus into the new
+document-centric layout and validate metadata completeness.
+
+Bootstrap canonical `sources` and `documents` tables from the current `chunks` table:
+
+```bash
+python3 scripts/bootstrap_corpus_tables.py --overwrite
+```
+
+If you also want to rewrite the `chunks` table so every chunk includes `document_id`
+and provenance fields:
+
+```bash
+python3 scripts/bootstrap_corpus_tables.py --overwrite --rewrite-chunks
+```
+
+Notes:
+- `--overwrite` alone creates / refreshes `sources` and `documents`, but leaves the
+  existing `chunks` schema untouched.
+- `--rewrite-chunks` is required if you want chunk provenance fields such as
+  `document_id`, `chunk_id`, and `chunk_index` to exist in the `chunks` table.
+- Importing enriched manifest chunks also requires `--rewrite-chunks` to have been run.
+
+Validate the upgraded corpus:
+
+```bash
+python3 scripts/validate_corpus_tables.py
+```
+
+The validator reports:
+- table existence and counts,
+- missing required document metadata,
+- document status distribution,
+- sample chunk provenance completeness.
+
+Import additional curated documents from a local YAML manifest:
+
+```bash
+python3 scripts/import_corpus_manifest.py --manifest data/corpus/sample_manifest.yaml --include-chunks
+```
+
+Supporting files:
+- `data/corpus/sources.yaml`: seed source registry for trusted and partner corpora
+- `data/corpus/sample_manifest.yaml`: example manual import manifest
+
+## Retrieval Debug Surface
+
+Use the retrieval debug endpoint to inspect the document-first ranking path for a single query:
+
+```bash
+curl -sS "http://127.0.0.1:8000/debug/retrieve?query=tell%20me%20more%20about%20feed%20in%20tariff&limit=12" \
+  -H "X-Api-Key: $API_KEY"
+```
+
+The response includes:
+- selected documents,
+- selected chunks,
+- retrieval profile,
+- query variants,
+- retrieval branches taken,
+- final selected path (`document_first`, `chunk_lexical`, `chunk_vector`, or `fallback`).
+
+To run a repeatable multi-prompt diagnostic surface and save both retrieval-debug and
+`/model` stream outputs:
+
+```bash
+python3 scripts/run_retrieval_surface.py --base-url http://127.0.0.1:8000 --output-prefix tmp/retrieval_surface
+```
+
+This writes:
+- `tmp/retrieval_surface.json`: machine-readable combined results
+- `tmp/retrieval_surface.txt`: human-readable report with retrieval debug and raw NDJSON
+
+For stream-only debugging:
+
+```bash
+python3 scripts/debug_model_stream.py --base-url http://127.0.0.1:8000 --output tmp/model_stream_debug.txt
+```
 
 ## Deployment
 

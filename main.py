@@ -22,13 +22,15 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from packaging.version import Version
 
-from src import database, genai
+from src import corpus, database, genai
 from src.entities import (
     AssistantResponse,
+    Document,
     Graph,
     GraphParameters,
     Message,
     Node,
+    SourceRecord,
 )
 from src.kg import v1 as kg_v1
 from src.kg import v2 as kg_v2
@@ -226,6 +228,57 @@ async def get_node(request: Request, name: str):
 
 
 @app.get(
+    path="/documents",
+    response_model=list[Document],
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def search_documents(
+    request: Request,
+    pattern: Annotated[str | None, Query(max_length=120)] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 20,
+):
+    """
+    Search canonical publication records if a documents table is available.
+    """
+    client: database.Client = request.state.client
+    table = await client.open_optional_table("documents")
+    if table is None:
+        return []
+    clause = "(status = 'approved')"
+    if pattern:
+        escaped = pattern.replace("'", "''")
+        clause += (
+            " AND ("
+            f"regexp_like(canonical_title, '(?i){escaped}') OR "
+            f"regexp_like(summary, '(?i){escaped}') OR "
+            f"regexp_like(topic_tags_text, '(?i){escaped}') OR "
+            f"regexp_like(geography_tags_text, '(?i){escaped}')"
+            ")"
+        )
+    rows = await table.query().where(clause).limit(limit).to_list()
+    return [corpus.document_record_to_api(row) for row in rows]
+
+
+@app.get(
+    path="/sources",
+    response_model=list[SourceRecord],
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def list_sources(request: Request):
+    """
+    List registered source records if a sources table is available.
+    """
+    client: database.Client = request.state.client
+    table = await client.open_optional_table("sources")
+    if table is None:
+        return []
+    rows = await table.query().limit(200).to_list()
+    return [SourceRecord(**row) for row in rows]
+
+
+@app.get(
     path="/graph",
     response_model=Graph,
     response_model_by_alias=False,
@@ -298,7 +351,7 @@ async def debug_tables(request: Request):
     names = await maybe_await(client.connection.table_names())
     names = list(names)
     status = {}
-    for name in ("nodes", "edges", "chunks", "sdg7"):
+    for name in ("nodes", "edges", "chunks", "documents", "sources", "sdg7"):
         if name in names:
             try:
                 table = await maybe_await(client.connection.open_table(name))
@@ -309,6 +362,31 @@ async def debug_tables(request: Request):
         else:
             status[name] = {"exists": False, "rows": 0}
     return {"tables": status, "all_tables": sorted(names)}
+
+
+@app.get(
+    path="/debug/retrieve",
+    dependencies=[Depends(authenticate)],
+    include_in_schema=False,
+)
+async def debug_retrieve(
+    request: Request,
+    query: Annotated[str, Query(min_length=2)],
+    limit: Annotated[int, Query(ge=1, le=50)] = 12,
+):
+    """
+    Inspect document/chunk retrieval decisions for a single query.
+    """
+    client: database.Client = request.state.client
+    debug_payload: dict = {}
+    chunks, documents = await client.retrieve_chunks(query, limit=limit, debug=debug_payload)
+    return {
+        "query": query,
+        "limit": limit,
+        "documents": [document.model_dump() for document in documents],
+        "chunks": [chunk.model_dump() for chunk in chunks],
+        "debug": debug_payload,
+    }
 
 
 @app.post(
@@ -348,6 +426,54 @@ async def ask_model(
     request_id = request.headers.get("X-Request-Id") or uuid4().hex
     user_query = messages[-1].content
     graph: nx.Graph = request.state.graph
+    scope_decision = genai.assess_scope(messages)
+    if not scope_decision.allowed:
+        logger.warning(
+            "Blocked model request request_id=%s category=%s reason=%s query=%r",
+            request_id,
+            scope_decision.category,
+            scope_decision.reason,
+            user_query,
+        )
+
+        async def stream_blocked_response():
+            empty_graph: Graph | GraphV2
+            if graph_version == "v1":
+                empty_graph = Graph(nodes=[], edges=[])
+            else:
+                empty_graph = GraphV2(nodes=[], edges=[])
+            yield (
+                AssistantResponse(
+                    role="assistant",
+                    content="",
+                    graph=empty_graph,
+                ).model_dump_json()
+                + "\n"
+            )
+            yield (
+                AssistantResponse(
+                    role="assistant",
+                    content=scope_decision.refusal or "This request is outside the supported scope.",
+                    graph=None,
+                ).model_dump_json()
+                + "\n"
+            )
+            yield (
+                AssistantResponse(
+                    role="assistant",
+                    content="",
+                    ideas=genai.build_scope_ideas(scope_decision.category),
+                    graph=None,
+                ).model_dump_json()
+                + "\n"
+            )
+
+        return StreamingResponse(
+            content=stream_blocked_response(),
+            media_type="application/x-ndjson",
+            headers={"X-Request-Id": request_id},
+        )
+
     logger.info(
         "Model request started request_id=%s graph_version=%s",
         request_id,
@@ -438,40 +564,86 @@ async def ask_model(
             await queue.put(("graph_data", graph_response.model_dump_json() + "\n"))
 
         async def produce_answer() -> None:
-            tools = [database.retrieve_chunks]
-            answer_connection = None
-            try:
-                # Use a dedicated connection to avoid concurrency issues with graph producer.
-                answer_connection = await database.get_connection()
-                answer_client = database.Client(answer_connection)
-                datasets = [
-                    await asyncio.wait_for(
-                        answer_client.get_sdg7_dataset(),
-                        timeout=tools_prep_timeout_seconds,
-                    )
-                ]
-                tools += genai.get_sql_tools(datasets)
-            except asyncio.TimeoutError:
-                logger.warning(
-                    "Tool preparation timed out request_id=%s timeout=%ss",
-                    request_id,
-                    tools_prep_timeout_seconds,
-                )
-            except Exception as error:
-                logger.exception(
-                    "Failed to prepare SQL tools request_id=%s: %s",
-                    request_id,
-                    error,
-                )
-            finally:
-                if answer_connection is not None:
-                    await maybe_close(answer_connection)
             response = AssistantResponse(
                 role="assistant",
                 content="",
                 graph=None,
             )
-            answer_iter = genai.get_answer(messages, response, tools=tools)
+            async def publication_payload():
+                retrieval_timeout_seconds = _env_timeout_seconds(
+                    "MODEL_PUBLICATION_RETRIEVAL_TIMEOUT_SECONDS",
+                    90.0,
+                )
+                answer_connection = None
+                logger.info(
+                    "Publication retrieval scheduled request_id=%s query=%r timeout=%ss",
+                    request_id,
+                    user_query,
+                    retrieval_timeout_seconds,
+                )
+                try:
+                    answer_connection = await database.get_connection()
+                    answer_client = database.Client(answer_connection)
+                    started_at = monotonic()
+                    logger.info(
+                        "Publication retrieval started request_id=%s query=%r timeout=%ss",
+                        request_id,
+                        user_query,
+                        retrieval_timeout_seconds,
+                    )
+                    try:
+                        chunks, documents = await asyncio.wait_for(
+                            answer_client.retrieve_chunks(user_query),
+                            timeout=retrieval_timeout_seconds,
+                        )
+                    except asyncio.TimeoutError:
+                        logger.warning(
+                            "Publication retrieval timed out request_id=%s query=%r timeout=%ss",
+                            request_id,
+                            user_query,
+                            retrieval_timeout_seconds,
+                        )
+                        return [], []
+                    except Exception as error:
+                        logger.exception(
+                            "Publication retrieval failed request_id=%s query=%r: %s",
+                            request_id,
+                            user_query,
+                            error,
+                        )
+                        return [], []
+                    logger.info(
+                        "Publication retrieval completed request_id=%s query=%r chunks=%s documents=%s elapsed_ms=%.2f",
+                        request_id,
+                        user_query,
+                        len(chunks),
+                        len(documents),
+                        (monotonic() - started_at) * 1000,
+                    )
+                    if chunks or documents:
+                        logger.info(
+                            "Publication payload ready request_id=%s query=%r chunks=%s documents=%s",
+                            request_id,
+                            user_query,
+                            len(chunks),
+                            len(documents),
+                        )
+                        return [chunk.to_context() for chunk in chunks], documents
+                finally:
+                    if answer_connection is not None:
+                        await maybe_close(answer_connection)
+                logger.warning(
+                    "Publication retrieval returned no usable results request_id=%s query=%r",
+                    request_id,
+                    user_query,
+                )
+                return [], []
+
+            answer_iter = genai.get_answer(
+                messages,
+                response,
+                publication_task=publication_payload(),
+            )
             try:
                 while True:
                     try:

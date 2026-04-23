@@ -1,0 +1,539 @@
+"""
+Tests for retrieval profiling and document selection heuristics.
+"""
+
+import pytest
+
+from src.database import (
+    Client,
+    _build_retrieval_profile,
+    _build_summary_fallback_chunks,
+    _build_metadata_patterns,
+    _document_has_min_signal,
+    _score_document_row,
+    _select_documents_and_chunks,
+    build_retrieval_queries,
+)
+from src import corpus
+
+
+def test_retrieval_profile_prefers_recent_for_data_queries():
+    profile = _build_retrieval_profile(
+        "What is the latest progress on access to electricity?"
+    )
+    assert profile.prefer_recent is True
+    assert profile.explicit_years == []
+
+
+def test_retrieval_profile_does_not_force_recent_for_explanatory_queries():
+    profile = _build_retrieval_profile("Tell me more about feed-in tariffs")
+    assert profile.prefer_recent is False
+    assert profile.explanatory is True
+    assert profile.intent == "policy"
+
+
+def test_retrieval_profile_classifies_data_queries():
+    profile = _build_retrieval_profile("What is the latest progress on access to electricity in 2025?")
+    assert profile.intent == "data"
+
+
+def test_document_selection_prefers_topical_document_over_generic_recent_report():
+    profile = _build_retrieval_profile("Tell me more about feed-in tariff")
+    rows = [
+        {
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Annual tracking report on SDG 7 progress and indicators.",
+            "content": "Electricity access, renewable share, energy efficiency trends.",
+            "_distance": 0.15,
+        },
+        {
+            "title": "Renewable Energy Policy Toolkit",
+            "year": 2022,
+            "language": "en",
+            "url": "https://example.org/policy-toolkit",
+            "summary": "Policy tools for renewable energy deployment.",
+            "content": (
+                "Feed-in tariff policy design, tariff setting, degression, "
+                "power purchase arrangements, and implementation challenges."
+            ),
+            "_distance": 0.22,
+        },
+    ]
+
+    chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert chunks
+    assert documents
+    assert documents[0].title == "Renewable Energy Policy Toolkit"
+    assert chunks[0].title == "Renewable Energy Policy Toolkit"
+
+
+def test_document_selection_penalizes_glossary_for_concept_query():
+    profile = _build_retrieval_profile(
+        "What is the connection between sustainable energy and climate change mitigation"
+    )
+    rows = [
+        {
+            "title": "The Climate Dictionary",
+            "year": 2023,
+            "language": "en",
+            "url": "https://www.undp.org/publications/climate-dictionary",
+            "summary": "A glossary of climate change terms for the general public.",
+            "content": "Definitions of climate adaptation, mitigation, resilience, and greenhouse gases.",
+            "_distance": 0.08,
+        },
+        {
+            "title": "Sustainable Energy and Climate Mitigation Pathways",
+            "year": 2022,
+            "language": "en",
+            "url": "https://example.org/mitigation-pathways",
+            "summary": "How sustainable energy transitions reduce greenhouse gas emissions and support climate mitigation.",
+            "content": "Sustainable energy, renewable deployment, and climate change mitigation pathways.",
+            "_distance": 0.18,
+        },
+    ]
+
+    _chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert documents
+    assert documents[0].title == "Sustainable Energy and Climate Mitigation Pathways"
+
+
+def test_build_retrieval_queries_strips_explanatory_prefix():
+    queries = build_retrieval_queries("Tell me more about feed in tariff")
+    assert "Tell me more about feed in tariff" in queries
+    assert "feed in tariff" in queries
+    assert "feed-in tariff" in queries
+
+
+def test_build_retrieval_queries_compacts_relationship_query():
+    queries = build_retrieval_queries(
+        "What is the connection between sustainable energy and climate change mitigation"
+    )
+    assert (
+        "sustainable energy and climate change mitigation" in queries
+        or "sustainable energy climate change mitigation" in queries
+    )
+
+
+def test_build_metadata_patterns_prefers_multi_word_phrases():
+    patterns = _build_metadata_patterns("Tell me more about access to electricity")
+    assert any("access[-\\s]+to[-\\s]+electricity" in pattern for pattern in patterns)
+
+    patterns = _build_metadata_patterns("Tell me more about feed in tariff")
+    assert any("feed[-\\s]+in[-\\s]+tariffs?" in pattern for pattern in patterns)
+    assert not any("fits?" in pattern for pattern in patterns)
+
+
+def test_document_selection_keeps_title_only_documents():
+    profile = _build_retrieval_profile("Tell me more about grid infrastructure")
+    rows = [
+        {
+            "title": "Grid Modernization Handbook",
+            "year": 2024,
+            "language": "en",
+            "url": "",
+            "summary": "Grid planning and modernization guidance.",
+            "content": "Grid infrastructure planning, resilience, and integration of renewables.",
+            "_distance": 0.12,
+        }
+    ]
+
+    chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert chunks
+    assert documents
+    assert documents[0].title == "Grid Modernization Handbook"
+
+
+def test_document_selection_deduplicates_same_url_reports():
+    profile = _build_retrieval_profile("Tell me more about access to electricity")
+    rows = [
+        {
+            "title": "2013 Progress toward Sustainable Energy",
+            "year": 2013,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Electricity access report.",
+            "content": "Access to electricity trends in 2013.",
+            "_distance": 0.12,
+        },
+        {
+            "title": "2017 Progress toward Sustainable Energy",
+            "year": 2017,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Electricity access report.",
+            "content": "Access to electricity trends in 2017.",
+            "_distance": 0.11,
+        },
+        {
+            "title": "Energy Access Investment Case",
+            "year": 2021,
+            "language": "en",
+            "url": "https://example.org/access-case",
+            "summary": "Improving access to electricity in underserved regions.",
+            "content": "Electricity access, rural electrification, and mini-grid investment.",
+            "_distance": 0.18,
+        },
+    ]
+
+    _chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert len([doc for doc in documents if doc.url == "https://trackingsdg7.esmap.org/downloads"]) == 1
+
+
+def test_document_selection_prefers_flagship_data_report_for_data_queries():
+    profile = _build_retrieval_profile("What is the latest data on access to electricity?")
+    rows = [
+        {
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Latest global electricity access progress and indicators.",
+            "content": "Access to electricity, rural deficit, regional trends, and SDG7 indicators.",
+            "_distance": 0.14,
+        },
+        {
+            "title": "Energy Access Investment Case",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/access-case",
+            "summary": "Investment opportunities for improving access to electricity.",
+            "content": "Electricity access finance, off-grid deployment, and mini-grid growth.",
+            "_distance": 0.13,
+        },
+    ]
+
+    _chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert documents
+    assert documents[0].title == "2025 Tracking SDG7 Report"
+
+
+def test_document_row_requires_real_signal_not_only_priors():
+    profile = _build_retrieval_profile("Tell me more about feed in tariff")
+    row = {
+        "document_id": "doc-1",
+        "source_id": "undp",
+        "canonical_title": "Air quality monitoring data for analysis of the pace and intensity of the coronavirus spread",
+        "summary": "Air quality observations and pandemic analysis in Central and Eastern Europe.",
+        "document_type": "policy",
+        "status": "approved",
+        "quality_score": 1.0,
+        "source_priority": 1.0,
+        "year": 2021,
+        "topic_tags": [
+            "energy efficiency",
+            "climate mitigation",
+            "grid infrastructure",
+        ],
+        "region_codes": ["europe"],
+    }
+
+    assert _document_has_min_signal(row, profile) is False
+    assert _score_document_row(row, profile) < 0.8
+
+
+def test_document_row_accepts_topic_backed_infrastructure_match():
+    profile = _build_retrieval_profile("Tell me more about grid infrastructure")
+    row = {
+        "document_id": "doc-2",
+        "source_id": "undp",
+        "canonical_title": "Resilient power systems planning note",
+        "summary": "Transmission resilience and power system modernization guidance.",
+        "document_type": "policy",
+        "status": "approved",
+        "quality_score": 0.9,
+        "source_priority": 1.0,
+        "year": 2024,
+        "topic_tags": ["grid infrastructure", "renewable integration"],
+        "region_codes": ["global"],
+    }
+
+    assert _document_has_min_signal(row, profile) is True
+    assert _score_document_row(row, profile) >= 0.8
+
+
+def test_document_row_requires_focus_phrase_for_feed_in_tariff():
+    profile = _build_retrieval_profile("Tell me more about feed in tariff")
+    row = {
+        "document_id": "doc-3",
+        "source_id": "undp",
+        "canonical_title": "BIOFIN Synthesis Report for Thailand",
+        "summary": (
+            "Findings from the three assessments feed into the formulation of the country's "
+            "Biodiversity Finance Plan."
+        ),
+        "document_type": "policy",
+        "status": "approved",
+        "quality_score": 1.0,
+        "source_priority": 1.0,
+        "year": 2020,
+        "topic_tags": ["energy finance"],
+        "region_codes": ["asia"],
+    }
+
+    assert _document_has_min_signal(row, profile) is False
+
+
+def test_summary_fallback_chunks_use_document_summaries():
+    profile = _build_retrieval_profile("Tell me more about access to electricity")
+    rows = [
+        {
+            "document_id": "doc-4",
+            "source_id": "undp",
+            "canonical_title": "Energy Access Brief",
+            "summary": "Access to electricity remains uneven across rural areas.",
+            "year": 2025,
+            "language": "English",
+            "url": "https://example.org/energy-access-brief",
+        }
+    ]
+
+    chunks = _build_summary_fallback_chunks(rows, profile, limit=3)
+
+    assert len(chunks) == 1
+    assert chunks[0].title == "Energy Access Brief"
+    assert "Access to electricity" in chunks[0].content
+
+
+@pytest.mark.asyncio
+async def test_retrieve_chunks_uses_lexical_matches_before_vector_search():
+    rows = [
+        {
+            "title": "Feed-in Tariff Policy Toolkit",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/fit-toolkit",
+            "summary": "Guidance on feed-in tariff design and reform.",
+            "content": "Feed-in tariff structures, degression, procurement, and market integration.",
+        },
+        {
+            "title": "Renewable Tariff Design Handbook",
+            "year": 2023,
+            "language": "en",
+            "url": "https://example.org/fit-handbook",
+            "summary": "Practical guidance for feed-in tariffs and related renewable pricing policies.",
+            "content": "Feed in tariff implementation, payment design, and project bankability.",
+        },
+    ]
+
+    class FakeQuery:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def select(self, _fields):
+            return self
+
+        def where(self, _clause):
+            return self
+
+        def limit(self, _limit):
+            return self
+
+        async def to_list(self):
+            return self.rows
+
+    class FakeTable:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def query(self):
+            return FakeQuery(self.rows)
+
+        def vector_search(self, _vector):
+            raise AssertionError("vector search should not run when lexical matches exist")
+
+    class FakeConnection:
+        def __init__(self, rows):
+            self.rows = rows
+
+        async def open_table(self, name):
+            if name == "chunks":
+                return FakeTable(self.rows)
+            raise ValueError(f"Table {name} was not found")
+
+    class FailingEmbedder:
+        async def aembed_query(self, _query):
+            raise AssertionError("embedder should not run when lexical matches exist")
+
+    client = Client(FakeConnection(rows))
+    client.embedder = FailingEmbedder()
+
+    chunks, documents = await client.retrieve_chunks("Tell me more about feed in tariff")
+
+    assert len(chunks) >= 2
+    assert len(documents) >= 2
+    assert documents[0].title == "Feed-in Tariff Policy Toolkit"
+
+
+def test_build_document_record_enriches_metadata():
+    record = corpus.build_document_record(
+        [
+            {
+                "title": "2025 Tracking SDG7 Report: Access to Electricity in Africa",
+                "year": 2025,
+                "language": "en",
+                "url": "https://trackingsdg7.esmap.org/downloads/report.pdf",
+                "summary": "Latest progress on electricity access and renewable energy in Sub-Saharan Africa.",
+                "content": "Electricity access, renewable energy, SDG 7 indicators, and Africa regional trends.",
+            }
+        ]
+    )
+
+    assert record.source_id == "tracking_sdg7"
+    assert record.document_type in {"flagship_report", "report"}
+    assert record.is_flagship is True
+    assert "energy access" in (record.topic_tags or [])
+    assert "africa" in (record.region_codes or [])
+    assert "SDG7" in (record.sdg_tags or [])
+    assert record.status == "approved"
+
+
+@pytest.mark.asyncio
+async def test_retrieve_chunks_prefers_documents_table_when_available():
+    document_rows = [
+        {
+            "document_id": "doc-1",
+            "source_id": "undp",
+            "canonical_title": "Feed-in Tariff Policy Toolkit",
+            "url": "https://example.org/fit-toolkit",
+            "language": "en",
+            "document_type": "policy",
+            "publication_date": "2024-01-01",
+            "year": 2024,
+            "summary": "Guidance on feed-in tariff design and renewable energy tariff reform.",
+            "status": "approved",
+            "publisher": "UNDP",
+            "series_name": None,
+            "topic_tags": ["energy finance", "renewable energy"],
+            "topic_tags_text": "energy finance | renewable energy",
+            "region_codes": ["global"],
+            "geography_tags_text": "global",
+            "audience_tags": ["policy-makers"],
+            "audience_tags_text": "policy-makers",
+            "authority_tier": "trusted",
+            "source_priority": 1.0,
+            "quality_score": 0.9,
+            "is_flagship": False,
+            "is_data_report": False,
+        },
+        {
+            "document_id": "doc-2",
+            "source_id": "world_bank",
+            "canonical_title": "Renewable Tariff Design Handbook",
+            "url": "https://example.org/fit-handbook",
+            "language": "en",
+            "document_type": "policy",
+            "publication_date": "2023-01-01",
+            "year": 2023,
+            "summary": "Practical guidance for feed-in tariffs and procurement rules.",
+            "status": "approved",
+            "publisher": "World Bank",
+            "series_name": None,
+            "topic_tags": ["energy finance"],
+            "topic_tags_text": "energy finance",
+            "region_codes": ["global"],
+            "geography_tags_text": "global",
+            "audience_tags": ["policy-makers"],
+            "audience_tags_text": "policy-makers",
+            "authority_tier": "trusted",
+            "source_priority": 1.0,
+            "quality_score": 0.85,
+            "is_flagship": False,
+            "is_data_report": False,
+        },
+    ]
+    chunk_rows = [
+        {
+            "document_id": "doc-1",
+            "title": "Feed-in Tariff Policy Toolkit",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/fit-toolkit",
+            "summary": "Guidance on feed-in tariff design and renewable energy tariff reform.",
+            "content": "Feed-in tariff degression, tariff setting, policy sequencing, and market integration.",
+            "chunk_id": "chunk-1",
+            "chunk_index": 0,
+        },
+        {
+            "document_id": "doc-2",
+            "title": "Renewable Tariff Design Handbook",
+            "year": 2023,
+            "language": "en",
+            "url": "https://example.org/fit-handbook",
+            "summary": "Practical guidance for feed-in tariffs and procurement rules.",
+            "content": "Feed in tariff implementation and procurement design for renewable markets.",
+            "chunk_id": "chunk-2",
+            "chunk_index": 0,
+        },
+    ]
+
+    class FakeSchemaField:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeQuery:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def select(self, _fields=None):
+            return self
+
+        def where(self, _clause):
+            return self
+
+        def limit(self, _limit):
+            return self
+
+        async def to_list(self):
+            return self.rows
+
+    class FakeVectorSearch(FakeQuery):
+        pass
+
+    class FakeTable:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def query(self):
+            return FakeQuery(self.rows)
+
+        def vector_search(self, _vector):
+            return FakeVectorSearch(self.rows)
+
+        async def schema(self):
+            if self.rows:
+                return [FakeSchemaField(name) for name in self.rows[0].keys()]
+            return []
+
+    class FakeConnection:
+        async def table_names(self):
+            return ["chunks", "documents"]
+
+        async def open_table(self, name):
+            if name == "chunks":
+                return FakeTable(chunk_rows)
+            if name == "documents":
+                return FakeTable(document_rows)
+            raise ValueError(name)
+
+    class FakeEmbedder:
+        async def aembed_query(self, _query):
+            return [0.1]
+
+    client = Client(FakeConnection())
+    client.embedder = FakeEmbedder()
+
+    chunks, documents = await client.retrieve_chunks("Tell me more about feed in tariff")
+
+    assert len(documents) >= 2
+    assert documents[0].document_id == "doc-1"
+    assert documents[0].document_type == "policy"
+    assert len(chunks) >= 2
+    assert all(chunk.document_id for chunk in chunks)
