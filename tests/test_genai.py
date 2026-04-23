@@ -91,6 +91,45 @@ async def test_generate_response():
 
 
 @pytest.mark.asyncio
+async def test_generate_response_uses_function_calling_for_structured_output(monkeypatch):
+    """
+    Structured-output calls should use the stable function-calling path.
+    """
+
+    class Response(BaseModel):
+        years: list[int]
+
+    class FakeStructuredChat:
+        async def ainvoke(self, _messages):
+            return Response(years=[1949, 1958])
+
+    class FakeChat:
+        def __init__(self):
+            self.calls: list[tuple[type[BaseModel], str]] = []
+
+        def with_structured_output(self, schema, *, method):
+            self.calls.append((schema, method))
+            return FakeStructuredChat()
+
+    fake_chat = FakeChat()
+
+    def fake_get_chat_client(**_kwargs):
+        return fake_chat
+
+    monkeypatch.setattr(genai, "get_chat_client", fake_get_chat_client)
+
+    response = await genai.generate_response(
+        "Extract years from this text.",
+        "Return years only.",
+        schema=Response,
+    )
+
+    assert isinstance(response, Response)
+    assert response.years == [1949, 1958]
+    assert fake_chat.calls == [(Response, "function_calling")]
+
+
+@pytest.mark.asyncio
 async def test_get_answer_emits_ideas_before_final_chunk(monkeypatch):
     """
     Test if `get_answer` can emit ideas during token streaming when ready early.

@@ -43,6 +43,7 @@ DOCUMENT_INDEX_FIELDS = [
     "series_name",
     "topic_tags",
     "topic_tags_text",
+    "country_codes",
     "region_codes",
     "geography_tags_text",
     "audience_tags",
@@ -210,6 +211,39 @@ CASE_STUDY_PATTERNS = (
     "initiative",
     "nama",
 )
+QUERY_REGION_ALIASES: dict[str, tuple[str, ...]] = {
+    "africa": ("africa", "sub saharan africa", "sub-saharan africa"),
+    "asia": ("asia", "south asia", "southeast asia", "central asia"),
+    "latin america": (
+        "latin america",
+        "latin america and the caribbean",
+        "latin america & the caribbean",
+        "caribbean",
+        "lac",
+    ),
+    "europe": ("europe", "european union"),
+    "middle east": ("middle east", "mena", "arab states"),
+    "small island developing states": ("sids", "small island developing states"),
+    "global": ("global", "worldwide", "international"),
+}
+QUERY_COUNTRY_ALIASES: dict[str, tuple[str, ...]] = {
+    "NGA": ("nigeria",),
+    "COD": ("democratic republic of congo", "dr congo", "drc"),
+    "ETH": ("ethiopia",),
+    "KEN": ("kenya",),
+    "IND": ("india",),
+    "IDN": ("indonesia",),
+    "BRA": ("brazil",),
+}
+COUNTRY_TO_REGION: dict[str, str] = {
+    "NGA": "africa",
+    "COD": "africa",
+    "ETH": "africa",
+    "KEN": "africa",
+    "IND": "asia",
+    "IDN": "asia",
+    "BRA": "latin america",
+}
 
 
 def _env_timeout_seconds(
@@ -258,6 +292,10 @@ class RetrievalProfile:
     prefer_recent: bool
     explanatory: bool
     intent: str
+    country_scopes: frozenset[str]
+    region_scopes: frozenset[str]
+    fallback_region_scopes: frozenset[str]
+    has_geographic_scope: bool
 
 
 @dataclass(frozen=True)
@@ -341,6 +379,41 @@ def _extract_years(text: str | None) -> list[int]:
     return [year for year in years if 1900 <= year <= 2100]
 
 
+def _extract_scopes_from_query(
+    text: str | None,
+    aliases: dict[str, tuple[str, ...]],
+) -> frozenset[str]:
+    normalized = _normalize_text(text)
+    if not normalized:
+        return frozenset()
+    matched: list[str] = []
+    for canonical, candidates in aliases.items():
+        for candidate in candidates:
+            candidate_normalized = _normalize_text(candidate)
+            if not candidate_normalized:
+                continue
+            if re.search(rf"\b{re.escape(candidate_normalized)}\b", normalized):
+                matched.append(canonical)
+                break
+    return frozenset(matched)
+
+
+def _extract_country_scopes(query: str) -> frozenset[str]:
+    return _extract_scopes_from_query(query, QUERY_COUNTRY_ALIASES)
+
+
+def _extract_region_scopes(query: str) -> frozenset[str]:
+    return _extract_scopes_from_query(query, QUERY_REGION_ALIASES)
+
+
+def _derive_fallback_regions(country_scopes: frozenset[str]) -> frozenset[str]:
+    return frozenset(
+        COUNTRY_TO_REGION[country]
+        for country in country_scopes
+        if country in COUNTRY_TO_REGION
+    )
+
+
 def _is_explanatory_query(query: str) -> bool:
     normalized = " ".join(query.lower().split())
     return normalized.startswith(EXPLANATORY_PREFIXES) or "benefits and challenges" in normalized
@@ -381,6 +454,9 @@ def _build_retrieval_profile(
     else:
         explicit_years = sorted({year for year in years if isinstance(year, int)})
     normalized_query = _normalize_text(query)
+    country_scopes = _extract_country_scopes(query)
+    region_scopes = _extract_region_scopes(query)
+    fallback_region_scopes = _derive_fallback_regions(country_scopes)
     return RetrievalProfile(
         query=query,
         normalized_query=normalized_query,
@@ -390,6 +466,10 @@ def _build_retrieval_profile(
         prefer_recent=_prefer_recent_documents(query, explicit_years),
         explanatory=_is_explanatory_query(query),
         intent=_classify_query_intent(query, explicit_years),
+        country_scopes=country_scopes,
+        region_scopes=region_scopes,
+        fallback_region_scopes=fallback_region_scopes,
+        has_geographic_scope=bool(country_scopes or region_scopes),
     )
 
 
@@ -557,6 +637,184 @@ def _safe_list_text(value: object) -> str:
     return ""
 
 
+def _normalize_scope_values(values: object) -> set[str]:
+    normalized: set[str] = set()
+    if isinstance(values, list):
+        for item in values:
+            if isinstance(item, str) and item.strip():
+                normalized.add(item.strip().lower())
+    elif isinstance(values, str):
+        for item in re.split(r"[|,;/]", values):
+            item = item.strip().lower()
+            if item:
+                normalized.add(item)
+    return normalized
+
+
+def _row_country_scopes(row: dict) -> set[str]:
+    countries = {
+        value.upper() if len(value) == 3 else value.upper()
+        for value in _normalize_scope_values(row.get("country_codes"))
+    }
+    if countries:
+        return countries
+    geography_text = " ".join(
+        filter(
+            None,
+            [
+                _safe_list_text(row.get("country_codes")),
+                row.get("geography_tags_text") or "",
+                row.get("summary") or "",
+                row.get("chunk_summary") or "",
+                row.get("content") or "",
+                row.get("title") or row.get("canonical_title") or "",
+            ],
+        )
+    )
+    return set(_extract_country_scopes(geography_text))
+
+
+def _row_region_scopes(row: dict) -> set[str]:
+    regions = _normalize_scope_values(row.get("region_codes"))
+    if regions:
+        return regions
+    geography_text = " ".join(
+        filter(
+            None,
+            [
+                _safe_list_text(row.get("region_codes")),
+                row.get("geography_tags_text") or "",
+                row.get("summary") or "",
+                row.get("chunk_summary") or "",
+                row.get("content") or "",
+                row.get("title") or row.get("canonical_title") or "",
+            ],
+        )
+    )
+    return set(_extract_region_scopes(geography_text))
+
+
+def _classify_geography_match(row: dict, profile: RetrievalProfile) -> dict[str, object]:
+    if not profile.has_geographic_scope:
+        return {
+            "match_class": "unscoped",
+            "rejected": False,
+            "country_codes": sorted(_row_country_scopes(row)),
+            "region_codes": sorted(_row_region_scopes(row)),
+        }
+
+    row_countries = _row_country_scopes(row)
+    row_regions = _row_region_scopes(row)
+    row_is_global = "global" in row_regions
+
+    if profile.country_scopes:
+        if row_countries & profile.country_scopes:
+            match_class = "exact_country"
+        elif row_countries and not (row_countries & profile.country_scopes):
+            match_class = "out_of_scope"
+        elif row_regions & profile.fallback_region_scopes:
+            match_class = "parent_region"
+        elif row_is_global:
+            match_class = "global"
+        else:
+            match_class = "out_of_scope"
+    else:
+        matching_regions = row_regions & profile.region_scopes
+        if matching_regions:
+            match_class = "exact_region"
+        elif row_countries and any(
+            COUNTRY_TO_REGION.get(country) in profile.region_scopes
+            for country in row_countries
+        ):
+            match_class = "exact_region"
+        elif row_countries:
+            match_class = "out_of_scope"
+        elif row_is_global:
+            match_class = "global"
+        else:
+            match_class = "out_of_scope"
+
+    return {
+        "match_class": match_class,
+        "rejected": match_class == "out_of_scope",
+        "country_codes": sorted(row_countries),
+        "region_codes": sorted(row_regions),
+    }
+
+
+def _geography_bonus(match_class: str) -> float:
+    match match_class:
+        case "unscoped":
+            return 0.0
+        case "exact_country":
+            return 2.2
+        case "exact_region":
+            return 1.7
+        case "parent_region":
+            return 0.85
+        case "global":
+            return 0.35
+        case "out_of_scope":
+            return -4.0
+        case _:
+            return 0.0
+
+
+def _allowed_geography_classes(rows: list[dict], profile: RetrievalProfile) -> tuple[set[str] | None, str]:
+    if not profile.has_geographic_scope:
+        return None, "unscoped"
+
+    classes = {
+        str(_classify_geography_match(row, profile)["match_class"])
+        for row in rows
+    }
+
+    if profile.country_scopes:
+        if "exact_country" in classes:
+            return {"exact_country", "global"}, "exact_country"
+        if "parent_region" in classes:
+            return {"parent_region", "global"}, "parent_region"
+        if "global" in classes:
+            return {"global"}, "global"
+        return set(), "out_of_scope"
+
+    if "exact_region" in classes:
+        return {"exact_region", "global"}, "exact_region"
+    if "global" in classes:
+        return {"global"}, "global"
+    return set(), "out_of_scope"
+
+
+def _filter_rows_by_geography(
+    rows: list[dict],
+    profile: RetrievalProfile,
+) -> tuple[list[dict], str, list[dict]]:
+    if not rows:
+        return [], "empty", []
+    allowed_classes, mode = _allowed_geography_classes(rows, profile)
+    if allowed_classes is None:
+        return rows, mode, []
+
+    filtered: list[dict] = []
+    rejected: list[dict] = []
+    for row in rows:
+        geo = _classify_geography_match(row, profile)
+        row_with_geo = {**row, "_geo_match_class": geo["match_class"]}
+        if geo["match_class"] in allowed_classes:
+            filtered.append(row_with_geo)
+        else:
+            rejected.append(
+                {
+                    "title": row.get("canonical_title") or row.get("title"),
+                    "document_id": row.get("document_id"),
+                    "match_class": geo["match_class"],
+                    "country_codes": geo["country_codes"],
+                    "region_codes": geo["region_codes"],
+                }
+            )
+    return filtered, mode, rejected
+
+
 def _authority_tier_bonus(tier: str | None, profile: RetrievalProfile) -> float:
     match (tier or "").lower():
         case "trusted":
@@ -642,6 +900,8 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
             missing_focus_penalty = 2.8
         elif len(focus_phrases) >= 2 and focus_hits < 2:
             missing_focus_penalty = 1.0
+    geo = _classify_geography_match(row, profile)
+    geography_component = _geography_bonus(str(geo["match_class"]))
     score = (
         title_component
         + summary_component
@@ -659,6 +919,7 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
         + flagship_component
         + data_report_component
         + document_type_component
+        + geography_component
         - status_penalty
         - concept_flagship_penalty
         - no_signal_penalty
@@ -680,6 +941,11 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
         "focus_phrases": list(focus_phrases),
         "focus_hits": focus_hits,
         "topics_focus_hits": topics_focus_hits,
+        "geography_match_class": geo["match_class"],
+        "geography_rejected": geo["rejected"],
+        "country_codes": geo["country_codes"],
+        "region_codes": geo["region_codes"],
+        "geography_component": _round_debug(geography_component),
         "focus_phrase_component": _round_debug(focus_phrase_component),
         "missing_focus_penalty": _round_debug(missing_focus_penalty),
         "signal_strength": _round_debug(signal_strength),
@@ -710,6 +976,8 @@ def _score_document_row(row: dict, profile: RetrievalProfile) -> float:
 
 def _document_has_min_signal(row: dict, profile: RetrievalProfile) -> bool:
     breakdown = _document_row_breakdown(row, profile)
+    if bool(breakdown["geography_rejected"]):
+        return False
     signal_strength = float(breakdown["signal_strength"])
     title_overlap = float(breakdown["title_overlap"])
     summary_overlap = float(breakdown["summary_overlap"])
@@ -734,10 +1002,11 @@ def _select_chunk_rows(
     *,
     limit: int,
 ) -> list[Chunk]:
-    if not rows:
+    filtered_rows, _mode, _rejected = _filter_rows_by_geography(rows, profile)
+    if not filtered_rows:
         return []
     ranked_rows = sorted(
-        ((row, _score_chunk_row(row, profile)) for row in rows),
+        ((row, _score_chunk_row(row, profile)) for row in filtered_rows),
         key=lambda item: item[1],
         reverse=True,
     )
@@ -757,7 +1026,7 @@ def _select_chunk_rows(
                 publication_date=row.get("publication_date"),
                 series_name=row.get("series_name"),
                 topics=row.get("topic_tags"),
-                geographies=row.get("region_codes"),
+                geographies=_row_geographies(row),
                 content=row.get("content") or "",
                 chunk_id=row.get("chunk_id"),
                 chunk_index=row.get("chunk_index"),
@@ -779,7 +1048,8 @@ def _build_summary_fallback_chunks(
     limit: int,
 ) -> list[Chunk]:
     fallback_rows: list[dict] = []
-    for index, row in enumerate(documents):
+    filtered_documents, _mode, _rejected = _filter_rows_by_geography(documents, profile)
+    for index, row in enumerate(filtered_documents):
         summary = (row.get("summary") or "").strip()
         if not summary:
             continue
@@ -1037,6 +1307,8 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         low_topicality_penalty = 1.1
     elif topicality < 0.75:
         low_topicality_penalty = 0.6
+    geo = _classify_geography_match(row, profile)
+    geography_component = _geography_bonus(str(geo["match_class"]))
     score = (
         distance_component
         + title_overlap_component
@@ -1050,6 +1322,7 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         + summary_phrase_bonus
         + content_phrase_bonus
         + recentness_component
+        + geography_component
         - generic_penalty
         - low_topicality_penalty
     )
@@ -1073,6 +1346,11 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         "title_phrase_bonus": _round_debug(title_phrase_bonus),
         "summary_phrase_bonus": _round_debug(summary_phrase_bonus),
         "content_phrase_bonus": _round_debug(content_phrase_bonus),
+        "geography_match_class": geo["match_class"],
+        "geography_rejected": geo["rejected"],
+        "country_codes": geo["country_codes"],
+        "region_codes": geo["region_codes"],
+        "geography_component": _round_debug(geography_component),
         "recentness_component": _round_debug(recentness_component),
         "generic_report_penalty": _round_debug(generic_penalty),
         "low_topicality_penalty": _round_debug(low_topicality_penalty),
@@ -1141,6 +1419,8 @@ def _document_candidate_breakdown(
         low_topicality_penalty = 1.15
     elif topicality < 0.9:
         low_topicality_penalty = 0.65
+    geo = _classify_geography_match(best_row, profile)
+    geography_component = _geography_bonus(str(geo["match_class"]))
 
     score = (
         support_score
@@ -1151,6 +1431,7 @@ def _document_candidate_breakdown(
         + recentness_component
         + authority_component
         + document_type_component
+        + geography_component
         - specificity_penalty
         - low_topicality_penalty
     )
@@ -1178,10 +1459,22 @@ def _document_candidate_breakdown(
         "recentness_component": _round_debug(recentness_component),
         "authority_component": _round_debug(authority_component),
         "document_type_component": _round_debug(document_type_component),
+        "geography_match_class": geo["match_class"],
+        "country_codes": geo["country_codes"],
+        "region_codes": geo["region_codes"],
+        "geography_component": _round_debug(geography_component),
         "specificity_penalty": _round_debug(specificity_penalty),
         "low_topicality_penalty": _round_debug(low_topicality_penalty),
         "score": _round_debug(score),
     }
+
+
+def _row_geographies(row: dict) -> list[str] | None:
+    values: list[str] = []
+    for item in list(_row_region_scopes(row)) + list(_row_country_scopes(row)):
+        if item not in values:
+            values.append(item)
+    return values or None
 
 
 def _build_document_candidate(
@@ -1210,11 +1503,12 @@ def _select_documents_and_chunks(
     limit: int,
     max_documents: int = 4,
 ) -> tuple[list[Chunk], list[Document]]:
-    if not rows:
+    filtered_rows, _mode, _rejected = _filter_rows_by_geography(rows, profile)
+    if not filtered_rows:
         return [], []
 
     ranked_rows = []
-    for row in rows:
+    for row in filtered_rows:
         ranked_rows.append((row, _score_chunk_row(row, profile)))
     ranked_rows.sort(key=lambda item: item[1], reverse=True)
 
@@ -1271,7 +1565,7 @@ def _select_documents_and_chunks(
                 publication_date=row.get("publication_date"),
                 series_name=row.get("series_name"),
                 topics=row.get("topic_tags"),
-                geographies=row.get("region_codes"),
+                geographies=_row_geographies(row),
             )
         )
         if len(selected_documents) >= max_documents:
@@ -1298,7 +1592,7 @@ def _select_documents_and_chunks(
                 publication_date=row.get("publication_date"),
                 series_name=row.get("series_name"),
                 topics=row.get("topic_tags"),
-                geographies=row.get("region_codes"),
+                geographies=_row_geographies(row),
                 content=row.get("content") or "",
                 chunk_id=row.get("chunk_id"),
                 chunk_index=row.get("chunk_index"),
@@ -1329,7 +1623,7 @@ def _select_documents_and_chunks(
                 publication_date=row.get("publication_date"),
                 series_name=row.get("series_name"),
                 topics=row.get("topic_tags"),
-                geographies=row.get("region_codes"),
+                geographies=_row_geographies(row),
                 content=row.get("content") or "",
                 chunk_id=row.get("chunk_id"),
                 chunk_index=row.get("chunk_index"),
@@ -1820,6 +2114,19 @@ class Client:
             Curated chunks for answer grounding and a separate ranked document list.
         """
         table = await self.connection.open_table("chunks")
+        if hasattr(table, "schema"):
+            chunk_schema = await table.schema()
+            chunk_fields = {field.name for field in chunk_schema}
+        else:
+            chunk_fields = {
+                "document_id",
+                "title",
+                "year",
+                "language",
+                "url",
+                "summary",
+                "content",
+            }
         documents_table = await self.open_optional_table("documents")
         profile = _build_retrieval_profile(query, years)
         candidate_limit = max(limit * 3, 24)
@@ -1864,6 +2171,10 @@ class Client:
                         "prefer_recent": profile.prefer_recent,
                         "explanatory": profile.explanatory,
                         "intent": profile.intent,
+                        "country_scopes": sorted(profile.country_scopes),
+                        "region_scopes": sorted(profile.region_scopes),
+                        "fallback_region_scopes": sorted(profile.fallback_region_scopes),
+                        "has_geographic_scope": profile.has_geographic_scope,
                     },
                     "retrieval_queries": retrieval_queries,
                     "documents_table_present": documents_table is not None,
@@ -1906,9 +2217,36 @@ class Client:
                 pattern_clauses.append(f"regexp_like(title, '(?i){escaped}')")
                 pattern_clauses.append(f"regexp_like(summary, '(?i){escaped}')")
             where_clause = apply_year_where(" OR ".join(pattern_clauses))
-            query_builder = table.query().select(
-                ["title", "year", "language", "url", "summary", "content"]
-            )
+            select_fields = [
+                field
+                for field in [
+                    "document_id",
+                    "title",
+                    "year",
+                    "language",
+                    "url",
+                    "summary",
+                    "content",
+                    "region_codes",
+                    "country_codes",
+                    "geography_tags_text",
+                    "topic_tags",
+                    "publisher",
+                    "document_type",
+                    "publication_date",
+                    "series_name",
+                    "chunk_id",
+                    "chunk_index",
+                    "content_type",
+                    "section_title",
+                    "page_start",
+                    "page_end",
+                    "token_count",
+                    "chunk_summary",
+                ]
+                if field in chunk_fields
+            ]
+            query_builder = table.query().select(select_fields)
             if where_clause:
                 query_builder = query_builder.where(where_clause)
             return await query_builder.limit(candidate_limit).to_list()
@@ -1929,8 +2267,6 @@ class Client:
         ) -> list[dict]:
             if not shortlisted_documents:
                 return []
-            schema = await table.schema()
-            chunk_fields = {field.name for field in schema}
             document_ids = [
                 row.get("document_id")
                 for row in shortlisted_documents
@@ -2030,8 +2366,12 @@ class Client:
             ranked_document_debug: list[dict] = []
             for retrieval_query in retrieval_queries:
                 variant_profile = _build_retrieval_profile(retrieval_query, profile.explicit_years)
+                filtered_index_rows, geography_mode, rejected_rows = _filter_rows_by_geography(
+                    index_rows,
+                    variant_profile,
+                )
                 variant_hits: list[tuple[DocumentHit, dict]] = []
-                for row in index_rows:
+                for row in filtered_index_rows:
                     year = row.get("year")
                     if profile.explicit_years and year not in profile.explicit_years:
                         continue
@@ -2049,7 +2389,9 @@ class Client:
                         {
                             "stage": "document_candidates_index",
                             "variant": retrieval_query,
+                            "geography_mode": geography_mode,
                             "rows": len(variant_hits),
+                            "rejected_out_of_scope": rejected_rows[:10],
                             "sample_titles": [
                                 item.row.get("canonical_title") or item.row.get("title")
                                 for item, _ in variant_hits[:5]
@@ -2062,6 +2404,14 @@ class Client:
                     retrieval_query,
                     len(variant_hits),
                 )
+                if variant_profile.has_geographic_scope and not variant_hits:
+                    logger.info(
+                        "retrieve_document_candidates geography filtered query=%r variant=%r mode=%s rejected=%s",
+                        query,
+                        retrieval_query,
+                        geography_mode,
+                        len(rejected_rows),
+                    )
                 for hit, breakdown in variant_hits:
                     key = str(
                         hit.row.get("document_id")
@@ -2095,7 +2445,9 @@ class Client:
                                 **breakdown,
                                 "variant": retrieval_query,
                                 "topic_tags": hit.row.get("topic_tags"),
+                                "country_codes": hit.row.get("country_codes"),
                                 "region_codes": hit.row.get("region_codes"),
+                                "geography_mode": geography_mode,
                             }
                         )
 
@@ -2267,6 +2619,10 @@ class Client:
                                 }
                             )
 
+                chunk_rows, chunk_geography_mode, rejected_chunk_rows = _filter_rows_by_geography(
+                    chunk_rows,
+                    profile,
+                )
                 selected_chunks = _select_chunk_rows(chunk_rows, profile, limit=limit)
                 if not selected_chunks and api_documents:
                     selected_chunks = _build_summary_fallback_chunks(
@@ -2297,6 +2653,8 @@ class Client:
                         for chunk in selected_chunks
                     ]
                     debug["selected"]["path"] = "document_first"
+                    debug["selected"]["geography_mode"] = chunk_geography_mode
+                    debug["selected"]["rejected_out_of_scope"] = rejected_chunk_rows[:10]
                     debug["selected"]["chunk_candidates"] = [
                         _chunk_score_breakdown(row, profile)
                         for row in chunk_rows[:10]
@@ -2374,21 +2732,27 @@ class Client:
                 len(variant_rows),
                 len(_build_metadata_patterns(retrieval_query)),
             )
+            filtered_variant_rows, geography_mode, rejected_rows = _filter_rows_by_geography(
+                variant_rows,
+                profile,
+            )
             if debug is not None:
                 debug["branches"].append(
                     {
                         "stage": "chunk_candidates_lexical",
                         "variant": retrieval_query,
-                        "rows": len(variant_rows),
+                        "rows": len(filtered_variant_rows),
+                        "geography_mode": geography_mode,
+                        "rejected_out_of_scope": rejected_rows[:10],
                         "patterns": _build_metadata_patterns(retrieval_query),
                         "sample_titles": [
                             row.get("title") or row.get("canonical_title")
-                            for row in variant_rows[:5]
+                            for row in filtered_variant_rows[:5]
                         ],
                     }
                 )
             adjusted_rows = []
-            for row in variant_rows:
+            for row in filtered_variant_rows:
                 adjusted_row = dict(row)
                 adjusted_row["_distance"] = float(row.get("_distance", 0.35 + 0.03 * variant_index))
                 adjusted_rows.append(adjusted_row)
@@ -2422,6 +2786,9 @@ class Client:
                     for chunk in chunks
                 ]
                 debug["selected"]["path"] = "chunk_lexical"
+                debug["selected"]["geography_mode"] = _allowed_geography_classes(
+                    lexical_rows, profile
+                )[1]
                 debug["selected"]["chunk_candidates"] = [
                     _chunk_score_breakdown(row, profile)
                     for row in lexical_rows[:10]
@@ -2477,22 +2844,28 @@ class Client:
                 retrieval_query,
                 len(variant_rows),
             )
+            filtered_variant_rows, geography_mode, rejected_rows = _filter_rows_by_geography(
+                variant_rows,
+                profile,
+            )
             if debug is not None:
                 debug["branches"].append(
                     {
                         "stage": "chunk_candidates_vector",
                         "variant": retrieval_query,
-                        "rows": len(variant_rows),
+                        "rows": len(filtered_variant_rows),
+                        "geography_mode": geography_mode,
+                        "rejected_out_of_scope": rejected_rows[:10],
                         "patterns": _build_metadata_patterns(retrieval_query),
                         "sample_titles": [
                             row.get("title") or row.get("canonical_title")
-                            for row in variant_rows[:5]
+                            for row in filtered_variant_rows[:5]
                         ],
                     }
                 )
 
             adjusted_rows: list[dict] = []
-            for row in variant_rows:
+            for row in filtered_variant_rows:
                 variant_distance = float(row.get("_distance", 1.0) or 1.0)
                 adjusted_row = dict(row)
                 adjusted_row["_distance"] = max(0.0, variant_distance + 0.03 * variant_index)
@@ -2527,6 +2900,9 @@ class Client:
                     for chunk in chunks
                 ]
                 debug["selected"]["path"] = "chunk_vector"
+                debug["selected"]["geography_mode"] = _allowed_geography_classes(
+                    vector_rows, profile
+                )[1]
                 debug["selected"]["chunk_candidates"] = [
                     _chunk_score_breakdown(row, profile)
                     for row in vector_rows[:10]
@@ -2559,6 +2935,9 @@ class Client:
                 for chunk in chunks
             ]
             debug["selected"]["path"] = "fallback"
+            debug["selected"]["geography_mode"] = _allowed_geography_classes(
+                _merge_candidate_rows(lexical_rows, vector_rows), profile
+            )[1]
             debug["selected"]["chunk_candidates"] = [
                 _chunk_score_breakdown(row, profile)
                 for row in _merge_candidate_rows(lexical_rows, vector_rows)[:10]

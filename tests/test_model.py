@@ -8,6 +8,11 @@ from random import choices
 from string import ascii_letters, digits
 
 import pytest
+from langchain_core.messages import AIMessageChunk
+
+import main as main_module
+from src.entities import Chunk, Document
+from src.kg.types import GraphV2
 
 
 def _read_chunks(response) -> list[dict]:
@@ -18,6 +23,10 @@ def _read_chunks(response) -> list[dict]:
 
 def _get_graph_chunk(chunks: list[dict]) -> dict | None:
     return next((chunk for chunk in chunks if chunk.get("graph") is not None), None)
+
+
+def _get_document_chunks(chunks: list[dict]) -> list[dict]:
+    return [chunk for chunk in chunks if chunk.get("documents")]
 
 
 def _is_graceful_fallback(text: str) -> bool:
@@ -227,3 +236,119 @@ def test_model_blocks_off_topic_or_probing_requests(
     ideas_chunks = [chunk for chunk in chunks if chunk.get("ideas")]
     assert ideas_chunks
     assert all(chunk.get("documents") is None for chunk in chunks)
+
+
+@pytest.mark.parametrize(
+    "query,documents_to_return,required_title,forbidden_title",
+    [
+        (
+            "Tell me more about access to electricity in Nigeria",
+            [
+                Document(
+                    document_id="doc-nga",
+                    title="Nigeria Electricity Access Brief",
+                    year=2024,
+                    language="en",
+                    url="https://example.org/nigeria-access",
+                    summary="Electricity access trends in Nigeria.",
+                ),
+                Document(
+                    document_id="doc-global",
+                    title="Global Electricity Access Update",
+                    year=2025,
+                    language="en",
+                    url="https://example.org/global-access",
+                    summary="Global electricity access update.",
+                ),
+            ],
+            "Nigeria Electricity Access Brief",
+            "Kenya Electricity Access Brief",
+        ),
+        (
+            "What is the latest progress on access to electricity in Latin America and the Caribbean?",
+            [
+                Document(
+                    document_id="doc-lac",
+                    title="LAC Energy Access Outlook",
+                    year=2025,
+                    language="en",
+                    url="https://example.org/lac-access",
+                    summary="Regional electricity access trends across Latin America and the Caribbean.",
+                ),
+                Document(
+                    document_id="doc-global",
+                    title="Global Electricity Access Update",
+                    year=2025,
+                    language="en",
+                    url="https://example.org/global-access",
+                    summary="Global electricity access update.",
+                ),
+            ],
+            "LAC Energy Access Outlook",
+            "Africa Energy Access Outlook",
+        ),
+    ],
+)
+def test_model_streamed_documents_respect_geographic_scope(
+    test_client,
+    monkeypatch,
+    query: str,
+    documents_to_return: list[Document],
+    required_title: str,
+    forbidden_title: str,
+):
+    async def fake_stream_chat_response(*, system_message, **_kwargs):
+        if system_message == main_module.genai.PROMPTS["draft_answer"]:
+            yield AIMessageChunk(content="Initial answer.")
+        elif system_message == main_module.genai.PROMPTS["answer_with_publications"]:
+            yield AIMessageChunk(content="Publication grounded answer.")
+
+    async def fake_generate_query_ideas(_messages):
+        return ["Idea A"]
+
+    class FakeClient:
+        def __init__(self, _connection):
+            self.connection = _connection
+
+        async def retrieve_chunks(self, _query):
+            return (
+                [
+                    Chunk(
+                        document_id=document.document_id,
+                        title=document.title,
+                        year=document.year,
+                        language=document.language,
+                        url=document.url,
+                        summary=document.summary,
+                        content=document.summary or document.title,
+                    )
+                    for document in documents_to_return
+                ],
+                    documents_to_return,
+                )
+
+    class FakeConnection:
+        def close(self):
+            return None
+
+    async def fake_get_connection():
+        return FakeConnection()
+
+    async def fake_build_subgraph_v2(_client, _graph, _query):
+        return GraphV2(nodes=[], edges=[])
+
+    monkeypatch.setattr(main_module.genai, "stream_chat_response", fake_stream_chat_response)
+    monkeypatch.setattr(main_module.genai, "generate_query_ideas", fake_generate_query_ideas)
+    monkeypatch.setattr(main_module.database, "Client", FakeClient)
+    monkeypatch.setattr(main_module.database, "get_connection", fake_get_connection)
+    monkeypatch.setattr(main_module.kg_v2, "build_subgraph_v2", fake_build_subgraph_v2)
+
+    response = test_client.post("/model", json=[{"role": "human", "content": query}])
+    assert response.status_code == 200
+    chunks = _read_chunks(response)
+    document_chunks = _get_document_chunks(chunks)
+    assert document_chunks
+    streamed_documents = document_chunks[-1]["documents"]
+    streamed_titles = [document["title"] for document in streamed_documents]
+    assert required_title in streamed_titles
+    assert forbidden_title not in streamed_titles
