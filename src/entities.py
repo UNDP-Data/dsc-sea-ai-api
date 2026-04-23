@@ -8,7 +8,7 @@ from typing import Literal
 import networkx as nx
 from lancedb.pydantic import LanceModel
 from langchain_core.messages import AIMessage, HumanMessage
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_serializer
 
 from .kg.types import GraphV2
 from .utils import PALLETES
@@ -265,6 +265,19 @@ class Document(LanceModel):
         # alphabetically by title (if years are the same)
         return self.title < other.title
 
+    def to_stream_payload(self) -> dict[str, str | int | None]:
+        """
+        Convert the document to the compact streamed reference shape expected by clients.
+        """
+        year = self.year if isinstance(self.year, int) and self.year > 0 else None
+        return {
+            "title": self.title or "",
+            "year": year,
+            "language": self.language or "",
+            "url": self.url or "",
+            "summary": self.summary or "",
+        }
+
 
 class Chunk(Document):
     """
@@ -408,6 +421,14 @@ class AssistantResponse(Message):
         default=None, description="One or more documents relevant to the user message"
     )
     graph: Graph | GraphV2 | None = Field(default=None)
+
+    @field_serializer("documents")
+    def _serialise_documents(
+        self, documents: list[Document] | None
+    ) -> list[dict[str, str | int | None]] | None:
+        if documents is None:
+            return None
+        return [document.to_stream_payload() for document in documents]
 
     def clear(self) -> None:
         """

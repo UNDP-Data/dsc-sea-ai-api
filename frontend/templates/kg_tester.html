@@ -459,8 +459,9 @@
                 const summary = typeof documentItem.summary === "string" ? documentItem.summary.trim() : "";
                 const language = typeof documentItem.language === "string" ? documentItem.language.trim() : "";
                 const year = Number.isInteger(documentItem.year) ? documentItem.year : null;
-                const key = url || `${title}|||${year || ""}`;
-                if (!title || seen.has(key)) {
+                const label = title || summary || url;
+                const key = url || `${title}|||${summary}|||${year || ""}`;
+                if (!label || seen.has(key)) {
                     continue;
                 }
                 seen.add(key);
@@ -491,7 +492,7 @@
 
                 const title = document.createElement(documentItem.url ? "a" : "div");
                 title.className = "document-title";
-                title.textContent = documentItem.title;
+                title.textContent = documentItem.title || documentItem.summary || documentItem.url;
                 if (documentItem.url) {
                     title.href = documentItem.url;
                     title.target = "_blank";

@@ -209,6 +209,13 @@ async def test_get_answer_emits_documents_as_separate_chunk(monkeypatch):
     assert len(document_chunks) == 1
     assert document_chunks[0]["content"] == ""
     assert document_chunks[0]["documents"][0]["title"] == "Reference Document"
+    assert set(document_chunks[0]["documents"][0].keys()) == {
+        "title",
+        "year",
+        "language",
+        "url",
+        "summary",
+    }
 
 
 @pytest.mark.asyncio
