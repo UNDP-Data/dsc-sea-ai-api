@@ -292,6 +292,7 @@ class RetrievalProfile:
     prefer_recent: bool
     explanatory: bool
     intent: str
+    current_data_query: bool
     country_scopes: frozenset[str]
     region_scopes: frozenset[str]
     fallback_region_scopes: frozenset[str]
@@ -419,12 +420,60 @@ def _is_explanatory_query(query: str) -> bool:
     return normalized.startswith(EXPLANATORY_PREFIXES) or "benefits and challenges" in normalized
 
 
+def _is_energy_access_query(normalized: str) -> bool:
+    return any(
+        marker in normalized
+        for marker in (
+            "access to energy",
+            "energy access",
+            "access to electricity",
+            "electricity access",
+            "access to clean cooking",
+            "clean cooking access",
+        )
+    )
+
+
+def _is_current_data_query(query: str, explicit_years: list[int]) -> bool:
+    if explicit_years:
+        return False
+    normalized = " ".join((query or "").lower().split())
+    if any(
+        marker in normalized
+        for marker in ("latest", "current", "recent", "most recent", "as of", "today")
+    ):
+        return True
+    if _is_energy_access_query(normalized) and any(
+        marker in normalized
+        for marker in (
+            "how many",
+            "how much",
+            "number of",
+            "people lack",
+            "still lack",
+            "without access",
+            "lack access",
+            "progress",
+            "status",
+            "rate",
+            "rates",
+            "share",
+            "shares",
+            "percent",
+            "percentage",
+            "population",
+        )
+    ):
+        return True
+    return False
+
+
 def _prefer_recent_documents(query: str, explicit_years: list[int]) -> bool:
+    if _is_current_data_query(query, explicit_years):
+        return True
     if explicit_years:
         return False
     normalized = " ".join(query.lower().split())
-    if any(marker in normalized for marker in ("latest", "current", "recent", "most recent", "as of")):
-        return True
     if _is_explanatory_query(normalized):
         return False
     return any(marker in normalized for marker in DATA_MARKERS)
@@ -466,6 +515,7 @@ def _build_retrieval_profile(
         prefer_recent=_prefer_recent_documents(query, explicit_years),
         explanatory=_is_explanatory_query(query),
         intent=_classify_query_intent(query, explicit_years),
+        current_data_query=_is_current_data_query(query, explicit_years),
         country_scopes=country_scopes,
         region_scopes=region_scopes,
         fallback_region_scopes=fallback_region_scopes,
@@ -501,6 +551,7 @@ def build_retrieval_queries(query: str) -> list[str]:
     """
     base = " ".join((query or "").strip().split())
     trimmed = _trim_query_for_retrieval(base)
+    normalized_base = _normalize_text(base)
     token_focus = " ".join(
         token
         for token in TOKEN_RE.findall(trimmed.lower())
@@ -522,7 +573,24 @@ def build_retrieval_queries(query: str) -> list[str]:
         candidate = " ".join((candidate or "").split()).strip()
         if candidate and candidate not in candidates:
             candidates.append(candidate)
+    if _is_current_data_query(base, []) and _is_energy_access_query(normalized_base):
+        for candidate in (
+            "latest access to electricity data",
+            "how many people lack access to electricity",
+            "tracking sdg7 access to electricity",
+            "electricity access latest progress",
+        ):
+            if candidate not in candidates:
+                candidates.append(candidate)
     return candidates
+
+
+def should_defer_to_publications(query: str, years: int | list[int] | None = None) -> bool:
+    """
+    Return whether the answer flow should wait for publication retrieval before
+    drafting the substantive answer.
+    """
+    return _build_retrieval_profile(query, years).current_data_query
 
 
 def _prioritize_retrieval_queries(query: str) -> list[str]:
@@ -866,15 +934,15 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
     quality_component = float(row.get("quality_score") or 0.0) * 0.8
     flagship_component = 0.0
     if row.get("is_flagship") and profile.intent == "data":
-        flagship_component = 0.9
+        flagship_component = 1.25 if profile.current_data_query else 0.9
     elif row.get("is_flagship"):
         flagship_component = -0.15
-    data_report_component = 0.8 if row.get("is_data_report") and profile.intent == "data" else 0.0
+    data_report_component = 0.0
+    if row.get("is_data_report") and profile.intent == "data":
+        data_report_component = 1.1 if profile.current_data_query else 0.8
     status_penalty = 3.5 if (row.get("status") or "approved") != "approved" else 0.0
     document_type_component = _document_type_bonus(document_type, profile)
     concept_flagship_penalty = 0.0
-    if row.get("is_data_report") and profile.intent == "data":
-        data_report_component = 0.8
     if profile.intent in {"concept", "policy"} and document_type == "flagship_report" and summary_overlap < 0.2:
         concept_flagship_penalty = 0.8
     token_hits = len(profile.query_tokens & _tokenize_text(text_blob))
@@ -1173,6 +1241,8 @@ def _infer_series_id(
 def _authority_bonus(source_org: str, profile: RetrievalProfile) -> float:
     match source_org:
         case "tracking_sdg7":
+            if profile.current_data_query:
+                return 1.5
             return 1.2 if profile.intent == "data" else 0.35
         case "undp":
             return 0.7 if profile.intent in {"concept", "policy", "implementation"} else 0.45
@@ -1186,6 +1256,8 @@ def _document_type_bonus(document_type: str, profile: RetrievalProfile) -> float
     match profile.intent:
         case "data":
             if document_type == "flagship_report":
+                if profile.current_data_query:
+                    return 1.45
                 return 1.1
             if document_type == "report":
                 return 0.5
@@ -1270,6 +1342,9 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
     content = row.get("content") or ""
     year = row.get("year")
     distance = float(row.get("_distance", 1.0) or 1.0)
+    source_domain = _infer_source_domain(row.get("url") or "")
+    source_org = _infer_source_org(source_domain)
+    document_type = row.get("document_type") or _infer_document_type(title, summary)
 
     title_overlap = _term_overlap_score(profile.query_tokens, title)
     summary_overlap = _term_overlap_score(profile.query_tokens, summary)
@@ -1301,6 +1376,8 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
     exact_summary_component = _phrase_match_bonus(profile.normalized_query, summary, 0.8)
     exact_content_component = _phrase_match_bonus(profile.normalized_query, content, 0.6)
     recentness_component = _recentness_bonus(year if isinstance(year, int) else None, profile)
+    authority_component = _authority_bonus(source_org, profile)
+    document_type_component = _document_type_bonus(document_type, profile)
     generic_penalty = _generic_report_penalty(title, profile, title_overlap, summary_overlap)
     low_topicality_penalty = 0.0
     if profile.explanatory and topicality < 1.3:
@@ -1322,6 +1399,8 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         + summary_phrase_bonus
         + content_phrase_bonus
         + recentness_component
+        + authority_component
+        + document_type_component
         + geography_component
         - generic_penalty
         - low_topicality_penalty
@@ -1346,6 +1425,8 @@ def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, ob
         "title_phrase_bonus": _round_debug(title_phrase_bonus),
         "summary_phrase_bonus": _round_debug(summary_phrase_bonus),
         "content_phrase_bonus": _round_debug(content_phrase_bonus),
+        "authority_component": _round_debug(authority_component),
+        "document_type_component": _round_debug(document_type_component),
         "geography_match_class": geo["match_class"],
         "geography_rejected": geo["rejected"],
         "country_codes": geo["country_codes"],

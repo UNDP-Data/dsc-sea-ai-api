@@ -352,3 +352,75 @@ def test_model_streamed_documents_respect_geographic_scope(
     streamed_titles = [document["title"] for document in streamed_documents]
     assert required_title in streamed_titles
     assert forbidden_title not in streamed_titles
+
+
+def test_model_skips_generic_draft_for_current_energy_access_data_query(
+    test_client,
+    monkeypatch,
+):
+    async def fake_stream_chat_response(*, system_message, **_kwargs):
+        if system_message == main_module.genai.PROMPTS["draft_answer"]:
+            raise AssertionError("draft_answer should not run for deferred current-data queries")
+        if system_message == main_module.genai.PROMPTS["answer_with_publications"]:
+            yield AIMessageChunk(
+                content="According to the latest Tracking SDG7 report, 666 million people lacked access to electricity."
+            )
+
+    async def fake_generate_query_ideas(_messages):
+        return ["Idea A"]
+
+    class FakeClient:
+        def __init__(self, _connection):
+            self.connection = _connection
+
+        async def retrieve_chunks(self, _query):
+            return (
+                [
+                    Chunk(
+                        document_id="doc-sdg7",
+                        title="2025 Tracking SDG7 Report",
+                        year=2025,
+                        language="en",
+                        url="https://trackingsdg7.esmap.org/downloads",
+                        summary="Latest global electricity access progress.",
+                        content="In 2023, 666 million people remained without access to electricity worldwide.",
+                    )
+                ],
+                [
+                    Document(
+                        document_id="doc-sdg7",
+                        title="2025 Tracking SDG7 Report",
+                        year=2025,
+                        language="en",
+                        url="https://trackingsdg7.esmap.org/downloads",
+                        summary="Latest global electricity access progress.",
+                    )
+                ],
+            )
+
+    class FakeConnection:
+        def close(self):
+            return None
+
+    async def fake_get_connection():
+        return FakeConnection()
+
+    async def fake_build_subgraph_v2(_client, _graph, _query):
+        return GraphV2(nodes=[], edges=[])
+
+    monkeypatch.setattr(main_module.genai, "stream_chat_response", fake_stream_chat_response)
+    monkeypatch.setattr(main_module.genai, "generate_query_ideas", fake_generate_query_ideas)
+    monkeypatch.setattr(main_module.database, "Client", FakeClient)
+    monkeypatch.setattr(main_module.database, "get_connection", fake_get_connection)
+    monkeypatch.setattr(main_module.kg_v2, "build_subgraph_v2", fake_build_subgraph_v2)
+
+    response = test_client.post(
+        "/model",
+        json=[{"role": "human", "content": "How many people lack access to energy?"}],
+    )
+    assert response.status_code == 200
+    chunks = _read_chunks(response)
+    combined = "".join(chunk.get("content", "") for chunk in chunks)
+    assert "I will check the publications for the latest data." in combined
+    assert "666 million" in combined
+    assert "more insights" not in combined
