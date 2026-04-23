@@ -19,6 +19,8 @@ __all__ = [
     "Node",
     "Edge",
     "Graph",
+    "SourceRecord",
+    "DocumentRecord",
     "Document",
     "Chunk",
     "Message",
@@ -223,25 +225,35 @@ class Document(LanceModel):
     Publication document.
     """
 
+    document_id: str | None = Field(default=None, description="Stable document identifier")
+    source: str | None = Field(default=None, description="Document source identifier or name")
+    publisher: str | None = Field(default=None, description="Publishing organization")
     title: str = Field(description="Document title if available")
     year: int = Field(description="Publication year if available")
     language: str = Field(description="Document language")
     url: str = Field(description="URL to the source document")
     summary: str | None = Field(description="Brief document summary if available")
+    document_type: str | None = Field(default=None, description="Document type classification")
+    publication_date: str | None = Field(default=None, description="ISO publication date if available")
+    series_name: str | None = Field(default=None, description="Series or report family name")
+    topics: list[str] | None = Field(default=None, description="Topical tags")
+    geographies: list[str] | None = Field(default=None, description="Geographic tags")
 
     def __hash__(self) -> int:
         """
-        Allows Document instances to be hashable based on the title.
+        Allows Document instances to be hashable based on the document identity.
         """
-        return hash(self.title)
+        return hash(self.document_id or self.url or self.title)
 
     def __eq__(self, other: "Document") -> bool:
         """
-        Compares two Document instances for equality based only on the title.
+        Compares two Document instances for equality based on stable identity where possible.
         """
         if not isinstance(other, Document):
             return NotImplemented
-        return self.title == other.title
+        left = self.document_id or self.url or self.title
+        right = other.document_id or other.url or other.title
+        return left == right
 
     def __lt__(self, other: "Document") -> bool:
         """
@@ -260,15 +272,93 @@ class Chunk(Document):
     """
 
     content: str = Field(description="Text content of a chunk")
+    chunk_id: str | None = Field(default=None, description="Stable chunk identifier")
+    chunk_index: int | None = Field(default=None, description="Chunk order within a document")
+    content_type: str | None = Field(default=None, description="Chunk content type")
+    section_title: str | None = Field(default=None, description="Section heading if available")
+    page_start: int | None = Field(default=None, description="First page covered by the chunk")
+    page_end: int | None = Field(default=None, description="Last page covered by the chunk")
+    token_count: int | None = Field(default=None, description="Estimated token count")
+    chunk_summary: str | None = Field(default=None, description="Optional short chunk summary")
 
     def to_context(self) -> dict:
         """
         Convert a chunk to a simple context to be fed to a GenAI model.
         """
         return {
+            "document_id": self.document_id,
+            "title": self.title,
+            "year": self.year,
+            "summary": self.summary,
+            "section_title": self.section_title,
+            "page_start": self.page_start,
+            "page_end": self.page_end,
             "content": self.content,
-            "source": f"[{self.title} ({self.year})]({self.url})",
         }
+
+
+class SourceRecord(LanceModel):
+    """
+    Canonical metadata for a source registry entry.
+    """
+
+    source_id: str
+    name: str
+    organization: str
+    authority_tier: str = Field(default="partner")
+    license_policy: str | None = None
+    robots_policy: str | None = None
+    base_url: str | None = None
+    ingestion_method: str = Field(default="manual_manifest")
+    enabled: bool = Field(default=True)
+    review_policy: str = Field(default="hybrid_editorial")
+    created_at: str | None = None
+    updated_at: str | None = None
+
+
+class DocumentRecord(LanceModel):
+    """
+    Canonical publication-level record stored in the retrieval corpus.
+    """
+
+    document_id: str
+    source_id: str
+    canonical_title: str
+    url: str
+    language: str
+    document_type: str
+    publication_date: str | None = None
+    year: int = 0
+    summary: str | None = None
+    status: str = Field(default="approved")
+    ingested_at: str | None = None
+    updated_at: str | None = None
+    content_hash: str | None = None
+    parser_version: str | None = None
+    embedding_version: str | None = None
+    subtitle: str | None = None
+    authors: list[str] | None = None
+    publisher: str | None = None
+    series_name: str | None = None
+    series_id: str | None = None
+    country_codes: list[str] | None = None
+    region_codes: list[str] | None = None
+    topic_tags: list[str] | None = None
+    sdg_tags: list[str] | None = None
+    sector_tags: list[str] | None = None
+    audience_tags: list[str] | None = None
+    source_priority: float | None = None
+    quality_score: float | None = None
+    dedupe_group_id: str | None = None
+    is_flagship: bool = False
+    is_data_report: bool = False
+    has_tables: bool | None = None
+    has_figures: bool | None = None
+    page_count: int | None = None
+    review_notes: str | None = None
+    topic_tags_text: str | None = None
+    geography_tags_text: str | None = None
+    audience_tags_text: str | None = None
 
 
 class Message(BaseModel):
