@@ -327,6 +327,103 @@ def test_document_selection_returns_sdg7_report_as_top_resource_for_energy_acces
     assert chunks[0].title == "2025 Tracking SDG7 Report"
 
 
+def test_document_selection_strongly_prefers_2025_sdg7_report_for_recent_data_queries():
+    profile = _build_retrieval_profile("What is the latest data on access to electricity?")
+    rows = [
+        {
+            "title": "2024 Global Energy Access Update",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/2024-global-access-update",
+            "summary": "Recent electricity access progress and global estimates.",
+            "content": "Electricity access trends, regional deficits, and global progress indicators.",
+            "_distance": 0.06,
+        },
+        {
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Latest global electricity access progress and indicators.",
+            "content": "Access to electricity, rural deficit, regional trends, and SDG7 indicators.",
+            "_distance": 0.17,
+        },
+    ]
+
+    chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert documents
+    assert chunks
+    assert documents[0].title == "2025 Tracking SDG7 Report"
+    assert chunks[0].title == "2025 Tracking SDG7 Report"
+
+
+def test_document_selection_top_three_titles_stay_in_scope_for_energy_access_count():
+    profile = _build_retrieval_profile("How many people lack access to energy?")
+    rows = [
+        {
+            "title": "Forests, Energy and Livelihoods",
+            "year": 2023,
+            "language": "en",
+            "url": "https://example.org/forests-energy-livelihoods",
+            "summary": "Woodfuel use, forests, biomass reliance, and household livelihoods.",
+            "content": (
+                "More than 2.4 billion people rely on polluting cooking systems, "
+                "and woodfuels remain a major household energy source."
+            ),
+            "_distance": 0.08,
+        },
+        {
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Latest global electricity access progress and indicators.",
+            "content": "In 2023, 666 million people remained without access to electricity worldwide.",
+            "_distance": 0.18,
+        },
+        {
+            "title": "Rural Electrification Progress Brief",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/rural-electrification-brief",
+            "summary": "Electricity access and rural electrification progress.",
+            "content": "Recent electricity access expansion through grids and mini-grids.",
+            "_distance": 0.12,
+        },
+        {
+            "title": "Energy Access Investment Case",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/energy-access-investment-case",
+            "summary": "Investment opportunities for improving access to electricity.",
+            "content": "Electricity access finance and off-grid deployment pathways.",
+            "_distance": 0.1,
+        },
+        {
+            "title": "Climate Dictionary",
+            "year": 2023,
+            "language": "en",
+            "url": "https://example.org/climate-dictionary",
+            "summary": "Glossary of climate and environment terms.",
+            "content": "Definitions for climate adaptation, mitigation, and resilience.",
+            "_distance": 0.07,
+        },
+    ]
+
+    chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert documents
+    assert chunks
+    assert documents[0].title == "2025 Tracking SDG7 Report"
+    off_topic_titles = {
+        "Forests, Energy and Livelihoods",
+        "Climate Dictionary",
+    }
+    top_three_titles = [document.title for document in documents[:3]]
+    assert sum(title in off_topic_titles for title in top_three_titles) == 0
+
+
 def test_document_row_requires_real_signal_not_only_priors():
     profile = _build_retrieval_profile("Tell me more about feed in tariff")
     row = {
