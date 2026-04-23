@@ -490,7 +490,7 @@ def get_embedding_client(**kwargs) -> AzureOpenAIEmbeddings:
 async def generate_response(
     prompt: str,
     system_message: str = "You are a helpful assistant.",
-    schema: BaseModel | None = None,
+    schema: type[BaseModel] | None = None,
     **kwargs,
 ) -> str | BaseModel:
     """
@@ -516,7 +516,11 @@ async def generate_response(
     """
     chat = get_chat_client(**kwargs)
     if schema is not None:
-        chat = chat.with_structured_output(schema)
+        # `json_schema` became the upstream default, but that path leaves parsed
+        # Pydantic models attached to message metadata and triggers noisy
+        # serializer warnings downstream. `function_calling` preserves the same
+        # structured-output contract here without that warning surface.
+        chat = chat.with_structured_output(schema, method="function_calling")
     response = await chat.ainvoke(
         [
             {"role": "system", "content": system_message},
@@ -729,8 +733,10 @@ async def get_answer(
                     f"Supporting publication excerpts:\n{_build_publications_context(publication_chunks)}",
                     (
                         "Continue the answer with additional evidence, examples, figures, or policy insights drawn "
-                        "from the publication excerpts. Do not repeat the initial explanation. Do not output a "
-                        "source list or raw URLs."
+                        "from the publication excerpts. Stay within any country or regional scope named in the "
+                        "conversation, and do not generalize from other geographies unless the evidence is clearly "
+                        "global and applicable. Do not repeat the initial explanation. Do not output a source list "
+                        "or raw URLs."
                     ),
                 ]
             )
