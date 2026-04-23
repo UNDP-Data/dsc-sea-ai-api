@@ -643,6 +643,7 @@ async def ask_model(
                 messages,
                 response,
                 publication_task=publication_payload(),
+                defer_initial_answer=database.should_defer_to_publications(user_query),
             )
             try:
                 while True:

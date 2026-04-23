@@ -372,3 +372,131 @@ async def test_get_answer_keeps_stream_alive_while_publications_load(monkeypatch
     assert keepalive_chunks
     assert document_chunks
     assert document_chunks[0]["documents"][0]["title"] == "Delayed Reference"
+
+
+@pytest.mark.asyncio
+async def test_get_answer_can_defer_initial_answer_for_current_data_query(monkeypatch):
+    """
+    Current-data queries can skip the generic draft and wait for publications first.
+    """
+
+    async def fake_stream_chat_response(*, system_message, **_kwargs):
+        if system_message == genai.PROMPTS["draft_answer"]:
+            raise AssertionError("draft_answer should be skipped for deferred current-data queries")
+        if system_message == genai.PROMPTS["answer_with_publications"]:
+            yield AIMessageChunk(content="According to the latest report, 666 million people lacked access.")
+
+    async def fake_generate_query_ideas(_messages):
+        return ["Idea A"]
+
+    monkeypatch.setattr(genai, "stream_chat_response", fake_stream_chat_response)
+    monkeypatch.setattr(genai, "generate_query_ideas", fake_generate_query_ideas)
+
+    response = AssistantResponse(role="assistant", content="")
+    messages = [Message(role="human", content="How many people lack access to energy?")]
+    publication_task = asyncio.Future()
+    publication_task.set_result(
+        (
+            [
+                Chunk(
+                    title="2025 Tracking SDG7 Report",
+                    year=2025,
+                    language="en",
+                    url="https://trackingsdg7.esmap.org/downloads",
+                    summary="Latest global electricity access progress.",
+                    content="In 2023, 666 million people remained without access to electricity worldwide.",
+                ).to_context()
+            ],
+            [
+                Document(
+                    title="2025 Tracking SDG7 Report",
+                    year=2025,
+                    language="en",
+                    url="https://trackingsdg7.esmap.org/downloads",
+                    summary="Latest global electricity access progress.",
+                )
+            ],
+        )
+    )
+
+    chunks = []
+    async for payload in genai.get_answer(
+        messages,
+        response,
+        publication_task=publication_task,
+        defer_initial_answer=True,
+    ):
+        chunks.append(json.loads(payload))
+
+    combined = "".join(chunk.get("content", "") for chunk in chunks)
+    assert "I will check the publications for the latest data." in combined
+    assert "666 million" in combined
+    assert "more insights" not in combined
+
+
+@pytest.mark.asyncio
+async def test_get_answer_current_data_query_keeps_latest_sdg7_number_only(monkeypatch):
+    """
+    Current-data answers should carry forward the latest SDG7 figure and not
+    introduce an older conflicting total.
+    """
+
+    async def fake_stream_chat_response(*, system_message, messages=None, **_kwargs):
+        if system_message == genai.PROMPTS["draft_answer"]:
+            raise AssertionError("draft_answer should be skipped for deferred current-data queries")
+        if system_message == genai.PROMPTS["answer_with_publications"]:
+            prompt = messages[0]["content"]
+            assert "666 million" in prompt
+            assert "770 million" not in prompt
+            yield AIMessageChunk(
+                content=(
+                    "According to the 2025 Tracking SDG7 Report, 666 million people "
+                    "remained without access to electricity worldwide."
+                )
+            )
+
+    async def fake_generate_query_ideas(_messages):
+        return ["Idea A"]
+
+    monkeypatch.setattr(genai, "stream_chat_response", fake_stream_chat_response)
+    monkeypatch.setattr(genai, "generate_query_ideas", fake_generate_query_ideas)
+
+    response = AssistantResponse(role="assistant", content="")
+    messages = [Message(role="human", content="How many people lack access to energy?")]
+    publication_task = asyncio.Future()
+    publication_task.set_result(
+        (
+            [
+                Chunk(
+                    title="2025 Tracking SDG7 Report",
+                    year=2025,
+                    language="en",
+                    url="https://trackingsdg7.esmap.org/downloads",
+                    summary="Latest global electricity access progress.",
+                    content="In 2023, 666 million people remained without access to electricity worldwide.",
+                ).to_context()
+            ],
+            [
+                Document(
+                    title="2025 Tracking SDG7 Report",
+                    year=2025,
+                    language="en",
+                    url="https://trackingsdg7.esmap.org/downloads",
+                    summary="Latest global electricity access progress.",
+                )
+            ],
+        )
+    )
+
+    chunks = []
+    async for payload in genai.get_answer(
+        messages,
+        response,
+        publication_task=publication_task,
+        defer_initial_answer=True,
+    ):
+        chunks.append(json.loads(payload))
+
+    combined = "".join(chunk.get("content", "") for chunk in chunks)
+    assert "666 million" in combined
+    assert "770 million" not in combined

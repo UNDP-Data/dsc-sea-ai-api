@@ -14,6 +14,7 @@ from src.database import (
     _score_document_row,
     _select_documents_and_chunks,
     build_retrieval_queries,
+    should_defer_to_publications,
 )
 from src import corpus
 
@@ -36,6 +37,24 @@ def test_retrieval_profile_does_not_force_recent_for_explanatory_queries():
 def test_retrieval_profile_classifies_data_queries():
     profile = _build_retrieval_profile("What is the latest progress on access to electricity in 2025?")
     assert profile.intent == "data"
+
+
+def test_retrieval_profile_flags_unspecified_energy_access_count_as_current_data():
+    profile = _build_retrieval_profile("How many people lack access to energy?")
+    assert profile.intent == "data"
+    assert profile.prefer_recent is True
+    assert profile.current_data_query is True
+
+
+def test_build_retrieval_queries_expands_unspecified_energy_access_count_query():
+    queries = build_retrieval_queries("How many people lack access to energy?")
+    assert "how many people lack access to electricity" in queries
+    assert "tracking sdg7 access to electricity" in queries
+
+
+def test_should_defer_to_publications_for_current_energy_access_data_query():
+    assert should_defer_to_publications("How many people lack access to energy?") is True
+    assert should_defer_to_publications("Tell me more about feed-in tariffs") is False
 
 
 def test_retrieval_profile_extracts_lac_scope():
@@ -237,6 +256,75 @@ def test_document_selection_prefers_flagship_data_report_for_data_queries():
 
     assert documents
     assert documents[0].title == "2025 Tracking SDG7 Report"
+
+
+def test_document_selection_prefers_latest_sdg7_report_for_unspecified_energy_access_count():
+    profile = _build_retrieval_profile("How many people lack access to energy?")
+    rows = [
+        {
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Latest global electricity access progress and indicators.",
+            "content": "In 2023, 666 million people remained without access to electricity worldwide.",
+            "_distance": 0.16,
+        },
+        {
+            "title": "2024 Energy Access Update",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/older-access-update",
+            "summary": "Older energy access estimates and trends.",
+            "content": "About 770 million people lacked access to electricity worldwide.",
+            "_distance": 0.12,
+        },
+    ]
+
+    _chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert documents
+    assert documents[0].title == "2025 Tracking SDG7 Report"
+
+
+def test_document_selection_returns_sdg7_report_as_top_resource_for_energy_access_count_query():
+    profile = _build_retrieval_profile("How many people lack access to energy?")
+    rows = [
+        {
+            "title": "2023 Regional Energy Access Brief",
+            "year": 2023,
+            "language": "en",
+            "url": "https://example.org/regional-access-brief",
+            "summary": "Regional energy access trends from an older brief.",
+            "content": "About 770 million people lacked access to electricity worldwide.",
+            "_distance": 0.09,
+        },
+        {
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Latest global electricity access progress and indicators.",
+            "content": "In 2023, 666 million people remained without access to electricity worldwide.",
+            "_distance": 0.15,
+        },
+        {
+            "title": "Energy Access Investment Case",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/access-investment",
+            "summary": "Investment opportunities for improving access to electricity.",
+            "content": "Electricity access finance and off-grid deployment pathways.",
+            "_distance": 0.08,
+        },
+    ]
+
+    chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert documents
+    assert chunks
+    assert documents[0].title == "2025 Tracking SDG7 Report"
+    assert chunks[0].title == "2025 Tracking SDG7 Report"
 
 
 def test_document_row_requires_real_signal_not_only_priors():
