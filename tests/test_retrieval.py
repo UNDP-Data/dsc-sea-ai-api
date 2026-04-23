@@ -9,6 +9,7 @@ from src.database import (
     _build_retrieval_profile,
     _build_summary_fallback_chunks,
     _build_metadata_patterns,
+    _classify_geography_match,
     _document_has_min_signal,
     _score_document_row,
     _select_documents_and_chunks,
@@ -35,6 +36,29 @@ def test_retrieval_profile_does_not_force_recent_for_explanatory_queries():
 def test_retrieval_profile_classifies_data_queries():
     profile = _build_retrieval_profile("What is the latest progress on access to electricity in 2025?")
     assert profile.intent == "data"
+
+
+def test_retrieval_profile_extracts_lac_scope():
+    profile = _build_retrieval_profile(
+        "What is the latest progress on access to electricity in Latin America and the Caribbean?"
+    )
+    assert profile.region_scopes == frozenset({"latin america"})
+    assert profile.country_scopes == frozenset()
+    assert profile.has_geographic_scope is True
+
+
+def test_retrieval_profile_extracts_country_scope_and_parent_region():
+    profile = _build_retrieval_profile("Tell me more about access to electricity in Nigeria")
+    assert profile.country_scopes == frozenset({"NGA"})
+    assert profile.fallback_region_scopes == frozenset({"africa"})
+    assert profile.has_geographic_scope is True
+
+
+def test_retrieval_profile_has_no_geography_for_generic_query():
+    profile = _build_retrieval_profile("Tell me more about access to electricity")
+    assert profile.country_scopes == frozenset()
+    assert profile.region_scopes == frozenset()
+    assert profile.has_geographic_scope is False
 
 
 def test_document_selection_prefers_topical_document_over_generic_recent_report():
@@ -237,6 +261,117 @@ def test_document_row_requires_real_signal_not_only_priors():
 
     assert _document_has_min_signal(row, profile) is False
     assert _score_document_row(row, profile) < 0.8
+
+
+def test_geography_classifier_rejects_sibling_country_for_country_query():
+    profile = _build_retrieval_profile("Tell me more about access to electricity in Nigeria")
+    row = {
+        "document_id": "doc-nga-miss",
+        "canonical_title": "Kenya Electricity Access Brief",
+        "summary": "Electricity access trends in Kenya.",
+        "country_codes": ["KEN"],
+        "region_codes": ["africa"],
+    }
+
+    geo = _classify_geography_match(row, profile)
+
+    assert geo["match_class"] == "out_of_scope"
+    assert _document_has_min_signal(row, profile) is False
+
+
+def test_geography_classifier_accepts_country_and_parent_region_fallback():
+    profile = _build_retrieval_profile("Tell me more about access to electricity in Nigeria")
+    nigeria_row = {
+        "document_id": "doc-nga",
+        "canonical_title": "Nigeria Electricity Access Brief",
+        "summary": "Electricity access trends in Nigeria.",
+        "country_codes": ["NGA"],
+        "region_codes": ["africa"],
+    }
+    africa_row = {
+        "document_id": "doc-africa",
+        "canonical_title": "Africa Energy Access Outlook",
+        "summary": "Regional electricity access trends across Africa.",
+        "region_codes": ["africa"],
+    }
+
+    assert _classify_geography_match(nigeria_row, profile)["match_class"] == "exact_country"
+    assert _classify_geography_match(africa_row, profile)["match_class"] == "parent_region"
+
+
+def test_document_selection_rejects_africa_for_lac_query():
+    profile = _build_retrieval_profile(
+        "What is the latest progress on access to electricity in Latin America and the Caribbean?"
+    )
+    rows = [
+        {
+            "title": "Africa Energy Access Outlook",
+            "year": 2025,
+            "language": "en",
+            "url": "https://example.org/africa-access",
+            "summary": "Regional electricity access trends across Africa.",
+            "content": "Access to electricity trends across Africa.",
+            "region_codes": ["africa"],
+            "_distance": 0.08,
+        },
+        {
+            "title": "LAC Energy Access Outlook",
+            "year": 2025,
+            "language": "en",
+            "url": "https://example.org/lac-access",
+            "summary": "Regional electricity access trends across Latin America and the Caribbean.",
+            "content": "Access to electricity trends across Latin America and the Caribbean.",
+            "region_codes": ["latin america"],
+            "_distance": 0.11,
+        },
+        {
+            "title": "Global Electricity Access Update",
+            "year": 2025,
+            "language": "en",
+            "url": "https://example.org/global-access",
+            "summary": "Global electricity access update.",
+            "content": "Worldwide access to electricity update.",
+            "region_codes": ["global"],
+            "_distance": 0.09,
+        },
+    ]
+
+    chunks, documents = _select_documents_and_chunks(rows, profile, limit=4)
+
+    assert documents
+    assert all("Africa Energy Access Outlook" != document.title for document in documents)
+    assert any(document.title == "LAC Energy Access Outlook" for document in documents)
+    assert any(document.title == "Global Electricity Access Update" for document in documents)
+
+
+def test_summary_fallback_respects_geographic_scope():
+    profile = _build_retrieval_profile("Tell me more about access to electricity in Nigeria")
+    rows = [
+        {
+            "document_id": "doc-ken",
+            "canonical_title": "Kenya Electricity Access Brief",
+            "summary": "Electricity access trends in Kenya.",
+            "country_codes": ["KEN"],
+            "region_codes": ["africa"],
+            "year": 2025,
+            "language": "en",
+            "url": "https://example.org/kenya-access",
+        },
+        {
+            "document_id": "doc-africa",
+            "canonical_title": "Africa Energy Access Outlook",
+            "summary": "Regional electricity access trends across Africa.",
+            "region_codes": ["africa"],
+            "year": 2025,
+            "language": "en",
+            "url": "https://example.org/africa-access",
+        },
+    ]
+
+    chunks = _build_summary_fallback_chunks(rows, profile, limit=3)
+
+    assert len(chunks) == 1
+    assert chunks[0].title == "Africa Energy Access Outlook"
 
 
 def test_document_row_accepts_topic_backed_infrastructure_match():
@@ -537,3 +672,176 @@ async def test_retrieve_chunks_prefers_documents_table_when_available():
     assert documents[0].document_type == "policy"
     assert len(chunks) >= 2
     assert all(chunk.document_id for chunk in chunks)
+
+
+@pytest.mark.asyncio
+async def test_retrieve_chunks_enforces_country_scope_before_document_selection():
+    document_rows = [
+        {
+            "document_id": "doc-nga",
+            "source_id": "undp",
+            "canonical_title": "Nigeria Electricity Access Brief",
+            "url": "https://example.org/nigeria-access",
+            "language": "en",
+            "document_type": "report",
+            "publication_date": "2024-01-01",
+            "year": 2024,
+            "summary": "Electricity access trends in Nigeria.",
+            "status": "approved",
+            "publisher": "UNDP",
+            "region_codes": ["africa"],
+            "country_codes": ["NGA"],
+            "geography_tags_text": "africa | NGA",
+            "authority_tier": "trusted",
+            "source_priority": 1.0,
+            "quality_score": 0.9,
+            "is_flagship": False,
+            "is_data_report": False,
+        },
+        {
+            "document_id": "doc-ken",
+            "source_id": "undp",
+            "canonical_title": "Kenya Electricity Access Brief",
+            "url": "https://example.org/kenya-access",
+            "language": "en",
+            "document_type": "report",
+            "publication_date": "2024-01-01",
+            "year": 2024,
+            "summary": "Electricity access trends in Kenya.",
+            "status": "approved",
+            "publisher": "UNDP",
+            "region_codes": ["africa"],
+            "country_codes": ["KEN"],
+            "geography_tags_text": "africa | KEN",
+            "authority_tier": "trusted",
+            "source_priority": 1.0,
+            "quality_score": 0.9,
+            "is_flagship": False,
+            "is_data_report": False,
+        },
+        {
+            "document_id": "doc-global",
+            "source_id": "world_bank",
+            "canonical_title": "Global Electricity Access Update",
+            "url": "https://example.org/global-access",
+            "language": "en",
+            "document_type": "report",
+            "publication_date": "2025-01-01",
+            "year": 2025,
+            "summary": "Global electricity access update.",
+            "status": "approved",
+            "publisher": "World Bank",
+            "region_codes": ["global"],
+            "geography_tags_text": "global",
+            "authority_tier": "trusted",
+            "source_priority": 1.0,
+            "quality_score": 0.8,
+            "is_flagship": False,
+            "is_data_report": True,
+        },
+    ]
+    chunk_rows = [
+        {
+            "document_id": "doc-nga",
+            "title": "Nigeria Electricity Access Brief",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/nigeria-access",
+            "summary": "Electricity access trends in Nigeria.",
+            "content": "Nigeria electricity access trends and off-grid deployment.",
+            "country_codes": ["NGA"],
+            "region_codes": ["africa"],
+            "chunk_id": "chunk-nga",
+            "chunk_index": 0,
+        },
+        {
+            "document_id": "doc-ken",
+            "title": "Kenya Electricity Access Brief",
+            "year": 2024,
+            "language": "en",
+            "url": "https://example.org/kenya-access",
+            "summary": "Electricity access trends in Kenya.",
+            "content": "Kenya electricity access trends and mini-grid deployment.",
+            "country_codes": ["KEN"],
+            "region_codes": ["africa"],
+            "chunk_id": "chunk-ken",
+            "chunk_index": 0,
+        },
+        {
+            "document_id": "doc-global",
+            "title": "Global Electricity Access Update",
+            "year": 2025,
+            "language": "en",
+            "url": "https://example.org/global-access",
+            "summary": "Global electricity access update.",
+            "content": "Worldwide electricity access update and SDG 7 progress.",
+            "region_codes": ["global"],
+            "chunk_id": "chunk-global",
+            "chunk_index": 0,
+        },
+    ]
+
+    class FakeSchemaField:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeQuery:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def select(self, _fields=None):
+            return self
+
+        def where(self, _clause):
+            return self
+
+        def limit(self, _limit):
+            return self
+
+        async def to_list(self):
+            return self.rows
+
+    class FakeVectorSearch(FakeQuery):
+        pass
+
+    class FakeTable:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def query(self):
+            return FakeQuery(self.rows)
+
+        def vector_search(self, _vector):
+            return FakeVectorSearch(self.rows)
+
+        async def schema(self):
+            if self.rows:
+                return [FakeSchemaField(name) for name in self.rows[0].keys()]
+            return []
+
+    class FakeConnection:
+        async def table_names(self):
+            return ["chunks", "documents"]
+
+        async def open_table(self, name):
+            if name == "chunks":
+                return FakeTable(chunk_rows)
+            if name == "documents":
+                return FakeTable(document_rows)
+            raise ValueError(name)
+
+    class FakeEmbedder:
+        async def aembed_query(self, _query):
+            return [0.1]
+
+    client = Client(FakeConnection())
+    client.embedder = FakeEmbedder()
+
+    chunks, documents = await client.retrieve_chunks(
+        "Tell me more about access to electricity in Nigeria"
+    )
+
+    assert any(document.document_id == "doc-nga" for document in documents)
+    assert any(document.document_id == "doc-global" for document in documents)
+    assert all(document.document_id != "doc-ken" for document in documents)
+    assert all(chunk.document_id != "doc-ken" for chunk in chunks)
