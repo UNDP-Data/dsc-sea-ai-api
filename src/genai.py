@@ -410,6 +410,10 @@ def _trusted_metric_instruction(chunks: list[dict]) -> str:
     """
     Add strict answer requirements for curated, trusted metric fallback chunks.
     """
+    has_context_fallback = any(
+        chunk.get("content_type") == "trusted_context_fallback"
+        for chunk in chunks
+    )
     for chunk in chunks:
         content = chunk.get("content") or ""
         if (
@@ -417,13 +421,20 @@ def _trusted_metric_instruction(chunks: list[dict]) -> str:
             and "666 million" in content
             and "electricity" in content.lower()
         ):
+            context_instruction = (
+                "Use the additional context excerpts to answer the broader question, and distinguish clearly "
+                "between the limits of retrieved excerpts and the scope of the full source report. Do not claim "
+                "that a source lacks information unless the supplied evidence explicitly establishes that absence."
+                if has_context_fallback
+                else "If only the headline metric excerpt is supplied, say only that the retrieved excerpt covers electricity access specifically; do not infer what the full source report does or does not cover."
+            )
             return (
                 "The publication excerpts include a trusted headline metric. The first substantive sentence "
                 "of the continuation must state exactly that 666 million people worldwide lacked access to "
                 "electricity in 2023. Do not substitute older or approximate global electricity-access figures. "
                 "If the user phrased the question as energy access generally, clarify that this figure is for "
-                "electricity access; discuss clean cooking only if the supplied excerpts include clean-cooking "
-                "evidence."
+                "electricity access. "
+                + context_instruction
             )
     return ""
 

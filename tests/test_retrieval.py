@@ -1107,6 +1107,21 @@ async def test_retrieve_chunks_seeds_latest_sdg7_report_for_current_data_query()
             "chunk_id": "chunk-sdg7",
             "chunk_index": 0,
         },
+        {
+            "document_id": "doc-sdg7",
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Annual SDG7 tracking report.",
+            "content": (
+                "Access to clean cooking remains part of SDG7 tracking; in 2023, "
+                "2.1 billion people relied on polluting fuels and technologies."
+            ),
+            "region_codes": ["global"],
+            "chunk_id": "chunk-sdg7-clean-cooking",
+            "chunk_index": 1,
+        },
     ]
 
     class FakeSchemaField:
@@ -1171,6 +1186,9 @@ async def test_retrieve_chunks_seeds_latest_sdg7_report_for_current_data_query()
     assert chunks
     assert documents[0].document_id == "doc-sdg7"
     assert chunks[0].document_id == "doc-sdg7"
+    assert len(documents) == 1
+    assert any("clean cooking" in chunk.content.lower() for chunk in chunks)
+    assert all(document.document_id == "doc-sdg7" for document in documents)
 
 
 @pytest.mark.asyncio
@@ -1286,10 +1304,21 @@ async def test_retrieve_chunks_uses_trusted_sdg7_metric_when_chunks_are_unavaila
     client = Client(FakeConnection())
     client.embedder = FakeEmbedder()
 
-    chunks, documents = await client.retrieve_chunks("How many people lack access to energy?")
+    debug = {}
+    chunks, documents = await client.retrieve_chunks(
+        "How many people lack access to energy?",
+        debug=debug,
+    )
 
     assert documents[0].document_id == "doc-sdg7"
     assert chunks[0].document_id == "doc-sdg7"
     assert chunks[0].content_type == "trusted_metric_fallback"
     assert "666 million" in chunks[0].content
     assert "770 million" not in chunks[0].content
+    assert any(chunk.content_type == "trusted_context_fallback" for chunk in chunks)
+    assert any("clean cooking" in chunk.content.lower() for chunk in chunks)
+    assert any(
+        branch.get("stage") == "trusted_context_fallback"
+        for branch in debug.get("branches", [])
+    )
+    assert debug.get("selected", {}).get("path") == "current_data_metric_plus_context"
