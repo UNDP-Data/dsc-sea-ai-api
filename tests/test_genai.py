@@ -523,3 +523,90 @@ async def test_get_answer_current_data_query_keeps_latest_sdg7_number_only(monke
 
     combined = "".join(chunk.get("content", "") for chunk in chunks)
     assert_only_666_as_global_electricity_access_deficit(combined)
+
+
+@pytest.mark.asyncio
+async def test_get_answer_current_data_query_synthesizes_supplied_context(monkeypatch):
+    """
+    When retrieval supplies broader SDG7 context, generation should synthesize
+    it instead of treating the metric excerpt as the whole evidence base.
+    """
+
+    async def fake_stream_chat_response(*, system_message, messages=None, **_kwargs):
+        if system_message == genai.PROMPTS["draft_answer"]:
+            raise AssertionError("draft_answer should be skipped for deferred current-data queries")
+        if system_message == genai.PROMPTS["answer_with_publications"]:
+            prompt = messages[0]["content"]
+            assert "666 million" in prompt
+            assert "2.1 billion" in prompt
+            assert "Use the additional context excerpts" in prompt
+            assert "limits of retrieved excerpts" in prompt
+            assert "full source report" in prompt
+            yield AIMessageChunk(
+                content=(
+                    "According to the 2025 Tracking SDG7 Report, 666 million people "
+                    "worldwide lacked access to electricity in 2023. The report also "
+                    "covers clean cooking: around 2.1 billion people relied on "
+                    "polluting fuels and technologies."
+                )
+            )
+
+    async def fake_generate_query_ideas(_messages):
+        return ["Idea A"]
+
+    monkeypatch.setattr(genai, "stream_chat_response", fake_stream_chat_response)
+    monkeypatch.setattr(genai, "generate_query_ideas", fake_generate_query_ideas)
+
+    response = AssistantResponse(role="assistant", content="")
+    messages = [Message(role="human", content="How many people lack access to energy?")]
+    publication_task = asyncio.Future()
+    publication_task.set_result(
+        (
+            [
+                Chunk(
+                    title="2025 Tracking SDG7 Report",
+                    year=2025,
+                    language="en",
+                    url="https://trackingsdg7.esmap.org/downloads",
+                    summary="Latest global SDG7 progress.",
+                    content="In 2023, 666 million people remained without access to electricity worldwide.",
+                    content_type="trusted_metric_fallback",
+                ).to_context(),
+                Chunk(
+                    title="2025 Tracking SDG7 Report",
+                    year=2025,
+                    language="en",
+                    url="https://trackingsdg7.esmap.org/downloads",
+                    summary="Latest global SDG7 progress.",
+                    content=(
+                        "In 2023, around 2.1 billion people worldwide remained "
+                        "dependent on polluting fuels and technologies for cooking."
+                    ),
+                    content_type="trusted_context_fallback",
+                    section_title="Access to clean cooking",
+                ).to_context(),
+            ],
+            [
+                Document(
+                    title="2025 Tracking SDG7 Report",
+                    year=2025,
+                    language="en",
+                    url="https://trackingsdg7.esmap.org/downloads",
+                    summary="Latest global SDG7 progress.",
+                )
+            ],
+        )
+    )
+
+    chunks = []
+    async for payload in genai.get_answer(
+        messages,
+        response,
+        publication_task=publication_task,
+        defer_initial_answer=True,
+    ):
+        chunks.append(json.loads(payload))
+
+    combined = "".join(chunk.get("content", "") for chunk in chunks)
+    assert_only_666_as_global_electricity_access_deficit(combined)
+    assert "clean cooking" in combined
