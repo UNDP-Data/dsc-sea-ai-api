@@ -1501,6 +1501,40 @@ def _should_seed_latest_sdg7(profile: RetrievalProfile) -> bool:
     return profile.current_data_query or (profile.intent == "data" and profile.prefer_recent)
 
 
+def _is_broad_energy_access_query(profile: RetrievalProfile) -> bool:
+    if profile.data_focus != "electricity_access":
+        return False
+    normalized = profile.normalized_query
+    return (
+        "access to energy" in normalized
+        or "energy access" in normalized
+        or (
+            "access" in profile.query_tokens
+            and "energy" in profile.query_tokens
+            and "electricity" not in profile.query_tokens
+        )
+    )
+
+
+def _build_current_data_enrichment_queries(profile: RetrievalProfile) -> list[str]:
+    if not profile.current_data_query or profile.data_focus != "electricity_access":
+        return []
+    queries = [
+        "access to electricity latest progress",
+        "electricity access regional gaps",
+        "sdg7 progress 2030 projections",
+    ]
+    if _is_broad_energy_access_query(profile):
+        queries.extend(
+            [
+                "clean cooking access latest progress",
+                "clean cooking polluting fuels technologies",
+                "energy access electricity clean cooking sdg7",
+            ]
+        )
+    return queries
+
+
 def _build_current_data_metric_fallback_chunks(
     documents: list[dict],
     profile: RetrievalProfile,
@@ -1561,6 +1595,200 @@ def _build_current_data_metric_fallback_chunks(
             ),
         )
     ]
+
+
+def _build_trusted_sdg7_context_fallback_chunks(
+    documents: list[dict],
+    profile: RetrievalProfile,
+    *,
+    existing_chunks: list[Chunk] | None = None,
+) -> list[Chunk]:
+    if not profile.current_data_query or profile.data_focus != "electricity_access":
+        return []
+    matching_document = next(
+        (row for row in documents if _is_latest_tracking_sdg7_row(row)),
+        None,
+    )
+    if matching_document is None:
+        return []
+    existing_text = _normalize_text(
+        " ".join(chunk.content for chunk in (existing_chunks or []) if chunk.content)
+    )
+    title = (
+        matching_document.get("canonical_title")
+        or matching_document.get("title")
+        or "2025 Tracking SDG7 Report"
+    )
+
+    def build_chunk(
+        *,
+        suffix: str,
+        section_title: str,
+        content: str,
+        summary: str,
+    ) -> Chunk:
+        return Chunk(
+            document_id=matching_document.get("document_id"),
+            source=matching_document.get("source_id") or matching_document.get("source"),
+            publisher=matching_document.get("publisher"),
+            title=title,
+            year=int(matching_document.get("year") or 2025),
+            language=matching_document.get("language") or "en",
+            url=matching_document.get("url") or "https://trackingsdg7.esmap.org/downloads",
+            summary=matching_document.get("summary"),
+            document_type=matching_document.get("document_type"),
+            publication_date=matching_document.get("publication_date"),
+            series_name=matching_document.get("series_name"),
+            topics=matching_document.get("topic_tags"),
+            geographies=_row_geographies(matching_document),
+            content=content,
+            chunk_id=f"{matching_document.get('document_id') or 'tracking-sdg7-2025'}-{suffix}",
+            chunk_index=0,
+            content_type="trusted_context_fallback",
+            section_title=section_title,
+            chunk_summary=summary,
+        )
+
+    chunks: list[Chunk] = []
+    if _is_broad_energy_access_query(profile) and "clean cooking" not in existing_text:
+        chunks.append(
+            build_chunk(
+                suffix="clean-cooking-context",
+                section_title="Access to clean cooking",
+                content=(
+                    "The 2025 Tracking SDG7 Report also tracks access to clean cooking. "
+                    "In 2023, around 2.1 billion people worldwide remained dependent on "
+                    "polluting fuels and technologies for cooking, even as global access "
+                    "to clean cooking reached about 74%. Progress remains too slow for "
+                    "universal clean cooking access by 2030."
+                ),
+                summary=(
+                    "The 2025 Tracking SDG7 Report includes clean cooking access, "
+                    "including the 2.1 billion people still relying on polluting fuels "
+                    "and technologies in 2023."
+                ),
+            )
+        )
+    if "sub saharan africa" not in existing_text and "regional" not in existing_text:
+        chunks.append(
+            build_chunk(
+                suffix="broader-energy-access-context",
+                section_title="Broader SDG7 access context",
+                content=(
+                    "The 2025 Tracking SDG7 Report treats energy access as more than "
+                    "electricity alone: SDG 7.1 covers both access to electricity and "
+                    "access to clean fuels and technologies for cooking. The report "
+                    "places these access indicators alongside renewable energy, energy "
+                    "efficiency, and international financial flows, and highlights that "
+                    "access gaps are concentrated in remote, low-income, fragile, and "
+                    "underserved communities, especially in Sub-Saharan Africa."
+                ),
+                summary=(
+                    "The report covers both electricity and clean cooking access and "
+                    "situates them within the broader SDG7 tracking framework."
+                ),
+            )
+        )
+    return chunks
+
+
+def _row_matches_document(row: dict, document: dict) -> bool:
+    row_document_id = row.get("document_id")
+    document_id = document.get("document_id")
+    if row_document_id and document_id and row_document_id == document_id:
+        return True
+    row_url = (row.get("url") or "").strip()
+    document_url = (document.get("url") or "").strip()
+    if row_url and document_url and row_url == document_url:
+        return True
+    row_title = (row.get("title") or "").strip()
+    document_title = (document.get("canonical_title") or document.get("title") or "").strip()
+    return bool(row_title and document_title and row_title == document_title)
+
+
+def _filter_rows_for_documents(rows: list[dict], documents: list[dict]) -> list[dict]:
+    return [
+        row
+        for row in rows
+        if any(_row_matches_document(row, document) for document in documents)
+    ]
+
+
+def _select_source_context_chunks(
+    rows: list[dict],
+    profile: RetrievalProfile,
+    *,
+    limit: int,
+) -> list[Chunk]:
+    filtered_rows, _mode, _rejected = _filter_rows_by_geography(rows, profile)
+    if not filtered_rows or limit <= 0:
+        return []
+
+    broad_energy_access = _is_broad_energy_access_query(profile)
+    candidates: list[tuple[dict, float]] = []
+    for row in filtered_rows:
+        text_blob = _normalize_text(
+            " ".join(
+                str(row.get(field) or "")
+                for field in ("title", "summary", "content", "section_title", "chunk_summary")
+            )
+        )
+        score = float(_chunk_score_breakdown(row, profile)["score"])
+        if "access to electricity" in text_blob or "electricity access" in text_blob:
+            score += 2.0
+        if "clean cooking" in text_blob or "clean fuels" in text_blob:
+            score += 1.8 if broad_energy_access else 0.4
+        if "2030" in text_blob or "universal access" in text_blob:
+            score += 0.9
+        if "sub saharan africa" in text_blob or "regional" in text_blob:
+            score += 0.7
+        if "666 million" in text_blob:
+            score += 0.8
+        candidates.append((row, score))
+
+    ranked_rows = sorted(candidates, key=lambda item: item[1], reverse=True)
+    chunks: list[Chunk] = []
+    seen: set[str] = set()
+    for row, _score in ranked_rows:
+        key = str(
+            row.get("chunk_id")
+            or row.get("content")
+            or row.get("url")
+            or row.get("title")
+            or ""
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        chunks.append(
+            Chunk(
+                document_id=row.get("document_id"),
+                source=row.get("source_id") or row.get("source"),
+                publisher=row.get("publisher"),
+                title=row.get("title") or row.get("canonical_title") or "",
+                year=int(row.get("year") or 0),
+                language=row.get("language") or "",
+                url=row.get("url") or "",
+                summary=row.get("summary"),
+                document_type=row.get("document_type"),
+                publication_date=row.get("publication_date"),
+                series_name=row.get("series_name"),
+                topics=row.get("topic_tags"),
+                geographies=_row_geographies(row),
+                content=row.get("content") or "",
+                chunk_id=row.get("chunk_id"),
+                chunk_index=row.get("chunk_index"),
+                content_type=row.get("content_type"),
+                section_title=row.get("section_title"),
+                page_start=row.get("page_start"),
+                page_end=row.get("page_end"),
+                token_count=row.get("token_count"),
+                chunk_summary=row.get("chunk_summary"),
+            )
+        )
+        if len(chunks) >= limit:
+            break
+    return chunks
 
 
 def _chunk_score_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, object]:
@@ -2862,29 +3090,112 @@ class Client:
                     profile,
                 )
                 if fast_metric_chunks:
-                    fast_metric_rows = [
+                    source_locked_rows = [
                         row for row in shortlisted_rows if _is_latest_tracking_sdg7_row(row)
-                    ]
-                    fast_metric_documents = [
-                        corpus.document_record_to_api(row) for row in fast_metric_rows
+                    ] or shortlisted_rows[:1]
+                    source_locked_documents = [
+                        corpus.document_record_to_api(row) for row in source_locked_rows
                     ] or api_documents[:1]
+                    enrichment_queries = _build_current_data_enrichment_queries(profile)
+                    enrichment_timeout = _env_timeout_seconds(
+                        "RETRIEVE_CURRENT_DATA_ENRICHMENT_TIMEOUT_SECONDS",
+                        min(lexical_timeout, 2.0),
+                    )
+                    enrichment_rows: list[dict] = []
                     logger.info(
-                        "retrieve_chunks current-data fast path query=%r docs=%s chunks=%s",
+                        "retrieve_chunks current-data metric-plus-context path query=%r docs=%s chunks=%s enrichment_queries=%s",
                         query,
-                        len(fast_metric_documents),
+                        len(source_locked_documents),
                         len(fast_metric_chunks),
+                        enrichment_queries,
                     )
                     if debug is not None:
                         debug["branches"].append(
                             {
-                                "stage": "current_data_metric_fast_path",
+                                "stage": "current_data_metric_chunk",
                                 "rows": len(fast_metric_chunks),
                                 "sample_titles": [chunk.title for chunk in fast_metric_chunks],
                             }
                         )
+                    for enrichment_query in enrichment_queries:
+                        try:
+                            rows = await asyncio.wait_for(
+                                fetch_document_chunks(
+                                    source_locked_rows,
+                                    enrichment_query,
+                                    lexical_only=True,
+                                ),
+                                timeout=enrichment_timeout,
+                            )
+                        except asyncio.TimeoutError:
+                            logger.warning(
+                                "retrieve_source_locked_enrichment timeout query=%r variant=%r timeout=%ss",
+                                query,
+                                enrichment_query,
+                                enrichment_timeout,
+                            )
+                            rows = []
+                            status = "timeout"
+                        except Exception as error:
+                            logger.warning(
+                                "retrieve_source_locked_enrichment failed query=%r variant=%r error=%s",
+                                query,
+                                enrichment_query,
+                                error,
+                            )
+                            rows = []
+                            status = "error"
+                        else:
+                            status = "ok"
+                        rows = _filter_rows_for_documents(rows, source_locked_rows)
+                        enrichment_rows = _merge_candidate_rows(enrichment_rows, rows)
+                        logger.info(
+                            "retrieve_source_locked_enrichment query=%r variant=%r rows=%s status=%s",
+                            query,
+                            enrichment_query,
+                            len(rows),
+                            status,
+                        )
+                        if debug is not None:
+                            debug["branches"].append(
+                                {
+                                    "stage": "source_locked_enrichment_chunks",
+                                    "variant": enrichment_query,
+                                    "status": status,
+                                    "rows": len(rows),
+                                    "sample_titles": [
+                                        row.get("title") or row.get("canonical_title")
+                                        for row in rows[:5]
+                                    ],
+                                }
+                            )
+                    context_chunks = _select_source_context_chunks(
+                        enrichment_rows,
+                        profile,
+                        limit=max(limit - len(fast_metric_chunks), 0),
+                    )
+                    trusted_context_chunks = _build_trusted_sdg7_context_fallback_chunks(
+                        source_locked_rows,
+                        profile,
+                        existing_chunks=fast_metric_chunks + context_chunks,
+                    )
+                    if trusted_context_chunks and debug is not None:
+                        debug["branches"].append(
+                            {
+                                "stage": "trusted_context_fallback",
+                                "rows": len(trusted_context_chunks),
+                                "sample_sections": [
+                                    chunk.section_title for chunk in trusted_context_chunks
+                                ],
+                            }
+                        )
+                    selected_chunks = (
+                        fast_metric_chunks + context_chunks + trusted_context_chunks
+                    )[:limit]
+                    if debug is not None:
                         debug["selected"]["documents"] = [
                             document.model_dump()
-                            for document in fast_metric_documents
+                            for document in source_locked_documents
                         ]
                         debug["selected"]["chunks"] = [
                             {
@@ -2896,10 +3207,10 @@ class Client:
                                 "url": chunk.url,
                                 "content_type": chunk.content_type,
                             }
-                            for chunk in fast_metric_chunks
+                            for chunk in selected_chunks
                         ]
-                        debug["selected"]["path"] = "current_data_metric_fast_path"
-                    return fast_metric_chunks[:limit], fast_metric_documents
+                        debug["selected"]["path"] = "current_data_metric_plus_context"
+                    return selected_chunks, source_locked_documents
                 chunk_rows: list[dict] = []
 
                 for retrieval_query in retrieval_queries:
