@@ -12,6 +12,9 @@ from pydantic import BaseModel
 from src import genai
 from src.entities import Chunk, Document
 from src.entities import AssistantResponse, Message
+from tests.access_metric_assertions import (
+    assert_only_666_as_global_electricity_access_deficit,
+)
 
 
 @pytest.mark.parametrize(
@@ -51,6 +54,23 @@ def test_assess_scope_allows_conversation_memory_query():
     decision = genai.assess_scope(messages)
     assert decision.allowed is True
     assert decision.category == "conversation_meta"
+
+
+def test_global_electricity_access_deficit_assertion_rejects_any_non_666_global_total():
+    with pytest.raises(AssertionError):
+        assert_only_666_as_global_electricity_access_deficit(
+            "Around 820 million people globally lack access to electricity."
+        )
+
+
+def test_global_electricity_access_deficit_assertion_allows_distinct_clean_cooking_metric():
+    assert_only_666_as_global_electricity_access_deficit(
+        (
+            "According to the 2025 Tracking SDG7 Report, 666 million people worldwide "
+            "lacked access to electricity in 2023. Separately, 2.3 billion people "
+            "still lack access to clean cooking."
+        )
+    )
 
 
 @pytest.mark.parametrize(
@@ -405,6 +425,7 @@ async def test_get_answer_can_defer_initial_answer_for_current_data_query(monkey
                     url="https://trackingsdg7.esmap.org/downloads",
                     summary="Latest global electricity access progress.",
                     content="In 2023, 666 million people remained without access to electricity worldwide.",
+                    content_type="trusted_metric_fallback",
                 ).to_context()
             ],
             [
@@ -447,7 +468,9 @@ async def test_get_answer_current_data_query_keeps_latest_sdg7_number_only(monke
         if system_message == genai.PROMPTS["answer_with_publications"]:
             prompt = messages[0]["content"]
             assert "666 million" in prompt
-            assert "770 million" not in prompt
+            assert_only_666_as_global_electricity_access_deficit(prompt)
+            assert "first substantive sentence" in prompt
+            assert "Do not substitute older or approximate global electricity-access figures" in prompt
             yield AIMessageChunk(
                 content=(
                     "According to the 2025 Tracking SDG7 Report, 666 million people "
@@ -474,6 +497,7 @@ async def test_get_answer_current_data_query_keeps_latest_sdg7_number_only(monke
                     url="https://trackingsdg7.esmap.org/downloads",
                     summary="Latest global electricity access progress.",
                     content="In 2023, 666 million people remained without access to electricity worldwide.",
+                    content_type="trusted_metric_fallback",
                 ).to_context()
             ],
             [
@@ -498,5 +522,4 @@ async def test_get_answer_current_data_query_keeps_latest_sdg7_number_only(monke
         chunks.append(json.loads(payload))
 
     combined = "".join(chunk.get("content", "") for chunk in chunks)
-    assert "666 million" in combined
-    assert "770 million" not in combined
+    assert_only_666_as_global_electricity_access_deficit(combined)

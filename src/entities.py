@@ -306,6 +306,8 @@ class Chunk(Document):
             "section_title": self.section_title,
             "page_start": self.page_start,
             "page_end": self.page_end,
+            "content_type": self.content_type,
+            "chunk_id": self.chunk_id,
             "content": self.content,
         }
 
