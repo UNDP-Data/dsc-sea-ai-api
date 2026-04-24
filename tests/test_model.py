@@ -13,6 +13,9 @@ from langchain_core.messages import AIMessageChunk
 import main as main_module
 from src.entities import Chunk, Document
 from src.kg.types import GraphV2
+from tests.access_metric_assertions import (
+    assert_only_666_as_global_electricity_access_deficit,
+)
 
 
 def _read_chunks(response) -> list[dict]:
@@ -422,5 +425,5 @@ def test_model_skips_generic_draft_for_current_energy_access_data_query(
     chunks = _read_chunks(response)
     combined = "".join(chunk.get("content", "") for chunk in chunks)
     assert "I will check the publications for the latest data." in combined
-    assert "666 million" in combined
+    assert_only_666_as_global_electricity_access_deficit(combined)
     assert "more insights" not in combined
