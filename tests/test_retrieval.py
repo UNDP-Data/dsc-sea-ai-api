@@ -13,6 +13,7 @@ from src.database import (
     _document_has_min_signal,
     _score_document_row,
     _select_documents_and_chunks,
+    _prioritize_retrieval_queries,
     build_retrieval_queries,
     should_defer_to_publications,
 )
@@ -49,6 +50,11 @@ def test_retrieval_profile_flags_unspecified_energy_access_count_as_current_data
 def test_build_retrieval_queries_expands_unspecified_energy_access_count_query():
     queries = build_retrieval_queries("How many people lack access to energy?")
     assert "how many people lack access to electricity" in queries
+    assert "tracking sdg7 access to electricity" in queries
+
+
+def test_prioritized_retrieval_queries_keep_sdg7_variant_for_current_data_query():
+    queries = _prioritize_retrieval_queries("How many people lack access to energy?")
     assert "tracking sdg7 access to electricity" in queries
 
 
@@ -1030,3 +1036,260 @@ async def test_retrieve_chunks_enforces_country_scope_before_document_selection(
     assert any(document.document_id == "doc-global" for document in documents)
     assert all(document.document_id != "doc-ken" for document in documents)
     assert all(chunk.document_id != "doc-ken" for chunk in chunks)
+
+
+@pytest.mark.asyncio
+async def test_retrieve_chunks_seeds_latest_sdg7_report_for_current_data_query():
+    document_rows = [
+        {
+            "document_id": "doc-forest",
+            "source_id": "undp",
+            "canonical_title": "Forests, Energy and Livelihoods",
+            "url": "https://example.org/forests-energy-livelihoods",
+            "language": "en",
+            "document_type": "report",
+            "publication_date": "2023-01-01",
+            "year": 2023,
+            "summary": "Woodfuel use, forests, biomass reliance, and household livelihoods.",
+            "status": "approved",
+            "publisher": "UNDP",
+            "region_codes": ["global"],
+            "geography_tags_text": "global",
+            "authority_tier": "partner",
+            "source_priority": 1.0,
+            "quality_score": 1.0,
+            "is_flagship": False,
+            "is_data_report": True,
+        },
+        {
+            "document_id": "doc-sdg7",
+            "source_id": "tracking_sdg7",
+            "canonical_title": "2025 Tracking SDG7 Report",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "language": "en",
+            "document_type": "flagship_report",
+            "publication_date": "2025-01-01",
+            "year": 2025,
+            "summary": "Annual SDG7 tracking report.",
+            "status": "approved",
+            "publisher": "Tracking SDG7 / ESMAP",
+            "region_codes": ["global"],
+            "geography_tags_text": "global",
+            "authority_tier": "trusted",
+            "source_priority": 1.0,
+            "quality_score": 1.0,
+            "is_flagship": True,
+            "is_data_report": True,
+        },
+    ]
+    chunk_rows = [
+        {
+            "document_id": "doc-forest",
+            "title": "Forests, Energy and Livelihoods",
+            "year": 2023,
+            "language": "en",
+            "url": "https://example.org/forests-energy-livelihoods",
+            "summary": "Woodfuel use, forests, biomass reliance, and household livelihoods.",
+            "content": "More than 2.4 billion people rely on polluting cooking systems.",
+            "region_codes": ["global"],
+            "chunk_id": "chunk-forest",
+            "chunk_index": 0,
+        },
+        {
+            "document_id": "doc-sdg7",
+            "title": "2025 Tracking SDG7 Report",
+            "year": 2025,
+            "language": "en",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "summary": "Annual SDG7 tracking report.",
+            "content": "In 2023, 666 million people remained without access to electricity worldwide.",
+            "region_codes": ["global"],
+            "chunk_id": "chunk-sdg7",
+            "chunk_index": 0,
+        },
+    ]
+
+    class FakeSchemaField:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeQuery:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def select(self, _fields=None):
+            return self
+
+        def where(self, _clause):
+            return self
+
+        def limit(self, _limit):
+            return self
+
+        async def to_list(self):
+            return self.rows
+
+    class FakeVectorSearch(FakeQuery):
+        pass
+
+    class FakeTable:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def query(self):
+            return FakeQuery(self.rows)
+
+        def vector_search(self, _vector):
+            return FakeVectorSearch(self.rows)
+
+        async def schema(self):
+            if self.rows:
+                return [FakeSchemaField(name) for name in self.rows[0].keys()]
+            return []
+
+    class FakeConnection:
+        async def table_names(self):
+            return ["chunks", "documents"]
+
+        async def open_table(self, name):
+            if name == "chunks":
+                return FakeTable(chunk_rows)
+            if name == "documents":
+                return FakeTable(document_rows)
+            raise ValueError(name)
+
+    class FakeEmbedder:
+        async def aembed_query(self, _query):
+            return [0.1]
+
+    client = Client(FakeConnection())
+    client.embedder = FakeEmbedder()
+
+    chunks, documents = await client.retrieve_chunks("How many people lack access to energy?")
+
+    assert documents
+    assert chunks
+    assert documents[0].document_id == "doc-sdg7"
+    assert chunks[0].document_id == "doc-sdg7"
+
+
+@pytest.mark.asyncio
+async def test_retrieve_chunks_uses_trusted_sdg7_metric_when_chunks_are_unavailable():
+    document_rows = [
+        {
+            "document_id": "doc-forest",
+            "source_id": "undp",
+            "canonical_title": "Forests, Energy and Livelihoods",
+            "url": "https://example.org/forests-energy-livelihoods",
+            "language": "en",
+            "document_type": "report",
+            "publication_date": "2023-01-01",
+            "year": 2023,
+            "summary": "Woodfuel use, forests, biomass reliance, and household livelihoods.",
+            "status": "approved",
+            "publisher": "UNDP",
+            "region_codes": ["global"],
+            "geography_tags_text": "global",
+            "authority_tier": "partner",
+            "source_priority": 1.0,
+            "quality_score": 1.0,
+            "is_flagship": False,
+            "is_data_report": True,
+        },
+        {
+            "document_id": "doc-sdg7",
+            "source_id": "tracking_sdg7",
+            "canonical_title": "2025 Tracking SDG7 Report",
+            "url": "https://trackingsdg7.esmap.org/downloads",
+            "language": "en",
+            "document_type": "flagship_report",
+            "publication_date": "2025-01-01",
+            "year": 2025,
+            "summary": "Annual SDG7 tracking report.",
+            "status": "approved",
+            "publisher": "Tracking SDG7 / ESMAP",
+            "region_codes": ["global"],
+            "geography_tags_text": "global",
+            "authority_tier": "trusted",
+            "source_priority": 1.0,
+            "quality_score": 1.0,
+            "is_flagship": True,
+            "is_data_report": True,
+        },
+    ]
+
+    class FakeSchemaField:
+        def __init__(self, name):
+            self.name = name
+
+    class FakeQuery:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def select(self, _fields=None):
+            return self
+
+        def where(self, _clause):
+            return self
+
+        def limit(self, _limit):
+            return self
+
+        async def to_list(self):
+            return self.rows
+
+    class FakeVectorSearch(FakeQuery):
+        pass
+
+    class FakeTable:
+        def __init__(self, rows, fields=None):
+            self.rows = rows
+            self.fields = fields
+
+        def query(self):
+            return FakeQuery(self.rows)
+
+        def vector_search(self, _vector):
+            return FakeVectorSearch(self.rows)
+
+        async def schema(self):
+            fields = self.fields or (self.rows[0].keys() if self.rows else [])
+            return [FakeSchemaField(name) for name in fields]
+
+    class FakeConnection:
+        async def table_names(self):
+            return ["chunks", "documents"]
+
+        async def open_table(self, name):
+            if name == "chunks":
+                return FakeTable(
+                    [],
+                    fields=[
+                        "document_id",
+                        "title",
+                        "year",
+                        "language",
+                        "url",
+                        "summary",
+                        "content",
+                        "chunk_id",
+                    ],
+                )
+            if name == "documents":
+                return FakeTable(document_rows)
+            raise ValueError(name)
+
+    class FakeEmbedder:
+        async def aembed_query(self, _query):
+            return [0.1]
+
+    client = Client(FakeConnection())
+    client.embedder = FakeEmbedder()
+
+    chunks, documents = await client.retrieve_chunks("How many people lack access to energy?")
+
+    assert documents[0].document_id == "doc-sdg7"
+    assert chunks[0].document_id == "doc-sdg7"
+    assert chunks[0].content_type == "trusted_metric_fallback"
+    assert "666 million" in chunks[0].content
+    assert "770 million" not in chunks[0].content

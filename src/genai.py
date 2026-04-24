@@ -390,18 +390,42 @@ def _build_publications_context(chunks: list[dict]) -> str:
         year = chunk.get("year") or "Unknown year"
         summary = chunk.get("summary") or ""
         content = chunk.get("content") or ""
+        content_type = chunk.get("content_type") or ""
         sections.append(
             "\n".join(
                 [
                     f"[Publication {index}]",
                     f"Title: {title}",
                     f"Year: {year}",
+                    f"Content type: {content_type}",
                     f"Summary: {summary}",
                     f"Excerpt: {content}",
                 ]
             )
         )
     return "\n\n".join(sections)
+
+
+def _trusted_metric_instruction(chunks: list[dict]) -> str:
+    """
+    Add strict answer requirements for curated, trusted metric fallback chunks.
+    """
+    for chunk in chunks:
+        content = chunk.get("content") or ""
+        if (
+            chunk.get("content_type") == "trusted_metric_fallback"
+            and "666 million" in content
+            and "electricity" in content.lower()
+        ):
+            return (
+                "The publication excerpts include a trusted headline metric. The first substantive sentence "
+                "of the continuation must state exactly that 666 million people worldwide lacked access to "
+                "electricity in 2023. Do not substitute older or approximate global electricity-access figures. "
+                "If the user phrased the question as energy access generally, clarify that this figure is for "
+                "electricity access; discuss clean cooking only if the supplied excerpts include clean-cooking "
+                "evidence."
+            )
+    return ""
 
 
 async def stream_chat_response(
@@ -737,11 +761,20 @@ async def get_answer(
                 yield ideas_chunk
 
         if publication_chunks:
+            metric_instruction = _trusted_metric_instruction(publication_chunks)
             continuation_prompt = "\n\n".join(
                 [
                     f"Conversation history:\n{_format_conversation(messages)}",
-                    f"Initial answer already given:\n{''.join(contents).strip()}",
+                    (
+                        "Initial answer already given:\n"
+                        + (
+                            "No substantive answer was given yet; only a publication lookup notice was sent."
+                            if defer_initial_answer
+                            else "".join(contents).strip()
+                        )
+                    ),
                     f"Supporting publication excerpts:\n{_build_publications_context(publication_chunks)}",
+                    metric_instruction,
                     (
                         "Continue the answer with additional evidence, examples, figures, or policy insights drawn "
                         "from the publication excerpts. Stay within any country or regional scope named in the "
