@@ -36,6 +36,7 @@ from src.entities import (
 from src.kg import v1 as kg_v1
 from src.kg import v2 as kg_v2
 from src.kg.types import GraphV2, GraphV2Parameters
+from src.moonshot import MoonshotCorsMiddleware
 from src.moonshot import get_allowed_origins as get_moonshot_allowed_origins
 from src.moonshot import router as moonshot_router
 from src.security import authenticate
@@ -114,6 +115,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(MoonshotCorsMiddleware)
 app.include_router(moonshot_router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates/")
