@@ -50,6 +50,7 @@ PLACEHOLDER_VALUES = {
 }
 RATE_LIMIT_LOCK = Lock()
 RATE_LIMIT_BUCKETS: dict[tuple[str, str], deque[float]] = {}
+DEFAULT_ALLOWED_ORIGINS = ("https://undp-data.github.io",)
 
 
 @dataclass(frozen=True)
@@ -153,12 +154,10 @@ def get_openai_client() -> AzureOpenAI | OpenAI | None:
 
 def get_allowed_origins() -> list[str]:
     raw_origins = normalize_string(os.getenv("ALLOWED_ORIGINS"))
-    if not raw_origins:
-        return []
-    normalized_origins = []
+    normalized_origins = [origin for origin in DEFAULT_ALLOWED_ORIGINS]
     for origin in raw_origins.split(","):
         normalized = normalize_origin(origin)
-        if normalized:
+        if normalized and normalized not in normalized_origins:
             normalized_origins.append(normalized)
     return normalized_origins
 
