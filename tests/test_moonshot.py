@@ -43,6 +43,22 @@ def test_health_reports_unconfigured_for_placeholder_credentials(monkeypatch) ->
     assert response.json()["configured"] is False
 
 
+def test_health_includes_cors_header_for_allowed_origin(monkeypatch) -> None:
+    monkeypatch.setenv("ALLOWED_ORIGINS", "https://undp-data.github.io")
+    clear_caches()
+
+    response = client.get(
+        "/api/moonshot/health",
+        headers={"Origin": "https://undp-data.github.io"},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] in {
+        "https://undp-data.github.io",
+        "*",
+    }
+
+
 def test_parse_query_sanitizes_filters(monkeypatch) -> None:
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
     clear_caches()
@@ -133,6 +149,26 @@ def test_parse_query_applies_rate_limit(monkeypatch) -> None:
     assert first.status_code == 200
     assert second.status_code == 429
     assert "rate limit exceeded" in response_text(second)
+
+
+def test_parse_query_options_returns_cors_headers(monkeypatch) -> None:
+    monkeypatch.setenv("ALLOWED_ORIGINS", "https://undp-data.github.io")
+    clear_caches()
+
+    response = client.options(
+        "/api/moonshot/parse-query",
+        headers={
+            "Origin": "https://undp-data.github.io",
+            "Access-Control-Request-Method": "POST",
+            "X-Forwarded-For": "203.0.113.7",
+        },
+    )
+
+    assert response.status_code in {200, 204}
+    assert response.headers["access-control-allow-origin"] in {
+        "https://undp-data.github.io",
+        "*",
+    }
 
 
 def test_project_synopsis_short_circuits_for_zero_projects(monkeypatch) -> None:
