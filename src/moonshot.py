@@ -77,6 +77,24 @@ class MoonshotCorsMiddleware(BaseHTTPMiddleware):
         return response
 
 
+class MoonshotCorsMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app: ASGIApp) -> None:
+        super().__init__(app)
+
+    async def dispatch(self, request: Request, call_next):
+        if not request.url.path.startswith("/api/moonshot"):
+            return await call_next(request)
+
+        headers = build_cors_headers(request)
+        if request.method == "OPTIONS" and headers:
+            return Response(status_code=204, headers=headers)
+
+        response = await call_next(request)
+        for key, value in headers.items():
+            response.headers[key] = value
+        return response
+
+
 @dataclass(frozen=True)
 class MoonshotSettings:
     azure_openai_key: str | None
