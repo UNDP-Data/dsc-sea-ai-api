@@ -192,6 +192,31 @@ def build_cors_headers(request: Request) -> dict[str, str]:
     return {}
 
 
+def build_cors_headers(request: Request) -> dict[str, str]:
+    origin = normalize_string(request.headers.get("origin"))
+    allowed_origins = get_allowed_origins()
+
+    if allowed_origins:
+        if origin and origin in allowed_origins:
+            return {
+                "Access-Control-Allow-Origin": origin,
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",
+                "Vary": "Origin",
+            }
+        return {}
+
+    if origin:
+        return {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type,Authorization",
+        }
+
+    return {}
+
+
 @dataclass(frozen=True)
 class MoonshotRateLimitSettings:
     window_seconds: int
