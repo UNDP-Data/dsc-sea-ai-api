@@ -13,6 +13,7 @@ from time import monotonic
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import JSONResponse, Response
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
 
 from .moonshot_models import (
@@ -155,6 +156,31 @@ def get_allowed_origins() -> list[str]:
     if not raw_origins:
         return []
     return [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+
+
+def build_cors_headers(request: Request) -> dict[str, str]:
+    origin = normalize_string(request.headers.get("origin"))
+    allowed_origins = get_allowed_origins()
+
+    if allowed_origins:
+        if origin and origin in allowed_origins:
+            return {
+                "Access-Control-Allow-Origin": origin,
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",
+                "Vary": "Origin",
+            }
+        return {}
+
+    if origin:
+        return {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type,Authorization",
+        }
+
+    return {}
 
 
 @dataclass(frozen=True)
@@ -613,18 +639,24 @@ def generate_project_synopsis(
 
 
 @router.get("/health", response_model=MoonshotHealthResponse)
-def health() -> MoonshotHealthResponse:
+def health(request: Request) -> JSONResponse:
     settings = get_settings()
-    return MoonshotHealthResponse(
+    payload = MoonshotHealthResponse(
         configured=settings.configured,
         provider=settings.provider,
         parseModel=settings.active_parse_model,
         synopsisModel=settings.active_synopsis_model,
     )
+    return JSONResponse(content=payload.model_dump(mode="json"), headers=build_cors_headers(request))
+
+
+@router.options("/health", include_in_schema=False)
+def health_options(request: Request) -> Response:
+    return Response(status_code=204, headers=build_cors_headers(request))
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)
-def parse_query(payload: ParseQueryRequest, request: Request) -> ParseQueryResponse:
+def parse_query(payload: ParseQueryRequest, request: Request) -> JSONResponse:
     try:
         enforce_allowed_request_origin(request)
         enforce_rate_limit(request, "parse")
@@ -658,16 +690,23 @@ def parse_query(payload: ParseQueryRequest, request: Request) -> ParseQueryRespo
             system_prompt=system_prompt,
             user_payload=user_payload,
         )
-        return ParseQueryResponse(
+        payload = ParseQueryResponse(
             filters=sanitize_parsed_filters(parsed.get("filters"), filter_catalog),
             unresolvedTerms=sanitize_unresolved_terms(parsed.get("unresolvedTerms")),
         )
+        return JSONResponse(content=payload.model_dump(mode="json"), headers=build_cors_headers(request))
     except Exception as error:
         raise_provider_http_error(error)
 
 
+@router.options("/parse-query", include_in_schema=False)
+def parse_query_options(request: Request) -> Response:
+    enforce_allowed_request_origin(request)
+    return Response(status_code=204, headers=build_cors_headers(request))
+
+
 @router.post("/project-synopsis", response_model=ProjectSynopsisResponse)
-def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> ProjectSynopsisResponse:
+def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> JSONResponse:
     try:
         enforce_allowed_request_origin(request)
         enforce_rate_limit(request, "synopsis")
@@ -683,8 +722,12 @@ def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> Proje
             raise HTTPException(status_code=400, detail="summaryMetrics and projectContext are required.")
 
         if not project_context["totalProjects"]:
-            return ProjectSynopsisResponse(
+            empty_payload = ProjectSynopsisResponse(
                 synopsis="No matching projects are available for an AI-generated project overview."
+            )
+            return JSONResponse(
+                content=empty_payload.model_dump(mode="json"),
+                headers=build_cors_headers(request),
             )
 
         system_prompt = " ".join(
@@ -710,6 +753,16 @@ def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> Proje
                 "projectContext": project_context,
             },
         )
-        return ProjectSynopsisResponse(synopsis=synopsis)
+        response_payload = ProjectSynopsisResponse(synopsis=synopsis)
+        return JSONResponse(
+            content=response_payload.model_dump(mode="json"),
+            headers=build_cors_headers(request),
+        )
     except Exception as error:
         raise_provider_http_error(error)
+
+
+@router.options("/project-synopsis", include_in_schema=False)
+def project_synopsis_options(request: Request) -> Response:
+    enforce_allowed_request_origin(request)
+    return Response(status_code=204, headers=build_cors_headers(request))
