@@ -15,6 +15,8 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse, Response
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.types import ASGIApp
 
 from .moonshot_models import (
     MoonshotHealthResponse,
@@ -51,6 +53,24 @@ PLACEHOLDER_VALUES = {
 RATE_LIMIT_LOCK = Lock()
 RATE_LIMIT_BUCKETS: dict[tuple[str, str], deque[float]] = {}
 DEFAULT_ALLOWED_ORIGINS = ("https://undp-data.github.io",)
+
+
+class MoonshotCorsMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app: ASGIApp) -> None:
+        super().__init__(app)
+
+    async def dispatch(self, request: Request, call_next):
+        if not request.url.path.startswith("/api/moonshot"):
+            return await call_next(request)
+
+        headers = build_cors_headers(request)
+        if request.method == "OPTIONS" and headers:
+            return Response(status_code=204, headers=headers)
+
+        response = await call_next(request)
+        for key, value in headers.items():
+            response.headers[key] = value
+        return response
 
 
 @dataclass(frozen=True)
@@ -169,31 +189,6 @@ def normalize_origin(value: str | None) -> str:
 
 def build_cors_headers(request: Request) -> dict[str, str]:
     origin = normalize_origin(request.headers.get("origin"))
-    allowed_origins = get_allowed_origins()
-
-    if allowed_origins:
-        if origin and origin in allowed_origins:
-            return {
-                "Access-Control-Allow-Origin": origin,
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",
-                "Vary": "Origin",
-            }
-        return {}
-
-    if origin:
-        return {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type,Authorization",
-        }
-
-    return {}
-
-
-def build_cors_headers(request: Request) -> dict[str, str]:
-    origin = normalize_string(request.headers.get("origin"))
     allowed_origins = get_allowed_origins()
 
     if allowed_origins:
