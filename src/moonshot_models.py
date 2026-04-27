@@ -16,8 +16,8 @@ class MoonshotHealthResponse(BaseModel):
 
 
 class ParseQueryRequest(BaseModel):
-    query: str
-    locale: str = "en"
+    query: str = Field(min_length=1, max_length=500)
+    locale: str = Field(default="en", max_length=32)
     filterCatalog: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -27,8 +27,8 @@ class ParseQueryResponse(BaseModel):
 
 
 class ProjectSynopsisRequest(BaseModel):
-    query: str
-    locale: str = "en"
+    query: str = Field(min_length=1, max_length=500)
+    locale: str = Field(default="en", max_length=32)
     filters: dict[str, str] = Field(default_factory=dict)
     summaryMetrics: dict[str, Any] = Field(default_factory=dict)
     projectContext: dict[str, Any] = Field(default_factory=dict)
