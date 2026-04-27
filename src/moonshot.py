@@ -155,7 +155,42 @@ def get_allowed_origins() -> list[str]:
     raw_origins = normalize_string(os.getenv("ALLOWED_ORIGINS"))
     if not raw_origins:
         return []
-    return [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+    normalized_origins = []
+    for origin in raw_origins.split(","):
+        normalized = normalize_origin(origin)
+        if normalized:
+            normalized_origins.append(normalized)
+    return normalized_origins
+
+
+def normalize_origin(value: str | None) -> str:
+    normalized = normalize_string(value).strip("\"'")
+    return normalized.rstrip("/")
+
+
+def build_cors_headers(request: Request) -> dict[str, str]:
+    origin = normalize_origin(request.headers.get("origin"))
+    allowed_origins = get_allowed_origins()
+
+    if allowed_origins:
+        if origin and origin in allowed_origins:
+            return {
+                "Access-Control-Allow-Origin": origin,
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",
+                "Vary": "Origin",
+            }
+        return {}
+
+    if origin:
+        return {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type,Authorization",
+        }
+
+    return {}
 
 
 def build_cors_headers(request: Request) -> dict[str, str]:
@@ -252,14 +287,14 @@ def is_allowed_request_origin(request: Request) -> bool:
     if not allowed_origins:
         return True
 
-    origin = normalize_string(request.headers.get("origin"))
+    origin = normalize_origin(request.headers.get("origin"))
     if origin and origin in allowed_origins:
         return True
 
-    referer = normalize_string(request.headers.get("referer"))
+    referer = normalize_string(request.headers.get("referer")).strip("\"'")
     if referer:
         for allowed_origin in allowed_origins:
-            prefix = allowed_origin.rstrip("/")
+            prefix = allowed_origin
             if referer == prefix or referer.startswith(f"{prefix}/"):
                 return True
 
