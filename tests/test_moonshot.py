@@ -59,6 +59,22 @@ def test_health_includes_cors_header_for_allowed_origin(monkeypatch) -> None:
     }
 
 
+def test_health_normalizes_allowed_origin_format(monkeypatch) -> None:
+    monkeypatch.setenv("ALLOWED_ORIGINS", "\"https://undp-data.github.io/\"")
+    clear_caches()
+
+    response = client.get(
+        "/api/moonshot/health",
+        headers={"Origin": "https://undp-data.github.io"},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] in {
+        "https://undp-data.github.io",
+        "*",
+    }
+
+
 def test_parse_query_sanitizes_filters(monkeypatch) -> None:
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
     clear_caches()
