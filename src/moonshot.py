@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+import ipaddress
 import json
 import os
+from collections import deque
 from dataclasses import dataclass
 from functools import lru_cache
+from threading import Lock
+from time import monotonic
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
 
 from .moonshot_models import (
@@ -43,6 +47,8 @@ PLACEHOLDER_VALUES = {
     "https://your-resource-name.openai.azure.com/",
     "your_openai_api_key_here",
 }
+RATE_LIMIT_LOCK = Lock()
+RATE_LIMIT_BUCKETS: dict[tuple[str, str], deque[float]] = {}
 
 
 @dataclass(frozen=True)
@@ -151,6 +157,22 @@ def get_allowed_origins() -> list[str]:
     return [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
 
 
+@dataclass(frozen=True)
+class MoonshotRateLimitSettings:
+    window_seconds: int
+    parse_limit: int
+    synopsis_limit: int
+
+
+@lru_cache
+def get_rate_limit_settings() -> MoonshotRateLimitSettings:
+    return MoonshotRateLimitSettings(
+        window_seconds=max(1, int(normalize_string(os.getenv("MOONSHOT_RATE_LIMIT_WINDOW_SECONDS")) or "300")),
+        parse_limit=max(1, int(normalize_string(os.getenv("MOONSHOT_PARSE_RATE_LIMIT")) or "20")),
+        synopsis_limit=max(1, int(normalize_string(os.getenv("MOONSHOT_SYNOPSIS_RATE_LIMIT")) or "8")),
+    )
+
+
 def is_placeholder_config_value(value: str | None) -> bool:
     normalized = normalize_string(value).lower()
     if not normalized:
@@ -178,6 +200,85 @@ def require_openai_client() -> AzureOpenAI | OpenAI:
             ),
         )
     return client
+
+
+def get_client_identifier(request: Request) -> str:
+    forwarded_for = normalize_string(request.headers.get("x-forwarded-for"))
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+    if request.client and request.client.host:
+        return request.client.host
+    return "unknown"
+
+
+def is_loopback_client(identifier: str) -> bool:
+    candidate = identifier.strip().lower()
+    if candidate in {"localhost", "testclient"}:
+        return True
+    try:
+        return ipaddress.ip_address(candidate).is_loopback
+    except ValueError:
+        return False
+
+
+def is_allowed_request_origin(request: Request) -> bool:
+    allowed_origins = get_allowed_origins()
+    if not allowed_origins:
+        return True
+
+    origin = normalize_string(request.headers.get("origin"))
+    if origin and origin in allowed_origins:
+        return True
+
+    referer = normalize_string(request.headers.get("referer"))
+    if referer:
+        for allowed_origin in allowed_origins:
+            prefix = allowed_origin.rstrip("/")
+            if referer == prefix or referer.startswith(f"{prefix}/"):
+                return True
+
+    return is_loopback_client(get_client_identifier(request))
+
+
+def enforce_allowed_request_origin(request: Request) -> None:
+    if not is_allowed_request_origin(request):
+        raise HTTPException(
+            status_code=403,
+            detail="Moonshot API is restricted to configured browser origins.",
+        )
+
+
+def enforce_rate_limit(request: Request, endpoint_name: str) -> None:
+    settings = get_rate_limit_settings()
+    limit = settings.parse_limit if endpoint_name == "parse" else settings.synopsis_limit
+    client_identifier = get_client_identifier(request)
+    bucket_key = (endpoint_name, client_identifier)
+    now = monotonic()
+    cutoff = now - settings.window_seconds
+
+    with RATE_LIMIT_LOCK:
+        bucket = RATE_LIMIT_BUCKETS.setdefault(bucket_key, deque())
+        while bucket and bucket[0] <= cutoff:
+            bucket.popleft()
+
+        if len(bucket) >= limit:
+            raise HTTPException(
+                status_code=429,
+                detail=(
+                    f"Moonshot {endpoint_name} rate limit exceeded. "
+                    f"Please wait before sending more requests."
+                ),
+            )
+
+        bucket.append(now)
+
+
+def clear_runtime_state() -> None:
+    get_settings.cache_clear()
+    get_openai_client.cache_clear()
+    get_rate_limit_settings.cache_clear()
+    with RATE_LIMIT_LOCK:
+        RATE_LIMIT_BUCKETS.clear()
 
 
 def raise_provider_http_error(error: Exception) -> None:
@@ -523,13 +624,15 @@ def health() -> MoonshotHealthResponse:
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)
-def parse_query(request: ParseQueryRequest) -> ParseQueryResponse:
+def parse_query(payload: ParseQueryRequest, request: Request) -> ParseQueryResponse:
     try:
+        enforce_allowed_request_origin(request)
+        enforce_rate_limit(request, "parse")
         client = require_openai_client()
         settings = get_settings()
-        query = require_string(request.query, "query")
-        locale = normalize_string(request.locale) or "en"
-        filter_catalog = sanitize_filter_catalog(request.filterCatalog)
+        query = require_string(payload.query, "query")
+        locale = normalize_string(payload.locale) or "en"
+        filter_catalog = sanitize_filter_catalog(payload.filterCatalog)
         schema = build_parse_query_schema(filter_catalog)
         system_prompt = " ".join(
             [
@@ -564,15 +667,17 @@ def parse_query(request: ParseQueryRequest) -> ParseQueryResponse:
 
 
 @router.post("/project-synopsis", response_model=ProjectSynopsisResponse)
-def project_synopsis(request: ProjectSynopsisRequest) -> ProjectSynopsisResponse:
+def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> ProjectSynopsisResponse:
     try:
+        enforce_allowed_request_origin(request)
+        enforce_rate_limit(request, "synopsis")
         client = require_openai_client()
         settings = get_settings()
-        query = require_string(request.query, "query")
-        locale = normalize_string(request.locale) or "en"
-        filters = sanitize_filters_payload(request.filters)
-        summary_metrics = sanitize_summary_metrics(request.summaryMetrics)
-        project_context = sanitize_project_context(request.projectContext)
+        query = require_string(payload.query, "query")
+        locale = normalize_string(payload.locale) or "en"
+        filters = sanitize_filters_payload(payload.filters)
+        summary_metrics = sanitize_summary_metrics(payload.summaryMetrics)
+        project_context = sanitize_project_context(payload.projectContext)
 
         if not summary_metrics or not project_context:
             raise HTTPException(status_code=400, detail="summaryMetrics and projectContext are required.")
