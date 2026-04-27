@@ -19,6 +19,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 
 from .moonshot_models import (
+    MoonshotDiagnosticsResponse,
     MoonshotHealthResponse,
     ParseQueryRequest,
     ParseQueryResponse,
@@ -53,6 +54,27 @@ PLACEHOLDER_VALUES = {
 RATE_LIMIT_LOCK = Lock()
 RATE_LIMIT_BUCKETS: dict[tuple[str, str], deque[float]] = {}
 DEFAULT_ALLOWED_ORIGINS = ("https://undp-data.github.io",)
+MOONSHOT_CORS_VERSION = "2026-04-27-dedicated-middleware-v2"
+
+
+class MoonshotCorsMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app: ASGIApp) -> None:
+        super().__init__(app)
+
+    async def dispatch(self, request: Request, call_next):
+        if not request.url.path.startswith("/api/moonshot"):
+            return await call_next(request)
+
+        cors_headers = build_cors_headers(request)
+        diagnostic_headers = build_diagnostic_headers(request)
+        if request.method == "OPTIONS" and cors_headers:
+            headers = {**cors_headers, **diagnostic_headers}
+            return Response(status_code=204, headers=headers)
+
+        response = await call_next(request)
+        for key, value in {**cors_headers, **diagnostic_headers}.items():
+            response.headers[key] = value
+        return response
 
 
 class MoonshotCorsMiddleware(BaseHTTPMiddleware):
@@ -210,6 +232,33 @@ def build_cors_headers(request: Request) -> dict[str, str]:
         }
 
     return {}
+
+
+def build_diagnostic_headers(request: Request) -> dict[str, str]:
+    origin = normalize_origin(request.headers.get("origin"))
+    allowed_origins = get_allowed_origins()
+    return {
+        "X-Moonshot-Cors-Version": MOONSHOT_CORS_VERSION,
+        "X-Moonshot-Origin-Match": "true" if origin and origin in allowed_origins else "false",
+    }
+
+
+def build_diagnostics_payload(request: Request) -> MoonshotDiagnosticsResponse:
+    settings = get_settings()
+    received_origin = normalize_string(request.headers.get("origin"))
+    normalized_origin = normalize_origin(received_origin)
+    allowed_origins = get_allowed_origins()
+    return MoonshotDiagnosticsResponse(
+        corsVersion=MOONSHOT_CORS_VERSION,
+        receivedOrigin=received_origin,
+        normalizedOrigin=normalized_origin,
+        allowedOrigins=allowed_origins,
+        originMatch=bool(normalized_origin and normalized_origin in allowed_origins),
+        configured=settings.configured,
+        provider=settings.provider,
+        parseModel=settings.active_parse_model,
+        synopsisModel=settings.active_synopsis_model,
+    )
 
 
 @dataclass(frozen=True)
@@ -676,12 +725,24 @@ def health(request: Request) -> JSONResponse:
         parseModel=settings.active_parse_model,
         synopsisModel=settings.active_synopsis_model,
     )
-    return JSONResponse(content=payload.model_dump(mode="json"), headers=build_cors_headers(request))
+    headers = build_cors_headers(request)
+    headers.update(build_diagnostic_headers(request))
+    return JSONResponse(content=payload.model_dump(mode="json"), headers=headers)
 
 
 @router.options("/health", include_in_schema=False)
 def health_options(request: Request) -> Response:
-    return Response(status_code=204, headers=build_cors_headers(request))
+    headers = build_cors_headers(request)
+    headers.update(build_diagnostic_headers(request))
+    return Response(status_code=204, headers=headers)
+
+
+@router.get("/diagnostics", response_model=MoonshotDiagnosticsResponse)
+def diagnostics(request: Request) -> JSONResponse:
+    headers = build_cors_headers(request)
+    headers.update(build_diagnostic_headers(request))
+    payload = build_diagnostics_payload(request)
+    return JSONResponse(content=payload.model_dump(mode="json"), headers=headers)
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)

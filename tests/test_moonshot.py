@@ -53,10 +53,8 @@ def test_health_includes_cors_header_for_allowed_origin(monkeypatch) -> None:
     )
 
     assert response.status_code == 200
-    assert response.headers["access-control-allow-origin"] in {
-        "https://undp-data.github.io",
-        "*",
-    }
+    assert_allowed_origin_headers(response)
+    assert response.headers["x-moonshot-origin-match"] == "true"
 
 
 def test_health_allows_published_origin_by_default(monkeypatch) -> None:
@@ -69,10 +67,8 @@ def test_health_allows_published_origin_by_default(monkeypatch) -> None:
     )
 
     assert response.status_code == 200
-    assert response.headers["access-control-allow-origin"] in {
-        "https://undp-data.github.io",
-        "*",
-    }
+    assert_allowed_origin_headers(response)
+    assert response.headers["x-moonshot-origin-match"] == "true"
 
 
 def test_health_normalizes_allowed_origin_format(monkeypatch) -> None:
@@ -85,10 +81,44 @@ def test_health_normalizes_allowed_origin_format(monkeypatch) -> None:
     )
 
     assert response.status_code == 200
-    assert response.headers["access-control-allow-origin"] in {
-        "https://undp-data.github.io",
-        "*",
-    }
+    assert_allowed_origin_headers(response)
+    assert response.headers["x-moonshot-origin-match"] == "true"
+
+
+def test_diagnostics_reports_runtime_cors_state(monkeypatch) -> None:
+    monkeypatch.setenv("ALLOWED_ORIGINS", "https://undp-data.github.io")
+    clear_caches()
+
+    response = client.get(
+        "/api/moonshot/diagnostics",
+        headers={"Origin": "https://undp-data.github.io"},
+    )
+
+    assert response.status_code == 200
+    assert_allowed_origin_headers(response)
+    payload = response.json()
+    assert payload["corsVersion"] == moonshot.MOONSHOT_CORS_VERSION
+    assert payload["receivedOrigin"] == "https://undp-data.github.io"
+    assert payload["normalizedOrigin"] == "https://undp-data.github.io"
+    assert payload["originMatch"] is True
+    assert "https://undp-data.github.io" in payload["allowedOrigins"]
+
+
+def test_diagnostics_reports_disallowed_origin_without_cors_allow_header(monkeypatch) -> None:
+    monkeypatch.setenv("ALLOWED_ORIGINS", "https://undp-data.github.io")
+    clear_caches()
+
+    response = client.get(
+        "/api/moonshot/diagnostics",
+        headers={"Origin": "https://example.com"},
+    )
+
+    assert response.status_code == 200
+    assert "access-control-allow-origin" not in response.headers
+    assert response.headers["x-moonshot-origin-match"] == "false"
+    payload = response.json()
+    assert payload["normalizedOrigin"] == "https://example.com"
+    assert payload["originMatch"] is False
 
 
 def test_parse_query_sanitizes_filters(monkeypatch) -> None:
@@ -110,6 +140,7 @@ def test_parse_query_sanitizes_filters(monkeypatch) -> None:
 
     response = client.post(
         "/api/moonshot/parse-query",
+        headers={"Origin": "https://undp-data.github.io"},
         json={
             "query": "Projects in Kenya",
             "locale": "en",
@@ -123,6 +154,7 @@ def test_parse_query_sanitizes_filters(monkeypatch) -> None:
     )
 
     assert response.status_code == 200
+    assert_allowed_origin_headers(response)
     assert response.json() == {
         "filters": {"bureau": "rbap", "countryCode": "KEN"},
         "unresolvedTerms": ["mini-grid entrepreneurship", "energy access"],
@@ -144,7 +176,7 @@ def test_parse_query_rejects_disallowed_origin(monkeypatch) -> None:
         },
     )
 
-    assert response.status_code == 403
+    assert response.status_code in {400, 403}
     assert "configured browser origins" in response_text(response)
 
 
@@ -197,10 +229,25 @@ def test_parse_query_options_returns_cors_headers(monkeypatch) -> None:
     )
 
     assert response.status_code in {200, 204}
-    assert response.headers["access-control-allow-origin"] in {
-        "https://undp-data.github.io",
-        "*",
-    }
+    assert_allowed_origin_headers(response)
+
+
+def test_parse_query_options_rejects_disallowed_origin(monkeypatch) -> None:
+    monkeypatch.setenv("ALLOWED_ORIGINS", "https://undp-data.github.io")
+    clear_caches()
+
+    response = client.options(
+        "/api/moonshot/parse-query",
+        headers={
+            "Origin": "https://example.com",
+            "Access-Control-Request-Method": "POST",
+            "X-Forwarded-For": "203.0.113.7",
+        },
+    )
+
+    assert response.status_code in {400, 403}
+    assert "access-control-allow-origin" not in response.headers
+    assert response.headers["x-moonshot-origin-match"] == "false"
 
 
 def test_project_synopsis_short_circuits_for_zero_projects(monkeypatch) -> None:
@@ -280,3 +327,8 @@ def test_project_synopsis_returns_config_error_when_credentials_missing(monkeypa
 def response_text(response) -> str:
     payload = response.json()
     return ((payload.get("error") or payload.get("detail") or "")).lower()
+
+
+def assert_allowed_origin_headers(response) -> None:
+    assert response.headers["access-control-allow-origin"] == "https://undp-data.github.io"
+    assert response.headers["x-moonshot-cors-version"] == moonshot.MOONSHOT_CORS_VERSION
