@@ -17,6 +17,7 @@ from fastapi import APIRouter, HTTPException, Request
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
 
 from .moonshot_models import (
+    MoonshotDiagnosticsResponse,
     MoonshotHealthResponse,
     ParseQueryRequest,
     ParseQueryResponse,
@@ -50,7 +51,7 @@ PLACEHOLDER_VALUES = {
 }
 RATE_LIMIT_LOCK = Lock()
 RATE_LIMIT_BUCKETS: dict[tuple[str, str], deque[float]] = {}
-
+r
 
 class MoonshotCorsMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: ASGIApp) -> None:
