@@ -17,7 +17,6 @@ import networkx as nx
 import yaml
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -36,8 +35,6 @@ from src.entities import (
 from src.kg import v1 as kg_v1
 from src.kg import v2 as kg_v2
 from src.kg.types import GraphV2, GraphV2Parameters
-from src.moonshot import MoonshotCorsMiddleware
-from src.moonshot import get_allowed_origins as get_moonshot_allowed_origins
 from src.moonshot import router as moonshot_router
 from src.security import authenticate
 
@@ -107,15 +104,6 @@ async def lifespan(_: FastAPI):
 with open("metadata.yaml", "r", encoding="utf-8") as file:
     metadata = yaml.safe_load(file)
 app = FastAPI(**metadata, lifespan=lifespan)
-allowed_origins = get_moonshot_allowed_origins()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins or ["*"],
-    allow_credentials=bool(allowed_origins),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-app.add_middleware(MoonshotCorsMiddleware)
 app.include_router(moonshot_router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates/")
