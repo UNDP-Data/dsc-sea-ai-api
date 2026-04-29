@@ -17,7 +17,6 @@ from fastapi import APIRouter, HTTPException, Request
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
 
 from .moonshot_models import (
-    MoonshotDiagnosticsResponse,
     MoonshotHealthResponse,
     ParseQueryRequest,
     ParseQueryResponse,
@@ -51,24 +50,6 @@ PLACEHOLDER_VALUES = {
 }
 RATE_LIMIT_LOCK = Lock()
 RATE_LIMIT_BUCKETS: dict[tuple[str, str], deque[float]] = {}
-r
-
-class MoonshotCorsMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app: ASGIApp) -> None:
-        super().__init__(app)
-
-    async def dispatch(self, request: Request, call_next):
-        if not request.url.path.startswith("/api/moonshot"):
-            return await call_next(request)
-
-        headers = build_cors_headers(request)
-        if request.method == "OPTIONS" and headers:
-            return Response(status_code=204, headers=headers)
-
-        response = await call_next(request)
-        for key, value in headers.items():
-            response.headers[key] = value
-        return response
 
 
 @dataclass(frozen=True)
