@@ -5,6 +5,7 @@ from __future__ import annotations
 import ipaddress
 import json
 import os
+import re
 from collections import deque
 from dataclasses import dataclass
 from functools import lru_cache
@@ -13,10 +14,7 @@ from time import monotonic
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import JSONResponse, Response
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.types import ASGIApp
 
 from .moonshot_models import (
     MoonshotDiagnosticsResponse,
@@ -53,29 +51,7 @@ PLACEHOLDER_VALUES = {
 }
 RATE_LIMIT_LOCK = Lock()
 RATE_LIMIT_BUCKETS: dict[tuple[str, str], deque[float]] = {}
-DEFAULT_ALLOWED_ORIGINS = ("https://undp-data.github.io",)
-MOONSHOT_CORS_VERSION = "2026-04-27-dedicated-middleware-v2"
-
-
-class MoonshotCorsMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app: ASGIApp) -> None:
-        super().__init__(app)
-
-    async def dispatch(self, request: Request, call_next):
-        if not request.url.path.startswith("/api/moonshot"):
-            return await call_next(request)
-
-        cors_headers = build_cors_headers(request)
-        diagnostic_headers = build_diagnostic_headers(request)
-        if request.method == "OPTIONS" and cors_headers:
-            headers = {**cors_headers, **diagnostic_headers}
-            return Response(status_code=204, headers=headers)
-
-        response = await call_next(request)
-        for key, value in {**cors_headers, **diagnostic_headers}.items():
-            response.headers[key] = value
-        return response
-
+r
 
 class MoonshotCorsMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: ASGIApp) -> None:
@@ -196,7 +172,7 @@ def get_openai_client() -> AzureOpenAI | OpenAI | None:
 
 def get_allowed_origins() -> list[str]:
     raw_origins = normalize_string(os.getenv("ALLOWED_ORIGINS"))
-    normalized_origins = [origin for origin in DEFAULT_ALLOWED_ORIGINS]
+    normalized_origins = []
     for origin in raw_origins.split(","):
         normalized = normalize_origin(origin)
         if normalized and normalized not in normalized_origins:
@@ -207,58 +183,6 @@ def get_allowed_origins() -> list[str]:
 def normalize_origin(value: str | None) -> str:
     normalized = normalize_string(value).strip("\"'")
     return normalized.rstrip("/")
-
-
-def build_cors_headers(request: Request) -> dict[str, str]:
-    origin = normalize_origin(request.headers.get("origin"))
-    allowed_origins = get_allowed_origins()
-
-    if allowed_origins:
-        if origin and origin in allowed_origins:
-            return {
-                "Access-Control-Allow-Origin": origin,
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",
-                "Vary": "Origin",
-            }
-        return {}
-
-    if origin:
-        return {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type,Authorization",
-        }
-
-    return {}
-
-
-def build_diagnostic_headers(request: Request) -> dict[str, str]:
-    origin = normalize_origin(request.headers.get("origin"))
-    allowed_origins = get_allowed_origins()
-    return {
-        "X-Moonshot-Cors-Version": MOONSHOT_CORS_VERSION,
-        "X-Moonshot-Origin-Match": "true" if origin and origin in allowed_origins else "false",
-    }
-
-
-def build_diagnostics_payload(request: Request) -> MoonshotDiagnosticsResponse:
-    settings = get_settings()
-    received_origin = normalize_string(request.headers.get("origin"))
-    normalized_origin = normalize_origin(received_origin)
-    allowed_origins = get_allowed_origins()
-    return MoonshotDiagnosticsResponse(
-        corsVersion=MOONSHOT_CORS_VERSION,
-        receivedOrigin=received_origin,
-        normalizedOrigin=normalized_origin,
-        allowedOrigins=allowed_origins,
-        originMatch=bool(normalized_origin and normalized_origin in allowed_origins),
-        configured=settings.configured,
-        provider=settings.provider,
-        parseModel=settings.active_parse_model,
-        synopsisModel=settings.active_synopsis_model,
-    )
 
 
 @dataclass(frozen=True)
@@ -272,8 +196,8 @@ class MoonshotRateLimitSettings:
 def get_rate_limit_settings() -> MoonshotRateLimitSettings:
     return MoonshotRateLimitSettings(
         window_seconds=max(1, int(normalize_string(os.getenv("MOONSHOT_RATE_LIMIT_WINDOW_SECONDS")) or "300")),
-        parse_limit=max(1, int(normalize_string(os.getenv("MOONSHOT_PARSE_RATE_LIMIT")) or "20")),
-        synopsis_limit=max(1, int(normalize_string(os.getenv("MOONSHOT_SYNOPSIS_RATE_LIMIT")) or "8")),
+        parse_limit=max(1, int(normalize_string(os.getenv("MOONSHOT_PARSE_RATE_LIMIT")) or "60")),
+        synopsis_limit=max(1, int(normalize_string(os.getenv("MOONSHOT_SYNOPSIS_RATE_LIMIT")) or "120")),
     )
 
 
@@ -457,7 +381,7 @@ def sanitize_filter_catalog(filter_catalog: Any) -> dict[str, list[dict[str, Any
                 aliases = option.get("aliases", [])
                 normalized_aliases = []
                 if isinstance(aliases, list):
-                    normalized_aliases = [normalize_string(alias) for alias in aliases if normalize_string(alias)][:8]
+                    normalized_aliases = [normalize_string(alias) for alias in aliases if normalize_string(alias)][:16]
                 if value:
                     options.append(
                         {
@@ -481,6 +405,119 @@ def sanitize_parsed_filters(filters: Any, filter_catalog: dict[str, list[dict[st
         if value and value != "all" and value in allowed_values:
             sanitized[key] = value
     return sanitized
+
+
+def normalize_match_text(value: Any) -> str:
+    text = normalize_string(value).lower()
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def alias_matches_query(query: str, alias: str) -> bool:
+    normalized_query = f" {normalize_match_text(query)} "
+    normalized_alias = normalize_match_text(alias)
+    if not normalized_alias:
+        return False
+    return f" {normalized_alias} " in normalized_query
+
+
+def find_explicit_filter_match(
+    query: str,
+    filter_catalog: dict[str, list[dict[str, Any]]],
+    key: str,
+) -> dict[str, Any] | None:
+    options = filter_catalog.get(key, [])
+    best_option = None
+    best_alias_length = 0
+    for option in options:
+        aliases = option.get("aliases", [])
+        matched_alias_length = max(
+            (
+                len(normalize_match_text(alias))
+                for alias in aliases
+                if alias_matches_query(query, alias)
+            ),
+            default=0,
+        )
+        if matched_alias_length > best_alias_length:
+            best_option = option
+            best_alias_length = matched_alias_length
+    return best_option
+
+
+def apply_deterministic_geography_overrides(
+    query: str,
+    filters: dict[str, str],
+    filter_catalog: dict[str, list[dict[str, Any]]],
+) -> dict[str, str]:
+    result = dict(filters)
+    explicit_bureau = find_explicit_filter_match(query, filter_catalog, "bureau")
+    explicit_country = find_explicit_filter_match(query, filter_catalog, "countryCode")
+
+    if explicit_bureau:
+        result["bureau"] = explicit_bureau["value"]
+        if not explicit_country:
+            result.pop("countryCode", None)
+
+    if explicit_country:
+        result["countryCode"] = explicit_country["value"]
+
+    return result
+
+
+def apply_deterministic_output_overrides(
+    query: str,
+    filters: dict[str, str],
+    filter_catalog: dict[str, list[dict[str, Any]]],
+) -> dict[str, str]:
+    result = dict(filters)
+    explicit_subcategory = find_explicit_filter_match(query, filter_catalog, "subCategory")
+    explicit_category = find_explicit_filter_match(query, filter_catalog, "category")
+
+    if explicit_subcategory:
+        result["subCategory"] = explicit_subcategory["value"]
+        inferred_category = infer_category_for_subcategory(explicit_subcategory["value"], filter_catalog)
+        if inferred_category:
+            result["category"] = inferred_category
+
+    if explicit_category and not explicit_subcategory:
+        result["category"] = explicit_category["value"]
+
+    return result
+
+
+def infer_category_for_subcategory(
+    subcategory: str,
+    filter_catalog: dict[str, list[dict[str, Any]]],
+) -> str | None:
+    label = normalize_match_text(subcategory)
+    category_options = filter_catalog.get("category", [])
+
+    if label.startswith("policy"):
+        return find_option_value(category_options, "Policy")
+    if label in {"clean cooking", "clean electricity", "health", "water", "agriculture", "transport", "energy infrastructure services"}:
+        return find_option_value(category_options, "Energy Access")
+    if label in {"solar", "hydro", "wind", "geothermal", "bioenergy", "efficiency"}:
+        return find_option_value(category_options, "Energy Transition")
+    if label == "productive use":
+        return find_option_value(category_options, "Productive Use")
+    return None
+
+
+def find_option_value(options: list[dict[str, Any]], value: str) -> str | None:
+    for option in options:
+        if option.get("value") == value:
+            return value
+    return None
+
+
+def apply_deterministic_parse_overrides(
+    query: str,
+    filters: dict[str, str],
+    filter_catalog: dict[str, list[dict[str, Any]]],
+) -> dict[str, str]:
+    output_filters = apply_deterministic_output_overrides(query, filters, filter_catalog)
+    return apply_deterministic_geography_overrides(query, output_filters, filter_catalog)
 
 
 def sanitize_unresolved_terms(terms: Any) -> list[str]:
@@ -617,6 +654,89 @@ def sanitize_filters_payload(filters: Any) -> dict[str, str]:
     return sanitized
 
 
+FILTER_LABELS = {
+    "funding": "funding",
+    "genderMarker": "gender marker",
+    "category": "beneficiary category",
+    "subCategory": "beneficiary subcategory",
+    "bureau": "regional bureau",
+    "economy": "economy",
+    "hdiTier": "HDI tier",
+    "specialGrouping": "special grouping",
+    "continentRegion": "continent region",
+    "subRegion": "sub-region",
+    "sahel": "Sahel",
+    "crisis": "crisis",
+    "countryCode": "country",
+}
+
+LANGUAGE_NAMES = {
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "zh": "Chinese",
+    "pt": "Portuguese",
+    "ru": "Russian",
+    "ar": "Arabic",
+}
+
+NO_PROJECT_SYNOPSIS_BY_LOCALE = {
+    "en": "No matching projects are available for an AI-generated project overview.",
+    "es": "No hay proyectos coincidentes disponibles para generar un panorama de proyectos con IA.",
+    "fr": "Aucun projet correspondant n’est disponible pour générer un aperçu des projets avec l’IA.",
+    "zh": "没有匹配的项目可用于生成 AI 项目概览。",
+    "pt": "Não há projetos correspondentes disponíveis para gerar uma visão geral dos projetos com IA.",
+    "ru": "Нет подходящих проектов для создания обзора проектов с помощью ИИ.",
+    "ar": "لا توجد مشاريع مطابقة متاحة لإنشاء نظرة عامة على المشاريع بالذكاء الاصطناعي.",
+}
+
+
+def get_locale_language_name(locale: str) -> str:
+    normalized = normalize_string(locale).lower().split("-")[0]
+    return LANGUAGE_NAMES.get(normalized, "English")
+
+
+def get_no_project_synopsis(locale: str) -> str:
+    normalized = normalize_string(locale).lower().split("-")[0]
+    return NO_PROJECT_SYNOPSIS_BY_LOCALE.get(
+        normalized,
+        NO_PROJECT_SYNOPSIS_BY_LOCALE["en"],
+    )
+
+
+def normalize_filter_value_for_prompt(value: Any) -> str:
+    text = normalize_string(value)
+    if text.lower() == "non-vf":
+        return "non-VF"
+    if text.lower() == "vf":
+        return "VF"
+    if text.lower() in {"true", "false"}:
+        return "yes" if text.lower() == "true" else "no"
+    return text
+
+
+def describe_filter_scope_for_prompt(filters: dict[str, Any]) -> str:
+    active_parts = []
+    for key, label in FILTER_LABELS.items():
+        value = normalize_string(filters.get(key))
+        if not value or value == "all":
+            continue
+        active_parts.append(f"{label}: {normalize_filter_value_for_prompt(value)}")
+
+    if not active_parts:
+        return "all selected filters"
+    if len(active_parts) == 1:
+        return f"the {active_parts[0]} filter"
+    return f"the {', '.join(active_parts)} filters"
+
+
+def has_active_filters(filters: dict[str, Any]) -> bool:
+    return any(
+        normalize_string(filters.get(key)) not in {"", "all"}
+        for key in FILTER_KEYS
+    )
+
+
 def coerce_number(value: Any) -> float:
     try:
         return float(value or 0)
@@ -717,36 +837,18 @@ def generate_project_synopsis(
 
 
 @router.get("/health", response_model=MoonshotHealthResponse)
-def health(request: Request) -> JSONResponse:
+def health() -> MoonshotHealthResponse:
     settings = get_settings()
-    payload = MoonshotHealthResponse(
+    return MoonshotHealthResponse(
         configured=settings.configured,
         provider=settings.provider,
         parseModel=settings.active_parse_model,
         synopsisModel=settings.active_synopsis_model,
     )
-    headers = build_cors_headers(request)
-    headers.update(build_diagnostic_headers(request))
-    return JSONResponse(content=payload.model_dump(mode="json"), headers=headers)
-
-
-@router.options("/health", include_in_schema=False)
-def health_options(request: Request) -> Response:
-    headers = build_cors_headers(request)
-    headers.update(build_diagnostic_headers(request))
-    return Response(status_code=204, headers=headers)
-
-
-@router.get("/diagnostics", response_model=MoonshotDiagnosticsResponse)
-def diagnostics(request: Request) -> JSONResponse:
-    headers = build_cors_headers(request)
-    headers.update(build_diagnostic_headers(request))
-    payload = build_diagnostics_payload(request)
-    return JSONResponse(content=payload.model_dump(mode="json"), headers=headers)
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)
-def parse_query(payload: ParseQueryRequest, request: Request) -> JSONResponse:
+def parse_query(payload: ParseQueryRequest, request: Request) -> ParseQueryResponse:
     try:
         enforce_allowed_request_origin(request)
         enforce_rate_limit(request, "parse")
@@ -762,6 +864,11 @@ def parse_query(payload: ParseQueryRequest, request: Request) -> JSONResponse:
                 "Only map terms that are explicitly present in the user query.",
                 "Do not infer semantic topics, latent intent, project themes, or free-text retrieval terms.",
                 "Use only filter values that exist in the provided filter catalog.",
+                "Prefer the UNDP regional bureau filter for regional language.",
+                "The preferred bureau values are RBA for Africa, RBLAC for Latin America and the Caribbean, RBAS for Arab States, RBEC for Eastern Europe and CIS, and RBAP for Asia-Pacific or Asia.",
+                "Do not map regional terms such as Asia, Asia-Pacific, Africa, Arab States, Latin America, Caribbean, Eastern Europe, or CIS to a countryCode.",
+                "Map explicit beneficiary or output subcategory terms such as clean cooking, clean electricity, productive use, solar, wind, hydro, geothermal, bioenergy, efficiency, health, water, agriculture, transport, and policy subtypes to subCategory.",
+                "When an explicit subCategory is matched, also return its parent category.",
                 'Return "all" for any filter dimension that is not explicitly matched by the query.',
                 "Return unsupported or leftover topical terms in unresolvedTerms.",
                 "If the query mentions a specific country, return the matching countryCode filter.",
@@ -780,23 +887,17 @@ def parse_query(payload: ParseQueryRequest, request: Request) -> JSONResponse:
             system_prompt=system_prompt,
             user_payload=user_payload,
         )
-        payload = ParseQueryResponse(
-            filters=sanitize_parsed_filters(parsed.get("filters"), filter_catalog),
+        sanitized_filters = sanitize_parsed_filters(parsed.get("filters"), filter_catalog)
+        return ParseQueryResponse(
+            filters=apply_deterministic_parse_overrides(query, sanitized_filters, filter_catalog),
             unresolvedTerms=sanitize_unresolved_terms(parsed.get("unresolvedTerms")),
         )
-        return JSONResponse(content=payload.model_dump(mode="json"), headers=build_cors_headers(request))
     except Exception as error:
         raise_provider_http_error(error)
 
 
-@router.options("/parse-query", include_in_schema=False)
-def parse_query_options(request: Request) -> Response:
-    enforce_allowed_request_origin(request)
-    return Response(status_code=204, headers=build_cors_headers(request))
-
-
 @router.post("/project-synopsis", response_model=ProjectSynopsisResponse)
-def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> JSONResponse:
+def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> ProjectSynopsisResponse:
     try:
         enforce_allowed_request_origin(request)
         enforce_rate_limit(request, "synopsis")
@@ -812,23 +913,31 @@ def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> JSONR
             raise HTTPException(status_code=400, detail="summaryMetrics and projectContext are required.")
 
         if not project_context["totalProjects"]:
-            empty_payload = ProjectSynopsisResponse(
-                synopsis="No matching projects are available for an AI-generated project overview."
-            )
-            return JSONResponse(
-                content=empty_payload.model_dump(mode="json"),
-                headers=build_cors_headers(request),
+            return ProjectSynopsisResponse(
+                synopsis=get_no_project_synopsis(locale)
             )
 
+        opening_phrase = (
+            "This subset of the UNDP energy portfolio"
+            if has_active_filters(filters)
+            else "The UNDP energy portfolio"
+        )
+        language_name = get_locale_language_name(locale)
         system_prompt = " ".join(
             [
-                "Write a concise overview of the filtered UNDP energy project set.",
-                "Use only the structured metrics and project context provided.",
+                "Write a project-focused overview of the filtered UNDP energy project set.",
+                f"Write the entire response in {language_name}.",
+                "Keep project titles and supplied country names exactly as provided in projectContext.",
+                f"In {language_name}, start the paragraph with a natural equivalent of: {opening_phrase}",
+                "Continue that opening sentence naturally, then describe the project examples.",
+                "Use only the supplied projectContext top projects and structured metrics.",
                 "Do not invent countries, projects, budgets, beneficiaries, outputs, or causal claims.",
-                "Do not restate the deterministic summary verbatim.",
-                "Focus on project mix, recurring themes, and representative examples from the supplied top projects.",
-                "Do not output bullet points, markdown headings, or a project title list.",
-                "Keep the answer to one short paragraph, about 80 to 140 words.",
+                "Do not repeat the deterministic summary totals such as total project count, country count, total budget, VF/non-VF split, clean electricity total, clean cooking total, productive-use total, or policy-project count.",
+                "Mention two to four specific top project titles exactly as supplied, with their country names and direct beneficiary counts when available.",
+                "Use the project descriptions and primary output categories to summarize what those named projects appear to focus on.",
+                "End with one sentence describing the overall portfolio focus or recurring project themes.",
+                "Do not output markdown headings, bullets, or a separate project title list.",
+                "Keep the answer to one compact paragraph, about 100 to 160 words.",
                 f"User locale: {locale}.",
             ]
         )
@@ -843,16 +952,6 @@ def project_synopsis(payload: ProjectSynopsisRequest, request: Request) -> JSONR
                 "projectContext": project_context,
             },
         )
-        response_payload = ProjectSynopsisResponse(synopsis=synopsis)
-        return JSONResponse(
-            content=response_payload.model_dump(mode="json"),
-            headers=build_cors_headers(request),
-        )
+        return ProjectSynopsisResponse(synopsis=synopsis)
     except Exception as error:
         raise_provider_http_error(error)
-
-
-@router.options("/project-synopsis", include_in_schema=False)
-def project_synopsis_options(request: Request) -> Response:
-    enforce_allowed_request_origin(request)
-    return Response(status_code=204, headers=build_cors_headers(request))
