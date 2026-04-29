@@ -15,19 +15,6 @@ class MoonshotHealthResponse(BaseModel):
     synopsisModel: str | None = None
 
 
-class MoonshotDiagnosticsResponse(BaseModel):
-    ok: bool = True
-    corsVersion: str
-    receivedOrigin: str
-    normalizedOrigin: str
-    allowedOrigins: list[str]
-    originMatch: bool
-    configured: bool
-    provider: str | None = None
-    parseModel: str | None = None
-    synopsisModel: str | None = None
-
-
 class ParseQueryRequest(BaseModel):
     query: str = Field(min_length=1, max_length=500)
     locale: str = Field(default="en", max_length=32)
