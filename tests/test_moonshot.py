@@ -198,6 +198,7 @@ def test_parse_query_applies_semantic_aliases_from_catalog(monkeypatch) -> None:
 
     response = client.post(
         "/api/moonshot/parse-query",
+        headers={"Origin": "https://undp-data.github.io"},
         json={
             "query": "show projects on e-mobility",
             "locale": "en",
@@ -487,3 +488,8 @@ def test_project_synopsis_returns_config_error_when_credentials_missing(monkeypa
 def response_text(response) -> str:
     payload = response.json()
     return ((payload.get("error") or payload.get("detail") or "")).lower()
+
+
+def assert_allowed_origin_headers(response) -> None:
+    assert response.headers["access-control-allow-origin"] == "https://undp-data.github.io"
+    assert response.headers["x-moonshot-cors-version"] == moonshot.MOONSHOT_CORS_VERSION
