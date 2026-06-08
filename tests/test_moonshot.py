@@ -129,6 +129,28 @@ def test_prodoc_download_url_streams_explicit_pdf_as_attachment(monkeypatch) -> 
     assert calls[0]["url"] == source_url
 
 
+def test_prodoc_download_url_uses_ascii_fallback_for_unicode_attachment_filename(monkeypatch) -> None:
+    class FakeGetResponse:
+        status_code = 200
+        content = b"%PDF unicode"
+
+    monkeypatch.setattr(moonshot.httpx, "get", lambda url, *, timeout: FakeGetResponse())
+
+    source_url = (
+        "https://sehseadata.blob.core.windows.net/images/Prodocs/Non-VF/"
+        "91204%20-%20Apoyo_a_la_Modernizaci%C3%B3n_de_La_Gesti%C3%B3n_Ambiental.pdf"
+    )
+    response = client.get(
+        "/api/moonshot/prodoc/download-url",
+        params={"url": source_url},
+    )
+
+    assert response.status_code == 200
+    content_disposition = response.headers["content-disposition"]
+    assert 'filename="91204 - Apoyo_a_la_Modernizacion_de_La_Gestion_Ambiental.pdf"' in content_disposition
+    assert "filename*=UTF-8''91204%20-%20Apoyo_a_la_Modernizaci%C3%B3n_de_La_Gesti%C3%B3n_Ambiental.pdf" in content_disposition
+
+
 def test_prodoc_download_url_rejects_non_prodoc_url() -> None:
     response = client.get(
         "/api/moonshot/prodoc/download-url",
