@@ -413,16 +413,14 @@
                         })
                 );
 
-            function escapeHtml(value) {
-                return String(value).replace(/[&<>]/g, (ch) => (
-                    ch === "&" ? "&amp;" : (ch === "<" ? "&lt;" : "&gt;")
-                ));
-            }
-
             function setTooltipContent(node) {
-                const title = escapeHtml(node.name || "Unknown node");
-                const description = escapeHtml(node.description || "No description available.");
-                tooltip.innerHTML = `<span class="title">${title}</span><span>${description}</span>`;
+                tooltip.replaceChildren();
+                const title = document.createElement("span");
+                title.className = "title";
+                title.textContent = node.name || "Unknown node";
+                const description = document.createElement("span");
+                description.textContent = node.description || "No description available.";
+                tooltip.append(title, description);
             }
 
             function moveTooltip(event) {
