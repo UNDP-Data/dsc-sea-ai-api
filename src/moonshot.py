@@ -17,6 +17,7 @@ from urllib.parse import quote
 
 import httpx
 from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import Response
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
 
 from .moonshot_models import (
@@ -941,6 +942,41 @@ def resolve_prodoc_blob(project_id: str, vertical_funded: bool, title: str = "")
     )
 
 
+def get_prodoc_download_filename(blob_name: str, project_id: str) -> str:
+    filename = blob_name.rsplit("/", 1)[-1] if blob_name else f"{project_id}.pdf"
+    return filename if filename.lower().endswith(".pdf") else f"{filename}.pdf"
+
+
+def download_prodoc_blob(project_id: str, vertical_funded: bool, title: str = "") -> Response:
+    resolved = resolve_prodoc_blob(project_id, vertical_funded, title)
+    if not resolved.url:
+        raise HTTPException(status_code=404, detail="No matching Prodoc PDF was found for this project.")
+
+    try:
+        response = httpx.get(resolved.url, timeout=60)
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=502, detail=f"Azure Blob download request failed: {exc}") from exc
+
+    if response.status_code >= 400:
+        raise HTTPException(
+            status_code=502,
+            detail=f"Azure Blob download failed for {resolved.blobName!r} with status {response.status_code}.",
+        )
+
+    filename = get_prodoc_download_filename(resolved.blobName, project_id)
+    return Response(
+        content=response.content,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": (
+                f'attachment; filename="{filename}"; '
+                f"filename*=UTF-8''{quote(filename)}"
+            ),
+            "X-Moonshot-Prodoc-Blob": resolved.blobName,
+        },
+    )
+
+
 @router.get("/health", response_model=MoonshotHealthResponse)
 def health() -> MoonshotHealthResponse:
     settings = get_settings()
@@ -956,6 +992,17 @@ def health() -> MoonshotHealthResponse:
 def prodoc(payload: ProdocResolveRequest, request: Request) -> ProdocResolveResponse:
     enforce_allowed_request_origin(request)
     return resolve_prodoc_blob(payload.projectId, payload.verticalFunded, payload.title)
+
+
+@router.get("/prodoc/download")
+def prodoc_download(
+    projectId: str,
+    verticalFunded: bool,
+    request: Request,
+    title: str = "",
+) -> Response:
+    enforce_allowed_request_origin(request)
+    return download_prodoc_blob(projectId, verticalFunded, title)
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)
