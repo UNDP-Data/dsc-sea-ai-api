@@ -8,6 +8,7 @@ import asyncio
 import csv
 import sys
 from pathlib import Path
+from inspect import isawaitable
 
 from dotenv import load_dotenv
 
@@ -81,7 +82,9 @@ async def _run(output: Path) -> int:
     finally:
         close = getattr(connection, "close", None)
         if close is not None:
-            await close()
+            result = close()
+            if isawaitable(result):
+                await result
 
 
 def main() -> int:
