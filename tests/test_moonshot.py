@@ -43,6 +43,64 @@ def test_health_reports_unconfigured_for_placeholder_credentials(monkeypatch) ->
     assert response.json()["configured"] is False
 
 
+def test_prodoc_resolves_first_matching_blob(monkeypatch) -> None:
+    class FakeResponse:
+        status_code = 200
+        text = """
+        <EnumerationResults>
+          <Blobs>
+            <Blob><Name>Prodocs/Non-VF/117913 - Project_Name.pdf</Name></Blob>
+            <Blob><Name>Prodocs/Non-VF/117913 - Project_Name (2).pdf</Name></Blob>
+            <Blob><Name>Prodocs/VF/117913 - Wrong_Folder.pdf</Name></Blob>
+          </Blobs>
+        </EnumerationResults>
+        """
+
+    calls = []
+
+    def fake_get(url, *, params, timeout):
+        calls.append({"url": url, "params": params, "timeout": timeout})
+        return FakeResponse()
+
+    monkeypatch.setattr(moonshot.httpx, "get", fake_get)
+
+    response = client.post(
+        "/api/moonshot/prodoc",
+        json={
+            "projectId": "117913",
+            "title": "Project Name",
+            "verticalFunded": False,
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "url": "https://sehseadata.blob.core.windows.net/images/Prodocs/Non-VF/117913%20-%20Project_Name.pdf",
+        "blobName": "Prodocs/Non-VF/117913 - Project_Name.pdf",
+        "matches": [
+            "Prodocs/Non-VF/117913 - Project_Name.pdf",
+            "Prodocs/Non-VF/117913 - Project_Name (2).pdf",
+        ],
+    }
+    assert calls[0]["params"]["prefix"] == "Prodocs/Non-VF/117913 - "
+
+
+def test_prodoc_rejects_unsupported_project_id() -> None:
+    response = client.post(
+        "/api/moonshot/prodoc",
+        json={
+            "projectId": "../117913",
+            "title": "Project Name",
+            "verticalFunded": False,
+        },
+    )
+
+    assert response.status_code == 400
+    response_body = response.json()
+    message = response_body.get("error") or response_body.get("detail") or ""
+    assert "projectId contains unsupported characters" in message
+
+
 def test_allowed_origins_are_normalized(monkeypatch) -> None:
     monkeypatch.setenv("ALLOWED_ORIGINS", "\"https://undp-data.github.io/\"")
     clear_caches()
