@@ -73,6 +73,34 @@ def test_prodoc_resolves_direct_title_candidate(monkeypatch) -> None:
     assert calls[0]["url"].endswith("/Prodocs/VF/5669%20-%20IMPRESS.pdf")
 
 
+def test_prodoc_download_streams_pdf_as_attachment(monkeypatch) -> None:
+    class FakeHeadResponse:
+        status_code = 200
+
+    class FakeGetResponse:
+        status_code = 200
+        content = b"%PDF test"
+
+    monkeypatch.setattr(moonshot.httpx, "head", lambda *_args, **_kwargs: FakeHeadResponse())
+    monkeypatch.setattr(moonshot.httpx, "get", lambda *_args, **_kwargs: FakeGetResponse())
+
+    response = client.get(
+        "/api/moonshot/prodoc/download",
+        params={
+            "projectId": "5669",
+            "title": "IMPRESS",
+            "verticalFunded": "true",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.content == b"%PDF test"
+    assert response.headers["content-type"] == "application/pdf"
+    assert "attachment" in response.headers["content-disposition"]
+    assert "5669 - IMPRESS.pdf" in response.headers["content-disposition"]
+    assert response.headers["x-moonshot-prodoc-blob"] == "Prodocs/VF/5669 - IMPRESS.pdf"
+
+
 def test_prodoc_resolves_first_matching_blob_from_listing_fallback(monkeypatch) -> None:
     class FakeHeadResponse:
         status_code = 404
