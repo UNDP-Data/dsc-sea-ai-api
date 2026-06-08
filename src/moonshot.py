@@ -6,6 +6,7 @@ import ipaddress
 import json
 import os
 import re
+import unicodedata
 import xml.etree.ElementTree as ET
 from collections import deque
 from dataclasses import dataclass
@@ -953,6 +954,22 @@ def get_project_document_filename_from_url(source_url: str) -> str:
     return filename if filename.lower().endswith(".pdf") else f"{filename}.pdf"
 
 
+def get_ascii_attachment_filename(filename: str) -> str:
+    ascii_filename = unicodedata.normalize("NFKD", filename).encode("ascii", "ignore").decode("ascii")
+    ascii_filename = re.sub(r'[^A-Za-z0-9._ -]+', "_", ascii_filename).strip()
+    if not ascii_filename:
+        ascii_filename = "project-document.pdf"
+    return ascii_filename if ascii_filename.lower().endswith(".pdf") else f"{ascii_filename}.pdf"
+
+
+def build_attachment_content_disposition(filename: str) -> str:
+    ascii_filename = get_ascii_attachment_filename(filename).replace("\\", "_").replace('"', "")
+    return (
+        f'attachment; filename="{ascii_filename}"; '
+        f"filename*=UTF-8''{quote(filename, safe='')}"
+    )
+
+
 def validate_project_document_url(source_url: str) -> str:
     normalized_url = normalize_string(source_url)
     allowed_prefix = f"{PRODOC_CONTAINER_URL}/Prodocs/"
@@ -979,10 +996,7 @@ def download_project_document_url(source_url: str) -> Response:
         content=response.content,
         media_type="application/pdf",
         headers={
-            "Content-Disposition": (
-                f'attachment; filename="{filename}"; '
-                f"filename*=UTF-8''{quote(filename)}"
-            ),
+            "Content-Disposition": build_attachment_content_disposition(filename),
             "X-Moonshot-Prodoc-Url": document_url,
         },
     )
@@ -1009,10 +1023,7 @@ def download_prodoc_blob(project_id: str, vertical_funded: bool, title: str = ""
         content=response.content,
         media_type="application/pdf",
         headers={
-            "Content-Disposition": (
-                f'attachment; filename="{filename}"; '
-                f"filename*=UTF-8''{quote(filename)}"
-            ),
+            "Content-Disposition": build_attachment_content_disposition(filename),
             "X-Moonshot-Prodoc-Blob": resolved.blobName,
         },
     )
