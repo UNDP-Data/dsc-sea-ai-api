@@ -6,13 +6,16 @@ import ipaddress
 import json
 import os
 import re
+import xml.etree.ElementTree as ET
 from collections import deque
 from dataclasses import dataclass
 from functools import lru_cache
 from threading import Lock
 from time import monotonic
 from typing import Any
+from urllib.parse import quote
 
+import httpx
 from fastapi import APIRouter, HTTPException, Request
 from openai import APIError, APIStatusError, AzureOpenAI, OpenAI
 
@@ -20,6 +23,8 @@ from .moonshot_models import (
     MoonshotHealthResponse,
     ParseQueryRequest,
     ParseQueryResponse,
+    ProdocResolveRequest,
+    ProdocResolveResponse,
     ProjectSynopsisRequest,
     ProjectSynopsisResponse,
 )
@@ -42,6 +47,7 @@ FILTER_KEYS = (
     "countryCode",
 )
 MAX_DESCRIPTION_LENGTH = 500
+PRODOC_CONTAINER_URL = "https://sehseadata.blob.core.windows.net/images"
 PLACEHOLDER_VALUES = {
     "your_azure_openai_key_here",
     "your-resource-name.openai.azure.com",
@@ -817,6 +823,83 @@ def generate_project_synopsis(
     return synopsis or "No synopsis was generated."
 
 
+def get_prodoc_folder(vertical_funded: bool) -> str:
+    return "VF" if vertical_funded else "Non-VF"
+
+
+def encode_blob_path(blob_path: str) -> str:
+    return "/".join(quote(segment, safe="") for segment in blob_path.split("/"))
+
+
+def parse_blob_names(xml: str) -> list[str]:
+    try:
+        document = ET.fromstring(xml)
+    except ET.ParseError as exc:
+        raise HTTPException(status_code=502, detail=f"Azure Blob listing returned invalid XML: {exc}") from exc
+
+    blob_names: list[str] = []
+    for name_node in document.iter():
+        if name_node.tag.split("}")[-1] == "Name" and name_node.text:
+            blob_names.append(name_node.text)
+    return blob_names
+
+
+def sort_prodoc_blob_names(blob_names: list[str]) -> list[str]:
+    def sort_key(blob_name: str) -> tuple[int, str]:
+        has_duplicate_suffix = bool(re.search(r"\(\d+\)\.pdf$", blob_name, re.IGNORECASE))
+        return (1 if has_duplicate_suffix else 0, blob_name.lower())
+
+    return sorted(blob_names, key=sort_key)
+
+
+def resolve_prodoc_blob(project_id: str, vertical_funded: bool) -> ProdocResolveResponse:
+    normalized_project_id = normalize_string(project_id)
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", normalized_project_id):
+        raise HTTPException(status_code=400, detail="projectId contains unsupported characters.")
+
+    folder = get_prodoc_folder(vertical_funded)
+    prefix = f"Prodocs/{folder}/{normalized_project_id} - "
+
+    try:
+        response = httpx.get(
+            PRODOC_CONTAINER_URL,
+            params={
+                "restype": "container",
+                "comp": "list",
+                "prefix": prefix,
+            },
+            timeout=15,
+        )
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=502, detail=f"Azure Blob listing request failed: {exc}") from exc
+
+    if response.status_code >= 400:
+        raise HTTPException(
+            status_code=502,
+            detail=(
+                "Azure Blob listing failed for the Prodoc prefix "
+                f"{prefix!r} with status {response.status_code}."
+            ),
+        )
+
+    matches = sort_prodoc_blob_names([
+        blob_name
+        for blob_name in parse_blob_names(response.text)
+        if blob_name.startswith(prefix) and blob_name.lower().endswith(".pdf")
+    ])
+    selected_blob_name = matches[0] if matches else ""
+    selected_url = (
+        f"{PRODOC_CONTAINER_URL}/{encode_blob_path(selected_blob_name)}"
+        if selected_blob_name
+        else ""
+    )
+    return ProdocResolveResponse(
+        url=selected_url,
+        blobName=selected_blob_name,
+        matches=matches,
+    )
+
+
 @router.get("/health", response_model=MoonshotHealthResponse)
 def health() -> MoonshotHealthResponse:
     settings = get_settings()
@@ -826,6 +909,12 @@ def health() -> MoonshotHealthResponse:
         parseModel=settings.active_parse_model,
         synopsisModel=settings.active_synopsis_model,
     )
+
+
+@router.post("/prodoc", response_model=ProdocResolveResponse)
+def prodoc(payload: ProdocResolveRequest, request: Request) -> ProdocResolveResponse:
+    enforce_allowed_request_origin(request)
+    return resolve_prodoc_blob(payload.projectId, payload.verticalFunded)
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)
