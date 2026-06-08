@@ -43,7 +43,40 @@ def test_health_reports_unconfigured_for_placeholder_credentials(monkeypatch) ->
     assert response.json()["configured"] is False
 
 
-def test_prodoc_resolves_first_matching_blob(monkeypatch) -> None:
+def test_prodoc_resolves_direct_title_candidate(monkeypatch) -> None:
+    class FakeHeadResponse:
+        status_code = 200
+
+    calls = []
+
+    def fake_head(url, *, timeout):
+        calls.append({"url": url, "timeout": timeout})
+        return FakeHeadResponse()
+
+    monkeypatch.setattr(moonshot.httpx, "head", fake_head)
+
+    response = client.post(
+        "/api/moonshot/prodoc",
+        json={
+            "projectId": "5669",
+            "title": "IMPRESS",
+            "verticalFunded": True,
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "url": "https://sehseadata.blob.core.windows.net/images/Prodocs/VF/5669%20-%20IMPRESS.pdf",
+        "blobName": "Prodocs/VF/5669 - IMPRESS.pdf",
+        "matches": ["Prodocs/VF/5669 - IMPRESS.pdf"],
+    }
+    assert calls[0]["url"].endswith("/Prodocs/VF/5669%20-%20IMPRESS.pdf")
+
+
+def test_prodoc_resolves_first_matching_blob_from_listing_fallback(monkeypatch) -> None:
+    class FakeHeadResponse:
+        status_code = 404
+
     class FakeResponse:
         status_code = 200
         text = """
@@ -57,11 +90,17 @@ def test_prodoc_resolves_first_matching_blob(monkeypatch) -> None:
         """
 
     calls = []
+    head_calls = []
+
+    def fake_head(url, *, timeout):
+        head_calls.append({"url": url, "timeout": timeout})
+        return FakeHeadResponse()
 
     def fake_get(url, *, params, timeout):
         calls.append({"url": url, "params": params, "timeout": timeout})
         return FakeResponse()
 
+    monkeypatch.setattr(moonshot.httpx, "head", fake_head)
     monkeypatch.setattr(moonshot.httpx, "get", fake_get)
 
     response = client.post(
@@ -82,6 +121,7 @@ def test_prodoc_resolves_first_matching_blob(monkeypatch) -> None:
             "Prodocs/Non-VF/117913 - Project_Name (2).pdf",
         ],
     }
+    assert head_calls[0]["url"].endswith("/Prodocs/Non-VF/117913%20-%20Project_Name.pdf")
     assert calls[0]["params"]["prefix"] == "Prodocs/Non-VF/117913 - "
 
 
