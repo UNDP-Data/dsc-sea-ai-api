@@ -3,7 +3,10 @@ Entities (models) and related routines to define the data layer.
 """
 
 from enum import Enum, auto
+from html import escape
+import re
 from typing import Literal
+from urllib.parse import urlparse
 
 import networkx as nx
 from lancedb.pydantic import LanceModel
@@ -26,6 +29,45 @@ __all__ = [
     "Message",
     "AssistantResponse",
 ]
+
+MARKDOWN_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]*)\)")
+
+
+def _html_encode_text(value: str | None) -> str:
+    """
+    Encode model-controlled text for safe insertion into HTML clients.
+    """
+    neutralized = MARKDOWN_IMAGE_RE.sub(
+        lambda match: f"[image omitted: {(match.group(1) or '').strip()}]",
+        value or "",
+    )
+    return escape(neutralized, quote=True)
+
+
+def _safe_href(value: str | None) -> str:
+    """
+    Restrict streamed links to ordinary web URLs.
+    """
+    url = (value or "").strip()
+    if not url:
+        return ""
+    parsed = urlparse(url)
+    if parsed.scheme not in {"http", "https"}:
+        return ""
+    return url
+
+
+def _html_encode_json_strings(value):
+    if isinstance(value, str):
+        return _html_encode_text(value)
+    if isinstance(value, list):
+        return [_html_encode_json_strings(item) for item in value]
+    if isinstance(value, dict):
+        return {
+            key: _html_encode_json_strings(item)
+            for key, item in value.items()
+        }
+    return value
 
 
 class SearchMethod(Enum):
@@ -271,11 +313,11 @@ class Document(LanceModel):
         """
         year = self.year if isinstance(self.year, int) and self.year > 0 else None
         return {
-            "title": self.title or "",
+            "title": _html_encode_text(self.title),
             "year": year,
-            "language": self.language or "",
-            "url": self.url or "",
-            "summary": self.summary or "",
+            "language": _html_encode_text(self.language),
+            "url": _safe_href(self.url),
+            "summary": _html_encode_text(self.summary),
         }
 
 
@@ -424,6 +466,16 @@ class AssistantResponse(Message):
     )
     graph: Graph | GraphV2 | None = Field(default=None)
 
+    @field_serializer("content")
+    def _serialise_content(self, content: str) -> str:
+        return _html_encode_text(content)
+
+    @field_serializer("ideas")
+    def _serialise_ideas(self, ideas: list[str] | None) -> list[str] | None:
+        if ideas is None:
+            return None
+        return [_html_encode_text(idea) for idea in ideas]
+
     @field_serializer("documents")
     def _serialise_documents(
         self, documents: list[Document] | None
@@ -431,6 +483,12 @@ class AssistantResponse(Message):
         if documents is None:
             return None
         return [document.to_stream_payload() for document in documents]
+
+    @field_serializer("graph")
+    def _serialise_graph(self, graph: Graph | GraphV2 | None):
+        if graph is None:
+            return None
+        return _html_encode_json_strings(graph.model_dump())
 
     def clear(self) -> None:
         """
