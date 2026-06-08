@@ -852,13 +852,58 @@ def sort_prodoc_blob_names(blob_names: list[str]) -> list[str]:
     return sorted(blob_names, key=sort_key)
 
 
-def resolve_prodoc_blob(project_id: str, vertical_funded: bool) -> ProdocResolveResponse:
+def normalize_prodoc_title(title: str) -> str:
+    return re.sub(r"\s+", "_", normalize_string(title))
+
+
+def build_prodoc_candidate_blob_names(project_id: str, vertical_funded: bool, title: str) -> list[str]:
+    normalized_title = normalize_prodoc_title(title)
+    if not normalized_title:
+        return []
+
+    folder = get_prodoc_folder(vertical_funded)
+    base_name = f"Prodocs/{folder}/{project_id} - {normalized_title}"
+    return [
+        f"{base_name}.pdf",
+        *[f"{base_name} ({index}).pdf" for index in range(2, 21)],
+    ]
+
+
+def get_blob_url(blob_name: str) -> str:
+    return f"{PRODOC_CONTAINER_URL}/{encode_blob_path(blob_name)}"
+
+
+def resolve_prodoc_direct_candidate(blob_names: list[str]) -> ProdocResolveResponse | None:
+    for blob_name in blob_names:
+        try:
+            response = httpx.head(get_blob_url(blob_name), timeout=15)
+        except httpx.HTTPError:
+            continue
+
+        if response.status_code == 200:
+            return ProdocResolveResponse(
+                url=get_blob_url(blob_name),
+                blobName=blob_name,
+                matches=[blob_name],
+            )
+    return None
+
+
+def resolve_prodoc_blob(project_id: str, vertical_funded: bool, title: str = "") -> ProdocResolveResponse:
     normalized_project_id = normalize_string(project_id)
     if not re.fullmatch(r"[A-Za-z0-9_-]+", normalized_project_id):
         raise HTTPException(status_code=400, detail="projectId contains unsupported characters.")
 
     folder = get_prodoc_folder(vertical_funded)
     prefix = f"Prodocs/{folder}/{normalized_project_id} - "
+    direct_candidate_blob_names = build_prodoc_candidate_blob_names(
+        normalized_project_id,
+        vertical_funded,
+        title,
+    )
+    direct_match = resolve_prodoc_direct_candidate(direct_candidate_blob_names)
+    if direct_match:
+        return direct_match
 
     try:
         response = httpx.get(
@@ -888,11 +933,7 @@ def resolve_prodoc_blob(project_id: str, vertical_funded: bool) -> ProdocResolve
         if blob_name.startswith(prefix) and blob_name.lower().endswith(".pdf")
     ])
     selected_blob_name = matches[0] if matches else ""
-    selected_url = (
-        f"{PRODOC_CONTAINER_URL}/{encode_blob_path(selected_blob_name)}"
-        if selected_blob_name
-        else ""
-    )
+    selected_url = get_blob_url(selected_blob_name) if selected_blob_name else ""
     return ProdocResolveResponse(
         url=selected_url,
         blobName=selected_blob_name,
@@ -914,7 +955,7 @@ def health() -> MoonshotHealthResponse:
 @router.post("/prodoc", response_model=ProdocResolveResponse)
 def prodoc(payload: ProdocResolveRequest, request: Request) -> ProdocResolveResponse:
     enforce_allowed_request_origin(request)
-    return resolve_prodoc_blob(payload.projectId, payload.verticalFunded)
+    return resolve_prodoc_blob(payload.projectId, payload.verticalFunded, payload.title)
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)
