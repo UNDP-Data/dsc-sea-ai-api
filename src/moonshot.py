@@ -13,7 +13,7 @@ from functools import lru_cache
 from threading import Lock
 from time import monotonic
 from typing import Any
-from urllib.parse import quote
+from urllib.parse import quote, unquote, urlparse
 
 import httpx
 from fastapi import APIRouter, HTTPException, Request
@@ -947,6 +947,47 @@ def get_prodoc_download_filename(blob_name: str, project_id: str) -> str:
     return filename if filename.lower().endswith(".pdf") else f"{filename}.pdf"
 
 
+def get_project_document_filename_from_url(source_url: str) -> str:
+    path = unquote(urlparse(source_url).path)
+    filename = path.rsplit("/", 1)[-1] if path else "project-document.pdf"
+    return filename if filename.lower().endswith(".pdf") else f"{filename}.pdf"
+
+
+def validate_project_document_url(source_url: str) -> str:
+    normalized_url = normalize_string(source_url)
+    allowed_prefix = f"{PRODOC_CONTAINER_URL}/Prodocs/"
+    if not normalized_url.startswith(allowed_prefix) or not normalized_url.lower().endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Project document URL is not an allowed Prodoc PDF URL.")
+    return normalized_url
+
+
+def download_project_document_url(source_url: str) -> Response:
+    document_url = validate_project_document_url(source_url)
+    try:
+        response = httpx.get(document_url, timeout=60)
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=502, detail=f"Azure Blob download request failed: {exc}") from exc
+
+    if response.status_code >= 400:
+        raise HTTPException(
+            status_code=502,
+            detail=f"Azure Blob download failed for the supplied project document URL with status {response.status_code}.",
+        )
+
+    filename = get_project_document_filename_from_url(document_url)
+    return Response(
+        content=response.content,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": (
+                f'attachment; filename="{filename}"; '
+                f"filename*=UTF-8''{quote(filename)}"
+            ),
+            "X-Moonshot-Prodoc-Url": document_url,
+        },
+    )
+
+
 def download_prodoc_blob(project_id: str, vertical_funded: bool, title: str = "") -> Response:
     resolved = resolve_prodoc_blob(project_id, vertical_funded, title)
     if not resolved.url:
@@ -1003,6 +1044,12 @@ def prodoc_download(
 ) -> Response:
     enforce_allowed_request_origin(request)
     return download_prodoc_blob(projectId, verticalFunded, title)
+
+
+@router.get("/prodoc/download-url")
+def prodoc_download_url(url: str, request: Request) -> Response:
+    enforce_allowed_request_origin(request)
+    return download_project_document_url(url)
 
 
 @router.post("/parse-query", response_model=ParseQueryResponse)
