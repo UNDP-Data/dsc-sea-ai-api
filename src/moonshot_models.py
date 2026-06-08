@@ -36,3 +36,15 @@ class ProjectSynopsisRequest(BaseModel):
 
 class ProjectSynopsisResponse(BaseModel):
     synopsis: str
+
+
+class ProdocResolveRequest(BaseModel):
+    projectId: str = Field(min_length=1, max_length=64)
+    title: str = Field(default="", max_length=500)
+    verticalFunded: bool
+
+
+class ProdocResolveResponse(BaseModel):
+    url: str = ""
+    blobName: str = ""
+    matches: list[str] = Field(default_factory=list)
