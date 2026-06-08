@@ -101,6 +101,46 @@ def test_prodoc_download_streams_pdf_as_attachment(monkeypatch) -> None:
     assert response.headers["x-moonshot-prodoc-blob"] == "Prodocs/VF/5669 - IMPRESS.pdf"
 
 
+def test_prodoc_download_url_streams_explicit_pdf_as_attachment(monkeypatch) -> None:
+    class FakeGetResponse:
+        status_code = 200
+        content = b"%PDF explicit"
+
+    calls = []
+
+    def fake_get(url, *, timeout):
+        calls.append({"url": url, "timeout": timeout})
+        return FakeGetResponse()
+
+    monkeypatch.setattr(moonshot.httpx, "get", fake_get)
+
+    source_url = "https://sehseadata.blob.core.windows.net/images/Prodocs/VF/5669%20-%20IMPRESS.pdf"
+    response = client.get(
+        "/api/moonshot/prodoc/download-url",
+        params={"url": source_url},
+    )
+
+    assert response.status_code == 200
+    assert response.content == b"%PDF explicit"
+    assert response.headers["content-type"] == "application/pdf"
+    assert "attachment" in response.headers["content-disposition"]
+    assert "5669 - IMPRESS.pdf" in response.headers["content-disposition"]
+    assert response.headers["x-moonshot-prodoc-url"] == source_url
+    assert calls[0]["url"] == source_url
+
+
+def test_prodoc_download_url_rejects_non_prodoc_url() -> None:
+    response = client.get(
+        "/api/moonshot/prodoc/download-url",
+        params={"url": "https://example.com/file.pdf"},
+    )
+
+    assert response.status_code == 400
+    response_body = response.json()
+    message = response_body.get("error") or response_body.get("detail") or ""
+    assert "not an allowed Prodoc PDF URL" in message
+
+
 def test_prodoc_resolves_first_matching_blob_from_listing_fallback(monkeypatch) -> None:
     class FakeHeadResponse:
         status_code = 404
