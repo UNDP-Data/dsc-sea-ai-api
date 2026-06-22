@@ -63,7 +63,6 @@ This repo includes a buildless static site for GitHub Pages:
 index.html
 assets/site.css
 assets/site.js
-.github/workflows/pages.yml
 .nojekyll
 ```
 
@@ -73,8 +72,15 @@ dashboard for the assistant kit. It does not embed API keys or call the
 authenticated chat API directly. Live assistant chat still requires the backend
 or a server-side proxy.
 
-To publish it, push to `main` and configure the repository's Pages source to
-GitHub Actions.
+To publish it, configure GitHub Pages as:
+
+```text
+Source: Deploy from a branch
+Branch: main
+Folder: / (root)
+```
+
+Then push `main`. The site is served directly from the repository root.
 
 After installation in the backend, expected routes are:
 
