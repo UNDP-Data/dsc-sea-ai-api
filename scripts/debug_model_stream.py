@@ -49,9 +49,10 @@ def _request_stream(
     api_key: str,
     graph_version: str,
     query: str,
+    assistant_id: str,
     timeout: int,
 ) -> tuple[int, list[dict], dict[str, str]]:
-    path = "/model"
+    path = "/model" if assistant_id == "sea" else f"/assistants/{urllib.parse.quote(assistant_id)}/model"
     if graph_version != "default":
         path += "?" + urllib.parse.urlencode({"graph_version": graph_version})
     url = f"{base_url.rstrip('/')}{path}"
@@ -186,6 +187,11 @@ def main() -> int:
         help="Optional graph version query parameter",
     )
     parser.add_argument(
+        "--assistant-id",
+        default="sea",
+        help="RAG assistant profile id. sea uses legacy /model alias.",
+    )
+    parser.add_argument(
         "--prompt",
         action="append",
         help="Prompt to run. Repeat for multiple prompts.",
@@ -223,6 +229,7 @@ def main() -> int:
             api_key=args.api_key,
             graph_version=args.graph_version,
             query=query,
+            assistant_id=args.assistant_id,
             timeout=args.timeout,
         )
         summary = _summarize_chunks(chunks)

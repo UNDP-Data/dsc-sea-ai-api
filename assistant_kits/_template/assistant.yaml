@@ -1,0 +1,57 @@
+assistant_id: example_assistant
+display_name: Example Publications Assistant
+domain_description: >
+  Replace this with the domain covered by the publication corpus.
+refusal_guidance: >
+  I can help with questions covered by this configured publication corpus.
+
+tables:
+  chunks: example_assistant_chunks
+  documents: example_assistant_documents
+  sources: example_assistant_sources
+
+prompts:
+  draft_answer: >
+    Give a concise initial answer for this assistant's domain. Do not include
+    source lists, citations, URLs, or unsupported claims.
+  answer_with_publications: >
+    Continue the answer using only the supplied publication excerpts. Keep
+    references out of the answer body because the API returns documents separately.
+  suggest_ideas: >
+    Generate up to 3 concise follow-up questions relevant to the conversation
+    and this assistant's publication corpus.
+
+source_definitions:
+  - source_id: example_source
+    name: Example Source Registry Entry
+    organization: Example Organization
+    authority_tier: trusted
+    base_url: https://example.org
+    ingestion_method: manual_manifest
+    review_policy: hybrid_editorial
+    domains:
+      - example.org
+
+tag_rules:
+  topics:
+    example topic:
+      - example topic
+      - example keyword
+  geographies:
+    global:
+      - global
+      - worldwide
+  countries: {}
+  sdgs: {}
+  sectors: {}
+  audiences:
+    policy-makers:
+      - policy
+      - guidance
+
+scope:
+  domain_terms:
+    - example
+    - publication
+  domain_phrases:
+    - example topic

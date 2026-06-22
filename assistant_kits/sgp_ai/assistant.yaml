@@ -1,0 +1,252 @@
+assistant_id: sgp_ai
+display_name: SGP AI
+domain_description: >
+  A publication-backed assistant for the GEF Small Grants Programme (SGP),
+  focused on community-led environmental grants, operational guidance, annual
+  monitoring results, biodiversity, climate action, land and water management,
+  chemicals and waste, social inclusion, and local livelihood co-benefits.
+refusal_guidance: >
+  I can help with questions covered by the configured GEF Small Grants Programme
+  publication corpus. For questions outside SGP publications, ask about SGP
+  operations, results, focal areas, grants, country programmes, community-led
+  projects, or related environmental and livelihood themes.
+
+tables:
+  chunks: sgp_ai_chunks
+  documents: sgp_ai_documents
+  sources: sgp_ai_sources
+
+storage:
+  lancedb_uri: az://lancedb/sgp_ai
+
+prompts:
+  draft_answer: >
+    You answer questions about the GEF Small Grants Programme using the configured
+    SGP publication corpus. Give a concise initial answer. Do not include source
+    lists, citations, URLs, or claims that need publication support.
+  answer_with_publications: >
+    Continue the answer using only the supplied SGP publication excerpts. Be
+    specific about operational guidance, results periods, focal areas, audiences,
+    and country-programme context when the excerpts support it. Keep references
+    out of the answer body because the API returns documents separately.
+  suggest_ideas: >
+    Generate up to 3 concise follow-up questions relevant to the user's
+    conversation and the SGP publication corpus.
+
+source_definitions:
+  - source_id: gef_sgp_innovation_library
+    name: GEF Small Grants Programme Innovation Library
+    organization: United Nations Development Programme / Global Environment Facility
+    authority_tier: trusted
+    base_url: https://sgp.undp.org
+    ingestion_method: manual_manifest
+    review_policy: hybrid_editorial
+    domains:
+      - sgp.undp.org
+
+tag_rules:
+  topics:
+    operational guidance:
+      - operational guideline
+      - op8
+      - project cycle
+      - eligibility
+      - grant disbursement
+      - country programme
+      - national steering committee
+    annual results:
+      - annual monitoring
+      - results report
+      - country programmes
+      - reporting period
+      - portfolio
+      - monitoring
+    community-led grants:
+      - community-led
+      - civil society
+      - community-based organization
+      - local action
+      - small grants
+      - grantee
+    biodiversity:
+      - biodiversity
+      - protected areas
+      - landscapes
+      - seascapes
+      - icca
+      - traditional knowledge
+      - species
+    climate change:
+      - climate change
+      - mitigation
+      - adaptation
+      - community-based adaptation
+      - resilience
+      - energy
+    land and water management:
+      - land degradation
+      - sustainable forest management
+      - fresh water
+      - water
+      - land management
+      - ridge-to-reef
+    chemicals and waste:
+      - chemicals
+      - waste
+      - mercury
+      - persistent organic pollutants
+    social inclusion:
+      - indigenous peoples
+      - local communities
+      - women
+      - youth
+      - persons with disabilities
+      - inclusion
+    capacity development:
+      - capacity development
+      - learning
+      - knowledge
+      - stakeholders
+      - policy frameworks
+      - monitoring and evaluation
+    partnership programmes:
+      - comdeks
+      - satoyama
+      - icca-gsi
+      - cba
+      - compact
+      - community-based redd
+  geographies:
+    global:
+      - global
+      - worldwide
+      - all regions
+    africa:
+      - africa
+    arab states:
+      - arab states
+    asia and the pacific:
+      - asia and the pacific
+      - pacific
+    europe and the cis:
+      - europe and the cis
+      - cis
+    latin america and the caribbean:
+      - latin america
+      - caribbean
+      - lac
+  countries: {}
+  sdgs:
+    sdg 5:
+      - gender equality
+      - women
+    sdg 6:
+      - water and sanitation
+      - fresh water
+    sdg 13:
+      - climate action
+      - climate change
+    sdg 14:
+      - life below water
+      - marine
+      - fisheries
+    sdg 15:
+      - life on land
+      - biodiversity
+      - forests
+      - land degradation
+  sectors:
+    agriculture and food security:
+      - agriculture
+      - food security
+      - agrobiodiversity
+    energy:
+      - energy
+      - renewable energy
+      - mitigation
+    fisheries:
+      - fisheries
+      - coastal
+      - marine
+    protected areas:
+      - protected area
+      - icca
+      - conservation area
+  audiences:
+    policy-makers:
+      - policy
+      - guidance
+      - governance
+      - country office
+    programme teams:
+      - national coordinator
+      - programme assistant
+      - national steering committee
+      - country programme
+      - cpmt
+    civil society:
+      - civil society
+      - ngo
+      - cbo
+      - community group
+      - grantee
+    researchers:
+      - evidence
+      - results
+      - monitoring
+      - evaluation
+
+scope:
+  domain_terms:
+    - sgp
+    - gef
+    - undp
+    - grant
+    - grants
+    - grantee
+    - biodiversity
+    - climate
+    - adaptation
+    - mitigation
+    - livelihood
+    - livelihoods
+    - community
+    - communities
+    - indigenous
+    - women
+    - youth
+    - monitoring
+    - evaluation
+    - land
+    - water
+    - chemicals
+    - waste
+    - op8
+    - comdeks
+    - satoyama
+    - icca
+    - iccas
+    - icca-gsi
+    - cba
+    - compact
+    - sepls
+    - landscape
+    - landscapes
+    - seascape
+    - seascapes
+  domain_phrases:
+    - small grants programme
+    - gef small grants programme
+    - community-led initiatives
+    - community-based organizations
+    - civil society organizations
+    - national steering committee
+    - country programme strategy
+    - operational phase 8
+    - annual monitoring report
+    - local action global impact
+    - indigenous peoples and local communities
+    - community development and knowledge management for the satoyama initiative
+    - societies in harmony with nature
+    - community-based adaptation
+    - community-based redd

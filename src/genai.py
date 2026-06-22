@@ -47,27 +47,172 @@ logger = logging.getLogger(__name__)
 TOKEN_RE = re.compile(r"[a-z0-9]+")
 DOMAIN_TERMS = {
     "adaptation",
+    "affordability",
+    "affordable",
+    "agriculture",
+    "air",
     "battery",
+    "biogas",
     "biofuel",
+    "biomass",
+    "blended",
+    "bond",
+    "bonds",
+    "capacity",
     "carbon",
+    "ccs",
+    "charcoal",
     "climate",
+    "coal",
+    "concessional",
     "cooking",
+    "cookstove",
+    "cookstoves",
+    "cooling",
     "decarbonization",
     "decarbonisation",
+    "demand",
+    "derisking",
+    "de-risking",
+    "diesel",
+    "disaster",
+    "distribution",
     "electricity",
     "electrification",
     "emissions",
     "energy",
     "esmap",
+    "ev",
+    "e-mobility",
     "feed",
+    "finance",
+    "financing",
+    "forest",
+    "forests",
+    "fuel",
+    "fuels",
+    "gender",
+    "geothermal",
+    "governance",
+    "greenhouse",
     "grid",
+    "guarantee",
+    "guarantees",
+    "health",
+    "heating",
+    "hydrogen",
     "hydropower",
+    "inequality",
+    "industrial",
+    "industry",
+    "infrastructure",
     "interconnection",
+    "investment",
+    "ipp",
+    "jobs",
+    "livelihoods",
+    "lpg",
+    "market",
+    "markets",
+    "metering",
+    "methane",
+    "microgrid",
+    "microgrids",
+    "mini",
     "mini-grid",
+    "minigrid",
+    "minigrids",
     "mitigation",
+    "mobility",
     "ndc",
+    "net",
+    "offgrid",
+    "off-grid",
     "paris",
     "photovoltaic",
+    "pollution",
+    "ppa",
+    "ppas",
+    "poverty",
+    "pricing",
+    "productive",
+    "reduction",
+    "regulation",
+    "reliability",
+    "resilience",
+    "resilient",
+    "renewable",
+    "rural",
+    "safety",
+    "sdg7",
+    "sdg",
+    "sea",
+    "sids",
+    "solar",
+    "storage",
+    "subsidy",
+    "subsidies",
+    "supply",
+    "sustainable",
+    "sukuk",
+    "tariff",
+    "transmission",
+    "transition",
+    "transport",
+    "utility",
+    "utilities",
+    "vulnerability",
+    "vulnerable",
+    "water",
+    "wind",
+    "workforce",
+    "zero",
+}
+CORE_DOMAIN_TERMS = {
+    "adaptation",
+    "battery",
+    "biogas",
+    "biofuel",
+    "biomass",
+    "carbon",
+    "ccs",
+    "climate",
+    "cookstove",
+    "cookstoves",
+    "cooking",
+    "de-risking",
+    "decarbonization",
+    "decarbonisation",
+    "derisking",
+    "distribution",
+    "electricity",
+    "electrification",
+    "emissions",
+    "energy",
+    "esmap",
+    "ev",
+    "e-mobility",
+    "feed",
+    "geothermal",
+    "grid",
+    "greenhouse",
+    "hydrogen",
+    "hydropower",
+    "interconnection",
+    "microgrid",
+    "microgrids",
+    "mini",
+    "mini-grid",
+    "minigrid",
+    "minigrids",
+    "mitigation",
+    "ndc",
+    "offgrid",
+    "off-grid",
+    "paris",
+    "photovoltaic",
+    "ppa",
+    "ppas",
     "renewable",
     "sdg7",
     "sdg",
@@ -76,24 +221,95 @@ DOMAIN_TERMS = {
     "storage",
     "sustainable",
     "tariff",
+    "transmission",
     "transition",
+    "utility",
+    "utilities",
     "wind",
 }
+ADJACENT_DOMAIN_TERMS = DOMAIN_TERMS - CORE_DOMAIN_TERMS
 DOMAIN_PHRASES = (
     "access to electricity",
+    "affordable energy",
+    "battery storage",
+    "blended finance",
+    "carbon capture",
+    "carbon market",
+    "carbon markets",
+    "carbon pricing",
     "clean cooking",
+    "clean electricity",
+    "clean fuels",
+    "clean hydrogen",
     "climate change",
+    "climate finance",
+    "climate resilience",
+    "concessional finance",
+    "debt for energy",
+    "demand side management",
+    "distributed energy",
+    "disaster risk reduction",
+    "electric mobility",
+    "electric vehicles",
     "energy access",
     "energy efficiency",
+    "energy finance",
+    "energy governance",
+    "energy investment",
+    "energy markets",
+    "energy planning",
+    "energy poverty",
+    "energy reliability",
+    "energy safety nets",
+    "energy security",
+    "energy storage",
     "energy transition",
     "feed in tariff",
     "feed-in tariff",
+    "gender sensitive",
+    "gender-sensitive",
+    "green jobs",
+    "green bond",
+    "green bonds",
+    "green hydrogen",
     "grid infrastructure",
+    "household air pollution",
+    "improved cookstoves",
+    "income support",
+    "industrial decarbonization",
+    "industrial decarbonisation",
+    "integrated energy planning",
+    "independent power producer",
+    "least developed countries",
+    "low carbon",
+    "mini grid",
+    "mini grids",
+    "mini-grid",
+    "mini-grids",
+    "net zero",
+    "off grid",
+    "off-grid",
+    "power purchase agreement",
+    "productive use",
+    "productive uses",
+    "just energy transition",
+    "just transition",
     "paris agreement",
+    "poverty reduction",
+    "renewable power",
     "renewable energy",
+    "rural electrification",
+    "social protection",
+    "social safety nets",
+    "small island developing states",
+    "sustainable finance",
     "sustainable development",
     "sustainable energy",
+    "transition finance",
+    "transmission and distribution",
     "tracking sdg7",
+    "universal access",
+    "water energy food nexus",
 )
 GREETING_PHRASES = (
     "hi",
@@ -173,12 +389,58 @@ def _contains_domain_signal(text: str | None) -> bool:
     tokens = set(normalized.split())
     if not tokens:
         return False
-    overlap = tokens & DOMAIN_TERMS
+    core_overlap = tokens & CORE_DOMAIN_TERMS
+    adjacent_overlap = tokens & ADJACENT_DOMAIN_TERMS
     if "feed" in tokens and "tariff" in tokens:
         return True
     if "energy" in tokens:
         return True
-    return len(overlap) >= 2
+    if core_overlap and adjacent_overlap:
+        return True
+    if len(core_overlap) >= 2:
+        return True
+    return len(adjacent_overlap) >= 2 and (
+        "sustainable" in tokens
+        or "development" in tokens
+        or "climate" in tokens
+        or "sdg" in tokens
+        or "sdg7" in tokens
+    )
+
+
+def _contains_profile_domain_signal(text: str | None, profile) -> bool:
+    normalized = _normalize_scope_text(text)
+    if not normalized:
+        return False
+    scope = getattr(profile, "scope", {}) if profile is not None else {}
+    phrases = scope.get("domain_phrases") if isinstance(scope, dict) else None
+    terms = scope.get("domain_terms") if isinstance(scope, dict) else None
+    if isinstance(phrases, list):
+        for phrase in phrases:
+            if isinstance(phrase, str) and _normalize_scope_text(phrase) in normalized:
+                return True
+    if isinstance(terms, list):
+        query_tokens = set(normalized.split())
+        domain_terms = {
+            token
+            for item in terms
+            if isinstance(item, str)
+            for token in _normalize_scope_text(item).split()
+        }
+        if query_tokens & domain_terms:
+            return True
+    return False
+
+
+def _profile_prompt(profile, name: str, default_key: str) -> str:
+    if profile is not None:
+        prompt_text = getattr(profile, "prompt_text", lambda _name: None)(name)
+        if prompt_text:
+            return prompt_text
+        prompt_key = getattr(profile, "prompt_key", lambda _name: None)(name)
+        if prompt_key and prompt_key in PROMPTS:
+            return PROMPTS[prompt_key]
+    return PROMPTS[default_key]
 
 
 def _is_greeting_or_capability_query(text: str | None) -> bool:
@@ -287,6 +549,63 @@ def assess_scope(messages: list[Message]) -> ScopeDecision:
             "climate mitigation and adaptation, renewable energy, energy access, clean cooking, "
             "grid infrastructure, and related SDG 7 policy questions. Please rephrase your request within that scope."
         ),
+    )
+
+
+def assess_profile_scope(messages: list[Message], profile) -> ScopeDecision:
+    """
+    Apply a profile-specific deterministic scope guard for non-SEA assistants.
+    """
+    if profile is None or getattr(profile, "is_default", False):
+        return assess_scope(messages)
+    if not messages:
+        return ScopeDecision(True, "empty", "No messages to assess.")
+
+    enabled = os.getenv("MODEL_SCOPE_GUARD_ENABLED", "true").strip().lower()
+    if enabled in {"0", "false", "no", "off"}:
+        return ScopeDecision(True, "disabled", "Scope guard disabled by configuration.")
+
+    latest = messages[-1].content
+    latest_normalized = _normalize_scope_text(latest)
+    conversation_text = "\n".join(message.content for message in messages[:-1])
+    conversation_in_domain = _contains_profile_domain_signal(conversation_text, profile)
+
+    if any(pattern in latest_normalized for pattern in PROMPT_PROBE_PATTERNS):
+        return ScopeDecision(
+            allowed=False,
+            category="prompt_probe",
+            reason="Prompt-extraction or instruction-override attempt detected.",
+            refusal=(
+                "I can't provide system prompts, hidden instructions, or internal configuration. "
+                + getattr(profile, "refusal_guidance", "Please rephrase your request within scope.")
+            ),
+        )
+
+    if any(pattern in latest_normalized for pattern in UNSAFE_PATTERNS):
+        return ScopeDecision(
+            allowed=False,
+            category="unsafe",
+            reason="Clearly unsafe or security-abusive request detected.",
+            refusal=(
+                "I can't help with harmful, dangerous, or security-abusive requests. "
+                + getattr(profile, "refusal_guidance", "Please rephrase your request within scope.")
+            ),
+        )
+
+    if _is_greeting_or_capability_query(latest):
+        return ScopeDecision(True, "meta", "Greeting or capability query.")
+    if _is_conversation_meta_query(latest) and conversation_text.strip():
+        return ScopeDecision(True, "conversation_meta", "Conversation memory query.")
+    if _contains_profile_domain_signal(latest, profile):
+        return ScopeDecision(True, "domain", "Latest query contains profile domain signal.")
+    if _is_follow_up_query(latest) and conversation_in_domain:
+        return ScopeDecision(True, "follow_up", "Follow-up query grounded in profile domain conversation.")
+
+    return ScopeDecision(
+        allowed=False,
+        category="off_topic",
+        reason="Latest query is outside the configured assistant scope.",
+        refusal=getattr(profile, "refusal_guidance", "Please rephrase your request within scope."),
     )
 
 
@@ -627,6 +946,7 @@ async def get_answer(
     response: AssistantResponse,
     publication_task: Awaitable[tuple[list[dict], list[Document]]] | None = None,
     defer_initial_answer: bool = False,
+    profile=None,
 ) -> AsyncGenerator[str, None]:
     """
     Respond to the user message using RAG and conversation history.
@@ -686,7 +1006,10 @@ async def get_answer(
         ideas_emitted_in_stream = True
 
     contents: list[str] = []
-    ideas_task = asyncio.create_task(generate_query_ideas(messages))
+    if profile is None:
+        ideas_task = asyncio.create_task(generate_query_ideas(messages))
+    else:
+        ideas_task = asyncio.create_task(generate_query_ideas(messages, profile=profile))
     publication_future: asyncio.Future | asyncio.Task | None = None
     created_publication_task = False
     if publication_task is not None:
@@ -705,7 +1028,7 @@ async def get_answer(
             try:
                 async for chunk in stream_chat_response(
                     messages=[message.to_langchain() for message in messages],
-                    system_message=PROMPTS["draft_answer"],
+                    system_message=_profile_prompt(profile, "draft_answer", "draft_answer"),
                     temperature=0.1,
                 ):
                     delta = _extract_chunk_text(getattr(chunk, "content", None))
@@ -725,9 +1048,20 @@ async def get_answer(
                 yield response.model_dump_json() + "\n"
                 reset_response_payload()
         else:
-            response.content = "I will check the publications for the latest data.\n\n"
-            yield response.model_dump_json() + "\n"
-            reset_response_payload()
+            current_data_policy = (
+                getattr(profile, "current_data_policy", lambda: {})()
+                if profile is not None
+                else {}
+            )
+            lookup_notice = (
+                current_data_policy.get("lookup_notice")
+                if isinstance(current_data_policy, dict)
+                else None
+            )
+            if lookup_notice or profile is None or getattr(profile, "is_default", False):
+                response.content = lookup_notice or "I will check the publications for the latest data.\n\n"
+                yield response.model_dump_json() + "\n"
+                reset_response_payload()
 
         if not defer_initial_answer:
             bridge_text = (
@@ -779,7 +1113,7 @@ async def get_answer(
                     (
                         "Initial answer already given:\n"
                         + (
-                            "No substantive answer was given yet; only a publication lookup notice was sent."
+                            "No substantive answer has been given yet."
                             if defer_initial_answer
                             else "".join(contents).strip()
                         )
@@ -798,7 +1132,11 @@ async def get_answer(
             try:
                 async for chunk in stream_chat_response(
                     messages=[{"role": "user", "content": continuation_prompt}],
-                    system_message=PROMPTS["answer_with_publications"],
+                    system_message=_profile_prompt(
+                        profile,
+                        "answer_with_publications",
+                        "answer_with_publications",
+                    ),
                     temperature=0.1,
                 ):
                     delta = _extract_chunk_text(getattr(chunk, "content", None))
@@ -852,7 +1190,7 @@ async def get_answer(
                 pass
 
 
-async def generate_query_ideas(messages: list[Message]) -> list[str]:
+async def generate_query_ideas(messages: list[Message], profile=None) -> list[str]:
     """
     Generate query ideas based on the conversation history.
 
@@ -878,7 +1216,7 @@ async def generate_query_ideas(messages: list[Message]) -> list[str]:
 
     response: ResponseFormat = await generate_response(
         prompt=json.dumps([message.model_dump() for message in messages], indent=4),
-        system_message=PROMPTS["suggest_ideas"],
+        system_message=_profile_prompt(profile, "suggest_ideas", "suggest_ideas"),
         schema=ResponseFormat,
         temperature=0.3,
     )

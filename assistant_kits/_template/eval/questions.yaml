@@ -1,0 +1,9 @@
+assistant_id: example_assistant
+questions:
+  - question_id: example_q1
+    query: What does the example policy note say about the example topic?
+    expected_documents:
+      - rank: 1
+        title: Example Policy Note
+        url: https://example.org/example-policy-note
+        reason: Primary source for the example topic.

@@ -45,6 +45,18 @@ For Azure Blob auth you can use either:
 - `STORAGE_SAS_URL` (full SAS URL), or
 - `STORAGE_ACCOUNT_NAME` with `STORAGE_ACCOUNT_KEY` / `STORAGE_SAS_TOKEN`.
 
+For local-only development or assistant-kit testing, set `LANCEDB_URI` to a
+filesystem directory. When this is set, the backend uses local LanceDB storage
+and does not require Azure Blob credentials:
+
+```bash
+export LANCEDB_URI="/path/to/local-lancedb"
+```
+
+If that local database contains assistant corpus tables but no `nodes`/`edges`
+knowledge-graph tables, the API uses a small built-in fallback graph so `/nodes`,
+`/graph`, and `/graph/v2` remain testable offline.
+
 Optional local tester env (separate tester app):
 - `KG_TESTER_API_KEY` (or fallback `API_KEY`) for tester proxy authentication to backend.
 - `KG_TESTER_LOCAL_API_BASE_URL` for local backend target (default `http://127.0.0.1:8000`).
@@ -183,6 +195,56 @@ make run-tester
 
 `make run-tester` binds to `127.0.0.1:8010` by default.
 
+## SGP AI Tester
+
+The SGP AI tester is a separate local-only frontend for the `sgp_ai` assistant.
+It proxies to `/assistants/sgp_ai/model` and `/assistants/sgp_ai/debug/retrieve`
+without exposing API keys in browser JavaScript.
+
+Recommended startup with automatic port fallback:
+
+```bash
+cd "/Users/ben/Documents/UNDP/SEH/dsc-energy-ai-backend"
+.venv/bin/python scripts/run_sgp_ai_local.py --reload
+```
+
+The launcher starts the backend and tester UI, reuses an existing backend when
+one is already serving the API, and moves the tester to the next free port when
+`8015` is occupied. Use the `Tester UI:` URL printed by the launcher.
+
+Example local startup when port `8000` is already in use:
+
+```bash
+# terminal 1
+.venv/bin/uvicorn main:app --host 127.0.0.1 --port 8016
+
+# terminal 2
+SGP_TESTER_API_BASE_URL=http://127.0.0.1:8016 make run-sgp-tester
+```
+
+If `8015` is already in use, set a different tester port manually:
+
+```bash
+SGP_TESTER_API_BASE_URL=http://127.0.0.1:8016 SGP_TESTER_PORT=8017 make run-sgp-tester
+```
+
+Open [http://127.0.0.1:8015/sgp-ai-tester](http://127.0.0.1:8015/sgp-ai-tester),
+or the alternate tester URL printed by the launcher/manual port you selected.
+
+The tester checks both assistant profile installation and corpus readiness. If it
+shows `SGP AI installed; corpus missing`, refresh storage credentials and import
+the corpus:
+
+```bash
+export LANCEDB_URI="/Users/ben/Documents/UNDP/SGP/Innovation Library/.local_lancedb"
+
+.venv/bin/python scripts/install_assistant_kit.py \
+  --kit "/Users/ben/Documents/UNDP/SGP/SGP AI/sgp_ai" \
+  --overwrite \
+  --import-corpus \
+  --include-chunks
+```
+
 Pre-commit validation:
 
 ```bash
@@ -204,6 +266,34 @@ Optional flags:
 
 Use the scripts below to upgrade an existing chunk-only corpus into the new
 document-centric layout and validate metadata completeness.
+
+Deploy a dataframe artifact directly to LanceDB. This is the reusable script
+form of the original `main.ipynb` table-deployment cells:
+
+```bash
+python3 scripts/deploy_lancedb_table.py \
+  --input data/chunks-vYY-MM-DD.parquet \
+  --table chunks \
+  --mode overwrite
+```
+
+If a prepared dataframe still needs embeddings, pass a text column and optional
+embedded artifact output:
+
+```bash
+python3 scripts/deploy_lancedb_table.py \
+  --input data/chunks-without-vectors.parquet \
+  --table chunks \
+  --embed-text-column content \
+  --embedded-output data/chunks-with-vectors.parquet \
+  --mode overwrite
+```
+
+By default the backend uses Azure-backed `az://lancedb`. If `LANCEDB_URI` is set,
+the same command writes to that local or explicit LanceDB URI instead.
+Assistant profiles can also define isolated storage, for example SGP uses
+`az://lancedb/sgp_ai` while SEA keeps the default `az://lancedb`. A local
+`LANCEDB_URI` override still wins for prototype runs.
 
 Bootstrap canonical `sources` and `documents` tables from the current `chunks` table:
 

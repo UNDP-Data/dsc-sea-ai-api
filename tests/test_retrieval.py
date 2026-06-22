@@ -10,6 +10,7 @@ from src.database import (
     _build_summary_fallback_chunks,
     _build_metadata_patterns,
     _classify_geography_match,
+    _dedupe_document_rows,
     _document_has_min_signal,
     _score_document_row,
     _select_documents_and_chunks,
@@ -26,6 +27,33 @@ def test_retrieval_profile_prefers_recent_for_data_queries():
     )
     assert profile.prefer_recent is True
     assert profile.explicit_years == []
+
+
+def test_dedupe_document_rows_prefers_user_facing_url_identity():
+    rows = [
+        {
+            "document_id": "download-a",
+            "url": "https://sgp.undp.org/innovation-library/item/example.html",
+            "canonical_title": "Example",
+            "year": 2024,
+        },
+        {
+            "document_id": "download-b",
+            "url": "https://sgp.undp.org/innovation-library/item/example.html",
+            "canonical_title": "Example",
+            "year": 2024,
+        },
+        {
+            "document_id": "download-c",
+            "url": "https://sgp.undp.org/innovation-library/item/other.html",
+            "canonical_title": "Other",
+            "year": 2024,
+        },
+    ]
+
+    deduped = _dedupe_document_rows(rows)
+
+    assert [row["document_id"] for row in deduped] == ["download-a", "download-c"]
 
 
 def test_retrieval_profile_does_not_force_recent_for_explanatory_queries():
@@ -53,6 +81,18 @@ def test_build_retrieval_queries_expands_unspecified_energy_access_count_query()
     assert "tracking sdg7 access to electricity" in queries
 
 
+def test_build_retrieval_queries_expands_sgp_operational_phase_shorthand():
+    queries = build_retrieval_queries(
+        "Who are the OP8 operational guidelines written for?"
+    )
+    prioritized = _prioritize_retrieval_queries(
+        "Who are the OP8 operational guidelines written for?"
+    )
+
+    assert any("operational phase 8" in query.lower() for query in queries)
+    assert "operational phase 8" in prioritized[0].lower()
+
+
 def test_prioritized_retrieval_queries_keep_sdg7_variant_for_current_data_query():
     queries = _prioritize_retrieval_queries("How many people lack access to energy?")
     assert "tracking sdg7 access to electricity" in queries
@@ -70,6 +110,17 @@ def test_retrieval_profile_extracts_lac_scope():
     assert profile.region_scopes == frozenset({"latin america"})
     assert profile.country_scopes == frozenset()
     assert profile.has_geographic_scope is True
+
+
+def test_geography_matching_normalizes_imported_sgp_region_codes():
+    profile = _build_retrieval_profile(
+        "What are the lessons from integrated water management in the Caribbean?"
+    )
+    row = {"region_codes": ["latin_america_caribbean"]}
+
+    match = _classify_geography_match(row, profile)
+
+    assert match["match_class"] == "exact_region"
 
 
 def test_retrieval_profile_extracts_country_scope_and_parent_region():
@@ -118,6 +169,66 @@ def test_document_selection_prefers_topical_document_over_generic_recent_report(
     assert documents
     assert documents[0].title == "Renewable Energy Policy Toolkit"
     assert chunks[0].title == "Renewable Energy Policy Toolkit"
+
+
+def test_document_scoring_prefers_latest_sgp_annual_monitoring_report():
+    profile = _build_retrieval_profile(
+        "What reporting period is covered by the latest SGP annual monitoring report?"
+    )
+    latest = {
+        "canonical_title": "GEF SMALL GRANTS PROGRAMME ANNUAL MONITORING REPORT 2024 - 2025 (SUMMARY INFOGRAPHIC)",
+        "year": 2025,
+        "summary": "This is the infographic version of the GEF Small Grants Programme Results Report 2024-2025.",
+        "topic_tags_text": "AMR | biodiversity | climate change mitigation",
+        "audience_tags_text": "programme teams | indigenous peoples | women | youth | persons with disabilities",
+        "document_type": "report",
+        "status": "approved",
+    }
+    older = {
+        "canonical_title": "GEF SMALL GRANTS PROGRAMME ANNUAL MONITORING REPORT 2023 - 2024 (Full Version)",
+        "year": 2024,
+        "summary": "The GEF Small Grants Programme annual monitoring report presents results for 2023-2024.",
+        "topic_tags_text": "AMR | biodiversity | climate change mitigation",
+        "audience_tags_text": "programme teams | indigenous peoples | women | youth | persons with disabilities",
+        "document_type": "report",
+        "status": "approved",
+    }
+
+    assert _score_document_row(latest, profile) > _score_document_row(older, profile)
+
+
+def test_document_signal_uses_sgp_priority_group_audience_tags():
+    profile = _build_retrieval_profile("How are youth engaged in SGP projects?")
+    row = {
+        "canonical_title": "Evaluation of project Fotae-Na - SGP Ecuador",
+        "year": 2018,
+        "summary": "",
+        "topic_tags_text": "report/publication | case study",
+        "audience_tags_text": "programme teams | indigenous peoples | women | youth",
+        "document_type": "publication",
+        "status": "approved",
+    }
+
+    assert _document_has_min_signal(row, profile) is True
+
+
+def test_document_signal_accepts_strong_sgp_title_match_without_exact_focus_phrase():
+    profile = _build_retrieval_profile(
+        "Who are the OP8 operational guidelines written for, and what implementation issues do they cover?"
+    )
+    row = {
+        "canonical_title": "GEF Small Grants Programme UNDP Operational Guidelines for Operational Phase 8",
+        "year": 2025,
+        "summary": "Operational Phase 8 implementation guidance for SGP country programme teams.",
+        "topic_tags_text": "report/publication | global publication",
+        "audience_tags_text": "programme teams",
+        "document_type": "policy",
+        "status": "approved",
+    }
+
+    expanded_profile = _build_retrieval_profile(_prioritize_retrieval_queries(profile.query)[0])
+
+    assert _document_has_min_signal(row, expanded_profile) is True
 
 
 def test_document_selection_penalizes_glossary_for_concept_query():

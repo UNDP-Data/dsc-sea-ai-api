@@ -1,0 +1,68 @@
+assistant_id: sample
+display_name: Sample Publications Assistant
+domain_description: >
+  A portable sample assistant for demonstrating the reusable RAG module with
+  a non-SEA publication corpus.
+refusal_guidance: >
+  I can help with questions covered by the configured sample publication corpus.
+
+tables:
+  chunks: sample_chunks
+  documents: sample_documents
+  sources: sample_sources
+
+prompts:
+  draft_answer: >
+    You answer questions for a configured publication corpus. Give a concise initial
+    answer using general knowledge only. Do not include source lists or URLs.
+  answer_with_publications: >
+    Continue the answer using only the supplied publication excerpts. Keep references
+    out of the answer body because the API returns documents separately.
+  suggest_ideas: >
+    Generate up to 3 concise follow-up questions relevant to the user's conversation
+    and this configured publication corpus.
+
+source_definitions:
+  - source_id: sample_source
+    name: Sample Publications
+    organization: Sample Organization
+    authority_tier: trusted
+    base_url: https://example.org
+    ingestion_method: manual_manifest
+    review_policy: hybrid_editorial
+    domains:
+      - example.org
+
+tag_rules:
+  topics:
+    food systems:
+      - food system
+      - agriculture
+      - nutrition
+    water management:
+      - water
+      - irrigation
+      - watershed
+  geographies:
+    global:
+      - global
+      - worldwide
+  countries: {}
+  sdgs: {}
+  sectors: {}
+  audiences:
+    policy-makers:
+      - policy
+      - guidance
+      - framework
+
+scope:
+  domain_terms:
+    - publication
+    - agriculture
+    - food
+    - water
+    - nutrition
+  domain_phrases:
+    - food systems
+    - water management

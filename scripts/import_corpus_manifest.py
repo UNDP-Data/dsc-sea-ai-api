@@ -21,6 +21,7 @@ load_dotenv(ROOT / ".env")
 
 from src import corpus, database
 from src.entities import DocumentRecord, SourceRecord
+from src.rag_system import get_profile
 
 
 def _load_manifest(path: Path) -> dict:
@@ -31,7 +32,7 @@ def _load_manifest(path: Path) -> dict:
     return payload
 
 
-def _document_record_from_manifest(item: dict) -> DocumentRecord:
+def _document_record_from_manifest(item: dict, *, profile) -> DocumentRecord:
     base_row = {
         "title": item.get("canonical_title") or item.get("title") or "",
         "year": int(item.get("year") or 0),
@@ -42,6 +43,7 @@ def _document_record_from_manifest(item: dict) -> DocumentRecord:
     }
     record = corpus.build_document_record(
         [base_row],
+        profile=profile,
         parser_version=item.get("parser_version", "manifest-v1"),
         embedding_version=item.get("embedding_version", "manifest-v1"),
         status=item.get("status", "approved"),
@@ -100,7 +102,7 @@ def _source_record_from_manifest(item: dict) -> SourceRecord:
     )
 
 
-def _chunk_rows_for_document(item: dict, document: DocumentRecord) -> list[dict]:
+def _chunk_rows_for_document(item: dict, document: DocumentRecord, *, profile) -> list[dict]:
     chunks = item.get("chunks")
     if isinstance(chunks, list) and chunks:
         rows = []
@@ -131,7 +133,11 @@ def _chunk_rows_for_document(item: dict, document: DocumentRecord) -> list[dict]
                     "token_count": chunk.get("token_count"),
                 }
             )
-        return corpus.enrich_chunk_rows(rows, documents_by_key={document.url or document.canonical_title: document})
+        return corpus.enrich_chunk_rows(
+            rows,
+            documents_by_key={document.url or document.canonical_title: document},
+            profile=profile,
+        )
 
     base_row = {
         "title": document.canonical_title,
@@ -148,12 +154,19 @@ def _chunk_rows_for_document(item: dict, document: DocumentRecord) -> list[dict]
         "region_codes": document.region_codes,
         "content": item.get("content") or item.get("summary") or "",
     }
-    return corpus.enrich_chunk_rows([base_row], documents_by_key={document.url or document.canonical_title: document})
+    return corpus.enrich_chunk_rows(
+        [base_row],
+        documents_by_key={document.url or document.canonical_title: document},
+        profile=profile,
+    )
 
 
 async def _run(args) -> dict[str, int]:
     print(f"[import] Loading manifest: {args.manifest}", flush=True)
     manifest = _load_manifest(Path(args.manifest))
+    assistant_id = args.assistant_id or manifest.get("assistant_id") or "sea"
+    profile = get_profile(assistant_id)
+    print(f"[import] Using assistant profile: {profile.assistant_id}", flush=True)
     source_records = [
         _source_record_from_manifest(item)
         for item in manifest.get("sources", [])
@@ -164,11 +177,14 @@ async def _run(args) -> dict[str, int]:
     for item in manifest.get("documents", []):
         if not isinstance(item, dict):
             continue
-        document = _document_record_from_manifest(item)
+        document = _document_record_from_manifest(item, profile=profile)
         document_records.append(document)
-        chunk_rows.extend(_chunk_rows_for_document(item, document))
+        chunk_rows.extend(_chunk_rows_for_document(item, document, profile=profile))
 
-    inferred_sources = corpus.build_source_records_for_documents(document_records)
+    inferred_sources = corpus.build_source_records_for_documents(
+        document_records,
+        profile=profile,
+    )
     by_source = {record.source_id: record for record in inferred_sources}
     for record in source_records:
         by_source[record.source_id] = record
@@ -178,9 +194,9 @@ async def _run(args) -> dict[str, int]:
         flush=True,
     )
     print("[import] Opening database connection...", flush=True)
-    connection = await database.get_connection()
+    connection = await database.get_connection(profile=profile)
     try:
-        client = database.Client(connection)
+        client = database.Client(connection, profile=profile)
         print("[import] Upserting sources...", flush=True)
         source_count = await client.upsert_sources([item.model_dump() for item in by_source.values()])
         print("[import] Upserting documents...", flush=True)
@@ -202,6 +218,11 @@ async def _run(args) -> dict[str, int]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", required=True, help="Path to YAML corpus manifest.")
+    parser.add_argument(
+        "--assistant-id",
+        default=None,
+        help="RAG assistant profile id. Defaults to manifest assistant_id or sea.",
+    )
     parser.add_argument(
         "--include-chunks",
         action="store_true",
