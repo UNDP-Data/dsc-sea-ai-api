@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Static GitHub Pages dashboard for the SGP AI assistant kit.">
+  <title>SGP AI Assistant Kit</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="./" aria-label="SGP AI home">
+        <span class="brand-mark" aria-hidden="true">SGP</span>
+        <span>SGP AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="#corpus">Corpus</a>
+        <a href="#contract">API</a>
+        <a href="#files">Files</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">GEF Small Grants Programme</p>
+        <h1>Publication-backed assistant kit for SGP-supported community-led grant initiatives.</h1>
+        <p class="lead">
+          This GitHub Pages site publishes the assistant kit surface for review:
+          metadata, corpus inventory, evaluation prompts, and the backend API contract
+          used after deployment.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="assistant.yaml">View assistant.yaml</a>
+          <a class="button" href="corpus/manifest.yaml">View manifest</a>
+        </div>
+      </div>
+      <figure class="hero-visual" aria-label="SGP AI corpus overview">
+        <div class="visual-grid">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <figcaption>
+          <strong id="hero-doc-count">Loading corpus...</strong>
+          <span>Innovation Library records prepared for retrieval</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="stats" aria-label="Assistant kit status">
+      <article>
+        <span class="stat-value" id="assistant-id">sgp_ai</span>
+        <span class="stat-label">Assistant id</span>
+      </article>
+      <article>
+        <span class="stat-value" id="document-count">...</span>
+        <span class="stat-label">Documents</span>
+      </article>
+      <article>
+        <span class="stat-value" id="chunk-count">...</span>
+        <span class="stat-label">Prepared chunks</span>
+      </article>
+      <article>
+        <span class="stat-value" id="question-count">...</span>
+        <span class="stat-label">Eval questions</span>
+      </article>
+    </section>
+
+    <section class="section" id="corpus">
+      <div class="section-heading">
+        <p class="eyebrow">Corpus</p>
+        <h2>Innovation Library coverage</h2>
+      </div>
+      <div class="content-grid">
+        <article class="panel">
+          <h3>Top document topics</h3>
+          <div id="topic-list" class="tag-list">
+            <span>Loading...</span>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>Languages</h3>
+          <div id="language-list" class="tag-list">
+            <span>Loading...</span>
+          </div>
+        </article>
+      </div>
+      <div class="panel document-panel">
+        <div class="panel-title-row">
+          <h3>Sample documents</h3>
+          <a href="corpus/manifest.yaml">Open full manifest</a>
+        </div>
+        <div id="document-list" class="document-list">
+          <p class="muted">Loading document previews...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contract">
+      <div class="section-heading">
+        <p class="eyebrow">Deployment contract</p>
+        <h2>Backend routes after installation</h2>
+      </div>
+      <div class="endpoint-list" aria-label="Assistant API routes">
+        <code>POST /assistants/sgp_ai/model</code>
+        <code>GET /assistants/sgp_ai/documents</code>
+        <code>GET /assistants/sgp_ai/sources</code>
+        <code>GET /assistants/sgp_ai/debug/retrieve</code>
+      </div>
+      <p class="note">
+        GitHub Pages is static hosting, so authenticated chat calls must continue
+        through a server-side backend or proxy. API keys are not embedded in this site.
+      </p>
+    </section>
+
+    <section class="section" id="files">
+      <div class="section-heading">
+        <p class="eyebrow">Kit files</p>
+        <h2>Versioned source surface</h2>
+      </div>
+      <div class="file-grid">
+        <a href="README.md">README.md</a>
+        <a href="CODEX_HANDOFF.md">CODEX_HANDOFF.md</a>
+        <a href="assistant.yaml">assistant.yaml</a>
+        <a href="corpus/manifest.yaml">corpus/manifest.yaml</a>
+        <a href="corpus/innovation_library_audit.md">corpus/innovation_library_audit.md</a>
+        <a href="eval/questions.yaml">eval/questions.yaml</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>SGP AI assistant kit</span>
+    <span>Static GitHub Pages build</span>
+  </footer>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>

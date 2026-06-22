@@ -2,9 +2,10 @@ assistant_id: sgp_ai
 display_name: SGP AI
 domain_description: >
   A publication-backed assistant for the GEF Small Grants Programme (SGP),
-  focused on community-led environmental grants, operational guidance, annual
-  monitoring results, biodiversity, climate action, land and water management,
-  chemicals and waste, social inclusion, and local livelihood co-benefits.
+  focused on SGP-supported grants and community-led initiatives, operational
+  guidance, annual monitoring results, biodiversity, climate action, land and
+  water management, chemicals and waste, social inclusion, and local livelihood
+  co-benefits.
 refusal_guidance: >
   I can help with questions covered by the configured GEF Small Grants Programme
   publication corpus. For questions outside SGP publications, ask about SGP
