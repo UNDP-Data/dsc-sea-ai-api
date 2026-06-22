@@ -57,7 +57,7 @@ This kit does not contain backend runtime code. The original backend owns:
 
 ## GitHub Pages site
 
-This repo includes a buildless static site for GitHub Pages:
+This repo includes a buildless static SGP AI query interface for GitHub Pages:
 
 ```text
 index.html
@@ -66,11 +66,17 @@ assets/site.js
 .nojekyll
 ```
 
-The site reads `assistant.yaml`, `corpus/manifest.yaml`, and
-`eval/questions.yaml` from the published repository and renders a review
-dashboard for the assistant kit. It does not embed API keys or call the
-authenticated chat API directly. Live assistant chat still requires the backend
-or a server-side proxy.
+The site calls the backend's public, origin-limited SGP AI Pages proxy:
+
+```text
+GET  /pages/sgp-ai/status
+POST /pages/sgp-ai/model
+GET  /pages/sgp-ai/debug/retrieve
+```
+
+It does not embed API keys or call the authenticated assistant API directly.
+The backend must allow the GitHub Pages origin with
+`SGP_AI_PAGES_ALLOWED_ORIGINS`, defaulting to `https://ben-keller.github.io`.
 
 To publish it, configure GitHub Pages as:
 

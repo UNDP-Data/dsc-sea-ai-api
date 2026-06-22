@@ -1,174 +1,217 @@
-const numberFormat = new Intl.NumberFormat("en");
+const API_BASE = "https://sea-ai-api.azurewebsites.net/pages/sgp-ai";
 
-const paths = {
-  assistant: "assistant.yaml",
-  manifest: "corpus/manifest.yaml",
-  questions: "eval/questions.yaml",
-};
+const form = document.getElementById("query-form");
+const queryEl = document.getElementById("query");
+const submitButton = document.getElementById("submit");
+const stopButton = document.getElementById("stop");
+const statusDot = document.getElementById("status-dot");
+const statusLabel = document.getElementById("status-label");
+const answerEl = document.getElementById("answer");
+const answerMeta = document.getElementById("answer-meta");
+const sourcesEl = document.getElementById("sources");
+const sourceCountEl = document.getElementById("source-count");
+const exampleButtons = Array.from(document.querySelectorAll(".examples button"));
 
-function setText(id, value) {
-  const element = document.getElementById(id);
-  if (element) element.textContent = value;
+let activeController = null;
+let backendReady = false;
+
+function setStatus(kind, text) {
+  statusDot.className = `dot ${kind}`;
+  statusLabel.textContent = text;
+  backendReady = kind === "good";
+  submitButton.disabled = !backendReady;
 }
 
-async function readText(path) {
-  const response = await fetch(path, { cache: "no-cache" });
-  if (!response.ok) throw new Error(`Unable to load ${path}`);
-  return response.text();
+function setRunning(isRunning) {
+  submitButton.disabled = isRunning || !backendReady;
+  stopButton.hidden = !isRunning;
 }
 
-function countMatches(text, pattern) {
-  const matches = text.match(pattern);
-  return matches ? matches.length : 0;
-}
-
-function topEntries(values, limit = 8) {
-  const counts = new Map();
-  for (const value of values) {
-    const key = value.trim();
-    if (!key) continue;
-    counts.set(key, (counts.get(key) || 0) + 1);
-  }
-  return [...counts.entries()]
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .slice(0, limit);
-}
-
-function extractSection(text, sectionName, nextSectionNames = []) {
-  const start = text.indexOf(`\n${sectionName}:`);
-  if (start === -1 && !text.startsWith(`${sectionName}:`)) return "";
-  const sectionStart = start === -1 ? 0 : start + 1;
-  let sectionEnd = text.length;
-  for (const name of nextSectionNames) {
-    const index = text.indexOf(`\n${name}:`, sectionStart + sectionName.length + 1);
-    if (index !== -1 && index < sectionEnd) sectionEnd = index;
-  }
-  return text.slice(sectionStart, sectionEnd);
-}
-
-function extractListValues(block, key) {
-  const values = [];
-  const lines = block.split(/\r?\n/);
-  let inList = false;
-  let indent = 0;
-  for (const line of lines) {
-    const keyMatch = line.match(new RegExp(`^(\\s*)${key}:\\s*$`));
-    if (keyMatch) {
-      inList = true;
-      indent = keyMatch[1].length;
-      continue;
+function readError(response) {
+  return response.text().then((text) => {
+    try {
+      const payload = JSON.parse(text);
+      return payload.detail || payload.error || response.statusText;
+    } catch (_) {
+      return text || response.statusText;
     }
-    if (inList) {
-      const item = line.match(/^\s*-\s+(.+?)\s*$/);
-      if (item) {
-        values.push(item[1].replace(/^["']|["']$/g, ""));
-        continue;
-      }
-      const nextKey = line.match(/^(\s*)[A-Za-z0-9_]+:/);
-      if (nextKey && nextKey[1].length <= indent) inList = false;
-    }
-  }
-  return values;
-}
-
-function parseDocuments(manifestText, limit = 5) {
-  const documentsText = extractSection(manifestText, "documents");
-  const blocks = documentsText.split(/\n(?=- source_id:)/).filter((block) => /\n\s*title:/.test(block));
-  return blocks.slice(0, limit).map((block) => {
-    const title = block.match(/\ntitle:\s*(.+)/)?.[1]?.replace(/^["']|["']$/g, "") || "Untitled document";
-    const url = block.match(/\n\s*url:\s*(.+)/)?.[1] || "";
-    const year = block.match(/\n\s*year:\s*(.+)/)?.[1] || "";
-    const language = block.match(/\n\s*language:\s*(.+)/)?.[1] || "";
-    return { title, url, year, language };
   });
 }
 
-function renderTags(id, entries) {
-  const element = document.getElementById(id);
-  if (!element) return;
-  element.replaceChildren();
-  if (!entries.length) {
-    const empty = document.createElement("span");
-    empty.textContent = "No data";
-    element.appendChild(empty);
-    return;
+function extractText(content) {
+  if (typeof content === "string") return content;
+  if (Array.isArray(content)) return content.map(extractText).join("");
+  if (content && typeof content === "object") {
+    if (typeof content.text === "string") return content.text;
+    if (content.text && typeof content.text.value === "string") return content.text.value;
+    if (content.content) return extractText(content.content);
   }
-  for (const [label, count] of entries) {
-    const tag = document.createElement("span");
-    tag.textContent = `${label} ${count}`;
-    element.appendChild(tag);
-  }
+  return "";
 }
 
-function renderDocuments(documents) {
-  const element = document.getElementById("document-list");
-  if (!element) return;
-  element.replaceChildren();
-  if (!documents.length) {
+function uniqueDocuments(documents) {
+  const seen = new Set();
+  const clean = [];
+  for (const item of Array.isArray(documents) ? documents : []) {
+    if (!item || typeof item !== "object") continue;
+    const title = String(item.title || item.canonical_title || "").trim();
+    const url = String(item.url || "").trim();
+    const summary = String(item.summary || "").trim();
+    const language = String(item.language || "").trim();
+    const year = Number.isInteger(item.year) && item.year > 0 ? item.year : null;
+    const key = item.document_id || url || `${title}|${year || ""}`;
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    clean.push({ title: title || url || "Untitled document", url, summary, language, year });
+  }
+  return clean;
+}
+
+function renderSources(documents) {
+  const clean = uniqueDocuments(documents);
+  sourceCountEl.textContent = `${clean.length} document${clean.length === 1 ? "" : "s"}`;
+  sourcesEl.replaceChildren();
+  if (!clean.length) {
     const empty = document.createElement("p");
-    empty.className = "muted";
-    empty.textContent = "No documents found in the manifest.";
-    element.appendChild(empty);
+    empty.className = "empty";
+    empty.textContent = "No references returned yet.";
+    sourcesEl.appendChild(empty);
     return;
   }
-  for (const documentItem of documents) {
-    const article = document.createElement("article");
-    article.className = "document-card";
-    const title = document.createElement("h4");
-    if (documentItem.url) {
-      const link = document.createElement("a");
-      link.href = documentItem.url;
-      link.textContent = documentItem.title;
-      link.rel = "noreferrer noopener";
-      title.appendChild(link);
-    } else {
-      title.textContent = documentItem.title;
+  for (const doc of clean) {
+    const card = document.createElement("article");
+    card.className = "source-card";
+    const title = document.createElement(doc.url ? "a" : "strong");
+    title.textContent = doc.title;
+    if (doc.url) {
+      title.href = doc.url;
+      title.target = "_blank";
+      title.rel = "noreferrer noopener";
     }
-    const meta = document.createElement("p");
-    meta.textContent = [documentItem.year, documentItem.language].filter(Boolean).join(" · ");
-    article.append(title, meta);
-    element.appendChild(article);
+    card.appendChild(title);
+    const metaParts = [];
+    if (doc.year) metaParts.push(String(doc.year));
+    if (doc.language) metaParts.push(doc.language);
+    if (metaParts.length) {
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = metaParts.join(" · ");
+      card.appendChild(meta);
+    }
+    if (doc.summary) {
+      const summary = document.createElement("p");
+      summary.textContent = doc.summary;
+      card.appendChild(summary);
+    }
+    sourcesEl.appendChild(card);
   }
 }
 
-async function hydratePage() {
+async function checkStatus() {
   try {
-    const [assistantText, manifestText, questionsText] = await Promise.all([
-      readText(paths.assistant),
-      readText(paths.manifest),
-      readText(paths.questions),
-    ]);
-
-    const assistantId = assistantText.match(/^assistant_id:\s*(.+)$/m)?.[1]?.trim() || "sgp_ai";
-    const documentsText = extractSection(manifestText, "documents");
-    const sourceText = extractSection(manifestText, "sources", ["documents"]);
-    const documentCount = countMatches(documentsText, /^- source_id:/gm);
-    const sourceCount = countMatches(sourceText, /^- source_id:/gm);
-    const chunkCount = countMatches(documentsText, /^\s+- section_title:/gm);
-    const questionCount = countMatches(questionsText, /^\s+- question_id:/gm);
-    const topics = topEntries(extractListValues(documentsText, "topic_tags"), 10);
-    const languages = topEntries([...documentsText.matchAll(/^\s*language:\s*(.+)$/gm)].map((match) => match[1]), 8);
-
-    setText("assistant-id", assistantId);
-    setText("document-count", numberFormat.format(documentCount));
-    setText("chunk-count", numberFormat.format(chunkCount));
-    setText("question-count", numberFormat.format(questionCount));
-    setText("hero-doc-count", `${numberFormat.format(documentCount)} documents from ${numberFormat.format(sourceCount)} source${sourceCount === 1 ? "" : "s"}`);
-    renderTags("topic-list", topics);
-    renderTags("language-list", languages);
-    renderDocuments(parseDocuments(manifestText));
-  } catch (error) {
-    setText("hero-doc-count", "Corpus files available");
-    setText("document-count", "Open");
-    setText("chunk-count", "Open");
-    setText("question-count", "Open");
-    renderTags("topic-list", []);
-    renderTags("language-list", []);
-    const list = document.getElementById("document-list");
-    if (list) {
-      list.innerHTML = '<p class="muted">Open the manifest directly to inspect documents.</p>';
+    const response = await fetch(`${API_BASE}/status`, { headers: { "Accept": "application/json" } });
+    if (!response.ok) throw new Error(await readError(response));
+    const payload = await response.json();
+    if (payload.corpus_ready) {
+      setStatus("good", `Ready · ${payload.document_count.toLocaleString()} documents`);
+    } else {
+      setStatus("bad", "Corpus unavailable");
     }
+  } catch (error) {
+    setStatus("bad", "Backend unavailable");
+    answerEl.innerHTML = "";
+    const message = document.createElement("p");
+    message.className = "error";
+    message.textContent = String(error.message || error);
+    answerEl.appendChild(message);
   }
 }
 
-hydratePage();
+async function streamAnswer(query, signal) {
+  const response = await fetch(`${API_BASE}/model`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/x-ndjson" },
+    body: JSON.stringify([{ role: "human", content: query }]),
+    signal,
+  });
+  if (!response.ok) throw new Error(await readError(response));
+  if (!response.body) throw new Error("No response stream returned by browser.");
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let answer = "";
+  let chunkCount = 0;
+  const started = performance.now();
+
+  function handleLine(line) {
+    if (!line.trim()) return;
+    const payload = JSON.parse(line);
+    chunkCount += 1;
+    const text = extractText(payload.content);
+    if (text) {
+      answer += text;
+      answerEl.textContent = answer;
+    }
+    if (Array.isArray(payload.documents)) {
+      renderSources(payload.documents);
+    }
+    answerMeta.textContent = `${Math.round((performance.now() - started) / 100) / 10}s · ${chunkCount} chunks`;
+  }
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() || "";
+    for (const line of lines) handleLine(line);
+  }
+  buffer += decoder.decode();
+  if (buffer.trim()) handleLine(buffer);
+}
+
+async function runQuery(query) {
+  const cleanQuery = String(query || "").trim();
+  if (!cleanQuery || !backendReady) return;
+  if (activeController) activeController.abort();
+  activeController = new AbortController();
+  answerMeta.textContent = "Streaming...";
+  answerEl.textContent = "";
+  sourcesEl.innerHTML = '<p class="empty">Waiting for references...</p>';
+  sourceCountEl.textContent = "0 documents";
+  setRunning(true);
+  try {
+    await streamAnswer(cleanQuery, activeController.signal);
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      answerEl.innerHTML = "";
+      const message = document.createElement("p");
+      message.className = "error";
+      message.textContent = String(error.message || error);
+      answerEl.appendChild(message);
+      answerMeta.textContent = "Error";
+    }
+  } finally {
+    setRunning(false);
+    activeController = null;
+  }
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  runQuery(queryEl.value);
+});
+
+stopButton.addEventListener("click", () => {
+  if (activeController) activeController.abort();
+});
+
+for (const button of exampleButtons) {
+  button.addEventListener("click", () => {
+    queryEl.value = button.textContent;
+    runQuery(button.textContent);
+  });
+}
+
+checkStatus();
