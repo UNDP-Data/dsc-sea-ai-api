@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 import main as app_module
 
 
-ALLOWED_ORIGIN = "https://ben-keller.github.io"
+ALLOWED_ORIGIN = "https://undp-data.github.io"
 
 
 class FakeTable:

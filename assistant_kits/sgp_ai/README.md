@@ -76,7 +76,8 @@ GET  /pages/sgp-ai/debug/retrieve
 
 It does not embed API keys or call the authenticated assistant API directly.
 The backend must allow the GitHub Pages origin with
-`SGP_AI_PAGES_ALLOWED_ORIGINS`, defaulting to `https://ben-keller.github.io`.
+`SGP_AI_PAGES_ALLOWED_ORIGINS`, defaulting to
+`https://undp-data.github.io`.
 
 To publish it, configure GitHub Pages as:
 
