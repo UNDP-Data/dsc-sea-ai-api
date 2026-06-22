@@ -122,7 +122,7 @@ def _get_profile_or_404(assistant_id: str):
 
 
 def _sgp_ai_pages_allowed_origins() -> set[str]:
-    raw = os.getenv("SGP_AI_PAGES_ALLOWED_ORIGINS") or "https://ben-keller.github.io,https://undp-data.github.io"
+    raw = os.getenv("SGP_AI_PAGES_ALLOWED_ORIGINS") or "https://undp-data.github.io"
     return {item.strip().rstrip("/") for item in raw.split(",") if item.strip()}
 
 
