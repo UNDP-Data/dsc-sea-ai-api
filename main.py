@@ -17,7 +17,7 @@ import networkx as nx
 import yaml
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from packaging.version import Version
@@ -41,6 +41,7 @@ from src.security import authenticate
 
 load_dotenv()
 logger = logging.getLogger(__name__)
+SGP_AI_PAGES_ASSISTANT_ID = "sgp_ai"
 
 
 def _env_timeout_seconds(
@@ -118,6 +119,36 @@ def _get_profile_or_404(assistant_id: str):
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(error),
         ) from error
+
+
+def _sgp_ai_pages_allowed_origins() -> set[str]:
+    raw = os.getenv("SGP_AI_PAGES_ALLOWED_ORIGINS") or "https://ben-keller.github.io"
+    return {item.strip().rstrip("/") for item in raw.split(",") if item.strip()}
+
+
+def _sgp_ai_pages_origin(request: Request) -> str:
+    origin = (request.headers.get("Origin") or "").strip().rstrip("/")
+    if not origin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Origin header is required for the SGP AI Pages API.",
+        )
+    if origin not in _sgp_ai_pages_allowed_origins():
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Origin is not allowed for the SGP AI Pages API.",
+        )
+    return origin
+
+
+def _sgp_ai_pages_cors_headers(origin: str) -> dict[str, str]:
+    return {
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Headers": "Content-Type, X-Request-Id",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Expose-Headers": "X-Request-Id",
+        "Vary": "Origin",
+    }
 
 
 async def _close_connection(connection) -> None:
@@ -408,6 +439,90 @@ async def debug_assistant_retrieve(
             "chunks": [chunk.model_dump() for chunk in chunks],
             "debug": debug_payload,
         }
+
+
+@app.options(
+    path="/pages/sgp-ai/{path:path}",
+    include_in_schema=False,
+)
+async def sgp_ai_pages_preflight(request: Request):
+    """
+    CORS preflight for the static GitHub Pages SGP AI interface.
+    """
+    origin = _sgp_ai_pages_origin(request)
+    return Response(status_code=204, headers=_sgp_ai_pages_cors_headers(origin))
+
+
+@app.get(
+    path="/pages/sgp-ai/status",
+    include_in_schema=False,
+)
+async def sgp_ai_pages_status(request: Request):
+    """
+    Origin-limited readiness check for the static GitHub Pages SGP AI interface.
+    """
+    origin = _sgp_ai_pages_origin(request)
+    profile = _get_profile_or_404(SGP_AI_PAGES_ASSISTANT_ID)
+    async with _profile_client(profile) as client:
+        table = await client.open_optional_table(client.table_name("documents"))
+        document_count = 0
+        if table is not None:
+            document_count = await table.count_rows()
+    return JSONResponse(
+        {
+            "ok": True,
+            "assistant_id": profile.assistant_id,
+            "display_name": profile.display_name,
+            "corpus_ready": document_count > 0,
+            "document_count": document_count,
+        },
+        headers=_sgp_ai_pages_cors_headers(origin),
+    )
+
+
+@app.get(
+    path="/pages/sgp-ai/debug/retrieve",
+    include_in_schema=False,
+)
+async def sgp_ai_pages_retrieve(
+    request: Request,
+    query: Annotated[str, Query(min_length=2)],
+    limit: Annotated[int, Query(ge=1, le=12)] = 6,
+):
+    """
+    Origin-limited retrieval preview for the static GitHub Pages SGP AI interface.
+    """
+    origin = _sgp_ai_pages_origin(request)
+    profile = _get_profile_or_404(SGP_AI_PAGES_ASSISTANT_ID)
+    async with _profile_client(profile) as client:
+        chunks, documents = await client.retrieve_chunks(query, limit=limit)
+    return JSONResponse(
+        {
+            "assistant_id": profile.assistant_id,
+            "query": query,
+            "limit": limit,
+            "documents": [document.model_dump() for document in documents],
+            "chunks": [chunk.model_dump() for chunk in chunks],
+        },
+        headers=_sgp_ai_pages_cors_headers(origin),
+    )
+
+
+@app.post(
+    path="/pages/sgp-ai/model",
+    response_model=AssistantResponse,
+    response_model_by_alias=False,
+    include_in_schema=False,
+)
+async def sgp_ai_pages_model(request: Request, messages: list[Message]):
+    """
+    Origin-limited streaming answer endpoint for the static GitHub Pages SGP AI interface.
+    """
+    origin = _sgp_ai_pages_origin(request)
+    response = await ask_assistant_model(request, SGP_AI_PAGES_ASSISTANT_ID, messages)
+    for key, value in _sgp_ai_pages_cors_headers(origin).items():
+        response.headers[key] = value
+    return response
 
 
 @app.get(
