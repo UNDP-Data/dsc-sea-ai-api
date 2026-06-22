@@ -55,6 +55,27 @@ This kit does not contain backend runtime code. The original backend owns:
 - retrieval and ranking behavior
 - deployment to Azure
 
+## GitHub Pages site
+
+This repo includes a buildless static site for GitHub Pages:
+
+```text
+index.html
+assets/site.css
+assets/site.js
+.github/workflows/pages.yml
+.nojekyll
+```
+
+The site reads `assistant.yaml`, `corpus/manifest.yaml`, and
+`eval/questions.yaml` from the published repository and renders a review
+dashboard for the assistant kit. It does not embed API keys or call the
+authenticated chat API directly. Live assistant chat still requires the backend
+or a server-side proxy.
+
+To publish it, push to `main` and configure the repository's Pages source to
+GitHub Actions.
+
 After installation in the backend, expected routes are:
 
 ```text
