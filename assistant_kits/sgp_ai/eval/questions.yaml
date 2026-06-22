@@ -50,7 +50,7 @@ questions:
       - national
 
   - question_id: gender_youth_disability_cba
-    query: How should SGP community-based adaptation projects mainstream gender, children, youth, and disability?
+    query: How should SGP-supported community-based adaptation grant initiatives mainstream gender, children, youth, and disability?
     expected_documents:
       - max_rank: 2
         title: Mainstreaming Gender, Children & Youth, and Disability into SGPs Community-Based Adaptation Projects

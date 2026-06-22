@@ -40,7 +40,7 @@ class ProxyMessage(BaseModel):
 
 class ModelProxyRequest(BaseModel):
     messages: list[ProxyMessage] = Field(min_length=1)
-    target_mode: TargetMode = "local"
+    target_mode: TargetMode = "backend"
 
 
 def _normalise_base(url: str) -> str:
@@ -199,11 +199,13 @@ async def sgp_ai_tester_page(request: Request):
 
 
 @app.get("/sgp-ai-tester/api/status", include_in_schema=False)
-async def proxy_status(request: Request, mode: TargetMode = "local"):
+async def proxy_status(request: Request, mode: TargetMode = "backend"):
     _require_local_request(request)
     api_base = _get_api_base(mode)
     assistant_id = _get_assistant_id()
     trace_headers: dict[str, str] = {}
+    corpus_ready = False
+    document_probe_count = 0
     try:
         async with httpx.AsyncClient(timeout=httpx.Timeout(20.0, connect=5.0)) as client:
             response = await client.get(f"{api_base}/assistants", headers=_headers(request, mode))
@@ -216,6 +218,20 @@ async def proxy_status(request: Request, mode: TargetMode = "local"):
                 (item for item in assistants if isinstance(item, dict) and item.get("assistant_id") == assistant_id),
                 None,
             )
+            if profile is not None:
+                documents_url = f"{api_base}/assistants/{quote(assistant_id, safe='')}/documents"
+                documents_response = await client.get(
+                    documents_url,
+                    headers=_headers(request, mode),
+                    params={"limit": 1},
+                )
+                trace_headers.update(_copy_trace_headers(documents_response))
+                await _raise_for_upstream(documents_response)
+                documents = documents_response.json()
+                if not isinstance(documents, list):
+                    raise HTTPException(status_code=502, detail="Backend documents response was not a list.")
+                document_probe_count = len(documents)
+                corpus_ready = bool(documents)
     except HTTPException:
         raise
     except httpx.HTTPError as error:
@@ -228,6 +244,8 @@ async def proxy_status(request: Request, mode: TargetMode = "local"):
             "backend_base_url": api_base,
             "assistant_id": assistant_id,
             "installed": profile is not None,
+            "corpus_ready": corpus_ready,
+            "document_probe_count": document_probe_count,
             "profile": profile,
             "assistant_count": len(assistants),
         },
@@ -240,7 +258,7 @@ async def proxy_retrieve(
     request: Request,
     query: Annotated[str, Query(min_length=2)],
     limit: Annotated[int, Query(ge=1, le=50)] = 12,
-    mode: TargetMode = "local",
+    mode: TargetMode = "backend",
 ):
     _require_local_request(request)
     api_base = _get_api_base(mode)

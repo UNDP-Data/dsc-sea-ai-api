@@ -218,12 +218,12 @@
                     <button id="target-local" type="button" data-target-mode="local">Local AI</button>
                     <button id="target-backend" type="button" data-target-mode="backend">Backend AI</button>
                 </div>
-                <div>Active target: <span id="active-target" class="active-target">Local AI</span></div>
+                <div>Active target: <span id="active-target" class="active-target">Backend AI</span></div>
             </div>
             <form id="query-form">
                 <label>
                     Query
-                    <textarea id="query" required minlength="2">How does SGP address coastal erosion?</textarea>
+                    <textarea id="query" required minlength="2">How have SGP-supported grants helped communities address coastal erosion?</textarea>
                 </label>
                 <div class="controls">
                     <label class="limit-row">
@@ -300,7 +300,8 @@
         let activeController = null;
         let backendReady = false;
         const targetStorageKey = "sgp-ai-target-mode";
-        let targetMode = localStorage.getItem(targetStorageKey) === "backend" ? "backend" : "local";
+        const storedTargetMode = localStorage.getItem(targetStorageKey);
+        let targetMode = storedTargetMode === "local" || storedTargetMode === "backend" ? storedTargetMode : "backend";
 
         function setBackendStatus(kind, label, detail) {
             statusDot.className = `dot ${kind}`;
@@ -475,8 +476,10 @@
                 const response = await fetch(`/sgp-ai-tester/api/status?mode=${encodeURIComponent(targetMode)}`);
                 if (!response.ok) throw new Error(await readError(response));
                 const payload = await response.json();
-                if (payload.installed) {
+                if (payload.installed && payload.corpus_ready) {
                     setBackendStatus("good", `${targetLabel(targetMode)} ready`, `Target: ${payload.backend_base_url} · assistant: ${payload.assistant_id}`);
+                } else if (payload.installed) {
+                    setBackendStatus("bad", `${targetLabel(targetMode)} corpus missing`, `Target reachable, but ${assistantId} returned no documents.`);
                 } else {
                     setBackendStatus("bad", `${targetLabel(targetMode)} missing SGP AI`, `Target reachable, but ${assistantId} is not in /assistants.`);
                 }
