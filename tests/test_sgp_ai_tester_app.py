@@ -43,13 +43,17 @@ def test_status_reports_installed_assistant(monkeypatch):
     _set_env(monkeypatch)
 
     def handler(request: httpx.Request) -> httpx.Response:
-        assert request.headers["X-Api-Key"] == "local-key"
+        assert str(request.url).startswith("http://backend.test/")
+        assert request.headers["X-Api-Key"] == "backend-key"
         if request.url.path == "/assistants":
             return httpx.Response(
                 200,
                 json=[{"assistant_id": "sgp_ai", "display_name": "SGP AI"}],
                 headers={"X-Request-Id": "req-1"},
             )
+        if request.url.path == "/assistants/sgp_ai/documents":
+            assert request.url.params["limit"] == "1"
+            return httpx.Response(200, json=[{"document_id": "doc-1", "title": "Doc"}])
         raise AssertionError(f"unexpected request: {request.url}")
 
     _patch_async_client(monkeypatch, handler)
@@ -58,7 +62,9 @@ def test_status_reports_installed_assistant(monkeypatch):
     assert response.status_code == 200
     assert response.json()["installed"] is True
     assert response.json()["assistant_id"] == "sgp_ai"
-    assert response.json()["mode"] == "local"
+    assert response.json()["mode"] == "backend"
+    assert response.json()["corpus_ready"] is True
+    assert response.json()["document_probe_count"] == 1
     assert response.headers["X-Request-Id"] == "req-1"
 
 
@@ -68,7 +74,11 @@ def test_status_checks_backend_mode_with_backend_key(monkeypatch):
     def handler(request: httpx.Request) -> httpx.Response:
         assert str(request.url).startswith("http://backend.test/")
         assert request.headers["X-Api-Key"] == "backend-key"
-        return httpx.Response(200, json=[{"assistant_id": "sgp_ai", "display_name": "SGP AI"}])
+        if request.url.path == "/assistants":
+            return httpx.Response(200, json=[{"assistant_id": "sgp_ai", "display_name": "SGP AI"}])
+        if request.url.path == "/assistants/sgp_ai/documents":
+            return httpx.Response(200, json=[{"document_id": "doc-1"}])
+        raise AssertionError(f"unexpected request: {request.url}")
 
     _patch_async_client(monkeypatch, handler)
     with TestClient(app_module.app) as client:
@@ -76,6 +86,27 @@ def test_status_checks_backend_mode_with_backend_key(monkeypatch):
     assert response.status_code == 200
     assert response.json()["installed"] is True
     assert response.json()["mode"] == "backend"
+    assert response.json()["corpus_ready"] is True
+
+
+def test_status_reports_installed_assistant_with_missing_corpus(monkeypatch):
+    _set_env(monkeypatch)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert str(request.url).startswith("http://backend.test/")
+        if request.url.path == "/assistants":
+            return httpx.Response(200, json=[{"assistant_id": "sgp_ai", "display_name": "SGP AI"}])
+        if request.url.path == "/assistants/sgp_ai/documents":
+            return httpx.Response(200, json=[])
+        raise AssertionError(f"unexpected request: {request.url}")
+
+    _patch_async_client(monkeypatch, handler)
+    with TestClient(app_module.app) as client:
+        response = client.get("/sgp-ai-tester/api/status")
+    assert response.status_code == 200
+    assert response.json()["installed"] is True
+    assert response.json()["corpus_ready"] is False
+    assert response.json()["document_probe_count"] == 0
 
 
 def test_status_reports_missing_assistant(monkeypatch):
@@ -153,6 +184,7 @@ def test_model_blocks_missing_corpus(monkeypatch):
     _set_env(monkeypatch)
 
     def handler(request: httpx.Request) -> httpx.Response:
+        assert str(request.url).startswith("http://backend.test/")
         assert request.url.path == "/assistants/sgp_ai/documents"
         return httpx.Response(200, json=[])
 
