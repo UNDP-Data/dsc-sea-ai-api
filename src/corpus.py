@@ -148,6 +148,67 @@ SOURCE_DEFINITIONS: tuple[SourceDefinition, ...] = (
 )
 
 
+def _source_definitions_from_profile(profile=None) -> tuple[SourceDefinition, ...]:
+    """
+    Return source definitions from a RAG profile, falling back to SEA defaults.
+    """
+    raw_definitions = getattr(profile, "source_definitions", None)
+    if not raw_definitions:
+        return SOURCE_DEFINITIONS
+    definitions: list[SourceDefinition] = []
+    for item in raw_definitions:
+        if not isinstance(item, dict):
+            continue
+        source_id = str(item.get("source_id") or "").strip()
+        name = str(item.get("name") or source_id).strip()
+        organization = str(item.get("organization") or name).strip()
+        if not source_id or not name:
+            continue
+        domains = item.get("domains")
+        definitions.append(
+            SourceDefinition(
+                source_id=source_id,
+                name=name,
+                organization=organization,
+                authority_tier=str(item.get("authority_tier") or "partner"),
+                base_url=str(item.get("base_url") or ""),
+                ingestion_method=str(item.get("ingestion_method") or "manual_manifest"),
+                review_policy=str(item.get("review_policy") or "hybrid_editorial"),
+                license_policy=item.get("license_policy"),
+                robots_policy=item.get("robots_policy"),
+                domains=tuple(value for value in domains if isinstance(value, str))
+                if isinstance(domains, list)
+                else (),
+            )
+        )
+    return tuple(definitions) or SOURCE_DEFINITIONS
+
+
+def _rules_from_profile(profile, group: str, default: dict[str, tuple[str, ...]]) -> dict[str, tuple[str, ...]]:
+    """
+    Return tag rules from a profile, preserving legacy defaults when absent.
+    """
+    tag_rules = getattr(profile, "tag_rules", None)
+    if not isinstance(tag_rules, dict):
+        return default
+    raw_group = tag_rules.get(group)
+    if not isinstance(raw_group, dict):
+        return default
+    rules: dict[str, tuple[str, ...]] = {}
+    for tag, patterns in raw_group.items():
+        if isinstance(patterns, str):
+            clean_patterns = (patterns,)
+        elif isinstance(patterns, list):
+            clean_patterns = tuple(
+                item for item in patterns if isinstance(item, str) and item.strip()
+            )
+        else:
+            clean_patterns = ()
+        if clean_patterns:
+            rules[str(tag)] = clean_patterns
+    return rules or default
+
+
 def _utcnow_iso() -> str:
     return datetime.now(tz=UTC).replace(microsecond=0).isoformat()
 
@@ -211,9 +272,9 @@ def _infer_quality_score(summary: str | None, content: str | None, url: str | No
     return min(score, 1.0)
 
 
-def match_source(url: str | None) -> SourceDefinition:
+def match_source(url: str | None, *, profile=None) -> SourceDefinition:
     domain = urlparse((url or "").strip()).netloc.lower()
-    for definition in SOURCE_DEFINITIONS:
+    for definition in _source_definitions_from_profile(profile):
         if any(domain.endswith(candidate) for candidate in definition.domains):
             return definition
     return SourceDefinition(
@@ -262,6 +323,7 @@ def document_key_from_row(row: dict) -> str:
 def build_document_record(
     rows: list[dict],
     *,
+    profile=None,
     parser_version: str = "bootstrap-v1",
     embedding_version: str = "legacy",
     status: str = "approved",
@@ -280,17 +342,17 @@ def build_document_record(
         "",
     )
     content = "\n".join((row.get("content") or "").strip() for row in rows if (row.get("content") or "").strip())
-    source = match_source(url)
+    source = match_source(url, profile=profile)
     source_record = build_source_record(source, timestamp=now)
     document_type = _infer_document_type(title, summary, content)
     series_name, series_id = _infer_series(title)
     text = " ".join(filter(None, [_normalize_text(title), _normalize_text(summary), _normalize_text(content)]))
-    topic_tags = _tag_matches(text, TOPIC_RULES) or None
-    geographies = _tag_matches(text, GEOGRAPHY_RULES) or None
-    country_codes = _tag_matches(text, COUNTRY_RULES) or None
-    sdg_tags = _tag_matches(text, SDG_RULES) or None
-    sector_tags = _tag_matches(text, SECTOR_RULES) or None
-    audience_tags = _tag_matches(text, AUDIENCE_RULES) or None
+    topic_tags = _tag_matches(text, _rules_from_profile(profile, "topics", TOPIC_RULES)) or None
+    geographies = _tag_matches(text, _rules_from_profile(profile, "geographies", GEOGRAPHY_RULES)) or None
+    country_codes = _tag_matches(text, _rules_from_profile(profile, "countries", COUNTRY_RULES)) or None
+    sdg_tags = _tag_matches(text, _rules_from_profile(profile, "sdgs", SDG_RULES)) or None
+    sector_tags = _tag_matches(text, _rules_from_profile(profile, "sectors", SECTOR_RULES)) or None
+    audience_tags = _tag_matches(text, _rules_from_profile(profile, "audiences", AUDIENCE_RULES)) or None
     publication_date = f"{year:04d}-01-01" if year else None
     content_hash = hashlib.sha256(
         "\n".join([title, url, summary, content]).encode("utf-8")
@@ -346,11 +408,16 @@ def build_document_record(
     )
 
 
-def build_source_records_for_documents(documents: list[DocumentRecord]) -> list[SourceRecord]:
+def build_source_records_for_documents(
+    documents: list[DocumentRecord], *, profile=None
+) -> list[SourceRecord]:
     timestamp = _utcnow_iso()
     records: dict[str, SourceRecord] = {}
-    definitions = {definition.source_id: definition for definition in SOURCE_DEFINITIONS}
-    definitions["manual_external"] = match_source("")
+    definitions = {
+        definition.source_id: definition
+        for definition in _source_definitions_from_profile(profile)
+    }
+    definitions["manual_external"] = match_source("", profile=profile)
     for document in documents:
         definition = definitions.get(document.source_id)
         if definition is None:
@@ -370,6 +437,7 @@ def enrich_chunk_rows(
     rows: list[dict],
     *,
     documents_by_key: dict[str, DocumentRecord],
+    profile=None,
 ) -> list[dict]:
     enriched = []
     per_document_index: dict[str, int] = {}
@@ -377,7 +445,7 @@ def enrich_chunk_rows(
         key = document_key_from_row(row)
         document = documents_by_key.get(key)
         if document is None:
-            document = build_document_record([row])
+            document = build_document_record([row], profile=profile)
             documents_by_key[key] = document
         chunk_index = per_document_index.get(document.document_id, 0)
         per_document_index[document.document_id] = chunk_index + 1

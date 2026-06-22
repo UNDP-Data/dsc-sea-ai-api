@@ -1,0 +1,134 @@
+assistant_id: sgp_ai
+questions:
+  - question_id: op8_governance
+    query: Who are the OP8 operational guidelines written for, and what implementation issues do they cover?
+    expected_documents:
+      - max_rank: 3
+        title: GEF Small Grants Programme UNDP Operational Guidelines for Operational Phase 8
+        url: https://sgp.undp.org/innovation-library/item/2632-gef-small-grants-programme-undp-operational-guidelines-for-operational-phase-8.html
+        reason: Primary source for OP8 governance, implementation roles, eligibility, project cycle, reporting, and grant disbursement guidance.
+    expected_answer_terms:
+      - [Operational Phase 8, OP8]
+      - country programme
+      - project cycle
+
+  - question_id: latest_results_period
+    query: What reporting period and how many country programmes are covered by the latest SGP annual monitoring report in the Innovation Library corpus?
+    expected_documents:
+      - max_rank: 1
+        title: GEF SMALL GRANTS PROGRAMME ANNUAL MONITORING REPORT 2024 - 2025 (SUMMARY INFOGRAPHIC)
+        url: https://sgp.undp.org/innovation-library/item/2660-gef-small-grants-programme-annual-monitoring-report-2024---2025-(summary-infographic).html
+        reason: Latest imported annual results source, covering 1 July 2024 to 30 June 2025 and 116 SGP Country Programmes.
+    expected_answer_terms:
+      - [1 July 2024, July 1, 2024]
+      - [30 June 2025, June 30, 2025]
+      - 116
+
+  - question_id: annual_monitoring_priority_groups
+    query: Which priority groups and focal areas are associated with the 2023-2024 SGP annual monitoring report?
+    expected_documents:
+      - max_rank: 2
+        title: GEF SMALL GRANTS PROGRAMME ANNUAL MONITORING REPORT 2023 - 2024 (Full Version)
+        url: https://sgp.undp.org/innovation-library/item/2628-gef-small-grants-programme-annual-monitoring-report-2023---2024-(full-version).html
+        reason: Source tagged with Indigenous Peoples, women, youth, persons with disabilities, and SGP focal areas.
+    expected_answer_terms:
+      - Indigenous Peoples
+      - Women
+      - Youth
+      - Biodiversity
+
+  - question_id: cba_mainstreaming
+    query: What does the Innovation Library say about planning and mainstreaming community-based adaptation at local, sub-national, and national levels?
+    expected_documents:
+      - max_rank: 2
+        title: Guidance Note on How to Plan and Mainstream Community-Based Adaptation at the Local, Sub-National and National Levels
+        url: https://sgp.undp.org/innovation-library/item/732-guidance-note-on-how-to-plan-and-mainstream-community-based-adaptation-at-the-local-sub-national-and-national-levels.html
+        reason: Dedicated guidance note for planning and mainstreaming community-based adaptation.
+    expected_answer_terms:
+      - community-based adaptation
+      - local
+      - national
+
+  - question_id: gender_youth_disability_cba
+    query: How should SGP community-based adaptation projects mainstream gender, children, youth, and disability?
+    expected_documents:
+      - max_rank: 2
+        title: Mainstreaming Gender, Children & Youth, and Disability into SGPs Community-Based Adaptation Projects
+        url: https://sgp.undp.org/innovation-library/item/727-mainstreaming-gender-children-youth-and-disability-into-sgps-community-based-adaptation-projects.html
+        reason: Dedicated SGP source on mainstreaming inclusion dimensions into CBA projects.
+    expected_answer_terms:
+      - gender
+      - youth
+      - disability
+
+  - question_id: icca_capacity
+    query: What resources cover ICCA capacity building and knowledge sharing for Indigenous Peoples and local communities?
+    expected_documents:
+      - max_rank: 2
+        title: ICCA Knowledge Sharing & Capacity-building Event in East and Southern Africa
+        url: https://sgp.undp.org/innovation-library/item/940-icca-knowledge-sharing-&-capacity-building-event-in-east-and-southern-africa.html
+        reason: Direct ICCA knowledge-sharing and capacity-building resource.
+      - max_rank: 5
+        title: A toolkit to support conservation by indigenous peoples and local communities
+        url: https://sgp.undp.org/innovation-library/item/585-a-toolkit-to-support-conservation-by-indigenous-peoples-and-local-communities-building-capacity-and-sharing-knowledge-for-indigenous-peoples-and-community-conserved-territories-and-areas-iccas.html
+        reason: Toolkit focused on ICCAs, capacity building, and knowledge sharing for Indigenous Peoples and local communities.
+    expected_answer_terms:
+      - Indigenous Peoples
+      - local communities
+      - ICCA
+
+  - question_id: caribbean_water_land_management
+    query: What are the lessons from integrated community-based water and land management in the Caribbean?
+    expected_documents:
+      - max_rank: 2
+        title: "Integrated community-based water and land management: Experiences from the Caribbean"
+        url: https://sgp.undp.org/innovation-library/item/2460-integrated-community-based-water-and-land-management--experiences-from-the-caribbean.html
+        reason: Direct source for the Caribbean integrated water and land management case.
+    expected_answer_terms:
+      - Caribbean
+      - water
+      - land management
+
+  - question_id: plastic_waste_coastal
+    query: What examples address plastic waste management and circular economy solutions in coastal communities?
+    expected_documents:
+      - max_rank: 3
+        title: Developing the community-based plastic waste management in coastal areas of Ha Long Bay Quang Ninh province.
+        url: https://sgp.undp.org/innovation-library/item/2089-developing-the-community-based-plastic-waste-management-in-coastal-areas-of-ha-long-bay-quang-ninh-province..html
+        reason: Community-based plastic waste management case in coastal Ha Long Bay.
+      - max_rank: 5
+        title: "Plastics and Circular Economy: Community Solutions"
+        url: https://sgp.undp.org/innovation-library/item/1835-plastics-and-circular-economy--community-solutions.html
+        reason: Dedicated plastics and circular economy source.
+    expected_answer_terms:
+      - plastic waste
+      - coastal
+      - circular economy
+
+  - question_id: comdeks_phase_4
+    query: What does COMDEKS Phase 4 emphasize about societies in harmony with nature?
+    expected_documents:
+      - max_rank: 2
+        title: "COMDEKS Phase 4: Societies in Harmony with Nature"
+        url: https://sgp.undp.org/innovation-library/item/2618-comdeks-phase-4--societies-in-harmony-with-nature.html
+        reason: Main COMDEKS Phase 4 source in the Innovation Library corpus.
+    expected_answer_terms:
+      - COMDEKS
+      - harmony with nature
+      - landscapes
+
+  - question_id: chemicals_mercury
+    query: Which resources discuss community-based chemicals and waste management, including mercury?
+    expected_documents:
+      - max_rank: 4
+        title: Community - based Chemicals and Waste Management
+        url: https://sgp.undp.org/innovation-library/item/1139-community-based-chemicals-and-waste-management.html
+        reason: Dedicated source for community-based chemicals and waste management.
+      - max_rank: 6
+        title: Artisanal and Small Scale Gold Mining and Mercury Management
+        url: https://sgp.undp.org/innovation-library/item/1985-artisanal-and-small-scale-gold-mining-and-mercury-management.html
+        reason: Mercury-specific SGP source.
+    expected_answer_terms:
+      - chemicals
+      - waste management
+      - mercury

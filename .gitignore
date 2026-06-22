@@ -170,6 +170,16 @@ env/
 # Manually added
 .DS_Store
 /data/
+!/data/
+/data/*
+!/data/corpus/
+/data/corpus/*
+!/data/corpus/sample_topic/
+!/data/corpus/sample_topic/manifest.yaml
 /docs/
+!/docs/
+/docs/*
+!/docs/ai-api/
+!/docs/ai-api/**
 /corpus/
 /tmp/

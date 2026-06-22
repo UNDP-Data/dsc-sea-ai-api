@@ -19,6 +19,7 @@ if str(ROOT) not in sys.path:
 load_dotenv(ROOT / ".env")
 
 from src import corpus, database  # noqa: E402
+from src.rag_system import get_profile  # noqa: E402
 
 FIELDS = [
     "document_id",
@@ -45,13 +46,17 @@ def _serialize(value):
     return str(value)
 
 
-async def _run(output: Path) -> int:
-    connection = await database.get_connection()
+async def _run(output: Path, assistant_id: str) -> int:
+    profile = get_profile(assistant_id)
+    connection = await database.get_connection(profile=profile)
     try:
-        client = database.Client(connection)
-        table = await client.open_optional_table("documents")
+        client = database.Client(connection, profile=profile)
+        table = await client.open_optional_table(client.table_name("documents"))
         if table is None:
-            print("Documents table does not exist.", file=sys.stderr)
+            print(
+                f"Documents table {client.table_name('documents')!r} does not exist.",
+                file=sys.stderr,
+            )
             return 1
         rows = await table.query().to_list()
         output.parent.mkdir(parents=True, exist_ok=True)
@@ -94,8 +99,13 @@ def main() -> int:
         default="data/retrieval_benchmark/corpus_inventory.csv",
         help="Output CSV path",
     )
+    parser.add_argument(
+        "--assistant-id",
+        default="sea",
+        help="RAG assistant profile id to export.",
+    )
     args = parser.parse_args()
-    return asyncio.run(_run(Path(args.output)))
+    return asyncio.run(_run(Path(args.output), args.assistant_id))
 
 
 if __name__ == "__main__":

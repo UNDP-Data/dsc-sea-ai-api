@@ -22,6 +22,7 @@ if str(ROOT) not in sys.path:
 load_dotenv(ROOT / ".env")
 
 from src import database
+from src.rag_system import get_profile
 
 
 def _progress(message: str) -> None:
@@ -29,16 +30,18 @@ def _progress(message: str) -> None:
 
 
 async def _run(args) -> dict[str, int]:
+    profile = get_profile(args.assistant_id)
     _progress("Opening database connection...")
-    connection = await database.get_connection()
+    connection = await database.get_connection(profile=profile)
     try:
-        client = database.Client(connection)
+        client = database.Client(connection, profile=profile)
         return await client.bootstrap_corpus_tables(
             overwrite=args.overwrite,
             rewrite_chunks=args.rewrite_chunks,
             parser_version=args.parser_version,
             embedding_version=args.embedding_version,
             status=args.status,
+            profile=profile,
             progress=_progress,
         )
     finally:
@@ -52,6 +55,11 @@ async def _run(args) -> dict[str, int]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--assistant-id",
+        default="sea",
+        help="RAG assistant profile id to use for table names and metadata rules.",
+    )
     parser.add_argument(
         "--overwrite",
         action="store_true",
@@ -78,7 +86,7 @@ def main() -> int:
         help="Document approval status to assign to bootstrapped document records.",
     )
     args = parser.parse_args()
-    _progress("Starting corpus bootstrap...")
+    _progress(f"Starting corpus bootstrap for assistant={args.assistant_id!r}...")
     if not args.rewrite_chunks:
         _progress(
             "Running in metadata-only mode. The chunks table will NOT be rewritten; "
