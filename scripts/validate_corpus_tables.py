@@ -20,6 +20,7 @@ if str(ROOT) not in sys.path:
 load_dotenv(ROOT / ".env")
 
 from src import database
+from src.rag_system import get_profile
 
 
 REQUIRED_DOCUMENT_FIELDS = (
@@ -39,17 +40,20 @@ async def _maybe_open(client: database.Client, name: str):
     return await client.open_optional_table(name)
 
 
-async def _run() -> dict:
+async def _run(args) -> dict:
+    profile = get_profile(args.assistant_id)
     print("[validate] Opening database connection...", flush=True)
-    connection = await database.get_connection()
+    connection = await database.get_connection(profile=profile)
     try:
-        client = database.Client(connection)
+        client = database.Client(connection, profile=profile)
         print("[validate] Opening tables...", flush=True)
-        documents_table = await _maybe_open(client, "documents")
-        sources_table = await _maybe_open(client, "sources")
-        chunks_table = await _maybe_open(client, "chunks")
+        documents_table = await _maybe_open(client, client.table_name("documents"))
+        sources_table = await _maybe_open(client, client.table_name("sources"))
+        chunks_table = await _maybe_open(client, client.table_name("chunks"))
 
         result: dict = {
+            "assistant_id": profile.assistant_id,
+            "tables": profile.table_names,
             "sources": {"exists": bool(sources_table), "count": 0},
             "documents": {"exists": bool(documents_table), "count": 0},
             "chunks": {"exists": bool(chunks_table), "count": 0},
@@ -112,8 +116,13 @@ async def _run() -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
-    print(json.dumps(asyncio.run(_run()), indent=2, sort_keys=True))
+    parser.add_argument(
+        "--assistant-id",
+        default="sea",
+        help="RAG assistant profile id to validate.",
+    )
+    args = parser.parse_args()
+    print(json.dumps(asyncio.run(_run(args)), indent=2, sort_keys=True))
     return 0
 
 

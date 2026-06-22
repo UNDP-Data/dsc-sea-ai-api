@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SGP AI Tester</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f6f7f9;
+            --surface: #ffffff;
+            --surface-soft: #f0f3f7;
+            --line: #d8dee8;
+            --line-strong: #aeb8c8;
+            --text: #1f2933;
+            --muted: #5d6b82;
+            --accent: #1668dc;
+            --accent-soft: #e9f1ff;
+            --good: #0c8f4d;
+            --warn: #c47a00;
+            --bad: #c8271d;
+            --code: #101828;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+        .page {
+            width: min(1500px, calc(100vw - 32px));
+            margin: 0 auto;
+            padding: 18px 0 32px;
+            display: grid;
+            gap: 14px;
+        }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 14px 0 8px;
+        }
+        h1 { margin: 0; font-size: 28px; line-height: 1.15; }
+        .subtitle { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+        .status-pill {
+            min-width: 310px;
+            max-width: 560px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .status-title { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text); }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--warn); display: inline-block; flex: 0 0 auto; }
+        .dot.good { background: var(--good); }
+        .dot.bad { background: var(--bad); }
+        .dot.loading { background: var(--accent); }
+        .status-detail { margin-top: 5px; overflow-wrap: anywhere; }
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: minmax(260px, 1fr) auto;
+            gap: 10px;
+            align-items: start;
+        }
+        label { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+        textarea, select, input {
+            width: 100%;
+            border: 1px solid var(--line-strong);
+            border-radius: 8px;
+            padding: 10px 11px;
+            color: var(--text);
+            background: #fff;
+            font: inherit;
+        }
+        textarea { min-height: 74px; resize: vertical; line-height: 1.4; }
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 15px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button:disabled { opacity: 0.55; cursor: default; }
+        .controls { display: grid; gap: 10px; }
+        .limit-row { display: grid; grid-template-columns: 1fr; gap: 6px; }
+        .target-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+        .target-switch {
+            display: inline-flex;
+            border: 1px solid var(--line-strong);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .target-switch button {
+            border-radius: 0;
+            background: #fff;
+            color: var(--muted);
+            border-right: 1px solid var(--line);
+            padding: 8px 11px;
+        }
+        .target-switch button:last-child { border-right: 0; }
+        .target-switch button.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        .active-target { font-weight: 700; color: var(--text); }
+        .examples { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .chip {
+            border: 1px solid #bdd1f2;
+            background: var(--accent-soft);
+            color: #174a91;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 650;
+            cursor: pointer;
+        }
+        .workspace {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+            gap: 14px;
+            align-items: start;
+        }
+        .section-title {
+            margin: 0 0 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .small { color: var(--muted); font-size: 12px; font-weight: 500; }
+        #answer {
+            white-space: pre-wrap;
+            line-height: 1.55;
+            min-height: 220px;
+            background: #fbfcfe;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 13px;
+        }
+        #run-status { margin-top: 10px; color: var(--muted); font-size: 13px; min-height: 20px; }
+        .stack { display: grid; gap: 14px; }
+        .refs, .chunks, .ideas { display: grid; gap: 8px; }
+        .reference, details.chunk {
+            border: 1px solid var(--line);
+            background: #fbfcfe;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .reference a { color: var(--accent); font-weight: 700; text-decoration: none; }
+        .reference a:hover { text-decoration: underline; }
+        .meta { margin-top: 5px; color: var(--muted); font-size: 12px; }
+        .summary { margin: 8px 0 0; color: #334155; font-size: 13px; line-height: 1.4; }
+        details.chunk summary { cursor: pointer; font-weight: 700; color: var(--text); }
+        .chunk-meta { color: var(--muted); font-size: 12px; margin: 6px 0 8px; }
+        .chunk-text { white-space: pre-wrap; line-height: 1.45; color: #263241; font-size: 13px; }
+        pre.raw {
+            margin: 0;
+            max-height: 280px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            color: var(--code);
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .empty { margin: 0; color: var(--muted); font-size: 13px; }
+        .error { color: var(--bad); }
+        .ok { color: var(--good); }
+        @media (max-width: 980px) {
+            .topbar, form, .workspace { grid-template-columns: 1fr; display: grid; }
+            .status-pill { min-width: 0; max-width: none; }
+            .target-row { align-items: flex-start; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="topbar">
+            <div>
+                <h1>SGP AI Tester</h1>
+                <p class="subtitle">Local query interface for the <code>{{ assistant_id }}</code> RAG assistant.</p>
+            </div>
+            <div class="status-pill" aria-live="polite">
+                <div class="status-title"><span id="status-dot" class="dot loading"></span><span id="status-label">Checking backend...</span></div>
+                <div id="status-detail" class="status-detail">Local: {{ targets.local }} · Backend: {{ targets.backend }}</div>
+            </div>
+        </header>
+
+        <section class="panel">
+            <div class="target-row">
+                <div class="target-switch" role="group" aria-label="AI target">
+                    <button id="target-local" type="button" data-target-mode="local">Local AI</button>
+                    <button id="target-backend" type="button" data-target-mode="backend">Backend AI</button>
+                </div>
+                <div>Active target: <span id="active-target" class="active-target">Local AI</span></div>
+            </div>
+            <form id="query-form">
+                <label>
+                    Query
+                    <textarea id="query" required minlength="2">How does SGP address coastal erosion?</textarea>
+                </label>
+                <div class="controls">
+                    <label class="limit-row">
+                        Retrieval limit
+                        <select id="limit">
+                            <option value="8">8 chunks</option>
+                            <option value="12" selected>12 chunks</option>
+                            <option value="20">20 chunks</option>
+                            <option value="30">30 chunks</option>
+                        </select>
+                    </label>
+                    <button id="run" type="submit" disabled>Ask SGP AI</button>
+                </div>
+            </form>
+            <div class="examples" aria-label="Example queries">
+                <button class="chip" type="button">coastal erosion</button>
+                <button class="chip" type="button">community-based adaptation</button>
+                <button class="chip" type="button">annual monitoring results</button>
+                <button class="chip" type="button">Indigenous Peoples priority groups</button>
+            </div>
+            <div id="run-status">Ready.</div>
+        </section>
+
+        <section class="workspace">
+            <div class="stack">
+                <section class="panel">
+                    <h2 class="section-title">Answer <span id="answer-meta" class="small"></span></h2>
+                    <div id="answer" aria-live="polite"></div>
+                </section>
+                <section class="panel">
+                    <h2 class="section-title">Raw Stream <span id="stream-count" class="small">0 chunks</span></h2>
+                    <pre id="raw" class="raw">[]</pre>
+                </section>
+            </div>
+            <div class="stack">
+                <section class="panel">
+                    <h2 class="section-title">References <span id="reference-count" class="small">0 documents</span></h2>
+                    <div id="references" class="refs"><p class="empty">References will appear after retrieval/model results arrive.</p></div>
+                </section>
+                <section class="panel">
+                    <h2 class="section-title">Retrieved Chunks <span id="chunk-count" class="small">0 chunks</span></h2>
+                    <div id="chunks" class="chunks"><p class="empty">Chunk evidence will appear after retrieval runs.</p></div>
+                </section>
+                <section class="panel">
+                    <h2 class="section-title">Follow-up Ideas</h2>
+                    <div id="ideas" class="ideas"><p class="empty">Ideas appear when the answer stream includes suggestions.</p></div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const assistantId = {{ assistant_id | tojson }};
+        const targetBases = {{ targets | tojson }};
+        const form = document.getElementById("query-form");
+        const queryEl = document.getElementById("query");
+        const limitEl = document.getElementById("limit");
+        const runButton = document.getElementById("run");
+        const statusDot = document.getElementById("status-dot");
+        const statusLabel = document.getElementById("status-label");
+        const statusDetail = document.getElementById("status-detail");
+        const runStatus = document.getElementById("run-status");
+        const answerEl = document.getElementById("answer");
+        const answerMeta = document.getElementById("answer-meta");
+        const referencesEl = document.getElementById("references");
+        const chunksEl = document.getElementById("chunks");
+        const ideasEl = document.getElementById("ideas");
+        const rawEl = document.getElementById("raw");
+        const streamCountEl = document.getElementById("stream-count");
+        const referenceCountEl = document.getElementById("reference-count");
+        const chunkCountEl = document.getElementById("chunk-count");
+        const activeTargetEl = document.getElementById("active-target");
+        const targetButtons = Array.from(document.querySelectorAll("[data-target-mode]"));
+        let activeController = null;
+        let backendReady = false;
+        const targetStorageKey = "sgp-ai-target-mode";
+        let targetMode = localStorage.getItem(targetStorageKey) === "backend" ? "backend" : "local";
+
+        function setBackendStatus(kind, label, detail) {
+            statusDot.className = `dot ${kind}`;
+            statusLabel.textContent = label;
+            statusDetail.textContent = detail;
+            backendReady = kind === "good";
+            runButton.disabled = !backendReady;
+        }
+
+        function targetLabel(mode) {
+            return mode === "backend" ? "Backend AI" : "Local AI";
+        }
+
+        function setTargetMode(mode) {
+            targetMode = mode === "backend" ? "backend" : "local";
+            localStorage.setItem(targetStorageKey, targetMode);
+            activeTargetEl.textContent = `${targetLabel(targetMode)} (${targetBases[targetMode]})`;
+            targetButtons.forEach((button) => {
+                const active = button.dataset.targetMode === targetMode;
+                button.classList.toggle("active", active);
+                button.setAttribute("aria-pressed", active ? "true" : "false");
+            });
+            checkStatus();
+        }
+
+        function setRunStatus(message, isError = false) {
+            runStatus.textContent = message;
+            runStatus.className = isError ? "error" : "";
+        }
+
+        function extractText(content) {
+            if (typeof content === "string") return content;
+            if (Array.isArray(content)) return content.map(extractText).join("");
+            if (content && typeof content === "object") {
+                if (typeof content.text === "string") return content.text;
+                if (content.text && typeof content.text.value === "string") return content.text.value;
+                if (content.content) return extractText(content.content);
+            }
+            return "";
+        }
+
+        function uniqueDocuments(documents) {
+            const seen = new Set();
+            const clean = [];
+            for (const item of Array.isArray(documents) ? documents : []) {
+                if (!item || typeof item !== "object") continue;
+                const title = String(item.title || item.canonical_title || "").trim();
+                const url = String(item.url || "").trim();
+                const summary = String(item.summary || "").trim();
+                const language = String(item.language || "").trim();
+                const year = Number.isInteger(item.year) && item.year > 0 ? item.year : null;
+                const key = item.document_id || url || `${title}|${year || ""}`;
+                if (!key || seen.has(key)) continue;
+                seen.add(key);
+                clean.push({ title: title || url || "Untitled document", url, summary, language, year });
+            }
+            return clean;
+        }
+
+        function renderReferences(documents) {
+            const clean = uniqueDocuments(documents);
+            referenceCountEl.textContent = `${clean.length} document${clean.length === 1 ? "" : "s"}`;
+            referencesEl.replaceChildren();
+            if (!clean.length) {
+                const empty = document.createElement("p");
+                empty.className = "empty";
+                empty.textContent = "No references returned yet.";
+                referencesEl.appendChild(empty);
+                return;
+            }
+            for (const doc of clean) {
+                const card = document.createElement("article");
+                card.className = "reference";
+                const title = document.createElement(doc.url ? "a" : "div");
+                title.textContent = doc.title;
+                if (doc.url) {
+                    title.href = doc.url;
+                    title.target = "_blank";
+                    title.rel = "noreferrer noopener";
+                }
+                card.appendChild(title);
+                const metaParts = [];
+                if (doc.year) metaParts.push(String(doc.year));
+                if (doc.language) metaParts.push(doc.language);
+                if (metaParts.length) {
+                    const meta = document.createElement("div");
+                    meta.className = "meta";
+                    meta.textContent = metaParts.join(" · ");
+                    card.appendChild(meta);
+                }
+                if (doc.summary) {
+                    const summary = document.createElement("p");
+                    summary.className = "summary";
+                    summary.textContent = doc.summary;
+                    card.appendChild(summary);
+                }
+                referencesEl.appendChild(card);
+            }
+        }
+
+        function renderChunks(chunks) {
+            const clean = Array.isArray(chunks) ? chunks : [];
+            chunkCountEl.textContent = `${clean.length} chunk${clean.length === 1 ? "" : "s"}`;
+            chunksEl.replaceChildren();
+            if (!clean.length) {
+                const empty = document.createElement("p");
+                empty.className = "empty";
+                empty.textContent = "No retrieval chunks returned.";
+                chunksEl.appendChild(empty);
+                return;
+            }
+            clean.forEach((chunk, index) => {
+                const details = document.createElement("details");
+                details.className = "chunk";
+                if (index < 3) details.open = true;
+                const summary = document.createElement("summary");
+                const title = chunk.title || chunk.canonical_title || "Untitled document";
+                const section = chunk.section_title ? ` · ${chunk.section_title}` : "";
+                summary.textContent = `${index + 1}. ${title}${section}`;
+                details.appendChild(summary);
+                const metaParts = [];
+                if (chunk.page_start) {
+                    const end = chunk.page_end && chunk.page_end !== chunk.page_start ? `-${chunk.page_end}` : "";
+                    metaParts.push(`pages ${chunk.page_start}${end}`);
+                }
+                if (chunk.year) metaParts.push(String(chunk.year));
+                if (chunk.language) metaParts.push(chunk.language);
+                if (chunk.chunk_id) metaParts.push(`chunk ${chunk.chunk_id}`);
+                const meta = document.createElement("div");
+                meta.className = "chunk-meta";
+                meta.textContent = metaParts.join(" · ") || "No page metadata";
+                details.appendChild(meta);
+                const text = document.createElement("div");
+                text.className = "chunk-text";
+                text.textContent = chunk.content || "";
+                details.appendChild(text);
+                chunksEl.appendChild(details);
+            });
+        }
+
+        function renderIdeas(ideas) {
+            const clean = Array.isArray(ideas) ? [...new Set(ideas.filter((item) => typeof item === "string" && item.trim()).map((item) => item.trim()))] : [];
+            ideasEl.replaceChildren();
+            if (!clean.length) {
+                const empty = document.createElement("p");
+                empty.className = "empty";
+                empty.textContent = "No follow-up ideas returned yet.";
+                ideasEl.appendChild(empty);
+                return;
+            }
+            for (const idea of clean) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "chip";
+                button.textContent = idea;
+                button.addEventListener("click", () => runQuery(idea));
+                ideasEl.appendChild(button);
+            }
+        }
+
+        async function readError(response) {
+            try {
+                const payload = await response.json();
+                return payload.detail || payload.error || response.statusText;
+            } catch (_) {
+                return await response.text() || response.statusText;
+            }
+        }
+
+        async function checkStatus() {
+            try {
+                const response = await fetch(`/sgp-ai-tester/api/status?mode=${encodeURIComponent(targetMode)}`);
+                if (!response.ok) throw new Error(await readError(response));
+                const payload = await response.json();
+                if (payload.installed) {
+                    setBackendStatus("good", `${targetLabel(targetMode)} ready`, `Target: ${payload.backend_base_url} · assistant: ${payload.assistant_id}`);
+                } else {
+                    setBackendStatus("bad", `${targetLabel(targetMode)} missing SGP AI`, `Target reachable, but ${assistantId} is not in /assistants.`);
+                }
+            } catch (error) {
+                if (targetMode === "local") {
+                    setBackendStatus("bad", "Local SGP AI backend is not running.", `Expected local target: ${targetBases.local}`);
+                } else {
+                    setBackendStatus("bad", "Backend AI unavailable", String(error.message || error));
+                }
+            }
+        }
+
+        async function loadRetrieval(query, limit, signal) {
+            const url = `/sgp-ai-tester/api/retrieve?mode=${encodeURIComponent(targetMode)}&query=${encodeURIComponent(query)}&limit=${encodeURIComponent(limit)}`;
+            const response = await fetch(url, { signal });
+            if (!response.ok) throw new Error(await readError(response));
+            const payload = await response.json();
+            renderReferences(payload.documents || []);
+            renderChunks(payload.chunks || []);
+            return payload;
+        }
+
+        async function streamModel(query, signal) {
+            const response = await fetch("/sgp-ai-tester/api/model", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/x-ndjson" },
+                body: JSON.stringify({ target_mode: targetMode, messages: [{ role: "human", content: query }] }),
+                signal,
+            });
+            if (!response.ok) throw new Error(await readError(response));
+            if (!response.body) throw new Error("No response stream returned by browser.");
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = "";
+            let answer = "";
+            let chunks = [];
+            let latestDocuments = [];
+            let latestIdeas = [];
+            const started = performance.now();
+
+            function handleLine(line) {
+                if (!line.trim()) return;
+                const payload = JSON.parse(line);
+                chunks.push(payload);
+                const text = extractText(payload.content);
+                if (text) {
+                    answer += text;
+                    answerEl.textContent = answer;
+                }
+                if (Array.isArray(payload.documents)) {
+                    latestDocuments = payload.documents;
+                    renderReferences(latestDocuments);
+                }
+                if (Array.isArray(payload.ideas)) {
+                    latestIdeas = payload.ideas;
+                    renderIdeas(latestIdeas);
+                }
+                rawEl.textContent = JSON.stringify(chunks, null, 2);
+                streamCountEl.textContent = `${chunks.length} chunk${chunks.length === 1 ? "" : "s"}`;
+                answerMeta.textContent = `${Math.round((performance.now() - started) / 100) / 10}s`;
+            }
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split("\n");
+                buffer = lines.pop() || "";
+                for (const line of lines) handleLine(line);
+            }
+            buffer += decoder.decode();
+            if (buffer.trim()) handleLine(buffer);
+            return { answer, chunks, latestDocuments, latestIdeas };
+        }
+
+        async function runQuery(query) {
+            const cleanQuery = (query || queryEl.value || "").trim();
+            if (!cleanQuery || !backendReady) return;
+            queryEl.value = cleanQuery;
+            if (activeController) activeController.abort();
+            activeController = new AbortController();
+            const signal = activeController.signal;
+            answerEl.textContent = "";
+            answerMeta.textContent = "";
+            rawEl.textContent = "[]";
+            streamCountEl.textContent = "0 chunks";
+            renderReferences([]);
+            renderChunks([]);
+            renderIdeas([]);
+            runButton.disabled = true;
+            setRunStatus(`Retrieving evidence and streaming answer from ${targetLabel(targetMode)}...`);
+            const started = performance.now();
+            try {
+                const retrievalPromise = loadRetrieval(cleanQuery, limitEl.value, signal).catch((error) => ({ error }));
+                const modelResult = await streamModel(cleanQuery, signal);
+                const retrievalResult = await retrievalPromise;
+                if (retrievalResult && retrievalResult.error) {
+                    setRunStatus(`Answer completed, but retrieval debug failed: ${retrievalResult.error.message}`, true);
+                } else {
+                    const elapsed = Math.round((performance.now() - started) / 100) / 10;
+                    const docCount = uniqueDocuments(modelResult.latestDocuments).length;
+                    setRunStatus(`Done in ${elapsed}s · ${docCount} streamed reference${docCount === 1 ? "" : "s"}.`);
+                }
+            } catch (error) {
+                if (error.name !== "AbortError") {
+                    setRunStatus(String(error.message || error), true);
+                }
+            } finally {
+                runButton.disabled = !backendReady;
+            }
+        }
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            runQuery(queryEl.value);
+        });
+        document.querySelectorAll(".examples .chip").forEach((button) => {
+            button.addEventListener("click", () => runQuery(button.textContent));
+        });
+        targetButtons.forEach((button) => {
+            button.addEventListener("click", () => setTargetMode(button.dataset.targetMode));
+        });
+        setTargetMode(targetMode);
+    </script>
+</body>
+</html>

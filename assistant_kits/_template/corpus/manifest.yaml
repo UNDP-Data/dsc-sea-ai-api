@@ -1,0 +1,28 @@
+assistant_id: example_assistant
+sources:
+  - source_id: example_source
+    name: Example Source Registry Entry
+    organization: Example Organization
+    authority_tier: trusted
+    base_url: https://example.org
+    ingestion_method: manual_manifest
+    review_policy: hybrid_editorial
+
+documents:
+  - source_id: example_source
+    title: Example Policy Note
+    url: https://example.org/example-policy-note
+    year: 2026
+    language: en
+    summary: >
+      Replace this with a concise publication-level summary.
+    topic_tags:
+      - example topic
+    region_codes:
+      - global
+    audience_tags:
+      - policy-makers
+    chunks:
+      - section_title: Overview
+        content: >
+          Replace this with prepared publication text or a high-quality chunk.

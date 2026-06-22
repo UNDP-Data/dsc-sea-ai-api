@@ -1,0 +1,9 @@
+assistant_id: sample
+questions:
+  - question_id: sample_q1
+    query: How do food systems relate to water management?
+    expected_documents:
+      - rank: 1
+        title: Sample Food Systems Policy Note
+        url: https://example.org/sample-food-systems-policy-note
+        reason: The sample publication directly covers food systems and water management.

@@ -11,6 +11,7 @@ import re
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from inspect import isawaitable
+from pathlib import Path
 from time import monotonic
 from urllib.parse import urlparse
 
@@ -22,11 +23,100 @@ from langchain_core.tools import tool
 from . import corpus, genai, utils
 from .entities import Chunk, Document, DocumentRecord, Graph, Node, SearchMethod, SourceRecord
 
-__all__ = ["get_storage_options", "get_connection", "Client", "retrieve_chunks"]
+__all__ = [
+    "get_storage_options",
+    "get_lancedb_uri",
+    "build_fallback_knowledge_graph",
+    "get_connection",
+    "Client",
+    "retrieve_chunks",
+]
 logger = logging.getLogger(__name__)
 TOKEN_RE = re.compile(r"[a-z0-9]+")
 YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
 DEFAULT_DOCUMENT_CACHE_TTL_SECONDS = 300.0
+FALLBACK_GRAPH_NODES = [
+    {
+        "name": "climate change mitigation",
+        "description": "Actions that reduce greenhouse gas emissions and limit global warming.",
+        "weight": 9.8,
+    },
+    {
+        "name": "climate adaptation strategies",
+        "description": "Measures that help communities and infrastructure adapt to climate impacts.",
+        "weight": 9.4,
+    },
+    {
+        "name": "solar energy",
+        "description": "Electricity or heat generated from sunlight through photovoltaic or thermal systems.",
+        "weight": 9.2,
+    },
+    {
+        "name": "renewable energy",
+        "description": "Energy produced from naturally replenished sources including solar, wind, hydro, and geothermal.",
+        "weight": 8.8,
+    },
+    {
+        "name": "energy policy",
+        "description": "Rules, incentives, and institutions that govern energy systems and investments.",
+        "weight": 8.1,
+    },
+    {
+        "name": "grid resilience",
+        "description": "Power-system capacity to withstand, recover from, and adapt to shocks.",
+        "weight": 7.8,
+    },
+    {
+        "name": "decarbonisation",
+        "description": "The process of reducing carbon intensity across energy, industry, transport, and buildings.",
+        "weight": 8.0,
+    },
+    {
+        "name": "environmental sustainability",
+        "description": "Managing natural resources and development so ecosystems remain viable over time.",
+        "weight": 7.6,
+    },
+    {
+        "name": "community engagement",
+        "description": "Participation of local stakeholders in planning, implementation, and accountability.",
+        "weight": 7.2,
+    },
+    {
+        "name": "energy access",
+        "description": "Reliable and affordable access to electricity and clean cooking services.",
+        "weight": 7.4,
+    },
+    {
+        "name": "clean cooking",
+        "description": "Cooking solutions that reduce household air pollution and fuel burdens.",
+        "weight": 6.9,
+    },
+    {
+        "name": "climate finance",
+        "description": "Public and private finance for mitigation, adaptation, and resilience investments.",
+        "weight": 7.0,
+    },
+]
+FALLBACK_GRAPH_EDGES = [
+    ("climate change mitigation", "supported_by", "renewable energy", 6.5),
+    ("renewable energy", "includes", "solar energy", 6.2),
+    ("solar energy", "contributes_to", "renewable energy", 6.0),
+    ("solar energy", "supports", "climate change mitigation", 5.9),
+    ("solar energy", "requires", "grid resilience", 5.8),
+    ("solar energy", "expands", "energy access", 5.1),
+    ("energy policy", "enables", "solar energy", 5.5),
+    ("energy policy", "supports", "renewable energy", 5.6),
+    ("climate change mitigation", "advanced_by", "decarbonisation", 6.1),
+    ("decarbonisation", "depends_on", "energy policy", 5.2),
+    ("climate adaptation strategies", "protect", "environmental sustainability", 5.0),
+    ("climate adaptation strategies", "use", "community engagement", 4.8),
+    ("community engagement", "strengthens", "environmental sustainability", 4.4),
+    ("energy access", "benefits_from", "solar energy", 4.7),
+    ("energy access", "includes", "clean cooking", 4.5),
+    ("climate finance", "funds", "renewable energy", 4.9),
+    ("climate finance", "funds", "climate adaptation strategies", 4.6),
+    ("environmental sustainability", "supports", "climate change mitigation", 4.3),
+]
 DOCUMENT_INDEX_FIELDS = [
     "document_id",
     "source_id",
@@ -58,6 +148,13 @@ _DOCUMENT_INDEX_CACHE: dict[str, object] = {
     "rows": None,
     "loaded_at": 0.0,
     "connection_id": None,
+    "connection_ref": None,
+    "table_name": None,
+}
+DEFAULT_RAG_TABLE_NAMES = {
+    "chunks": "chunks",
+    "documents": "documents",
+    "sources": "sources",
 }
 STOPWORDS = {
     "a",
@@ -65,9 +162,18 @@ STOPWORDS = {
     "and",
     "are",
     "as",
+    "associated",
     "at",
+    "address",
     "be",
     "by",
+    "cover",
+    "covered",
+    "covers",
+    "did",
+    "do",
+    "does",
+    "examples",
     "for",
     "from",
     "how",
@@ -75,6 +181,7 @@ STOPWORDS = {
     "in",
     "is",
     "it",
+    "issues",
     "me",
     "more",
     "of",
@@ -82,13 +189,18 @@ STOPWORDS = {
     "or",
     "please",
     "provide",
+    "resources",
+    "say",
     "tell",
     "that",
     "the",
     "this",
     "to",
     "what",
+    "who",
     "with",
+    "written",
+    "they",
 }
 EXPLANATORY_PREFIXES = (
     "tell me more about",
@@ -181,6 +293,20 @@ GENERIC_REPORT_PATTERNS = (
     "tracking sdg 7 report",
     "report",
 )
+SGP_ANNUAL_MONITORING_QUERY_MARKERS = (
+    "annual monitoring report",
+    "annual monitoring",
+    "results report",
+    "amr",
+)
+SGP_PRIORITY_GROUP_TERMS = {
+    "indigenous",
+    "peoples",
+    "women",
+    "youth",
+    "disabilities",
+    "disability",
+}
 FLAGSHIP_REPORT_PATTERNS = (
     "tracking sdg7",
     "tracking sdg 7",
@@ -243,6 +369,18 @@ COUNTRY_TO_REGION: dict[str, str] = {
     "IND": "asia",
     "IDN": "asia",
     "BRA": "latin america",
+}
+ROW_REGION_CANONICAL: dict[str, str] = {
+    "africa": "africa",
+    "arab states": "middle east",
+    "arab_states": "middle east",
+    "asia and the pacific": "asia",
+    "asia_pacific": "asia",
+    "europe and the cis": "europe",
+    "europe_cis": "europe",
+    "latin america and the caribbean": "latin america",
+    "latin_america_caribbean": "latin america",
+    "global": "global",
 }
 
 
@@ -375,6 +513,18 @@ def _extract_query_phrases(text: str | None, max_words: int = 4) -> tuple[str, .
             if phrase not in phrases:
                 phrases.append(phrase)
     return tuple(phrases)
+
+
+def _expand_operational_phase_shorthand(text: str) -> str:
+    """
+    Expand SGP shorthand such as OP8 into the title wording used by source PDFs.
+    """
+    return re.sub(
+        r"\bop\s*([1-9])\b",
+        lambda match: f"operational phase {match.group(1)}",
+        text or "",
+        flags=re.IGNORECASE,
+    )
 
 
 def _extract_years(text: str | None) -> list[int]:
@@ -574,6 +724,8 @@ def build_retrieval_queries(query: str) -> list[str]:
     base = " ".join((query or "").strip().split())
     trimmed = _trim_query_for_retrieval(base)
     normalized_base = _normalize_text(base)
+    expanded_base = _expand_operational_phase_shorthand(base)
+    expanded_trimmed = _expand_operational_phase_shorthand(trimmed)
     token_focus = " ".join(
         token
         for token in TOKEN_RE.findall(trimmed.lower())
@@ -581,6 +733,8 @@ def build_retrieval_queries(query: str) -> list[str]:
     )
     candidates: list[str] = []
     for candidate in (
+        expanded_trimmed if expanded_trimmed != trimmed else "",
+        expanded_base if expanded_base != base else "",
         base,
         trimmed,
         token_focus,
@@ -621,10 +775,14 @@ def _prioritize_retrieval_queries(query: str) -> list[str]:
     """
     base = " ".join((query or "").strip().split())
     trimmed = _trim_query_for_retrieval(base)
+    expanded_trimmed = _expand_operational_phase_shorthand(trimmed)
+    expanded_base = _expand_operational_phase_shorthand(base)
     candidates = build_retrieval_queries(query)
     prioritized: list[str] = []
 
     for candidate in (
+        expanded_trimmed if expanded_trimmed != trimmed else "",
+        expanded_base if expanded_base != base else "",
         trimmed,
         trimmed.replace("feed in tariff", "feed-in tariff"),
         base,
@@ -770,7 +928,10 @@ def _row_country_scopes(row: dict) -> set[str]:
 
 
 def _row_region_scopes(row: dict) -> set[str]:
-    regions = _normalize_scope_values(row.get("region_codes"))
+    regions = {
+        ROW_REGION_CANONICAL.get(value, value)
+        for value in _normalize_scope_values(row.get("region_codes"))
+    }
     if regions:
         return regions
     geography_text = " ".join(
@@ -922,6 +1083,72 @@ def _authority_tier_bonus(tier: str | None, profile: RetrievalProfile) -> float:
             return 0.0
 
 
+def _is_sgp_annual_monitoring_query(profile: RetrievalProfile) -> bool:
+    normalized = profile.normalized_query
+    if any(marker in normalized for marker in SGP_ANNUAL_MONITORING_QUERY_MARKERS):
+        return True
+    return "annual" in profile.query_tokens and "monitoring" in profile.query_tokens
+
+
+def _sgp_annual_monitoring_component(
+    *,
+    title: str,
+    summary: str,
+    topics_text: str,
+    year: int | None,
+    profile: RetrievalProfile,
+) -> float:
+    if not _is_sgp_annual_monitoring_query(profile):
+        return 0.0
+
+    normalized_title = _normalize_text(title)
+    normalized_blob = _normalize_text(" ".join(filter(None, [title, summary, topics_text])))
+    is_amr = (
+        "annual monitoring report" in normalized_blob
+        or "results report" in normalized_blob
+        or " amr " in f" {normalized_blob} "
+    )
+    if not is_amr:
+        return 0.0
+
+    component = 2.0
+    if profile.explicit_years:
+        title_years = set(_extract_years(title))
+        explicit_years = set(profile.explicit_years)
+        if explicit_years and explicit_years.issubset(title_years):
+            component += 2.6
+        elif year in explicit_years:
+            component += 1.4
+    elif profile.prefer_recent:
+        if year is not None and year >= 2025:
+            component += 4.0
+        elif year is not None and year >= 2024:
+            component += 2.6
+        elif year is not None and year >= 2023:
+            component += 1.4
+        elif year is not None and year >= 2021:
+            component += 0.5
+
+    if "full version" in normalized_title and "summary" not in profile.normalized_query:
+        component += 0.8
+    if "summary infographic" in normalized_title and "summary" not in profile.normalized_query:
+        component -= 0.2
+    return component
+
+
+def _priority_group_component(metadata_text: str, profile: RetrievalProfile) -> tuple[float, int]:
+    query_hits = profile.query_tokens & SGP_PRIORITY_GROUP_TERMS
+    if not query_hits and not {"priority", "groups"} <= profile.query_tokens:
+        return 0.0, 0
+    metadata_tokens = _tokenize_text(metadata_text)
+    matched = query_hits & metadata_tokens
+    if {"priority", "groups"} <= profile.query_tokens:
+        matched |= metadata_tokens & SGP_PRIORITY_GROUP_TERMS
+    if not matched:
+        return 0.0, 0
+    return min(1.6, 0.45 * len(matched) + 0.45), len(matched)
+
+
 def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, object]:
     title = row.get("canonical_title") or row.get("title") or ""
     subtitle = row.get("subtitle") or ""
@@ -932,17 +1159,19 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
     year = row.get("year")
     text_blob = " ".join(filter(None, [title, subtitle, summary, series_name, publisher]))
     topics_text = _safe_list_text(row.get("topic_tags")) or (row.get("topic_tags_text") or "")
+    audience_text = _safe_list_text(row.get("audience_tags")) or (row.get("audience_tags_text") or "")
+    metadata_text = " ".join(filter(None, [topics_text, audience_text]))
     source_org = _infer_source_org(_infer_source_domain(row.get("url") or ""))
     normalized_title = _normalize_text(title)
     normalized_summary = _normalize_text(summary)
     normalized_text_blob = _normalize_text(text_blob)
-    normalized_topics_text = _normalize_text(topics_text)
+    normalized_topics_text = _normalize_text(metadata_text)
     focus_phrases = _extract_focus_phrases(profile.query)
 
     title_overlap = _term_overlap_score(profile.query_tokens, title)
     summary_overlap = _term_overlap_score(profile.query_tokens, summary)
     text_overlap = _term_overlap_score(profile.query_tokens, text_blob)
-    topics_overlap = _term_overlap_score(profile.query_tokens, topics_text)
+    topics_overlap = _term_overlap_score(profile.query_tokens, metadata_text)
     phrase_bonus = _phrase_hits_bonus(profile.query_phrases, text_blob, 0.2)
     title_component = 2.8 * title_overlap
     summary_component = 1.9 * summary_overlap
@@ -957,6 +1186,17 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
     focus_hits = max(title_focus_hits, summary_focus_hits, text_focus_hits, topics_focus_hits)
     focus_phrase_component = 0.9 * focus_hits
     recentness_component = _recentness_bonus(year if isinstance(year, int) else None, profile)
+    sgp_annual_monitoring_component = _sgp_annual_monitoring_component(
+        title=title,
+        summary=summary,
+        topics_text=metadata_text,
+        year=year if isinstance(year, int) else None,
+        profile=profile,
+    )
+    priority_group_component, priority_group_hits = _priority_group_component(
+        metadata_text,
+        profile,
+    )
     authority_component = _authority_tier_bonus(row.get("authority_tier"), profile)
     source_priority_component = float(row.get("source_priority") or 0.0) * 0.35
     quality_component = float(row.get("quality_score") or 0.0) * 0.8
@@ -1017,6 +1257,8 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
         + exact_title_component
         + exact_summary_component
         + recentness_component
+        + sgp_annual_monitoring_component
+        + priority_group_component
         + authority_component
         + source_priority_component
         + quality_component
@@ -1068,6 +1310,9 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
         "exact_title_component": _round_debug(exact_title_component),
         "exact_summary_component": _round_debug(exact_summary_component),
         "recentness_component": _round_debug(recentness_component),
+        "sgp_annual_monitoring_component": _round_debug(sgp_annual_monitoring_component),
+        "priority_group_component": _round_debug(priority_group_component),
+        "priority_group_hits": priority_group_hits,
         "authority_component": _round_debug(authority_component),
         "source_priority_component": _round_debug(source_priority_component),
         "quality_component": _round_debug(quality_component),
@@ -1094,9 +1339,22 @@ def _document_has_min_signal(row: dict, profile: RetrievalProfile) -> bool:
     topics_overlap = float(breakdown["topics_overlap"])
     token_hits = int(breakdown["token_hits"])
     focus_hits = int(breakdown["focus_hits"])
+    priority_group_hits = int(breakdown.get("priority_group_hits", 0))
+    sgp_annual_monitoring_component = float(
+        breakdown.get("sgp_annual_monitoring_component", 0.0)
+    )
     focus_phrases = list(breakdown["focus_phrases"])
     data_focus_match = bool(breakdown.get("data_focus_match", True))
-    if focus_phrases and focus_hits == 0 and profile.intent in {"definition", "policy", "implementation"}:
+    has_sgp_metadata_signal = (
+        priority_group_hits > 0 or sgp_annual_monitoring_component > 0
+    )
+    if (
+        focus_phrases
+        and focus_hits == 0
+        and profile.intent in {"definition", "policy", "implementation"}
+        and not has_sgp_metadata_signal
+        and signal_strength < 0.45
+    ):
         return False
     if profile.current_data_query and profile.data_focus and not data_focus_match:
         return False
@@ -1106,6 +1364,7 @@ def _document_has_min_signal(row: dict, profile: RetrievalProfile) -> bool:
         or summary_overlap >= 0.1
         or token_hits >= 2
         or topics_overlap >= 0.34
+        or priority_group_hits > 0
     )
 
 
@@ -1706,6 +1965,45 @@ def _row_matches_document(row: dict, document: dict) -> bool:
     return bool(row_title and document_title and row_title == document_title)
 
 
+def _document_identity_key(row: dict) -> str:
+    """
+    Stable user-facing document identity for retrieval deduplication.
+
+    Some copied corpora can contain multiple downloaded files for the same
+    Innovation Library item. Those rows may have distinct internal document IDs
+    while sharing a canonical URL/title, so prefer URL/title before falling back
+    to document_id.
+    """
+    url = (row.get("url") or "").strip().lower()
+    if url:
+        return f"url:{url}"
+    title = (
+        row.get("canonical_title")
+        or row.get("title")
+        or ""
+    ).strip().lower()
+    year = row.get("year") or ""
+    if title:
+        return f"title:{title}|year:{year}"
+    document_id = (row.get("document_id") or "").strip()
+    return f"document_id:{document_id}" if document_id else ""
+
+
+def _dedupe_document_rows(rows: list[dict], *, limit: int | None = None) -> list[dict]:
+    deduped: list[dict] = []
+    seen: set[str] = set()
+    for row in rows:
+        key = _document_identity_key(row)
+        if key and key in seen:
+            continue
+        if key:
+            seen.add(key)
+        deduped.append(row)
+        if limit is not None and len(deduped) >= limit:
+            break
+    return deduped
+
+
 def _filter_rows_for_documents(rows: list[dict], documents: list[dict]) -> list[dict]:
     return [
         row
@@ -2270,7 +2568,55 @@ def get_storage_options() -> dict[str, str]:
     )
 
 
-async def get_connection() -> lancedb.AsyncConnection:
+def get_lancedb_uri(profile=None) -> str:
+    """
+    Resolve the LanceDB URI.
+
+    Production defaults to Azure-backed LanceDB. Local development and tester
+    runs can set `LANCEDB_URI` to a filesystem path, which avoids Azure writes
+    while preserving the same table names and retrieval code. Assistant profiles
+    may define a storage-specific URI, used only when `LANCEDB_URI` is not set.
+    """
+    raw = (os.getenv("LANCEDB_URI") or "").strip()
+    if not raw:
+        profile_uri = getattr(profile, "lancedb_uri", None)
+        raw = profile_uri.strip() if isinstance(profile_uri, str) else ""
+    if not raw:
+        return "az://lancedb"
+    if "://" not in raw:
+        path = Path(raw).expanduser()
+        path.mkdir(parents=True, exist_ok=True)
+        return str(path)
+    return raw
+
+
+def build_fallback_knowledge_graph() -> nx.DiGraph:
+    """
+    Build a small deterministic graph for local/offline test runs.
+
+    This is only used when LanceDB graph tables are missing or empty. It keeps
+    `/nodes`, `/graph`, and `/graph/v2` usable in local assistant-kit workspaces
+    that intentionally contain only assistant-specific corpus tables.
+    """
+    graph = nx.DiGraph()
+    for node in FALLBACK_GRAPH_NODES:
+        graph.add_node(
+            node["name"],
+            description=node["description"],
+            weight=float(node["weight"]),
+        )
+    for subject, predicate, object_name, weight in FALLBACK_GRAPH_EDGES:
+        graph.add_edge(
+            subject,
+            object_name,
+            predicate=predicate,
+            description=f"{subject} {predicate.replace('_', ' ')} {object_name}.",
+            weight=float(weight),
+        )
+    return graph
+
+
+async def get_connection(profile=None) -> lancedb.AsyncConnection:
     """
     Get an asynchronous database connection for LanceDB stored on Azure Blob Storage.
 
@@ -2279,9 +2625,10 @@ async def get_connection() -> lancedb.AsyncConnection:
     lancedb.AsyncConnection
         Asynchronous database connection client.
     """
-    return await lancedb.connect_async(
-        "az://lancedb", storage_options=get_storage_options()
-    )
+    uri = get_lancedb_uri(profile=profile)
+    if uri.startswith("az://"):
+        return await lancedb.connect_async(uri, storage_options=get_storage_options())
+    return await lancedb.connect_async(uri)
 
 
 class Client:
@@ -2289,9 +2636,27 @@ class Client:
     Database client class to perform routine operations using LanceDB.
     """
 
-    def __init__(self, connection: lancedb.AsyncConnection):
+    def __init__(
+        self,
+        connection: lancedb.AsyncConnection,
+        *,
+        table_names: dict[str, str] | None = None,
+        profile=None,
+    ):
         self.connection = connection
         self.embedder = genai.get_embedding_client()
+        self.profile = profile
+        self.assistant_id = getattr(profile, "assistant_id", "sea")
+        self.enable_sea_current_data_policy = self.assistant_id == "sea"
+        profile_tables = getattr(profile, "table_names", None)
+        self.table_names = {
+            **DEFAULT_RAG_TABLE_NAMES,
+            **(profile_tables if isinstance(profile_tables, dict) else {}),
+            **(table_names or {}),
+        }
+
+    def table_name(self, logical_name: str) -> str:
+        return self.table_names.get(logical_name, logical_name)
 
     async def table_exists(self, name: str) -> bool:
         table_names = await self.connection.table_names()
@@ -2305,6 +2670,9 @@ class Client:
                 return None
             raise
 
+    async def open_logical_table(self, logical_name: str):
+        return await self.open_optional_table(self.table_name(logical_name))
+
     async def get_table_field_names(self, name: str) -> set[str]:
         table = await self.open_optional_table(name)
         if table is None:
@@ -2317,7 +2685,8 @@ class Client:
         *,
         refresh: bool = False,
     ) -> list[dict]:
-        documents_table = await self.open_optional_table("documents")
+        documents_table_name = self.table_name("documents")
+        documents_table = await self.open_optional_table(documents_table_name)
         if documents_table is None:
             return []
 
@@ -2334,6 +2703,8 @@ class Client:
             and isinstance(cached_rows, list)
             and cached_rows
             and _DOCUMENT_INDEX_CACHE.get("connection_id") == connection_id
+            and _DOCUMENT_INDEX_CACHE.get("connection_ref") is self.connection
+            and _DOCUMENT_INDEX_CACHE.get("table_name") == documents_table_name
             and cache_age <= ttl_seconds
         ):
             return list(cached_rows)
@@ -2346,6 +2717,8 @@ class Client:
         _DOCUMENT_INDEX_CACHE["rows"] = approved_rows
         _DOCUMENT_INDEX_CACHE["loaded_at"] = monotonic()
         _DOCUMENT_INDEX_CACHE["connection_id"] = connection_id
+        _DOCUMENT_INDEX_CACHE["connection_ref"] = self.connection
+        _DOCUMENT_INDEX_CACHE["table_name"] = documents_table_name
         return list(approved_rows)
 
     async def _overwrite_table_rows(
@@ -2383,6 +2756,7 @@ class Client:
         parser_version: str = "bootstrap-v1",
         embedding_version: str = "legacy",
         status: str = "approved",
+        profile=None,
         progress=None,
     ) -> dict[str, int]:
         async def emit(message: str) -> None:
@@ -2393,7 +2767,10 @@ class Client:
                 await result
 
         await emit("Opening chunks table...")
-        chunks_table = await self.open_optional_table("chunks")
+        chunks_table_name = self.table_name("chunks")
+        documents_table_name = self.table_name("documents")
+        sources_table_name = self.table_name("sources")
+        chunks_table = await self.open_optional_table(chunks_table_name)
         if chunks_table is None:
             await emit("Chunks table not found. Nothing to bootstrap.")
             return {"sources": 0, "documents": 0, "chunks": 0}
@@ -2414,32 +2791,37 @@ class Client:
             documents.append(
                 corpus.build_document_record(
                     grouped[key],
+                    profile=profile,
                     parser_version=parser_version,
                     embedding_version=embedding_version,
                     status=status,
                 )
             )
         await emit(f"Built {len(documents)} document records.")
-        sources = corpus.build_source_records_for_documents(documents)
+        sources = corpus.build_source_records_for_documents(documents, profile=profile)
         await emit(f"Built {len(sources)} source records.")
         documents_by_key = {
             key: document
             for key, document in zip(sorted(grouped), documents, strict=False)
         }
-        enriched_rows = corpus.enrich_chunk_rows(rows, documents_by_key=documents_by_key)
+        enriched_rows = corpus.enrich_chunk_rows(
+            rows,
+            documents_by_key=documents_by_key,
+            profile=profile,
+        )
         await emit(f"Prepared {len(enriched_rows)} enriched chunk rows.")
 
         table_mode = "overwrite" if overwrite else None
         await emit("Writing sources table...")
         await self.connection.create_table(
-            "sources",
+            sources_table_name,
             data=[item.model_dump() for item in sources],
             mode=table_mode,
             exist_ok=not overwrite,
         )
         await emit("Writing documents table...")
         await self.connection.create_table(
-            "documents",
+            documents_table_name,
             data=[item.model_dump() for item in documents],
             mode=table_mode,
             exist_ok=not overwrite,
@@ -2447,7 +2829,7 @@ class Client:
         if rewrite_chunks:
             await emit("Rewriting chunks table with document provenance...")
             await self.connection.create_table(
-                "chunks",
+                chunks_table_name,
                 data=enriched_rows,
                 mode="overwrite",
             )
@@ -2462,19 +2844,24 @@ class Client:
     async def upsert_sources(self, rows: list[dict]) -> int:
         if not rows:
             return 0
-        return await self._overwrite_table_rows("sources", rows, key_field="source_id")
+        return await self._overwrite_table_rows(
+            self.table_name("sources"), rows, key_field="source_id"
+        )
 
     async def upsert_documents(self, rows: list[dict]) -> int:
         if not rows:
             return 0
-        return await self._overwrite_table_rows("documents", rows, key_field="document_id")
+        return await self._overwrite_table_rows(
+            self.table_name("documents"), rows, key_field="document_id"
+        )
 
     async def upsert_chunks(self, rows: list[dict]) -> int:
         if not rows:
             return 0
-        table = await self.open_optional_table("chunks")
+        chunks_table_name = self.table_name("chunks")
+        table = await self.open_optional_table(chunks_table_name)
         if table is None:
-            await self.connection.create_table("chunks", data=rows)
+            await self.connection.create_table(chunks_table_name, data=rows)
             return len(rows)
         schema = await table.schema()
         field_names = {field.name for field in schema}
@@ -2497,7 +2884,9 @@ class Client:
                     "Re-run bootstrap with `--rewrite-chunks` before importing enriched chunks. "
                     f"Missing fields: {', '.join(missing)}"
                 )
-            return await self._overwrite_table_rows("chunks", rows, key_field="chunk_id")
+            return await self._overwrite_table_rows(
+                chunks_table_name, rows, key_field="chunk_id"
+            )
         await table.add(rows)
         return len(rows)
 
@@ -2701,7 +3090,7 @@ class Client:
         tuple[list[Chunk], list[Document]]
             Curated chunks for answer grounding and a separate ranked document list.
         """
-        table = await self.connection.open_table("chunks")
+        table = await self.connection.open_table(self.table_name("chunks"))
         if hasattr(table, "schema"):
             chunk_schema = await table.schema()
             chunk_fields = {field.name for field in chunk_schema}
@@ -2715,7 +3104,7 @@ class Client:
                 "summary",
                 "content",
             }
-        documents_table = await self.open_optional_table("documents")
+        documents_table = await self.open_optional_table(self.table_name("documents"))
         profile = _build_retrieval_profile(query, years)
         candidate_limit = max(limit * 3, 24)
         retrieval_queries = _prioritize_retrieval_queries(query)
@@ -2954,7 +3343,7 @@ class Client:
 
             ranked_documents: list[DocumentHit] = []
             ranked_document_debug: list[dict] = []
-            if _should_seed_latest_sdg7(profile):
+            if self.enable_sea_current_data_policy and _should_seed_latest_sdg7(profile):
                 seeded_hits: list[tuple[DocumentHit, dict]] = []
                 for row in index_rows:
                     if not _is_latest_tracking_sdg7_row(row):
@@ -3040,25 +3429,12 @@ class Client:
                         len(rejected_rows),
                     )
                 for hit, breakdown in variant_hits:
-                    key = str(
-                        hit.row.get("document_id")
-                        or hit.row.get("url")
-                        or hit.row.get("canonical_title")
-                        or hit.row.get("title")
-                        or ""
-                    )
+                    key = _document_identity_key(hit.row)
                     existing = next(
                         (
                             item
                             for item in ranked_documents
-                            if str(
-                                item.row.get("document_id")
-                                or item.row.get("url")
-                                or item.row.get("canonical_title")
-                                or item.row.get("title")
-                                or ""
-                            )
-                            == key
+                            if _document_identity_key(item.row) == key
                         ),
                         None,
                     )
@@ -3081,18 +3457,26 @@ class Client:
             ranked_documents.sort(key=lambda item: item.score, reverse=True)
 
             if ranked_documents:
-                shortlisted_rows = [item.row for item in ranked_documents[:6]]
+                shortlisted_rows = _dedupe_document_rows(
+                    [item.row for item in ranked_documents],
+                    limit=6,
+                )
                 api_documents = [corpus.document_record_to_api(row) for row in shortlisted_rows]
                 if debug is not None:
                     debug["selected"]["document_candidates"] = ranked_document_debug[:10]
-                fast_metric_chunks = _build_current_data_metric_fallback_chunks(
-                    shortlisted_rows,
-                    profile,
+                fast_metric_chunks = (
+                    _build_current_data_metric_fallback_chunks(
+                        shortlisted_rows,
+                        profile,
+                    )
+                    if self.enable_sea_current_data_policy
+                    else []
                 )
                 if fast_metric_chunks:
                     source_locked_rows = [
                         row for row in shortlisted_rows if _is_latest_tracking_sdg7_row(row)
                     ] or shortlisted_rows[:1]
+                    source_locked_rows = _dedupe_document_rows(source_locked_rows)
                     source_locked_documents = [
                         corpus.document_record_to_api(row) for row in source_locked_rows
                     ] or api_documents[:1]
@@ -3377,10 +3761,14 @@ class Client:
                     profile,
                 )
                 selected_chunks = _select_chunk_rows(chunk_rows, profile, limit=limit)
-                metric_fallback_chunks = _build_current_data_metric_fallback_chunks(
-                    shortlisted_rows,
-                    profile,
-                    existing_chunks=selected_chunks,
+                metric_fallback_chunks = (
+                    _build_current_data_metric_fallback_chunks(
+                        shortlisted_rows,
+                        profile,
+                        existing_chunks=selected_chunks,
+                    )
+                    if self.enable_sea_current_data_policy
+                    else []
                 )
                 if metric_fallback_chunks:
                     selected_chunks = (metric_fallback_chunks + selected_chunks)[:limit]
@@ -3739,9 +4127,13 @@ class Client:
             table = await self.connection.open_table("nodes")
         except ValueError as error:
             if "was not found" in str(error):
-                return nx.DiGraph()
+                logger.warning("Knowledge graph nodes table missing; using fallback local graph.")
+                return build_fallback_knowledge_graph()
             raise
         df = await table.query().select(["name", "description", "weight"]).to_pandas()
+        if df.empty:
+            logger.warning("Knowledge graph nodes table is empty; using fallback local graph.")
+            return build_fallback_knowledge_graph()
         nodes = zip(
             df["name"].tolist(),
             df[["description", "weight"]].to_dict(orient="records"),
@@ -3750,9 +4142,8 @@ class Client:
             table = await self.connection.open_table("edges")
         except ValueError as error:
             if "was not found" in str(error):
-                graph = nx.DiGraph()
-                graph.add_nodes_from(nodes)
-                return graph
+                logger.warning("Knowledge graph edges table missing; using fallback local graph.")
+                return build_fallback_knowledge_graph()
             raise
         # check if level column exists in the table schema
         schema = await table.schema()
@@ -3762,6 +4153,9 @@ class Client:
             edge_columns.append("level")
             edge_attrs.append("level")
         df = await table.query().select(edge_columns).to_pandas()
+        if df.empty:
+            logger.warning("Knowledge graph edges table is empty; using fallback local graph.")
+            return build_fallback_knowledge_graph()
         edges = zip(
             df["subject"].tolist(),
             df["object"].tolist(),
