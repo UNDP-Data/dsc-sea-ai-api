@@ -11,6 +11,7 @@ import main as app_module
 
 
 ALLOWED_ORIGIN = "https://ben-keller.github.io"
+ORG_ALLOWED_ORIGIN = "https://undp-data.github.io"
 
 
 class FakeTable:
@@ -108,6 +109,20 @@ def test_pages_preflight_allows_pages_origin():
     assert response.status_code == 204
     assert response.headers["Access-Control-Allow-Origin"] == ALLOWED_ORIGIN
     assert "POST" in response.headers["Access-Control-Allow-Methods"]
+
+
+def test_pages_preflight_allows_undp_data_pages_origin():
+    with TestClient(app_module.app) as client:
+        response = client.options(
+            "/pages/sgp-ai/model",
+            headers={
+                "Origin": ORG_ALLOWED_ORIGIN,
+                "Access-Control-Request-Method": "POST",
+            },
+        )
+
+    assert response.status_code == 204
+    assert response.headers["Access-Control-Allow-Origin"] == ORG_ALLOWED_ORIGIN
 
 
 def test_pages_model_streams_without_browser_api_key(monkeypatch):
