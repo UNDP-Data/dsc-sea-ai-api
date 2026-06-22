@@ -1,0 +1,275 @@
+assistant_id: sea
+display_name: Sustainable Energy Academy AI
+domain_description: >
+  Sustainable energy, SDG 7, energy access, renewable energy, clean cooking,
+  grid infrastructure, just transition, climate mitigation and adaptation,
+  climate finance, resilience, and related sustainable development topics.
+refusal_guidance: >
+  I am limited to Sustainable Energy Academy topics such as sustainable energy,
+  climate mitigation and adaptation, renewable energy, energy access, clean cooking,
+  grid infrastructure, and related SDG 7 policy questions.
+
+tables:
+  chunks: chunks
+  documents: documents
+  sources: sources
+
+prompt_refs:
+  extract_entities: extract_entities
+  answer_question: answer_question
+  draft_answer: draft_answer
+  answer_with_publications: answer_with_publications
+  suggest_ideas: suggest_ideas
+
+source_definitions:
+  - source_id: tracking_sdg7
+    name: Tracking SDG7 / ESMAP
+    organization: World Bank / ESMAP
+    authority_tier: trusted
+    base_url: https://trackingsdg7.esmap.org
+    ingestion_method: official_index
+    review_policy: hybrid_editorial
+    domains:
+      - trackingsdg7.esmap.org
+      - esmap.org
+  - source_id: undp
+    name: UNDP Publications
+    organization: UNDP
+    authority_tier: trusted
+    base_url: https://www.undp.org
+    ingestion_method: official_index
+    review_policy: hybrid_editorial
+    domains:
+      - undp.org
+  - source_id: world_bank
+    name: World Bank Publications
+    organization: World Bank
+    authority_tier: trusted
+    base_url: https://www.worldbank.org
+    ingestion_method: official_index
+    review_policy: hybrid_editorial
+    domains:
+      - worldbank.org
+  - source_id: iea
+    name: IEA Publications
+    organization: International Energy Agency
+    authority_tier: partner
+    base_url: https://www.iea.org
+    ingestion_method: official_index
+    review_policy: hybrid_editorial
+    domains:
+      - iea.org
+  - source_id: seforall
+    name: SEforALL Publications
+    organization: Sustainable Energy for All
+    authority_tier: partner
+    base_url: https://www.seforall.org
+    ingestion_method: official_index
+    review_policy: hybrid_editorial
+    domains:
+      - seforall.org
+  - source_id: irena
+    name: IRENA Publications
+    organization: IRENA
+    authority_tier: partner
+    base_url: https://www.irena.org
+    ingestion_method: official_index
+    review_policy: hybrid_editorial
+    domains:
+      - irena.org
+  - source_id: unep
+    name: UNEP Publications
+    organization: UNEP
+    authority_tier: partner
+    base_url: https://www.unep.org
+    ingestion_method: official_index
+    review_policy: hybrid_editorial
+    domains:
+      - unep.org
+
+tag_rules:
+  topics:
+    energy access:
+      - energy access
+      - electricity access
+      - electrification
+      - mini-grid
+      - off-grid
+    renewable energy:
+      - renewable
+      - solar
+      - wind
+      - hydro
+      - geothermal
+      - bioenergy
+    energy efficiency:
+      - energy efficiency
+      - energy intensity
+      - efficiency
+    climate mitigation:
+      - climate mitigation
+      - decarbon
+      - emissions
+      - greenhouse gas
+    climate adaptation:
+      - climate adaptation
+      - resilience
+      - adaptive capacity
+      - disaster risk
+    energy finance:
+      - finance
+      - investment
+      - green bond
+      - concessional
+      - tariff
+    grid infrastructure:
+      - grid
+      - transmission
+      - distribution
+      - storage
+      - interconnection
+    clean cooking:
+      - clean cooking
+      - cookstove
+      - biofuel
+      - traditional biomass
+  geographies:
+    africa:
+      - africa
+      - sub-saharan africa
+    asia:
+      - asia
+      - south asia
+      - southeast asia
+      - central asia
+    latin america:
+      - latin america
+      - caribbean
+      - lac
+    europe:
+      - europe
+      - european union
+    middle east:
+      - middle east
+      - mena
+      - arab states
+    small island developing states:
+      - sids
+      - small island developing states
+    global:
+      - global
+      - worldwide
+      - international
+  countries:
+    NGA:
+      - nigeria
+    COD:
+      - democratic republic of congo
+      - dr congo
+      - drc
+    ETH:
+      - ethiopia
+    KEN:
+      - kenya
+    IND:
+      - india
+    IDN:
+      - indonesia
+    BRA:
+      - brazil
+  sdgs:
+    SDG7:
+      - sdg 7
+      - sustainable development goal 7
+      - energy access
+      - renewable
+      - clean cooking
+    SDG13:
+      - sdg 13
+      - climate action
+      - mitigation
+      - adaptation
+  sectors:
+    power:
+      - electricity
+      - power
+      - grid
+      - renewable power
+    transport:
+      - transport
+      - mobility
+      - vehicle
+      - biofuel
+    industry:
+      - industry
+      - industrial
+      - manufacturing
+    buildings:
+      - building
+      - buildings
+      - cooling
+      - heating
+    cooking:
+      - clean cooking
+      - cookstove
+      - cooking
+    finance:
+      - finance
+      - investment
+      - bond
+      - loan
+  audiences:
+    policy-makers:
+      - policy
+      - roadmap
+      - guidance
+      - framework
+      - regulation
+    practitioners:
+      - toolkit
+      - implementation
+      - case study
+      - programme
+      - project
+    researchers:
+      - analysis
+      - report
+      - assessment
+      - scenario
+
+scope:
+  domain_terms:
+    - sustainable
+    - energy
+    - climate
+    - electricity
+    - renewable
+    - sdg7
+    - grid
+    - cooking
+    - transition
+  domain_phrases:
+    - sustainable energy
+    - energy access
+    - clean cooking
+    - climate change
+    - renewable energy
+    - grid infrastructure
+
+retrieval_policy:
+  current_data:
+    enabled: true
+    flagship_patterns:
+      - tracking sdg7
+      - tracking sdg 7
+      - progress toward sustainable energy
+    trusted_metrics:
+      - id: sdg7_2025_electricity_access_deficit
+        applies_to:
+          - access to energy
+          - energy access
+          - access to electricity
+          - electricity access
+        text: >
+          According to the 2025 Tracking SDG7 Report, 666 million people worldwide
+          lacked access to electricity in 2023.

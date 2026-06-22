@@ -1,0 +1,30 @@
+assistant_id: sample
+sources:
+  - source_id: sample_source
+    name: Sample Publications
+    organization: Sample Organization
+    authority_tier: trusted
+    base_url: https://example.org
+    ingestion_method: manual_manifest
+    review_policy: hybrid_editorial
+
+documents:
+  - source_id: sample_source
+    title: Sample Food Systems Policy Note
+    url: https://example.org/sample-food-systems-policy-note
+    year: 2026
+    language: en
+    summary: >
+      A sample document used to prove that the reusable RAG pipeline can operate
+      on a non-SEA corpus with its own table namespace.
+    topic_tags:
+      - food systems
+    region_codes:
+      - global
+    audience_tags:
+      - policy-makers
+    chunks:
+      - section_title: Overview
+        content: >
+          Food systems policy connects agricultural productivity, nutrition outcomes,
+          water management, and climate resilience in rural communities.

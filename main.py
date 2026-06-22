@@ -36,6 +36,7 @@ from src.kg import v1 as kg_v1
 from src.kg import v2 as kg_v2
 from src.kg.types import GraphV2, GraphV2Parameters
 from src.moonshot import router as moonshot_router
+from src.rag_system import RagProfileError, get_profile, list_profiles
 from src.security import authenticate
 
 load_dotenv()
@@ -107,6 +108,35 @@ app = FastAPI(**metadata, lifespan=lifespan)
 app.include_router(moonshot_router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates/")
+
+
+def _get_profile_or_404(assistant_id: str):
+    try:
+        return get_profile(assistant_id)
+    except RagProfileError as error:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(error),
+        ) from error
+
+
+async def _close_connection(connection) -> None:
+    close = getattr(connection, "close", None)
+    if close is None:
+        return
+    result = close()
+    if isawaitable(result):
+        with suppress(Exception):
+            await asyncio.wait_for(result, timeout=2.0)
+
+
+@asynccontextmanager
+async def _profile_client(profile):
+    connection = await database.get_connection(profile=profile)
+    try:
+        yield database.Client(connection, profile=profile)
+    finally:
+        await _close_connection(connection)
 
 
 @app.get(
@@ -281,6 +311,106 @@ async def list_sources(request: Request):
 
 
 @app.get(
+    path="/assistants",
+    dependencies=[Depends(authenticate)],
+)
+async def list_rag_assistants():
+    """
+    List configured publication-backed RAG assistant profiles.
+    """
+    return [
+        {
+            "assistant_id": profile.assistant_id,
+            "display_name": profile.display_name,
+            "domain_description": profile.domain_description,
+            "tables": profile.table_names,
+            "default": profile.is_default,
+        }
+        for profile in list_profiles()
+    ]
+
+
+@app.get(
+    path="/assistants/{assistant_id}/documents",
+    response_model=list[Document],
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def search_assistant_documents(
+    assistant_id: str,
+    pattern: Annotated[str | None, Query(max_length=120)] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 20,
+):
+    """
+    Search canonical publication records for a configured RAG assistant.
+    """
+    profile = _get_profile_or_404(assistant_id)
+    async with _profile_client(profile) as client:
+        table = await client.open_optional_table(client.table_name("documents"))
+        if table is None:
+            return []
+        clause = "(status = 'approved')"
+        if pattern:
+            escaped = pattern.replace("'", "''")
+            clause += (
+                " AND ("
+                f"regexp_like(canonical_title, '(?i){escaped}') OR "
+                f"regexp_like(summary, '(?i){escaped}') OR "
+                f"regexp_like(topic_tags_text, '(?i){escaped}') OR "
+                f"regexp_like(geography_tags_text, '(?i){escaped}')"
+                ")"
+            )
+        rows = await table.query().where(clause).limit(limit).to_list()
+        return [corpus.document_record_to_api(row) for row in rows]
+
+
+@app.get(
+    path="/assistants/{assistant_id}/sources",
+    response_model=list[SourceRecord],
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def list_assistant_sources(assistant_id: str):
+    """
+    List source records for a configured RAG assistant.
+    """
+    profile = _get_profile_or_404(assistant_id)
+    async with _profile_client(profile) as client:
+        table = await client.open_optional_table(client.table_name("sources"))
+        if table is None:
+            return []
+        rows = await table.query().limit(200).to_list()
+        return [SourceRecord(**row) for row in rows]
+
+
+@app.get(
+    path="/assistants/{assistant_id}/debug/retrieve",
+    dependencies=[Depends(authenticate)],
+    include_in_schema=False,
+)
+async def debug_assistant_retrieve(
+    assistant_id: str,
+    query: Annotated[str, Query(min_length=2)],
+    limit: Annotated[int, Query(ge=1, le=50)] = 12,
+):
+    """
+    Inspect document/chunk retrieval decisions for a configured assistant.
+    """
+    profile = _get_profile_or_404(assistant_id)
+    async with _profile_client(profile) as client:
+        debug_payload: dict = {}
+        chunks, documents = await client.retrieve_chunks(query, limit=limit, debug=debug_payload)
+        return {
+            "assistant_id": profile.assistant_id,
+            "query": query,
+            "limit": limit,
+            "documents": [document.model_dump() for document in documents],
+            "chunks": [chunk.model_dump() for chunk in chunks],
+            "debug": debug_payload,
+        }
+
+
+@app.get(
     path="/graph",
     response_model=Graph,
     response_model_by_alias=False,
@@ -389,6 +519,210 @@ async def debug_retrieve(
         "chunks": [chunk.model_dump() for chunk in chunks],
         "debug": debug_payload,
     }
+
+
+@app.post(
+    path="/assistants/{assistant_id}/model",
+    response_model=AssistantResponse,
+    response_model_by_alias=False,
+    dependencies=[Depends(authenticate)],
+)
+async def ask_assistant_model(
+    request: Request,
+    assistant_id: str,
+    messages: list[Message],
+):
+    """
+    Ask a configured RAG assistant to stream an NDJSON response.
+
+    This route is RAG-only in v1 and intentionally does not emit Knowledge Graph
+    chunks for non-SEA assistants.
+    """
+    if not messages:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="At least one message is required.",
+        )
+    if messages[-1].role != "human":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="The last message must come from the user.",
+        )
+
+    profile = _get_profile_or_404(assistant_id)
+    request_id = request.headers.get("X-Request-Id") or uuid4().hex
+    user_query = messages[-1].content
+    scope_decision = genai.assess_profile_scope(messages, profile)
+    if not scope_decision.allowed:
+        logger.warning(
+            "Blocked assistant request assistant_id=%s request_id=%s category=%s reason=%s query=%r",
+            profile.assistant_id,
+            request_id,
+            scope_decision.category,
+            scope_decision.reason,
+            user_query,
+        )
+
+        async def stream_blocked_response():
+            yield (
+                AssistantResponse(
+                    role="assistant",
+                    content=scope_decision.refusal or "This request is outside the supported scope.",
+                    graph=None,
+                ).model_dump_json()
+                + "\n"
+            )
+            yield (
+                AssistantResponse(
+                    role="assistant",
+                    content="",
+                    ideas=genai.build_scope_ideas(scope_decision.category),
+                    graph=None,
+                ).model_dump_json()
+                + "\n"
+            )
+
+        return StreamingResponse(
+            content=stream_blocked_response(),
+            media_type="application/x-ndjson",
+            headers={"X-Request-Id": request_id},
+        )
+
+    logger.info(
+        "Assistant model request started assistant_id=%s request_id=%s",
+        profile.assistant_id,
+        request_id,
+    )
+
+    async def maybe_close(connection) -> None:
+        close = getattr(connection, "close", None)
+        if close is None:
+            return
+        result = close()
+        if isawaitable(result):
+            with suppress(Exception):
+                await asyncio.wait_for(result, timeout=2.0)
+
+    async def publication_payload():
+        retrieval_timeout_seconds = _env_timeout_seconds(
+            "MODEL_PUBLICATION_RETRIEVAL_TIMEOUT_SECONDS",
+            90.0,
+        )
+        answer_connection = None
+        logger.info(
+            "Assistant publication retrieval scheduled assistant_id=%s request_id=%s query=%r timeout=%ss",
+            profile.assistant_id,
+            request_id,
+            user_query,
+            retrieval_timeout_seconds,
+        )
+        try:
+            answer_connection = await database.get_connection(profile=profile)
+            answer_client = database.Client(answer_connection, profile=profile)
+            started_at = monotonic()
+            try:
+                chunks, documents = await asyncio.wait_for(
+                    answer_client.retrieve_chunks(user_query),
+                    timeout=retrieval_timeout_seconds,
+                )
+            except asyncio.TimeoutError:
+                logger.warning(
+                    "Assistant publication retrieval timed out assistant_id=%s request_id=%s query=%r timeout=%ss",
+                    profile.assistant_id,
+                    request_id,
+                    user_query,
+                    retrieval_timeout_seconds,
+                )
+                return [], []
+            except Exception as error:
+                logger.exception(
+                    "Assistant publication retrieval failed assistant_id=%s request_id=%s query=%r: %s",
+                    profile.assistant_id,
+                    request_id,
+                    user_query,
+                    error,
+                )
+                return [], []
+            logger.info(
+                "Assistant publication retrieval completed assistant_id=%s request_id=%s query=%r chunks=%s documents=%s elapsed_ms=%.2f",
+                profile.assistant_id,
+                request_id,
+                user_query,
+                len(chunks),
+                len(documents),
+                (monotonic() - started_at) * 1000,
+            )
+            return [chunk.to_context() for chunk in chunks], documents
+        finally:
+            if answer_connection is not None:
+                await maybe_close(answer_connection)
+
+    async def stream_assistant_response():
+        response = AssistantResponse(role="assistant", content="", graph=None)
+        stream_idle_timeout_seconds = _env_timeout_seconds(
+            "MODEL_STREAM_IDLE_TIMEOUT_SECONDS",
+            90.0,
+        )
+        defer_initial_answer = (
+            not profile.is_default
+            or database.should_defer_to_publications(user_query)
+        )
+        answer_iter = genai.get_answer(
+            messages,
+            response,
+            publication_task=publication_payload(),
+            defer_initial_answer=defer_initial_answer,
+            profile=profile,
+        )
+        emitted_chunks = 0
+        try:
+            while True:
+                try:
+                    chunk = await asyncio.wait_for(
+                        answer_iter.__anext__(),
+                        timeout=stream_idle_timeout_seconds,
+                    )
+                except StopAsyncIteration:
+                    break
+                except asyncio.TimeoutError:
+                    logger.warning(
+                        "Assistant model stream idle timeout assistant_id=%s request_id=%s timeout=%ss",
+                        profile.assistant_id,
+                        request_id,
+                        stream_idle_timeout_seconds,
+                    )
+                    fallback = AssistantResponse(
+                        role="assistant",
+                        content="I ran into a temporary delay while retrieving supporting data. Please retry your question.",
+                        graph=None,
+                    )
+                    yield fallback.model_dump_json() + "\n"
+                    emitted_chunks += 1
+                    break
+                if await request.is_disconnected():
+                    logger.info(
+                        "Client disconnected during assistant stream assistant_id=%s request_id=%s.",
+                        profile.assistant_id,
+                        request_id,
+                    )
+                    return
+                yield chunk
+                emitted_chunks += 1
+        finally:
+            with suppress(Exception):
+                await asyncio.wait_for(answer_iter.aclose(), timeout=1.0)
+        logger.info(
+            "Assistant model request finished assistant_id=%s request_id=%s chunks=%s",
+            profile.assistant_id,
+            request_id,
+            emitted_chunks,
+        )
+
+    return StreamingResponse(
+        content=stream_assistant_response(),
+        media_type="application/x-ndjson",
+        headers={"X-Request-Id": request_id},
+    )
 
 
 @app.post(

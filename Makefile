@@ -12,3 +12,7 @@ run:
 	uvicorn main:app --reload
 run-tester:
 	uvicorn frontend.kg_tester_app:app --reload --host 127.0.0.1 --port 8010
+run-sgp-tester:
+	uvicorn frontend.sgp_ai_tester_app:app --reload --host $${SGP_TESTER_HOST:-127.0.0.1} --port $${SGP_TESTER_PORT:-8015}
+run-sgp-local:
+	$${PYTHON:-.venv/bin/python} scripts/run_sgp_ai_local.py --reload

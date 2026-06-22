@@ -1,0 +1,596 @@
+{
+  "service": {
+    "name": "UNDP Sustainable Energy Academy AI API",
+    "repository_role": "AI API service for the UNDP Sustainable Energy Digital Intelligence Platform",
+    "platform_surfaces": [
+      "Energy AI",
+      "Sustainable Energy Academy",
+      "Knowledge Graph experience",
+      "Moonshot dashboard support endpoints"
+    ],
+    "main_application": "main.py",
+    "local_tester_application": "frontend/kg_tester_app.py",
+    "version_source": "metadata.yaml",
+    "deployment_workflow": ".github/workflows/azure-webapps-python.yml",
+    "azure_web_app_name": "sea-ai-api",
+    "unknowns": [
+      "Exact production frontend repositories consuming this API",
+      "Whether Energy AI, Sustainable Energy Academy, and Knowledge Graph are separate applications or surfaces of one frontend",
+      "Production startup command and whether Dockerfile is used"
+    ]
+  },
+  "runtime": {
+    "framework": "FastAPI",
+    "server": "Uvicorn",
+    "python_versions_seen": [
+      "3.12 in Dockerfile and GitHub Actions"
+    ],
+    "major_libraries": [
+      "pydantic",
+      "lancedb[azure]",
+      "langchain-openai",
+      "langgraph",
+      "networkx",
+      "pandas",
+      "pyarrow",
+      "httpx",
+      "jinja2"
+    ]
+  },
+  "external_services": {
+    "model_providers": [
+      {
+        "name": "Azure OpenAI",
+        "uses": [
+          "chat generation",
+          "structured output",
+          "embeddings"
+        ],
+        "environment_variables": [
+          "AZURE_OPENAI_KEY",
+          "AZURE_OPENAI_ENDPOINT",
+          "AZURE_OPENAI_API_VERSION",
+          "AZURE_OPENAI_CHAT_MODEL",
+          "AZURE_OPENAI_EMBED_MODEL"
+        ]
+      },
+      {
+        "name": "OpenAI direct API",
+        "uses": [
+          "Moonshot fallback provider"
+        ],
+        "environment_variables": [
+          "OPENAI_API_KEY",
+          "OPENAI_BASE_URL",
+          "OPENAI_ORG_ID",
+          "OPENAI_PROJECT_ID",
+          "OPENAI_PARSE_MODEL",
+          "OPENAI_SYNOPSIS_MODEL"
+        ]
+      }
+    ],
+    "storage": [
+      {
+        "name": "Azure Blob Storage via LanceDB",
+        "uri": "az://lancedb",
+        "environment_variables": [
+          "STORAGE_SAS_URL",
+          "STORAGE_ACCOUNT_NAME",
+          "STORAGE_ACCOUNT_KEY",
+          "STORAGE_SAS_TOKEN"
+        ]
+      }
+    ],
+    "external_data_sources": [
+      {
+        "name": "UNSD SDG API",
+        "use": "main.ipynb builds sdg7 table"
+      },
+      {
+        "name": "Azure Blob Prodoc container",
+        "use": "Moonshot Prodoc lookup and PDF download"
+      }
+    ]
+  },
+  "storage_tables": [
+    {
+      "name": "chunks",
+      "purpose": "Publication chunk content and vectors for RAG retrieval",
+      "required_for": [
+        "/model",
+        "/debug/retrieve"
+      ],
+      "provenance_fields_optional": [
+        "document_id",
+        "chunk_id",
+        "chunk_index"
+      ]
+    },
+    {
+      "name": "documents",
+      "purpose": "Canonical publication metadata used for document-first retrieval and references",
+      "required_for": [
+        "/documents",
+        "document-first RAG"
+      ]
+    },
+    {
+      "name": "sources",
+      "purpose": "Source registry metadata",
+      "required_for": [
+        "/sources",
+        "document metadata enrichment"
+      ]
+    },
+    {
+      "name": "nodes",
+      "purpose": "Knowledge graph nodes and node vectors",
+      "required_for": [
+        "/nodes",
+        "/graph",
+        "/graph/v2",
+        "/model graph chunks"
+      ]
+    },
+    {
+      "name": "edges",
+      "purpose": "Knowledge graph edges",
+      "required_for": [
+        "/graph",
+        "/graph/v2",
+        "/model graph chunks"
+      ]
+    },
+    {
+      "name": "sdg7",
+      "purpose": "SDG7 tabular data loaded by main.ipynb",
+      "required_for": [
+        "Unknown / requires confirmation"
+      ]
+    }
+  ],
+  "endpoints": [
+    {
+      "path": "/",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Render README documentation as HTML",
+      "auth": "none",
+      "response": "HTML",
+      "internal_functions": [
+        "main.readme"
+      ]
+    },
+    {
+      "path": "/changelog",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Render CHANGELOG as HTML",
+      "auth": "none",
+      "response": "HTML",
+      "internal_functions": [
+        "main.changelog"
+      ]
+    },
+    {
+      "path": "/kg-tester",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Render legacy KG tester page",
+      "auth": "none",
+      "response": "HTML",
+      "internal_functions": [
+        "main.kg_tester"
+      ]
+    },
+    {
+      "path": "/favicon.ico",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Return empty favicon response",
+      "auth": "none",
+      "response": "empty response",
+      "internal_functions": [
+        "main.favicon"
+      ]
+    },
+    {
+      "path": "/static/{path}",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Serve static files",
+      "auth": "none",
+      "response": "static file",
+      "internal_functions": [
+        "fastapi.staticfiles.StaticFiles"
+      ]
+    },
+    {
+      "path": "/nodes",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Search graph nodes",
+      "auth": "X-Api-Key",
+      "request_schema": "SearchParameters",
+      "response_schema": "list[Node]",
+      "internal_functions": [
+        "main.search_nodes",
+        "Client.search_nodes"
+      ]
+    },
+    {
+      "path": "/nodes/{name}",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Fetch graph node by name",
+      "auth": "X-Api-Key",
+      "request_schema": "path parameter name",
+      "response_schema": "Node",
+      "internal_functions": [
+        "main.get_node",
+        "Client.get_node"
+      ]
+    },
+    {
+      "path": "/documents",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Search canonical document metadata",
+      "auth": "X-Api-Key",
+      "request_schema": "DocumentSearchParameters",
+      "response_schema": "list[Document]",
+      "internal_functions": [
+        "main.search_documents",
+        "Client.search_documents"
+      ]
+    },
+    {
+      "path": "/sources",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "List source registry rows",
+      "auth": "X-Api-Key",
+      "request_schema": "none",
+      "response_schema": "list[SourceRecord]",
+      "internal_functions": [
+        "main.list_sources",
+        "Client.list_sources"
+      ]
+    },
+    {
+      "path": "/graph",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Return v1 knowledge graph subgraph",
+      "auth": "X-Api-Key",
+      "request_schema": "GraphParameters",
+      "response_schema": "Graph",
+      "internal_functions": [
+        "main.query_knowledge_graph",
+        "genai.extract_entities",
+        "KnowledgeGraph.find_subgraph"
+      ]
+    },
+    {
+      "path": "/graph/v2",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Return v2 visualization-oriented knowledge graph subgraph",
+      "auth": "X-Api-Key",
+      "request_schema": "GraphV2Parameters",
+      "response_schema": "GraphV2",
+      "internal_functions": [
+        "main.query_knowledge_graph_v2",
+        "kg_v2.build_subgraph_v2"
+      ]
+    },
+    {
+      "path": "/debug/tables",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Inspect table availability and counts",
+      "auth": "X-Api-Key",
+      "request_schema": "none",
+      "response_schema": "debug JSON",
+      "internal_functions": [
+        "main.debug_tables"
+      ],
+      "include_in_openapi_schema": false
+    },
+    {
+      "path": "/debug/retrieve",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Inspect RAG document/chunk selection for a query",
+      "auth": "X-Api-Key",
+      "request_schema": "query and limit query parameters",
+      "response_schema": "debug JSON with documents, chunks, and retrieval diagnostics",
+      "internal_functions": [
+        "main.debug_retrieve",
+        "Client.retrieve_chunks"
+      ],
+      "include_in_openapi_schema": false
+    },
+    {
+      "path": "/model",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "Stream assistant answer, graph, documents, and follow-up ideas",
+      "auth": "X-Api-Key",
+      "request_schema": "list[Message]",
+      "response_schema": "NDJSON stream of AssistantResponse chunks",
+      "internal_functions": [
+        "main.ask_model",
+        "genai.assess_scope",
+        "genai.get_answer",
+        "Client.retrieve_chunks",
+        "kg_v2.build_subgraph_v2"
+      ]
+    },
+    {
+      "path": "/api/moonshot/health",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Report Moonshot provider configuration status",
+      "auth": "none",
+      "request_schema": "none",
+      "response_schema": "MoonshotHealthResponse",
+      "internal_functions": [
+        "moonshot.health",
+        "get_settings"
+      ]
+    },
+    {
+      "path": "/api/moonshot/prodoc",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "Resolve Prodoc PDF URL for a project",
+      "auth": "origin check when configured",
+      "request_schema": "ProdocResolveRequest",
+      "response_schema": "ProdocResolveResponse",
+      "internal_functions": [
+        "moonshot.resolve_prodoc",
+        "resolve_prodoc_blob"
+      ]
+    },
+    {
+      "path": "/api/moonshot/prodoc/download",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Download resolved Prodoc PDF by project metadata",
+      "auth": "origin check when configured",
+      "request_schema": "projectId, title, verticalFunded query parameters",
+      "response_schema": "PDF response",
+      "internal_functions": [
+        "moonshot.download_prodoc",
+        "resolve_prodoc_blob"
+      ]
+    },
+    {
+      "path": "/api/moonshot/prodoc/download-url",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Download validated Prodoc PDF URL",
+      "auth": "origin check when configured",
+      "request_schema": "url query parameter",
+      "response_schema": "PDF response",
+      "internal_functions": [
+        "moonshot.download_prodoc_url"
+      ]
+    },
+    {
+      "path": "/api/moonshot/parse-query",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "Parse dashboard natural-language query into filters",
+      "auth": "origin check and rate limit",
+      "request_schema": "ParseQueryRequest",
+      "response_schema": "ParseQueryResponse",
+      "internal_functions": [
+        "moonshot.parse_query",
+        "require_openai_client"
+      ]
+    },
+    {
+      "path": "/api/moonshot/project-synopsis",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "Generate dashboard synopsis from supplied project context",
+      "auth": "origin check and rate limit",
+      "request_schema": "ProjectSynopsisRequest",
+      "response_schema": "ProjectSynopsisResponse",
+      "internal_functions": [
+        "moonshot.project_synopsis",
+        "require_openai_client"
+      ]
+    },
+    {
+      "path": "/assistants",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "List configured RAG assistant profiles",
+      "auth": "X-Api-Key",
+      "request_schema": "none",
+      "response_schema": "list of assistant profile metadata",
+      "internal_functions": [
+        "rag_system.list_profiles"
+      ]
+    },
+    {
+      "path": "/assistants/{assistant_id}/model",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "Stream profile-specific RAG assistant answer",
+      "auth": "X-Api-Key",
+      "request_schema": "list[Message]",
+      "response_schema": "NDJSON stream of AssistantResponse chunks",
+      "internal_functions": [
+        "rag_system.get_profile",
+        "genai.assess_profile_scope",
+        "genai.get_answer",
+        "Client.retrieve_chunks"
+      ]
+    },
+    {
+      "path": "/assistants/{assistant_id}/documents",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Search assistant-specific canonical document metadata",
+      "auth": "X-Api-Key",
+      "request_schema": "pattern and limit query parameters",
+      "response_schema": "list[Document]",
+      "internal_functions": [
+        "rag_system.get_profile",
+        "Client.open_optional_table"
+      ]
+    },
+    {
+      "path": "/assistants/{assistant_id}/sources",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "List assistant-specific source registry rows",
+      "auth": "X-Api-Key",
+      "request_schema": "none",
+      "response_schema": "list[SourceRecord]",
+      "internal_functions": [
+        "rag_system.get_profile",
+        "Client.open_optional_table"
+      ]
+    },
+    {
+      "path": "/assistants/{assistant_id}/debug/retrieve",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Inspect assistant-specific retrieval diagnostics",
+      "auth": "X-Api-Key",
+      "request_schema": "query and limit query parameters",
+      "response_schema": "debug JSON with assistant_id, documents, chunks, and diagnostics",
+      "internal_functions": [
+        "rag_system.get_profile",
+        "Client.retrieve_chunks"
+      ],
+      "include_in_openapi_schema": false
+    }
+  ],
+  "standalone_tester_endpoints": [
+    {
+      "path": "/",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Redirect to /kg-tester",
+      "auth": "loopback-only app access"
+    },
+    {
+      "path": "/kg-tester",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Serve local tester HTML",
+      "auth": "loopback-only app access"
+    },
+    {
+      "path": "/kg-tester/api/model",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "Proxy tester requests to API /model",
+      "auth": "loopback-only app access plus upstream X-Api-Key"
+    }
+  ],
+  "rag": {
+    "source_corpus_assumption": "main.ipynb reads one-row-per-document parquet at abfs://datasets/corpus-v25-06-27.parquet",
+    "chunking": [
+      {
+        "chunk_size_tokens": 768,
+        "overlap_tokens": 192
+      },
+      {
+        "chunk_size_tokens": 256,
+        "overlap_tokens": 64
+      }
+    ],
+    "embeddings": "AzureOpenAIEmbeddings with dimensions=1024",
+    "retrieval_modes": [
+      "document-first retrieval when documents table exists",
+      "legacy chunk-first lexical/vector fallback",
+      "current-data SDG7 trusted metric/context fallback",
+      "geography-aware filtering"
+    ],
+    "reference_output": "documents[] streamed separately from answer text",
+    "multi_topic_profiles": {
+      "profile_directory": "config/rag_profiles",
+      "default_assistant_id": "sea",
+      "sample_profile": "sample",
+      "table_isolation": "profile-configured LanceDB table names"
+    }
+  },
+  "knowledge_graph": {
+    "node_table": "nodes",
+    "edge_table": "edges",
+    "v1": "LLM extracts entities, then NetworkX subgraph is assembled",
+    "v2": "hybrid/semantic/exact node retrieval builds central-secondary-periphery graph",
+    "edge_predicate_default": "relates_to",
+    "unknowns": [
+      "Upstream generation/curation process for nodes and edges",
+      "Validation methodology for graph weights and descriptions"
+    ]
+  },
+  "governance_controls_present": [
+    "API key auth for core endpoints",
+    "Moonshot origin checks and rate limits",
+    "Scope guard before /model generation",
+    "Prompt-probe and unsafe request blocking",
+    "HTML encoding of assistant content, ideas, graph strings, and documents",
+    "Markdown image neutralization",
+    "HTTP(S)-only document URLs",
+    "References separated from answer body",
+    "Geographic retrieval filtering",
+    "Current-data SDG7 anchoring for selected global access queries"
+  ],
+  "governance_controls_missing_or_unknown": [
+    "PII redaction before logging/model calls",
+    "Per-user RBAC and rate limits for core AI endpoints",
+    "Source licensing enforcement in ingestion",
+    "Reproducible raw-document ingestion pipeline",
+    "Formal corpus approval workflow",
+    "Page-level citation verification",
+    "Model/provider data retention policy",
+    "Incident response process for hallucination or unsafe output"
+  ],
+  "scripts": [
+    "scripts/bootstrap_corpus_tables.py",
+    "scripts/import_corpus_manifest.py",
+    "scripts/validate_corpus_tables.py",
+    "scripts/export_documents_inventory.py",
+    "scripts/run_retrieval_surface.py",
+    "scripts/debug_model_stream.py",
+    "scripts/evaluate_graph_v2.py",
+    "scripts/validate_retrieval_benchmark.py"
+  ]
+}
