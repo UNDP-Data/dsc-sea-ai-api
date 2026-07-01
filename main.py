@@ -42,6 +42,19 @@ from src.security import authenticate
 load_dotenv()
 logger = logging.getLogger(__name__)
 SGP_AI_PAGES_ASSISTANT_ID = "sgp_ai"
+SgpAiDataSource = Literal["innovation_library", "project_database", "all"]
+SGP_AI_PAGES_SOURCE_IDS: dict[SgpAiDataSource, tuple[str, ...] | None] = {
+    "innovation_library": ("gef_sgp_innovation_library",),
+    "project_database": ("gef_sgp_intranet_projects",),
+    "all": None,
+}
+
+
+def _sgp_ai_pages_source_ids(data_source: SgpAiDataSource) -> tuple[str, ...] | None:
+    """
+    Map the public SGP AI data-source switch to corpus source IDs.
+    """
+    return SGP_AI_PAGES_SOURCE_IDS[data_source]
 
 
 def _env_timeout_seconds(
@@ -488,19 +501,26 @@ async def sgp_ai_pages_retrieve(
     request: Request,
     query: Annotated[str, Query(min_length=2)],
     limit: Annotated[int, Query(ge=1, le=12)] = 6,
+    data_source: Annotated[SgpAiDataSource, Query()] = "all",
 ):
     """
     Origin-limited retrieval preview for the static GitHub Pages SGP AI interface.
     """
     origin = _sgp_ai_pages_origin(request)
     profile = _get_profile_or_404(SGP_AI_PAGES_ASSISTANT_ID)
+    source_ids = _sgp_ai_pages_source_ids(data_source)
     async with _profile_client(profile) as client:
-        chunks, documents = await client.retrieve_chunks(query, limit=limit)
+        chunks, documents = await client.retrieve_chunks(
+            query,
+            limit=limit,
+            source_ids=source_ids,
+        )
     return JSONResponse(
         {
             "assistant_id": profile.assistant_id,
             "query": query,
             "limit": limit,
+            "data_source": data_source,
             "documents": [document.model_dump() for document in documents],
             "chunks": [chunk.model_dump() for chunk in chunks],
         },
@@ -514,11 +534,17 @@ async def sgp_ai_pages_retrieve(
     response_model_by_alias=False,
     include_in_schema=False,
 )
-async def sgp_ai_pages_model(request: Request, messages: list[Message]):
+async def sgp_ai_pages_model(
+    request: Request,
+    messages: list[Message],
+    data_source: Annotated[SgpAiDataSource, Query()] = "all",
+):
     """
     Origin-limited streaming answer endpoint for the static GitHub Pages SGP AI interface.
     """
     origin = _sgp_ai_pages_origin(request)
+    request.state.retrieval_source_ids = _sgp_ai_pages_source_ids(data_source)
+    request.state.retrieval_data_source = data_source
     response = await ask_assistant_model(request, SGP_AI_PAGES_ASSISTANT_ID, messages)
     for key, value in _sgp_ai_pages_cors_headers(origin).items():
         response.headers[key] = value
@@ -667,6 +693,7 @@ async def ask_assistant_model(
     profile = _get_profile_or_404(assistant_id)
     request_id = request.headers.get("X-Request-Id") or uuid4().hex
     user_query = messages[-1].content
+    retrieval_source_ids = getattr(request.state, "retrieval_source_ids", None)
     scope_decision = genai.assess_profile_scope(messages, profile)
     if not scope_decision.allowed:
         logger.warning(
@@ -736,8 +763,11 @@ async def ask_assistant_model(
             answer_client = database.Client(answer_connection, profile=profile)
             started_at = monotonic()
             try:
+                retrieval_kwargs = {}
+                if retrieval_source_ids:
+                    retrieval_kwargs["source_ids"] = retrieval_source_ids
                 chunks, documents = await asyncio.wait_for(
-                    answer_client.retrieve_chunks(user_query),
+                    answer_client.retrieve_chunks(user_query, **retrieval_kwargs),
                     timeout=retrieval_timeout_seconds,
                 )
             except asyncio.TimeoutError:
