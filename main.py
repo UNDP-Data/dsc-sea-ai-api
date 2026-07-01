@@ -502,13 +502,20 @@ async def sgp_ai_pages_retrieve(
     query: Annotated[str, Query(min_length=2)],
     limit: Annotated[int, Query(ge=1, le=12)] = 6,
     data_source: Annotated[SgpAiDataSource, Query()] = "all",
+    dataset: Annotated[SgpAiDataSource | None, Query()] = None,
+    corpus: Annotated[SgpAiDataSource | None, Query()] = None,
 ):
     """
     Origin-limited retrieval preview for the static GitHub Pages SGP AI interface.
     """
     origin = _sgp_ai_pages_origin(request)
     profile = _get_profile_or_404(SGP_AI_PAGES_ASSISTANT_ID)
-    source_ids = _sgp_ai_pages_source_ids(data_source)
+    selected_data_source = (
+        data_source
+        if data_source != "all" or not (dataset or corpus)
+        else (dataset or corpus or "all")
+    )
+    source_ids = _sgp_ai_pages_source_ids(selected_data_source)
     async with _profile_client(profile) as client:
         chunks, documents = await client.retrieve_chunks(
             query,
@@ -520,7 +527,7 @@ async def sgp_ai_pages_retrieve(
             "assistant_id": profile.assistant_id,
             "query": query,
             "limit": limit,
-            "data_source": data_source,
+            "data_source": selected_data_source,
             "documents": [document.model_dump() for document in documents],
             "chunks": [chunk.model_dump() for chunk in chunks],
         },
@@ -538,13 +545,20 @@ async def sgp_ai_pages_model(
     request: Request,
     messages: list[Message],
     data_source: Annotated[SgpAiDataSource, Query()] = "all",
+    dataset: Annotated[SgpAiDataSource | None, Query()] = None,
+    corpus: Annotated[SgpAiDataSource | None, Query()] = None,
 ):
     """
     Origin-limited streaming answer endpoint for the static GitHub Pages SGP AI interface.
     """
     origin = _sgp_ai_pages_origin(request)
-    request.state.retrieval_source_ids = _sgp_ai_pages_source_ids(data_source)
-    request.state.retrieval_data_source = data_source
+    selected_data_source = (
+        data_source
+        if data_source != "all" or not (dataset or corpus)
+        else (dataset or corpus or "all")
+    )
+    request.state.retrieval_source_ids = _sgp_ai_pages_source_ids(selected_data_source)
+    request.state.retrieval_data_source = selected_data_source
     response = await ask_assistant_model(request, SGP_AI_PAGES_ASSISTANT_ID, messages)
     for key, value in _sgp_ai_pages_cors_headers(origin).items():
         response.headers[key] = value
