@@ -3072,6 +3072,7 @@ class Client:
         years: int | list[int] | None = None,
         limit: int = 20,
         debug: dict | None = None,
+        source_ids: tuple[str, ...] | list[str] | set[str] | None = None,
     ) -> tuple[list[Chunk], list[Document]]:
         """
         Retrieve the document chunks from the database that best match a query.
@@ -3106,6 +3107,10 @@ class Client:
             }
         documents_table = await self.open_optional_table(self.table_name("documents"))
         profile = _build_retrieval_profile(query, years)
+        source_filter_ids = tuple(
+            sorted({str(source_id).strip() for source_id in (source_ids or []) if str(source_id).strip()})
+        )
+        source_filter_set = set(source_filter_ids)
         candidate_limit = max(limit * 3, 24)
         retrieval_queries = _prioritize_retrieval_queries(query)
         lexical_timeout = _env_timeout_seconds(
@@ -3156,6 +3161,7 @@ class Client:
                         "has_geographic_scope": profile.has_geographic_scope,
                     },
                     "retrieval_queries": retrieval_queries,
+                    "source_ids": list(source_filter_ids),
                     "documents_table_present": documents_table is not None,
                     "branches": [],
                     "selected": {},
@@ -3172,18 +3178,39 @@ class Client:
                 else:
                     joined_years = ", ".join(map(str, profile.explicit_years))
                     clauses.append(f"(year IN ({joined_years}))")
+            if source_filter_ids:
+                source_clauses = []
+                joined_sources = ", ".join(f"'{_sql_quote(value)}'" for value in source_filter_ids)
+                if "source_id" in chunk_fields:
+                    source_clauses.append(f"source_id IN ({joined_sources})")
+                if "source" in chunk_fields:
+                    source_clauses.append(f"source IN ({joined_sources})")
+                if source_clauses:
+                    clauses.append("(" + " OR ".join(source_clauses) + ")")
             if not clauses:
                 return None
             return " AND ".join(clauses)
 
         document_index_rows: list[dict] | None = None
 
+        def row_matches_source_filter(row: dict) -> bool:
+            if not source_filter_set:
+                return True
+            values = {
+                str(row.get("source_id") or "").strip(),
+                str(row.get("source") or "").strip(),
+            }
+            return bool(values & source_filter_set)
+
         async def fetch_document_index_rows() -> list[dict]:
             nonlocal document_index_rows
             if documents_table is None:
                 return []
             if document_index_rows is None:
-                document_index_rows = await self.get_document_index_rows()
+                rows = await self.get_document_index_rows()
+                document_index_rows = [
+                    row for row in rows if row_matches_source_filter(row)
+                ]
             return document_index_rows
 
         async def fetch_lexical_rows(retrieval_query: str) -> list[dict]:
@@ -3206,6 +3233,8 @@ class Client:
                     "url",
                     "summary",
                     "content",
+                    "source_id",
+                    "source",
                     "region_codes",
                     "country_codes",
                     "geography_tags_text",
