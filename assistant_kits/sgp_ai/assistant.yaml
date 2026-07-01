@@ -31,8 +31,14 @@ prompts:
     and country-programme context when the excerpts support it. Keep references
     out of the answer body because the API returns documents separately.
   suggest_ideas: >
-    Generate up to 3 concise follow-up questions relevant to the user's
-    conversation and the SGP publication corpus.
+    Generate exactly 3 concise follow-up questions for the user's next turn,
+    grounded in the SGP publication corpus. Do not rephrase or restate the
+    user's previous question. Each question must branch into a distinct deeper
+    dimension, such as evidence and results, implementation mechanics, country
+    or regional comparisons, grantee/community practice, policy implications,
+    financing and partnerships, monitoring indicators, risks and trade-offs, or
+    lessons for replication. Make the questions specific, creative, and useful
+    for discovery.
 
 source_definitions:
   - source_id: gef_sgp_innovation_library
