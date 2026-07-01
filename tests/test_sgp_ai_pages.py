@@ -25,7 +25,7 @@ class FakeClient:
     async def open_optional_table(self, _name: str):
         return FakeTable()
 
-    async def retrieve_chunks(self, query: str, *, limit: int, debug=None):
+    async def retrieve_chunks(self, query: str, *, limit: int, debug=None, source_ids=None):
         assert query == "coastal erosion"
         assert limit == 2
         return [FakeDump({"content": "Evidence"})], [FakeDump({"title": "Doc"})]
