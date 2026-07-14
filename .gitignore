@@ -183,3 +183,9 @@ env/
 !/docs/ai-api/**
 /corpus/
 /tmp/
+
+# Generated assistant-kit corpus payloads are import artifacts, not backend config.
+assistant_kits/*/corpus/chunks/
+assistant_kits/*/corpus/*.jsonl
+assistant_kits/*/corpus/*.jsonl.gz
+assistant_kits/*/corpus/manifest.yaml.backup-*
