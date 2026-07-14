@@ -480,17 +480,26 @@ async def sgp_ai_pages_preflight(request: Request):
     path="/pages/sgp-ai/status",
     include_in_schema=False,
 )
-async def sgp_ai_pages_status(request: Request):
+async def sgp_ai_pages_status(
+    request: Request,
+    data_source: Annotated[SgpAiDataSource, Query()] = "all",
+):
     """
     Origin-limited readiness check for the static GitHub Pages SGP AI interface.
     """
     origin = _sgp_ai_pages_origin(request)
+    source_ids = _sgp_ai_pages_source_ids(data_source)
     profile = _get_profile_or_404(SGP_AI_PAGES_ASSISTANT_ID)
     async with _profile_client(profile) as client:
         table = await client.open_optional_table(client.table_name("documents"))
         document_count = 0
         if table is not None:
-            document_count = await table.count_rows()
+            source_filter = None
+            if source_ids:
+                source_filter = " OR ".join(
+                    f"source_id = '{source_id}'" for source_id in source_ids
+                )
+            document_count = await table.count_rows(source_filter)
     return JSONResponse(
         {
             "ok": True,
@@ -498,6 +507,7 @@ async def sgp_ai_pages_status(request: Request):
             "display_name": profile.display_name,
             "corpus_ready": document_count > 0,
             "document_count": document_count,
+            "data_source": data_source,
         },
         headers=_sgp_ai_pages_cors_headers(origin),
     )

@@ -135,12 +135,18 @@ def _row_for_chunk(chunk: dict, document: DocumentRecord) -> dict:
     return row
 
 
-def _chunk_rows_for_document(item: dict, document: DocumentRecord, *, profile) -> list[dict]:
+def _chunk_rows_for_document(
+    item: dict,
+    document: DocumentRecord,
+    *,
+    profile,
+    allow_summary_fallback: bool = True,
+) -> list[dict]:
     chunks = item.get("chunks")
     rows = []
     if isinstance(chunks, list) and chunks:
         rows = [_row_for_chunk(chunk, document) for chunk in chunks if isinstance(chunk, dict)]
-    elif item.get("content") or item.get("summary"):
+    elif allow_summary_fallback and (item.get("content") or item.get("summary")):
         rows = [_row_for_chunk({"content": item.get("content") or item.get("summary") or ""}, document)]
     if not rows:
         return []
@@ -221,6 +227,7 @@ async def _run(args) -> dict[str, int]:
     document_records = []
     chunk_rows = []
     documents_by_id = {}
+    chunk_paths = _manifest_chunk_paths(Path(args.manifest), manifest, args.chunks_jsonl) if args.include_chunks else []
     for item in manifest.get("documents", []):
         if not isinstance(item, dict):
             continue
@@ -228,11 +235,16 @@ async def _run(args) -> dict[str, int]:
         document_records.append(document)
         documents_by_id[document.document_id] = document
         if args.include_chunks:
-            chunk_rows.extend(_chunk_rows_for_document(item, document, profile=profile))
-    if args.include_chunks:
-        chunk_paths = _manifest_chunk_paths(Path(args.manifest), manifest, args.chunks_jsonl)
-        if chunk_paths:
-            chunk_rows.extend(_chunk_rows_from_jsonl(chunk_paths, documents_by_id, profile=profile))
+            chunk_rows.extend(
+                _chunk_rows_for_document(
+                    item,
+                    document,
+                    profile=profile,
+                    allow_summary_fallback=not bool(chunk_paths),
+                )
+            )
+    if args.include_chunks and chunk_paths:
+        chunk_rows.extend(_chunk_rows_from_jsonl(chunk_paths, documents_by_id, profile=profile))
 
     inferred_sources = corpus.build_source_records_for_documents(
         document_records,
