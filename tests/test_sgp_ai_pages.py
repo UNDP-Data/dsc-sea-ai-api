@@ -15,8 +15,13 @@ ALLOWED_ORIGIN = "https://undp-data.github.io"
 
 
 class FakeTable:
-    async def count_rows(self):
-        return 1433
+    async def count_rows(self, source_filter=None):
+        counts = {
+            None: 3080,
+            "source_id = 'gef_sgp_innovation_library'": 1433,
+            "source_id = 'gef_sgp_intranet_projects'": 1647,
+        }
+        return counts[source_filter]
 
 
 class FakeClient:
@@ -81,8 +86,34 @@ def test_pages_status_requires_allowed_origin(monkeypatch):
     assert response.status_code == 200
     assert response.headers["Access-Control-Allow-Origin"] == ALLOWED_ORIGIN
     assert response.json()["corpus_ready"] is True
-    assert response.json()["document_count"] == 1433
+    assert response.json()["document_count"] == 3080
+    assert response.json()["data_source"] == "all"
     assert blocked.status_code == 403
+
+
+def test_pages_status_counts_selected_data_source(monkeypatch):
+    @asynccontextmanager
+    async def fake_profile_client(_profile):
+        yield FakeClient()
+
+    monkeypatch.setattr(app_module, "_profile_client", fake_profile_client)
+
+    with TestClient(app_module.app) as client:
+        library = client.get(
+            "/pages/sgp-ai/status?data_source=innovation_library",
+            headers={"Origin": ALLOWED_ORIGIN},
+        )
+        projects = client.get(
+            "/pages/sgp-ai/status?data_source=project_database",
+            headers={"Origin": ALLOWED_ORIGIN},
+        )
+
+    assert library.status_code == 200
+    assert library.json()["document_count"] == 1433
+    assert library.json()["data_source"] == "innovation_library"
+    assert projects.status_code == 200
+    assert projects.json()["document_count"] == 1647
+    assert projects.json()["data_source"] == "project_database"
 
 
 def test_pages_status_rejects_missing_origin(monkeypatch):
