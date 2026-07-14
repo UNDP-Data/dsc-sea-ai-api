@@ -150,6 +150,7 @@ _DOCUMENT_INDEX_CACHE: dict[str, object] = {
     "connection_id": None,
     "connection_ref": None,
     "table_name": None,
+    "relevance_features": None,
 }
 DEFAULT_RAG_TABLE_NAMES = {
     "chunks": "chunks",
@@ -455,6 +456,37 @@ class DocumentCandidate:
 class DocumentHit:
     row: dict
     score: float
+
+
+@dataclass(frozen=True)
+class DocumentRelevanceFeatures:
+    row: dict
+    title: str
+    subtitle: str
+    summary: str
+    series_name: str
+    publisher: str
+    document_type: str
+    year: int | None
+    text_blob: str
+    topics_text: str
+    audience_text: str
+    metadata_text: str
+    source_org: str
+    normalized_title: str
+    normalized_summary: str
+    normalized_text_blob: str
+    normalized_topics_text: str
+    normalized_data_focus_blob: str
+    title_tokens: frozenset[str]
+    summary_tokens: frozenset[str]
+    text_tokens: frozenset[str]
+    metadata_tokens: frozenset[str]
+    country_scopes: frozenset[str]
+    region_scopes: frozenset[str]
+    is_global: bool
+    source_priority: float
+    quality_score: float
 
 
 def _extract_focus_phrases(query: str | None) -> tuple[str, ...]:
@@ -1149,6 +1181,417 @@ def _priority_group_component(metadata_text: str, profile: RetrievalProfile) -> 
     return min(1.6, 0.45 * len(matched) + 0.45), len(matched)
 
 
+def _safe_int_year(value: object) -> int | None:
+    if isinstance(value, int):
+        return value
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _token_overlap_score(query_tokens: set[str], text_tokens: frozenset[str]) -> float:
+    if not query_tokens or not text_tokens:
+        return 0.0
+    return len(query_tokens & text_tokens) / len(query_tokens)
+
+
+def _normalized_phrase_bonus(query_phrases: tuple[str, ...], normalized_text: str, weight: float) -> float:
+    if not normalized_text or not query_phrases:
+        return 0.0
+    bonus = 0.0
+    hits = 0
+    for phrase in query_phrases:
+        if phrase and phrase in normalized_text:
+            hits += 1
+            bonus += weight * min(len(phrase.split()), 4)
+            if hits >= 3:
+                break
+    return bonus
+
+
+def _build_document_relevance_features(row: dict) -> DocumentRelevanceFeatures:
+    title = row.get("canonical_title") or row.get("title") or ""
+    subtitle = row.get("subtitle") or ""
+    summary = row.get("summary") or ""
+    series_name = row.get("series_name") or ""
+    publisher = row.get("publisher") or ""
+    document_type = row.get("document_type") or "publication"
+    year = _safe_int_year(row.get("year"))
+    text_blob = " ".join(filter(None, [title, subtitle, summary, series_name, publisher]))
+    topics_text = _safe_list_text(row.get("topic_tags")) or (row.get("topic_tags_text") or "")
+    audience_text = _safe_list_text(row.get("audience_tags")) or (row.get("audience_tags_text") or "")
+    metadata_text = " ".join(filter(None, [topics_text, audience_text]))
+    source_org = _infer_source_org(_infer_source_domain(row.get("url") or ""))
+    country_scopes = frozenset(_row_country_scopes(row))
+    region_scopes = frozenset(_row_region_scopes(row))
+    return DocumentRelevanceFeatures(
+        row=row,
+        title=title,
+        subtitle=subtitle,
+        summary=summary,
+        series_name=series_name,
+        publisher=publisher,
+        document_type=document_type,
+        year=year,
+        text_blob=text_blob,
+        topics_text=topics_text,
+        audience_text=audience_text,
+        metadata_text=metadata_text,
+        source_org=source_org,
+        normalized_title=_normalize_text(title),
+        normalized_summary=_normalize_text(summary),
+        normalized_text_blob=_normalize_text(text_blob),
+        normalized_topics_text=_normalize_text(metadata_text),
+        normalized_data_focus_blob=_normalize_text(
+            " ".join(filter(None, [title, summary, topics_text]))
+        ),
+        title_tokens=frozenset(_tokenize_text(title)),
+        summary_tokens=frozenset(_tokenize_text(summary)),
+        text_tokens=frozenset(_tokenize_text(text_blob)),
+        metadata_tokens=frozenset(_tokenize_text(metadata_text)),
+        country_scopes=country_scopes,
+        region_scopes=region_scopes,
+        is_global="global" in region_scopes,
+        source_priority=float(row.get("source_priority") or 0.0),
+        quality_score=float(row.get("quality_score") or 0.0),
+    )
+
+
+def _classify_feature_geography_match(
+    feature: DocumentRelevanceFeatures,
+    profile: RetrievalProfile,
+) -> dict[str, object]:
+    if not profile.has_geographic_scope:
+        return {
+            "match_class": "unscoped",
+            "rejected": False,
+            "country_codes": sorted(feature.country_scopes),
+            "region_codes": sorted(feature.region_scopes),
+        }
+
+    row_countries = set(feature.country_scopes)
+    row_regions = set(feature.region_scopes)
+    if profile.country_scopes:
+        if row_countries & profile.country_scopes:
+            match_class = "exact_country"
+        elif row_countries and not (row_countries & profile.country_scopes):
+            match_class = "out_of_scope"
+        elif row_regions & profile.fallback_region_scopes:
+            match_class = "parent_region"
+        elif feature.is_global:
+            match_class = "global"
+        else:
+            match_class = "out_of_scope"
+    else:
+        matching_regions = row_regions & profile.region_scopes
+        if matching_regions:
+            match_class = "exact_region"
+        elif row_countries and any(
+            COUNTRY_TO_REGION.get(country) in profile.region_scopes
+            for country in row_countries
+        ):
+            match_class = "exact_region"
+        elif row_countries:
+            match_class = "out_of_scope"
+        elif feature.is_global:
+            match_class = "global"
+        else:
+            match_class = "out_of_scope"
+
+    return {
+        "match_class": match_class,
+        "rejected": match_class == "out_of_scope",
+        "country_codes": sorted(row_countries),
+        "region_codes": sorted(row_regions),
+    }
+
+
+def _feature_priority_group_component(
+    feature: DocumentRelevanceFeatures,
+    profile: RetrievalProfile,
+) -> tuple[float, int]:
+    query_hits = profile.query_tokens & SGP_PRIORITY_GROUP_TERMS
+    if not query_hits and not {"priority", "groups"} <= profile.query_tokens:
+        return 0.0, 0
+    matched = query_hits & feature.metadata_tokens
+    if {"priority", "groups"} <= profile.query_tokens:
+        matched |= feature.metadata_tokens & SGP_PRIORITY_GROUP_TERMS
+    if not matched:
+        return 0.0, 0
+    return min(1.6, 0.45 * len(matched) + 0.45), len(matched)
+
+
+def _feature_sgp_annual_monitoring_component(
+    feature: DocumentRelevanceFeatures,
+    profile: RetrievalProfile,
+) -> float:
+    if not _is_sgp_annual_monitoring_query(profile):
+        return 0.0
+    normalized_blob = _normalize_text(
+        " ".join(filter(None, [feature.title, feature.summary, feature.topics_text]))
+    )
+    is_amr = (
+        "annual monitoring report" in normalized_blob
+        or "results report" in normalized_blob
+        or " amr " in f" {normalized_blob} "
+    )
+    if not is_amr:
+        return 0.0
+
+    component = 2.0
+    if profile.explicit_years:
+        title_years = set(_extract_years(feature.title))
+        explicit_years = set(profile.explicit_years)
+        if explicit_years and explicit_years.issubset(title_years):
+            component += 2.6
+        elif feature.year in explicit_years:
+            component += 1.4
+    elif profile.prefer_recent:
+        if feature.year is not None and feature.year >= 2025:
+            component += 4.0
+        elif feature.year is not None and feature.year >= 2024:
+            component += 2.6
+        elif feature.year is not None and feature.year >= 2023:
+            component += 1.4
+        elif feature.year is not None and feature.year >= 2021:
+            component += 0.5
+
+    if "full version" in feature.normalized_title and "summary" not in profile.normalized_query:
+        component += 0.8
+    if "summary infographic" in feature.normalized_title and "summary" not in profile.normalized_query:
+        component -= 0.2
+    return component
+
+
+def _feature_data_focus_components(
+    feature: DocumentRelevanceFeatures,
+    profile: RetrievalProfile,
+) -> tuple[float, float, bool]:
+    if not profile.current_data_query or not profile.data_focus:
+        return 0.0, 0.0, True
+
+    text_blob = feature.normalized_data_focus_blob
+    if profile.data_focus == "electricity_access":
+        strong_markers = (
+            "access to electricity",
+            "electricity access",
+            "without access to electricity",
+            "electricity",
+            "electrification",
+            "grid connection",
+            "grid connections",
+            "mini grid",
+            "mini grids",
+            "off grid",
+            "off grids",
+        )
+        side_topic_markers = (
+            "clean cooking",
+            "cooking",
+            "cookstove",
+            "cookstoves",
+            "woodfuel",
+            "woodfuels",
+            "biomass",
+            "charcoal",
+            "forest",
+            "forests",
+            "livelihoods",
+            "household air pollution",
+        )
+        has_strong_focus = any(marker in text_blob for marker in strong_markers)
+        has_side_topic = any(marker in text_blob for marker in side_topic_markers)
+        component = 1.6 if has_strong_focus else 0.0
+        if feature.source_org == "tracking_sdg7":
+            component += 0.45
+        penalty = 0.0
+        if not has_strong_focus:
+            penalty += 1.8
+        if has_side_topic and not has_strong_focus:
+            penalty += 2.2
+        return component, penalty, has_strong_focus
+
+    if profile.data_focus == "clean_cooking":
+        strong_markers = (
+            "clean cooking",
+            "cooking fuel",
+            "cooking fuels",
+            "cookstove",
+            "cookstoves",
+            "household air pollution",
+        )
+        has_strong_focus = any(marker in text_blob for marker in strong_markers)
+        component = 1.4 if has_strong_focus else 0.0
+        penalty = 1.6 if not has_strong_focus else 0.0
+        return component, penalty, has_strong_focus
+
+    return 0.0, 0.0, True
+
+
+def _document_feature_breakdown(
+    feature: DocumentRelevanceFeatures,
+    profile: RetrievalProfile,
+    focus_phrases: tuple[str, ...],
+) -> dict[str, object]:
+    title_overlap = _token_overlap_score(profile.query_tokens, feature.title_tokens)
+    summary_overlap = _token_overlap_score(profile.query_tokens, feature.summary_tokens)
+    text_overlap = _token_overlap_score(profile.query_tokens, feature.text_tokens)
+    topics_overlap = _token_overlap_score(profile.query_tokens, feature.metadata_tokens)
+    phrase_bonus = _normalized_phrase_bonus(
+        profile.query_phrases,
+        feature.normalized_text_blob,
+        0.2,
+    )
+    title_component = 2.8 * title_overlap
+    summary_component = 1.9 * summary_overlap
+    text_component = 1.2 * text_overlap
+    topics_component = 0.35 * topics_overlap
+    exact_title_component = 1.6 if profile.normalized_query and profile.normalized_query in feature.normalized_title else 0.0
+    exact_summary_component = 0.9 if profile.normalized_query and profile.normalized_query in feature.normalized_summary else 0.0
+    title_focus_hits = sum(1 for phrase in focus_phrases if phrase in feature.normalized_title)
+    summary_focus_hits = sum(1 for phrase in focus_phrases if phrase in feature.normalized_summary)
+    text_focus_hits = sum(1 for phrase in focus_phrases if phrase in feature.normalized_text_blob)
+    topics_focus_hits = sum(1 for phrase in focus_phrases if phrase in feature.normalized_topics_text)
+    focus_hits = max(title_focus_hits, summary_focus_hits, text_focus_hits, topics_focus_hits)
+    focus_phrase_component = 0.9 * focus_hits
+    recentness_component = _recentness_bonus(feature.year, profile)
+    sgp_annual_monitoring_component = _feature_sgp_annual_monitoring_component(
+        feature,
+        profile,
+    )
+    priority_group_component, priority_group_hits = _feature_priority_group_component(
+        feature,
+        profile,
+    )
+    authority_component = _authority_tier_bonus(feature.row.get("authority_tier"), profile)
+    source_priority_component = feature.source_priority * 0.35
+    quality_component = feature.quality_score * 0.8
+    flagship_component = 0.0
+    if feature.row.get("is_flagship") and profile.intent == "data":
+        flagship_component = 1.25 if profile.current_data_query else 0.9
+    elif feature.row.get("is_flagship"):
+        flagship_component = -0.15
+    data_report_component = 0.0
+    if feature.row.get("is_data_report") and profile.intent == "data":
+        data_report_component = 1.1 if profile.current_data_query else 0.8
+    status_penalty = 3.5 if (feature.row.get("status") or "approved") != "approved" else 0.0
+    document_type_component = _document_type_bonus(feature.document_type, profile)
+    concept_flagship_penalty = 0.0
+    if (
+        profile.intent in {"concept", "policy"}
+        and feature.document_type == "flagship_report"
+        and summary_overlap < 0.2
+    ):
+        concept_flagship_penalty = 0.8
+    token_hits = len(profile.query_tokens & feature.text_tokens)
+    signal_strength = max(
+        title_overlap,
+        summary_overlap,
+        text_overlap,
+        topics_overlap * 0.5,
+        0.25 if exact_title_component > 0 else 0.0,
+        0.18 if exact_summary_component > 0 else 0.0,
+        phrase_bonus / 1.2 if phrase_bonus > 0 else 0.0,
+        min(token_hits / max(len(profile.query_tokens) or 1, 1), 1.0),
+    )
+    signal_component = 1.4 * signal_strength
+    no_signal_penalty = 0.0
+    if signal_strength < 0.12:
+        no_signal_penalty = 4.0
+    elif signal_strength < 0.2:
+        no_signal_penalty = 1.7
+    missing_focus_penalty = 0.0
+    if focus_phrases and profile.intent in {"definition", "policy", "implementation"}:
+        if focus_hits == 0:
+            missing_focus_penalty = 2.8
+        elif len(focus_phrases) >= 2 and focus_hits < 2:
+            missing_focus_penalty = 1.0
+    geo = _classify_feature_geography_match(feature, profile)
+    geography_component = _geography_bonus(str(geo["match_class"]))
+    data_focus_component, data_focus_penalty, data_focus_match = _feature_data_focus_components(
+        feature,
+        profile,
+    )
+    score = (
+        title_component
+        + summary_component
+        + text_component
+        + topics_component
+        + phrase_bonus
+        + signal_component
+        + focus_phrase_component
+        + exact_title_component
+        + exact_summary_component
+        + recentness_component
+        + sgp_annual_monitoring_component
+        + priority_group_component
+        + authority_component
+        + source_priority_component
+        + quality_component
+        + flagship_component
+        + data_report_component
+        + document_type_component
+        + geography_component
+        + data_focus_component
+        - status_penalty
+        - concept_flagship_penalty
+        - no_signal_penalty
+        - missing_focus_penalty
+        - data_focus_penalty
+    )
+    return {
+        "document_id": feature.row.get("document_id"),
+        "title": feature.title,
+        "source_id": feature.row.get("source_id"),
+        "document_type": feature.document_type,
+        "year": feature.year,
+        "status": feature.row.get("status"),
+        "title_overlap": _round_debug(title_overlap),
+        "summary_overlap": _round_debug(summary_overlap),
+        "text_overlap": _round_debug(text_overlap),
+        "topics_overlap": _round_debug(topics_overlap),
+        "topics_component": _round_debug(topics_component),
+        "phrase_bonus": _round_debug(phrase_bonus),
+        "focus_phrases": list(focus_phrases),
+        "focus_hits": focus_hits,
+        "topics_focus_hits": topics_focus_hits,
+        "geography_match_class": geo["match_class"],
+        "geography_rejected": geo["rejected"],
+        "country_codes": geo["country_codes"],
+        "region_codes": geo["region_codes"],
+        "geography_component": _round_debug(geography_component),
+        "data_focus": profile.data_focus,
+        "data_focus_match": data_focus_match,
+        "data_focus_component": _round_debug(data_focus_component),
+        "data_focus_penalty": _round_debug(data_focus_penalty),
+        "focus_phrase_component": _round_debug(focus_phrase_component),
+        "missing_focus_penalty": _round_debug(missing_focus_penalty),
+        "signal_strength": _round_debug(signal_strength),
+        "signal_component": _round_debug(signal_component),
+        "no_signal_penalty": _round_debug(no_signal_penalty),
+        "token_hits": token_hits,
+        "title_component": _round_debug(title_component),
+        "summary_component": _round_debug(summary_component),
+        "text_component": _round_debug(text_component),
+        "exact_title_component": _round_debug(exact_title_component),
+        "exact_summary_component": _round_debug(exact_summary_component),
+        "recentness_component": _round_debug(recentness_component),
+        "sgp_annual_monitoring_component": _round_debug(sgp_annual_monitoring_component),
+        "priority_group_component": _round_debug(priority_group_component),
+        "priority_group_hits": priority_group_hits,
+        "authority_component": _round_debug(authority_component),
+        "source_priority_component": _round_debug(source_priority_component),
+        "quality_component": _round_debug(quality_component),
+        "flagship_component": _round_debug(flagship_component),
+        "data_report_component": _round_debug(data_report_component),
+        "document_type_component": _round_debug(document_type_component),
+        "status_penalty": _round_debug(status_penalty),
+        "concept_flagship_penalty": _round_debug(concept_flagship_penalty),
+        "score": _round_debug(score),
+    }
+
+
 def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, object]:
     title = row.get("canonical_title") or row.get("title") or ""
     subtitle = row.get("subtitle") or ""
@@ -1324,6 +1767,67 @@ def _document_row_breakdown(row: dict, profile: RetrievalProfile) -> dict[str, o
         "score": _round_debug(score),
     }
 
+
+
+def _public_relevance_list(value: object) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, (list, tuple, set)):
+        items = value
+    else:
+        items = re.split(r"[;,]", str(value))
+    clean: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        text = str(item or "").strip()
+        if not text:
+            continue
+        key = text.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        clean.append(text)
+    return clean
+
+
+def _public_relevance_document(
+    row: dict,
+    breakdown: dict[str, object],
+    raw_score: float,
+    relevance: float,
+) -> dict[str, object]:
+    country_codes = _public_relevance_list(
+        row.get("country_codes") or breakdown.get("country_codes")
+    )
+    region_codes = _public_relevance_list(
+        row.get("region_codes") or breakdown.get("region_codes")
+    )
+    return {
+        "document_id": row.get("document_id"),
+        "title": row.get("canonical_title") or row.get("title") or "Untitled document",
+        "source": row.get("source_id") or row.get("source") or "",
+        "year": row.get("year"),
+        "url": row.get("url") or "",
+        "document_type": row.get("document_type") or breakdown.get("document_type") or "publication",
+        "topics": _public_relevance_list(
+            row.get("topic_tags") or row.get("topic_tags_text")
+        ),
+        "geographies": _public_relevance_list(
+            row.get("geographies") or row.get("countries") or row.get("regions")
+        ),
+        "country_codes": country_codes,
+        "region_codes": region_codes,
+        "raw_score": round(float(raw_score), 4),
+        "relevance": round(max(0.0, min(1.0, float(relevance))), 4),
+        "score_explanation": {
+            "title_overlap": breakdown.get("title_overlap", 0),
+            "summary_overlap": breakdown.get("summary_overlap", 0),
+            "topics_overlap": breakdown.get("topics_overlap", 0),
+            "signal_strength": breakdown.get("signal_strength", 0),
+            "token_hits": breakdown.get("token_hits", 0),
+            "geography_match_class": breakdown.get("geography_match_class", "none"),
+        },
+    }
 
 def _score_document_row(row: dict, profile: RetrievalProfile) -> float:
     return float(_document_row_breakdown(row, profile)["score"])
@@ -2719,7 +3223,63 @@ class Client:
         _DOCUMENT_INDEX_CACHE["connection_id"] = connection_id
         _DOCUMENT_INDEX_CACHE["connection_ref"] = self.connection
         _DOCUMENT_INDEX_CACHE["table_name"] = documents_table_name
+        _DOCUMENT_INDEX_CACHE["relevance_features"] = [
+            _build_document_relevance_features(row) for row in approved_rows
+        ]
         return list(approved_rows)
+
+    async def score_document_relevance_map(
+        self,
+        query: str,
+        *,
+        source_ids: tuple[str, ...] | list[str] | set[str] | None = None,
+    ) -> list[dict[str, object]]:
+        profile = _build_retrieval_profile(query)
+        rows = await self.get_document_index_rows()
+        cached_features = _DOCUMENT_INDEX_CACHE.get("relevance_features")
+        if not isinstance(cached_features, list) or len(cached_features) != len(rows):
+            cached_features = [_build_document_relevance_features(row) for row in rows]
+            _DOCUMENT_INDEX_CACHE["relevance_features"] = cached_features
+
+        source_filter = {str(source_id) for source_id in source_ids or [] if source_id}
+        focus_phrases = _extract_focus_phrases(profile.query)
+        scored: list[tuple[DocumentRelevanceFeatures, dict[str, object], float]] = []
+        for feature in cached_features:
+            if source_filter and str(feature.row.get("source_id") or "") not in source_filter:
+                continue
+            breakdown = _document_feature_breakdown(feature, profile, focus_phrases)
+            raw_score = float(breakdown.get("score") or 0.0)
+            scored.append((feature, breakdown, raw_score))
+
+        if not scored:
+            return []
+
+        raw_scores = [raw for _, _, raw in scored]
+        min_score = min(raw_scores)
+        max_score = max(raw_scores)
+        span = max_score - min_score
+        documents: list[dict[str, object]] = []
+        for feature, breakdown, raw_score in scored:
+            if span <= 0:
+                relevance = 1.0 if raw_score > 0 else 0.0
+            else:
+                relevance = (raw_score - min_score) / span
+            documents.append(
+                _public_relevance_document(
+                    feature.row,
+                    breakdown,
+                    raw_score,
+                    relevance,
+                )
+            )
+        documents.sort(
+            key=lambda item: (
+                float(item.get("raw_score") or 0.0),
+                str(item.get("title") or ""),
+            ),
+            reverse=True,
+        )
+        return documents
 
     async def _overwrite_table_rows(
         self,

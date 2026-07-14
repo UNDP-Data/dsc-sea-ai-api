@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+from collections import defaultdict
 import sys
 from pathlib import Path
 
@@ -102,44 +103,13 @@ def _source_record_from_manifest(item: dict) -> SourceRecord:
     )
 
 
-def _chunk_rows_for_document(item: dict, document: DocumentRecord, *, profile) -> list[dict]:
-    chunks = item.get("chunks")
-    if isinstance(chunks, list) and chunks:
-        rows = []
-        for chunk in chunks:
-            if not isinstance(chunk, dict):
-                continue
-            rows.append(
-                {
-                    "document_id": document.document_id,
-                    "title": document.canonical_title,
-                    "year": document.year,
-                    "language": document.language,
-                    "url": document.url,
-                    "summary": document.summary,
-                    "source_id": document.source_id,
-                    "publisher": document.publisher,
-                    "document_type": document.document_type,
-                    "publication_date": document.publication_date,
-                    "series_name": document.series_name,
-                    "topic_tags": document.topic_tags,
-                    "region_codes": document.region_codes,
-                    "content": chunk.get("content") or "",
-                    "section_title": chunk.get("section_title"),
-                    "page_start": chunk.get("page_start"),
-                    "page_end": chunk.get("page_end"),
-                    "content_type": chunk.get("content_type", "text"),
-                    "chunk_summary": chunk.get("chunk_summary"),
-                    "token_count": chunk.get("token_count"),
-                }
-            )
-        return corpus.enrich_chunk_rows(
-            rows,
-            documents_by_key={document.url or document.canonical_title: document},
-            profile=profile,
-        )
-
-    base_row = {
+def _row_for_chunk(chunk: dict, document: DocumentRecord) -> dict:
+    chunk_identifier = chunk.get("chunk_id")
+    if not chunk_identifier and chunk.get("document_id") and chunk.get("document_id") != document.document_id:
+        # Older manifests used chunk.document_id as the chunk identifier.
+        chunk_identifier = chunk.get("document_id")
+    row = {
+        "document_id": document.document_id,
         "title": document.canonical_title,
         "year": document.year,
         "language": document.language,
@@ -152,13 +122,89 @@ def _chunk_rows_for_document(item: dict, document: DocumentRecord, *, profile) -
         "series_name": document.series_name,
         "topic_tags": document.topic_tags,
         "region_codes": document.region_codes,
-        "content": item.get("content") or item.get("summary") or "",
+        "content": chunk.get("content") or chunk.get("text") or "",
+        "section_title": chunk.get("section_title") or chunk.get("section_heading"),
+        "page_start": chunk.get("page_start"),
+        "page_end": chunk.get("page_end"),
+        "content_type": chunk.get("content_type", "text"),
+        "chunk_summary": chunk.get("chunk_summary"),
+        "token_count": chunk.get("token_count"),
     }
+    if chunk_identifier:
+        row["chunk_id"] = chunk_identifier
+    return row
+
+
+def _chunk_rows_for_document(item: dict, document: DocumentRecord, *, profile) -> list[dict]:
+    chunks = item.get("chunks")
+    rows = []
+    if isinstance(chunks, list) and chunks:
+        rows = [_row_for_chunk(chunk, document) for chunk in chunks if isinstance(chunk, dict)]
+    elif item.get("content") or item.get("summary"):
+        rows = [_row_for_chunk({"content": item.get("content") or item.get("summary") or ""}, document)]
+    if not rows:
+        return []
     return corpus.enrich_chunk_rows(
-        [base_row],
+        rows,
         documents_by_key={document.url or document.canonical_title: document},
         profile=profile,
     )
+
+
+def _manifest_chunk_paths(manifest_path: Path, manifest: dict, cli_paths: list[str] | None) -> list[Path]:
+    paths = [Path(item).expanduser() for item in cli_paths or []]
+    for item in manifest.get("chunk_files") or []:
+        if not isinstance(item, str) or not item.strip():
+            continue
+        path = Path(item).expanduser()
+        if not path.is_absolute():
+            path = manifest_path.parent / path
+        paths.append(path)
+    clean = []
+    seen = set()
+    for path in paths:
+        resolved = path.resolve()
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+        clean.append(resolved)
+    return clean
+
+
+def _chunk_rows_from_jsonl(
+    paths: list[Path],
+    documents_by_id: dict[str, DocumentRecord],
+    *,
+    profile,
+) -> list[dict]:
+    rows_by_document: dict[str, list[dict]] = defaultdict(list)
+    for path in paths:
+        if not path.exists():
+            raise FileNotFoundError(f"Chunk JSONL not found: {path}")
+        with path.open("r", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle, start=1):
+                if not line.strip():
+                    continue
+                chunk = json.loads(line)
+                if not isinstance(chunk, dict):
+                    continue
+                document_id = str(chunk.get("document_id") or "")
+                document = documents_by_id.get(document_id)
+                if document is None:
+                    raise ValueError(f"Unknown document_id {document_id!r} in {path}:{line_number}")
+                rows_by_document[document_id].append(_row_for_chunk(chunk, document))
+
+    enriched: list[dict] = []
+    for document_id in sorted(rows_by_document):
+        document = documents_by_id[document_id]
+        enriched.extend(
+            corpus.enrich_chunk_rows(
+                rows_by_document[document_id],
+                documents_by_key={document.url or document.canonical_title: document},
+                profile=profile,
+            )
+        )
+    return enriched
 
 
 async def _run(args) -> dict[str, int]:
@@ -174,12 +220,19 @@ async def _run(args) -> dict[str, int]:
     ]
     document_records = []
     chunk_rows = []
+    documents_by_id = {}
     for item in manifest.get("documents", []):
         if not isinstance(item, dict):
             continue
         document = _document_record_from_manifest(item, profile=profile)
         document_records.append(document)
-        chunk_rows.extend(_chunk_rows_for_document(item, document, profile=profile))
+        documents_by_id[document.document_id] = document
+        if args.include_chunks:
+            chunk_rows.extend(_chunk_rows_for_document(item, document, profile=profile))
+    if args.include_chunks:
+        chunk_paths = _manifest_chunk_paths(Path(args.manifest), manifest, args.chunks_jsonl)
+        if chunk_paths:
+            chunk_rows.extend(_chunk_rows_from_jsonl(chunk_paths, documents_by_id, profile=profile))
 
     inferred_sources = corpus.build_source_records_for_documents(
         document_records,
@@ -226,7 +279,13 @@ def main() -> int:
     parser.add_argument(
         "--include-chunks",
         action="store_true",
-        help="Also upsert chunk rows generated from the manifest.",
+        help="Also upsert chunk rows generated from the manifest or external chunk JSONL files.",
+    )
+    parser.add_argument(
+        "--chunks-jsonl",
+        action="append",
+        default=[],
+        help="External chunk JSONL file. May be repeated. Relative manifest chunk_files are also used.",
     )
     args = parser.parse_args()
     print(json.dumps(asyncio.run(_run(args)), indent=2, sort_keys=True))

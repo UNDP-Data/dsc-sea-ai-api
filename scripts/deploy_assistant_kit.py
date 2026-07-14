@@ -72,6 +72,12 @@ def main() -> int:
         help="When importing corpus, include chunk rows.",
     )
     parser.add_argument(
+        "--chunks-jsonl",
+        action="append",
+        default=[],
+        help="External chunk JSONL file to pass through to the corpus importer. May be repeated.",
+    )
+    parser.add_argument(
         "--profiles-dir",
         default=str(ROOT / "config" / "rag_profiles"),
         help=argparse.SUPPRESS,
@@ -107,6 +113,8 @@ def main() -> int:
             command.append("--import-corpus")
         if args.include_chunks:
             command.append("--include-chunks")
+        for path in args.chunks_jsonl:
+            command.extend(["--chunks-jsonl", path])
         result = _run(command)
     except (AssistantKitError, subprocess.CalledProcessError) as error:
         error_payload = {"ok": False, "error": str(error), "kit": str(kit_path), "backend_root": str(ROOT)}
