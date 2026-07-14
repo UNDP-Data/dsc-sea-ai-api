@@ -57,6 +57,16 @@ def _sgp_ai_pages_source_ids(data_source: SgpAiDataSource) -> tuple[str, ...] | 
     return SGP_AI_PAGES_SOURCE_IDS[data_source]
 
 
+def _sgp_ai_pages_selected_data_source(
+    data_source: SgpAiDataSource,
+    dataset: SgpAiDataSource | None,
+    corpus: SgpAiDataSource | None,
+) -> SgpAiDataSource:
+    if data_source != "all" or not (dataset or corpus):
+        return data_source
+    return dataset or corpus or "all"
+
+
 def _env_timeout_seconds(
     name: str,
     default: float,
@@ -510,10 +520,10 @@ async def sgp_ai_pages_retrieve(
     """
     origin = _sgp_ai_pages_origin(request)
     profile = _get_profile_or_404(SGP_AI_PAGES_ASSISTANT_ID)
-    selected_data_source = (
-        data_source
-        if data_source != "all" or not (dataset or corpus)
-        else (dataset or corpus or "all")
+    selected_data_source = _sgp_ai_pages_selected_data_source(
+        data_source,
+        dataset,
+        corpus,
     )
     source_ids = _sgp_ai_pages_source_ids(selected_data_source)
     async with _profile_client(profile) as client:
@@ -530,6 +540,45 @@ async def sgp_ai_pages_retrieve(
             "data_source": selected_data_source,
             "documents": [document.model_dump() for document in documents],
             "chunks": [chunk.model_dump() for chunk in chunks],
+        },
+        headers=_sgp_ai_pages_cors_headers(origin),
+    )
+
+
+@app.get(
+    path="/pages/sgp-ai/relevance-map",
+    include_in_schema=False,
+)
+async def sgp_ai_pages_relevance_map(
+    request: Request,
+    query: Annotated[str, Query(min_length=2)],
+    data_source: Annotated[SgpAiDataSource, Query()] = "all",
+    dataset: Annotated[SgpAiDataSource | None, Query()] = None,
+    corpus: Annotated[SgpAiDataSource | None, Query()] = None,
+):
+    """
+    Origin-limited document-level relevance scores for the static SGP AI interface.
+    """
+    origin = _sgp_ai_pages_origin(request)
+    profile = _get_profile_or_404(SGP_AI_PAGES_ASSISTANT_ID)
+    selected_data_source = _sgp_ai_pages_selected_data_source(
+        data_source,
+        dataset,
+        corpus,
+    )
+    source_ids = _sgp_ai_pages_source_ids(selected_data_source)
+    async with _profile_client(profile) as client:
+        documents = await client.score_document_relevance_map(
+            query,
+            source_ids=source_ids,
+        )
+    return JSONResponse(
+        {
+            "assistant_id": profile.assistant_id,
+            "query": query,
+            "data_source": selected_data_source,
+            "document_count": len(documents),
+            "documents": documents,
         },
         headers=_sgp_ai_pages_cors_headers(origin),
     )
@@ -552,10 +601,10 @@ async def sgp_ai_pages_model(
     Origin-limited streaming answer endpoint for the static GitHub Pages SGP AI interface.
     """
     origin = _sgp_ai_pages_origin(request)
-    selected_data_source = (
-        data_source
-        if data_source != "all" or not (dataset or corpus)
-        else (dataset or corpus or "all")
+    selected_data_source = _sgp_ai_pages_selected_data_source(
+        data_source,
+        dataset,
+        corpus,
     )
     request.state.retrieval_source_ids = _sgp_ai_pages_source_ids(selected_data_source)
     request.state.retrieval_data_source = selected_data_source

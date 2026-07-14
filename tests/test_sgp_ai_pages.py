@@ -8,6 +8,7 @@ from fastapi.responses import StreamingResponse
 from fastapi.testclient import TestClient
 
 import main as app_module
+from src import database as database_module
 
 
 ALLOWED_ORIGIN = "https://undp-data.github.io"
@@ -29,6 +30,27 @@ class FakeClient:
         assert query == "coastal erosion"
         assert limit == 2
         return [FakeDump({"content": "Evidence"})], [FakeDump({"title": "Doc"})]
+
+    async def score_document_relevance_map(self, query: str, *, source_ids=None):
+        assert query == "coastal erosion"
+        self.source_ids = source_ids
+        return [
+            {
+                "document_id": "doc-1",
+                "title": "Coastal erosion grant lessons",
+                "source": "gef_sgp_intranet_projects",
+                "year": 2024,
+                "url": "https://example.org/doc-1",
+                "document_type": "project profile",
+                "topics": ["coastal erosion"],
+                "geographies": ["Turkey"],
+                "country_codes": ["Turkey"],
+                "region_codes": [],
+                "raw_score": 3.25,
+                "relevance": 1.0,
+                "score_explanation": {"signal_strength": 0.9},
+            }
+        ]
 
 
 class FakeDump:
@@ -93,6 +115,96 @@ def test_pages_retrieve_returns_documents_and_chunks(monkeypatch):
     assert response.headers["Access-Control-Allow-Origin"] == ALLOWED_ORIGIN
     assert response.json()["documents"] == [{"title": "Doc"}]
     assert response.json()["chunks"] == [{"content": "Evidence"}]
+
+
+def test_pages_relevance_map_returns_cors_and_scores(monkeypatch):
+    @asynccontextmanager
+    async def fake_profile_client(_profile):
+        yield FakeClient()
+
+    monkeypatch.setattr(app_module, "_profile_client", fake_profile_client)
+
+    with TestClient(app_module.app) as client:
+        response = client.get(
+            "/pages/sgp-ai/relevance-map?query=coastal%20erosion&data_source=project_database",
+            headers={"Origin": ALLOWED_ORIGIN},
+        )
+
+    payload = response.json()
+    assert response.status_code == 200
+    assert response.headers["Access-Control-Allow-Origin"] == ALLOWED_ORIGIN
+    assert payload["data_source"] == "project_database"
+    assert payload["document_count"] == 1
+    assert payload["documents"][0]["relevance"] == 1.0
+    assert payload["documents"][0]["source"] == "gef_sgp_intranet_projects"
+
+
+def test_pages_relevance_map_honors_empty_corpus(monkeypatch):
+    class EmptyMapClient(FakeClient):
+        async def score_document_relevance_map(self, query: str, *, source_ids=None):
+            return []
+
+    @asynccontextmanager
+    async def fake_profile_client(_profile):
+        yield EmptyMapClient()
+
+    monkeypatch.setattr(app_module, "_profile_client", fake_profile_client)
+
+    with TestClient(app_module.app) as client:
+        response = client.get(
+            "/pages/sgp-ai/relevance-map?query=coastal%20erosion",
+            headers={"Origin": ALLOWED_ORIGIN},
+        )
+
+    assert response.status_code == 200
+    assert response.json()["document_count"] == 0
+    assert response.json()["documents"] == []
+
+
+def test_relevance_feature_breakdown_matches_row_breakdown():
+    row = {
+        "document_id": "doc-1",
+        "source_id": "gef_sgp_intranet_projects",
+        "canonical_title": "Turkey coastal erosion coral reef project",
+        "subtitle": "Community monitoring",
+        "summary": "Women and local programme teams worked on coastal erosion and biodiversity.",
+        "series_name": "SGP project database",
+        "publisher": "GEF Small Grants Programme",
+        "document_type": "project profile",
+        "year": 2024,
+        "status": "approved",
+        "url": "https://example.org/project",
+        "topic_tags": ["coastal erosion", "biodiversity", "women"],
+        "audience_tags": ["programme teams", "women"],
+        "country_codes": ["TUR"],
+        "region_codes": ["europe_cis"],
+        "source_priority": 1.0,
+        "quality_score": 0.8,
+        "authority_tier": "trusted",
+        "is_flagship": False,
+        "is_data_report": False,
+    }
+    profile = database_module._build_retrieval_profile("Turkey coastal erosion women")
+    feature = database_module._build_document_relevance_features(row)
+
+    row_breakdown = database_module._document_row_breakdown(row, profile)
+    feature_breakdown = database_module._document_feature_breakdown(
+        feature,
+        profile,
+        database_module._extract_focus_phrases(profile.query),
+    )
+
+    for key in (
+        "title_overlap",
+        "summary_overlap",
+        "text_overlap",
+        "topics_overlap",
+        "signal_strength",
+        "token_hits",
+        "geography_match_class",
+        "score",
+    ):
+        assert feature_breakdown[key] == row_breakdown[key]
 
 
 def test_pages_preflight_allows_pages_origin():
