@@ -111,6 +111,14 @@ def validate_manifest_mapping(payload: dict[str, Any], *, expected_assistant_id:
             if isinstance(source.get("source_id"), str):
                 seen_sources.add(source["source_id"])
 
+    chunk_files = payload.get("chunk_files")
+    has_chunk_files = False
+    if chunk_files is not None:
+        if not isinstance(chunk_files, list) or not all(isinstance(item, str) and item.strip() for item in chunk_files):
+            errors.append("manifest.chunk_files must be a list of non-empty paths when provided.")
+        else:
+            has_chunk_files = True
+
     documents = payload.get("documents")
     if not isinstance(documents, list) or not documents:
         errors.append("manifest must include a non-empty documents list.")
@@ -148,8 +156,15 @@ def validate_manifest_mapping(payload: dict[str, Any], *, expected_assistant_id:
                             errors.append(f"{chunk_prefix} must be a mapping.")
                         elif not isinstance(chunk.get("content"), str) or not chunk["content"].strip():
                             errors.append(f"{chunk_prefix}.content is required.")
-            elif not has_content:
-                errors.append(f"{prefix} must include either content or non-empty chunks.")
+            else:
+                try:
+                    chunk_count = int(document.get("chunk_count") or 0)
+                except (TypeError, ValueError):
+                    chunk_count = 0
+                if not has_content and not (has_chunk_files and chunk_count > 0):
+                    errors.append(
+                        f"{prefix} must include content, non-empty chunks, or chunk_count with manifest.chunk_files."
+                    )
     return errors
 
 

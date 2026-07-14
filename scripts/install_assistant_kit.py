@@ -46,7 +46,7 @@ def _copy_kit_dir(source: Path, target: Path, *, overwrite: bool) -> str:
     return "copied"
 
 
-def _run_import(manifest: Path, assistant_id: str, *, include_chunks: bool) -> None:
+def _run_import(manifest: Path, assistant_id: str, *, include_chunks: bool, chunks_jsonl: list[str]) -> None:
     command = [
         sys.executable,
         str(ROOT / "scripts" / "import_corpus_manifest.py"),
@@ -57,6 +57,8 @@ def _run_import(manifest: Path, assistant_id: str, *, include_chunks: bool) -> N
     ]
     if include_chunks:
         command.append("--include-chunks")
+    for path in chunks_jsonl:
+        command.extend(["--chunks-jsonl", path])
     subprocess.run(command, cwd=ROOT, check=True)
 
 
@@ -76,6 +78,7 @@ def main() -> int:
     parser.add_argument("--overwrite", action="store_true", help="Overwrite existing installed profile/kit files.")
     parser.add_argument("--import-corpus", action="store_true", help="Import the kit corpus manifest into LanceDB.")
     parser.add_argument("--include-chunks", action="store_true", help="When importing corpus, also upsert chunks.")
+    parser.add_argument("--chunks-jsonl", action="append", default=[], help="External chunk JSONL file to pass to the corpus importer. May be repeated.")
     args = parser.parse_args()
 
     try:
@@ -90,7 +93,12 @@ def main() -> int:
             if kit.manifest_path is None:
                 raise AssistantKitError("Cannot import corpus: kit has no corpus/manifest.yaml.")
             manifest_for_import = kit_target / "corpus" / "manifest.yaml" if kit_target.exists() else kit.manifest_path
-            _run_import(manifest_for_import, assistant_id, include_chunks=args.include_chunks)
+            _run_import(
+                manifest_for_import,
+                assistant_id,
+                include_chunks=args.include_chunks,
+                chunks_jsonl=args.chunks_jsonl,
+            )
             imported = True
     except (AssistantKitError, subprocess.CalledProcessError) as error:
         print(json.dumps({"ok": False, "error": str(error)}, indent=2), file=sys.stderr)
