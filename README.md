@@ -407,6 +407,17 @@ The project is hooked up to CI/CD via GitHub Actions.
 - A push to `main` triggers deployment.
 - The `frontend/` KG tester app is intentionally separate and is not required for API deployment.
 
+### API keys
+
+Clients send their key in the `X-Api-Key` header. The server accepts the keys listed in `API_KEYS`, a JSON object with one key per caller:
+
+```json
+{"academy-frontend": "...", "sgp-pipeline": "..."}
+```
+
+Giving each caller its own key means one can be rotated or revoked without touching the others. `API_KEY` is still accepted (as the caller `default`) so existing deployments keep working while callers move over; remove it once every caller has its own key. The non-public SGP corpora use the separate `SGP_PROJECT_RAG_API_KEY`.
+
+
 ## Contributing
 
 All contributions must follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
