@@ -189,3 +189,10 @@ assistant_kits/*/corpus/chunks/
 assistant_kits/*/corpus/*.jsonl
 assistant_kits/*/corpus/*.jsonl.gz
 assistant_kits/*/corpus/manifest.yaml.backup-*
+
+# Private environment variants; commit value-free examples only.
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.sample
